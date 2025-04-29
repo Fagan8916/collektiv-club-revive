@@ -16,27 +16,27 @@ const ContactSection = () => {
         <div className="text-center mb-16">
           <h2 className="section-title">Get In Touch</h2>
           <p className="section-subtitle">
-            Have questions about membership or want to learn more about COLLEKTIV.CLUB?
+            Have questions about membership or want to learn more about the Collektiv Club?
             We'd love to hear from you.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div>
-            <h3 className="text-2xl font-bold mb-6 text-collektiv-blue">
+            <h3 className="text-2xl font-bold mb-6 text-collektiv-green">
               Contact Information
             </h3>
             
             <div className="space-y-6 mb-8">
               <div className="flex items-start">
-                <div className="bg-collektiv-blue/10 p-3 rounded-full mr-4">
-                  <Mail className="h-6 w-6 text-collektiv-blue" />
+                <div className="bg-collektiv-green/10 p-3 rounded-full mr-4">
+                  <Mail className="h-6 w-6 text-collektiv-green" />
                 </div>
                 <div>
                   <h4 className="font-medium mb-1">Email Us</h4>
                   <a 
                     href="mailto:info@collektiv.club" 
-                    className="text-collektiv-lightblue hover:underline"
+                    className="text-collektiv-lightgreen hover:underline"
                   >
                     info@collektiv.club
                   </a>
@@ -44,48 +44,42 @@ const ContactSection = () => {
               </div>
               
               <div className="flex items-start">
-                <div className="bg-collektiv-blue/10 p-3 rounded-full mr-4">
-                  <Phone className="h-6 w-6 text-collektiv-blue" />
+                <div className="bg-collektiv-green/10 p-3 rounded-full mr-4">
+                  <Phone className="h-6 w-6 text-collektiv-green" />
                 </div>
                 <div>
                   <h4 className="font-medium mb-1">Call Us</h4>
                   <a 
-                    href="tel:+11234567890" 
-                    className="text-collektiv-lightblue hover:underline"
+                    href="tel:+441244456357" 
+                    className="text-collektiv-lightgreen hover:underline"
                   >
-                    +1 (123) 456-7890
+                    +44 1244 456357
                   </a>
                 </div>
               </div>
               
               <div className="flex items-start">
-                <div className="bg-collektiv-blue/10 p-3 rounded-full mr-4">
-                  <MapPin className="h-6 w-6 text-collektiv-blue" />
+                <div className="bg-collektiv-green/10 p-3 rounded-full mr-4">
+                  <MapPin className="h-6 w-6 text-collektiv-green" />
                 </div>
                 <div>
-                  <h4 className="font-medium mb-1">Visit Us</h4>
-                  <address className="not-italic text-gray-600">
-                    123 Community Avenue<br />
-                    Suite 456<br />
-                    New York, NY 10001
-                  </address>
+                  <h4 className="font-medium mb-1">Book Time with Us</h4>
+                  <a 
+                    href="https://calendly.com/collektiv-club/introductory-meeting" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-collektiv-lightgreen hover:underline"
+                  >
+                    Schedule a Meeting
+                  </a>
                 </div>
-              </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h4 className="font-bold mb-3">Office Hours</h4>
-              <div className="space-y-2 text-gray-600">
-                <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
-                <p>Saturday: 10:00 AM - 2:00 PM</p>
-                <p>Sunday: Closed</p>
               </div>
             </div>
           </div>
           
           <div>
             <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-md">
-              <h3 className="text-2xl font-bold mb-6 text-collektiv-blue">
+              <h3 className="text-2xl font-bold mb-6 text-collektiv-green">
                 Send Us a Message
               </h3>
               
@@ -97,7 +91,7 @@ const ContactSection = () => {
                   <input
                     type="text"
                     id="name"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-collektiv-blue"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-collektiv-green"
                     required
                   />
                 </div>
@@ -108,7 +102,7 @@ const ContactSection = () => {
                   <input
                     type="email"
                     id="email"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-collektiv-blue"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-collektiv-green"
                     required
                   />
                 </div>
@@ -121,7 +115,7 @@ const ContactSection = () => {
                 <input
                   type="text"
                   id="subject"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-collektiv-blue"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-collektiv-green"
                   required
                 />
               </div>
@@ -133,7 +127,7 @@ const ContactSection = () => {
                 <textarea
                   id="message"
                   rows={5}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-collektiv-blue"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-collektiv-green"
                   required
                 ></textarea>
               </div>

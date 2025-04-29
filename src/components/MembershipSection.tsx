@@ -6,21 +6,18 @@ import { Link } from "react-router-dom";
 const MembershipSection = () => {
   const plans = [
     {
-      name: "VIP",
-      price: "£985",
-      period: "per Annum",
-      description: "Suggested for members investing >£15,000 per annum",
+      name: "Trial",
+      price: "Free*",
+      period: "",
+      description: "Suggested for members investing <£3,499 per annum",
       features: [
-        "0% Investment fee",
+        "12.5% Investment fee",
         "0% Annual Investment fee",
         "0% Carry / Performance fee",
-        "Priority on EIS & SEIS Deals",
-        "Access to the Founder and Member Slack Community",
-        "Gold Club Community Group Access and Discounts",
-        "£100 KYC cost included"
+        "Access to the Online Academy"
       ],
-      button: "Get Started",
-      highlighted: true,
+      button: "Start Trial",
+      highlighted: false,
     },
     {
       name: "Premium",
@@ -38,18 +35,21 @@ const MembershipSection = () => {
       highlighted: false,
     },
     {
-      name: "Trial",
-      price: "Free*",
-      period: "",
-      description: "Suggested for members investing <£3,499 per annum",
+      name: "VIP",
+      price: "£985",
+      period: "per Annum",
+      description: "Suggested for members investing >£15,000 per annum",
       features: [
-        "12.5% Investment fee",
+        "0% Investment fee",
         "0% Annual Investment fee",
         "0% Carry / Performance fee",
-        "Access to the Online Academy"
+        "Priority on EIS & SEIS Deals",
+        "Access to the Founder and Member Slack Community",
+        "Gold Club Community Group Access and Discounts",
+        "£100 KYC cost included"
       ],
-      button: "Start Trial",
-      highlighted: false,
+      button: "Get Started",
+      highlighted: true,
     },
   ];
 

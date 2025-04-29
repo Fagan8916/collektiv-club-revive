@@ -12,7 +12,7 @@ const CTASection = () => {
             Ready to Join Our Community?
           </h2>
           <p className="text-xl text-green-100 mb-10 max-w-2xl mx-auto">
-            Become a part of COLLEKTIV.CLUB today and start connecting with like-minded 
+            Become a part of the Collektiv Club today and start connecting with like-minded 
             individuals dedicated to growth and success.
           </p>
           <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">

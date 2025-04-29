@@ -30,7 +30,7 @@ const Membership = () => {
         <section className="section bg-white" id="benefits">
           <div className="container">
             <div className="text-center mb-16">
-              <h2 className="section-title">Why Join COLLEKTIV.CLUB?</h2>
+              <h2 className="section-title">Why Join the Collektiv Club?</h2>
               <p className="section-subtitle">
                 Here's a closer look at what makes our community special and the benefits you'll receive as a member.
               </p>
@@ -122,7 +122,7 @@ const Membership = () => {
             <div className="max-w-3xl mx-auto">
               {[
                 {
-                  q: "How do I join COLLEKTIV.CLUB?",
+                  q: "How do I join the Collektiv Club?",
                   a: "Joining is easy! Simply click the 'Join Now' button, select your preferred membership plan, and complete the registration process. Once approved, you'll receive access to all member benefits based on your chosen plan."
                 },
                 {
