@@ -9,6 +9,8 @@ import NewsSection from "@/components/NewsSection";
 import ContactSection from "@/components/ContactSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
+import InvestmentStatsSection from "@/components/InvestmentStatsSection";
+import MissionSection from "@/components/MissionSection";
 
 const Index = () => {
   return (
@@ -16,6 +18,8 @@ const Index = () => {
       <Header />
       <main>
         <HeroSection />
+        <InvestmentStatsSection />
+        <MissionSection />
         <AboutSection />
         <HowItWorksSection />
         <MembershipSection />

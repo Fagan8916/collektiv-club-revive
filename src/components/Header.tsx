@@ -46,7 +46,7 @@ const Header = () => {
           className="flex items-center"
         >
           <img 
-            src="/public/lovable-uploads/fbdc3f7f-db38-4393-bbbd-7bfcedfdcf87.png" 
+            src="/public/lovable-uploads/d7216f53-dbaf-46e5-a9ae-e407297c311d.png" 
             alt="the Collektiv Club" 
             className="h-12"
           />
