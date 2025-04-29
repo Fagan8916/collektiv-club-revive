@@ -12,10 +12,10 @@ const Membership = () => {
       <Header />
       <main>
         {/* Hero Section */}
-        <section className="pt-32 pb-16 bg-gradient-to-r from-blue-50 to-white">
+        <section className="pt-32 pb-16 bg-gradient-to-r from-collektiv-accent to-white">
           <div className="container">
             <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-collektiv-blue">Membership Benefits</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-collektiv-green">Membership Benefits</h1>
               <p className="text-xl text-gray-700">
                 Discover all the advantages of joining our community and find the perfect membership option for you.
               </p>
@@ -39,14 +39,14 @@ const Membership = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-12">
               <div>
                 <img 
-                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23dbeafe'/%3E%3Cpath d='M0 0h600v400H0z' fill='%232563eb' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%231e3a8a' text-anchor='middle' dominant-baseline='middle'%3ENetworking Events%3C/text%3E%3C/svg%3E" 
+                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h600v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3ENetworking Events%3C/text%3E%3C/svg%3E" 
                   alt="Networking Events" 
                   className="rounded-xl shadow-lg"
                 />
               </div>
               
               <div>
-                <h3 className="text-2xl font-bold mb-4 text-collektiv-blue">Exclusive Events & Networking</h3>
+                <h3 className="text-2xl font-bold mb-4 text-collektiv-green">Exclusive Events & Networking</h3>
                 <p className="text-gray-700 mb-4">
                   Access members-only events, workshops, and networking opportunities 
                   designed to help you connect with industry leaders and like-minded professionals.
@@ -74,35 +74,34 @@ const Membership = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-12">
               <div className="order-2 md:order-1">
-                <h3 className="text-2xl font-bold mb-4 text-collektiv-blue">Knowledge & Resources</h3>
+                <h3 className="text-2xl font-bold mb-4 text-collektiv-green">Investment Opportunities</h3>
                 <p className="text-gray-700 mb-4">
-                  Gain access to our extensive library of resources, courses, and expert content 
-                  designed to help you grow personally and professionally.
+                  Gain access to curated investment opportunities and expert insights to help grow your portfolio.
                 </p>
                 <ul className="space-y-3">
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Digital content library with hundreds of resources</span>
+                    <span>Curated EIS & SEIS investment opportunities</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Exclusive online courses and webinars</span>
+                    <span>Expert evaluation and due diligence</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Monthly industry reports and insights</span>
+                    <span>Preferential investment terms for members</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Expert-led masterclasses</span>
+                    <span>Regular investment updates and portfolio tracking</span>
                   </li>
                 </ul>
               </div>
               
               <div className="order-1 md:order-2">
                 <img 
-                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23dbeafe'/%3E%3Cpath d='M0 0h600v400H0z' fill='%232563eb' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%231e3a8a' text-anchor='middle' dominant-baseline='middle'%3EKnowledge Resources%3C/text%3E%3C/svg%3E" 
-                  alt="Knowledge Resources" 
+                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h600v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3EInvestment Opportunities%3C/text%3E%3C/svg%3E" 
+                  alt="Investment Opportunities" 
                   className="rounded-xl shadow-lg"
                 />
               </div>
@@ -127,20 +126,20 @@ const Membership = () => {
                   a: "Joining is easy! Simply click the 'Join Now' button, select your preferred membership plan, and complete the registration process. Once approved, you'll receive access to all member benefits based on your chosen plan."
                 },
                 {
-                  q: "Can I upgrade my membership later?",
-                  a: "Absolutely! You can upgrade your membership at any time. When you upgrade, you'll immediately gain access to all the additional benefits of your new plan."
+                  q: "What are the investment fees?",
+                  a: "Our fees vary by membership tier: VIP members pay 0% Investment fee, Premium members pay 4%, and Trial members pay 12.5%. There are no Annual Investment fees or Carry/Performance fees across all tiers."
                 },
                 {
-                  q: "Are there any commitment periods?",
-                  a: "Our memberships are available on both monthly and annual plans. Annual plans come with a discount compared to paying monthly. You can cancel anytime, but we do not offer refunds for unused portions of paid membership periods."
+                  q: "What is KYC and why is it included?",
+                  a: "KYC (Know Your Customer) is a verification process required for financial investments. We include the £100 KYC cost in our VIP and Premium memberships to make the investment process smoother for our members."
                 },
                 {
                   q: "How do I access member-only content?",
-                  a: "After joining, you'll receive login credentials to our member portal where you can access all digital resources, event information, and networking opportunities."
+                  a: "After joining, you'll receive login credentials to our member portal where you can access all digital resources, event information, and investment opportunities."
                 },
               ].map((item, i) => (
                 <div key={i} className="mb-6 bg-white p-6 rounded-lg shadow-sm">
-                  <h3 className="text-xl font-bold mb-3 text-collektiv-blue">{item.q}</h3>
+                  <h3 className="text-xl font-bold mb-3 text-collektiv-green">{item.q}</h3>
                   <p className="text-gray-600">{item.a}</p>
                 </div>
               ))}

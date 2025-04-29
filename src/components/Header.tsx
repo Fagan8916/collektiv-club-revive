@@ -43,9 +43,13 @@ const Header = () => {
       <div className="container flex items-center justify-between">
         <Link 
           to="/" 
-          className="text-2xl font-display font-bold text-collektiv-blue"
+          className="flex items-center"
         >
-          COLLEKTIV.CLUB
+          <img 
+            src="/public/lovable-uploads/5c840e3a-42ff-4205-b966-186132b2d060.png" 
+            alt="COLLEKTIV" 
+            className="h-12"
+          />
         </Link>
 
         <div className="hidden lg:flex items-center space-x-8">
@@ -53,7 +57,7 @@ const Header = () => {
             <Link
               key={item.name}
               to={item.href}
-              className="text-gray-700 hover:text-collektiv-blue font-medium transition-colors"
+              className="text-gray-700 hover:text-collektiv-green font-medium transition-colors"
             >
               {item.name}
             </Link>
@@ -87,7 +91,7 @@ const Header = () => {
             <Link
               key={item.name}
               to={item.href}
-              className="text-gray-700 hover:text-collektiv-blue text-xl font-medium transition-colors"
+              className="text-gray-700 hover:text-collektiv-green text-xl font-medium transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
               {item.name}

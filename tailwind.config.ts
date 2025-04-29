@@ -64,9 +64,9 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				collektiv: {
-					blue: '#1e3a8a',
-					lightblue: '#2563eb',
-					accent: '#3b82f6',
+					green: '#00815D',       // Primary green color
+					lightgreen: '#00B5AA',  // Secondary lighter green
+					accent: '#E3FBF8',      // Light accent color
 					gray: '#6b7280',
 					light: '#f9fafb'
 				}

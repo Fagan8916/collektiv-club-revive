@@ -7,22 +7,22 @@ const NewsSection = () => {
   const articles = [
     {
       id: 1,
-      title: "COLLEKTIV.CLUB Announces New Workshop Series",
+      title: "COLLEKTIV.CLUB Announces New Investment Opportunities",
       excerpt:
-        "Join us for our upcoming workshop series focused on professional development and networking strategies.",
+        "Discover our latest curated investment opportunities focused on high-growth potential startups with EIS & SEIS benefits.",
       date: "April 15, 2025",
       author: "Admin",
-      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23dbeafe'/%3E%3Cpath d='M0 0h800v400H0z' fill='%232563eb' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%231e3a8a' text-anchor='middle' dominant-baseline='middle'%3ECollektiv Workshop%3C/text%3E%3C/svg%3E",
-      slug: "new-workshop-series",
+      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h800v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3EInvestment Opportunities%3C/text%3E%3C/svg%3E",
+      slug: "new-investment-opportunities",
     },
     {
       id: 2,
       title: "Member Spotlight: Success Stories from Our Community",
       excerpt:
-        "Read about the incredible achievements of our members and how the COLLEKTIV.CLUB community has supported their journey.",
+        "Read about the incredible achievements of our members and how the COLLEKTIV.CLUB community has supported their investment journey.",
       date: "April 10, 2025",
       author: "Content Team",
-      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23dbeafe'/%3E%3Cpath d='M0 0h800v400H0z' fill='%232563eb' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%231e3a8a' text-anchor='middle' dominant-baseline='middle'%3EMember Success%3C/text%3E%3C/svg%3E",
+      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h800v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3EMember Success%3C/text%3E%3C/svg%3E",
       slug: "member-spotlight",
     },
     {
@@ -32,7 +32,7 @@ const NewsSection = () => {
         "Mark your calendars for our biggest networking event of the year, featuring guest speakers and opportunity to connect with industry leaders.",
       date: "April 5, 2025",
       author: "Events Team",
-      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23dbeafe'/%3E%3Cpath d='M0 0h800v400H0z' fill='%232563eb' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%231e3a8a' text-anchor='middle' dominant-baseline='middle'%3ENetworking Event%3C/text%3E%3C/svg%3E",
+      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h800v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3ENetworking Event%3C/text%3E%3C/svg%3E",
       slug: "networking-event-may",
     },
   ];
@@ -74,7 +74,7 @@ const NewsSection = () => {
                 </p>
                 <Link 
                   to={`/news/${article.slug}`}
-                  className="inline-flex items-center text-collektiv-blue font-medium hover:text-collektiv-lightblue transition-colors"
+                  className="inline-flex items-center text-collektiv-green font-medium hover:text-collektiv-lightgreen transition-colors"
                 >
                   Read More
                   <ArrowRight size={16} className="ml-1" />
