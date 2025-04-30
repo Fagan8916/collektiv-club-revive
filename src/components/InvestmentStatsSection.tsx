@@ -24,17 +24,17 @@ const InvestmentStatsSection = () => {
             </div>
           </div>
 
-          {/* 150+ Stat */}
+          {/* 6-12 Deals Stat */}
           <div className="text-center">
             <div className="flex flex-col items-center">
-              <h2 className="text-5xl md:text-6xl font-bold text-collektiv-green mb-2">150+</h2>
+              <h2 className="text-5xl md:text-6xl font-bold text-collektiv-green mb-2">6-12</h2>
               <div className="w-48 h-2 mb-6">
                 <svg viewBox="0 0 200 20" xmlns="http://www.w3.org/2000/svg">
                   <path d="M0,10 C30,20 70,0 100,10 C130,20 170,0 200,10" 
                     fill="none" stroke="#003B73" strokeWidth="2"/>
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-collektiv-green mb-4">Companies screened annually</h3>
+              <h3 className="text-xl font-semibold text-collektiv-green mb-4">Deals per year</h3>
               <p className="text-gray-700">
                 On average, we meet with three founders per week and aim to complete at least six 
                 deals annually. Quality remains our top priority.

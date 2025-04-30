@@ -11,8 +11,8 @@ const Footer = () => {
           <div>
             <div className="mb-4">
               <img 
-                src="/public/lovable-uploads/f59750eb-4fb9-47da-9010-aab8815d041a.png" 
-                alt="COLLEKTIV" 
+                src="/public/lovable-uploads/d7216f53-dbaf-46e5-a9ae-e407297c311d.png" 
+                alt="The Collektiv Club" 
                 className="h-12"
               />
             </div>
@@ -101,8 +101,8 @@ const Footer = () => {
               </li>
               <li className="flex items-center">
                 <Phone size={16} className="mr-2" />
-                <a href="tel:+11234567890" className="text-green-100 hover:text-white transition-colors">
-                  +1 (123) 456-7890
+                <a href="tel:+441244456357" className="text-green-100 hover:text-white transition-colors">
+                  +44 1244 456357
                 </a>
               </li>
             </ul>
@@ -112,7 +112,7 @@ const Footer = () => {
         <div className="border-t border-green-800 pt-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-green-100 text-sm mb-4 md:mb-0">
-              &copy; {new Date().getFullYear()} COLLEKTIV.CLUB. All rights reserved.
+              &copy; {new Date().getFullYear()} The Collektiv Club. All rights reserved.
             </p>
             <div className="flex space-x-4">
               <Link to="/privacy" className="text-green-100 hover:text-white text-sm transition-colors">
@@ -122,6 +122,9 @@ const Footer = () => {
                 Terms of Service
               </Link>
             </div>
+          </div>
+          <div className="mt-4 text-xs text-green-200">
+            Investing in early-stage businesses involves significant risks, including illiquidity, lack of dividends, loss of investment, and dilution. These opportunities are intended exclusively for high-net-worth individuals and sophisticated investors who understand these risks (<Link to="/hnwi-si" className="underline">See here for more details</Link>). Capital is at risk. Please seek independent financial advice if you are unsure about investing
           </div>
         </div>
       </div>

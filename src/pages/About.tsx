@@ -13,7 +13,7 @@ const About = () => {
         <section className="pt-32 pb-16 bg-gradient-to-r from-blue-50 to-white">
           <div className="container">
             <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-collektiv-blue">About COLLEKTIV.CLUB</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-collektiv-blue">About The Collektiv Club</h1>
               <p className="text-xl text-gray-700">
                 Learn more about our mission, vision, and the community that makes us special.
               </p>
@@ -28,7 +28,7 @@ const About = () => {
               <div>
                 <h2 className="text-3xl font-bold mb-6 text-collektiv-blue">Our Mission</h2>
                 <p className="text-gray-700 mb-6">
-                  COLLEKTIV.CLUB was founded with a simple yet powerful mission: to create a 
+                  The Collektiv Club was founded with a simple yet powerful mission: to create a 
                   community where ambitious individuals can come together, share knowledge, 
                   and support each other on their journey to success.
                 </p>
@@ -65,30 +65,47 @@ const About = () => {
           </div>
         </section>
 
-        {/* Team Section - Simplified */}
+        {/* Team Section */}
         <section className="section bg-gray-50">
           <div className="container">
             <div className="text-center mb-16">
               <h2 className="section-title">Our Team</h2>
               <p className="section-subtitle">
-                Meet the dedicated individuals behind COLLEKTIV.CLUB who work tirelessly 
+                Meet the dedicated individuals behind The Collektiv Club who work tirelessly 
                 to create value for our community.
               </p>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="bg-white p-6 rounded-lg shadow-md text-center">
-                  <div className="w-24 h-24 bg-collektiv-blue/20 rounded-full mx-auto mb-4 flex items-center justify-center">
-                    <span className="text-collektiv-blue text-xl font-bold">TM</span>
-                  </div>
-                  <h3 className="text-xl font-bold mb-1">Team Member {i}</h3>
-                  <p className="text-collektiv-lightblue mb-3">Position</p>
-                  <p className="text-gray-600">
-                    Brief description about this team member and their role at COLLEKTIV.CLUB.
-                  </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              <div className="bg-white p-6 rounded-lg shadow-md text-center">
+                <div className="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full">
+                  <img 
+                    src="/public/lovable-uploads/540d3588-f37f-46c5-b02f-9f3a90db2559.png"
+                    alt="Manon" 
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-              ))}
+                <h3 className="text-xl font-bold mb-1">Manon Delaigue</h3>
+                <p className="text-collektiv-lightblue mb-3">Co-Founder</p>
+                <p className="text-gray-600">
+                  Previously Deloitte Ventures, supporting growth strategies for technology startups and establishing strategic partnerships. MBA from Hult International Business School in San Francisco.
+                </p>
+              </div>
+              
+              <div className="bg-white p-6 rounded-lg shadow-md text-center">
+                <div className="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full">
+                  <img 
+                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h200v200H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='16' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3ERyan%3C/text%3E%3C/svg%3E"
+                    alt="Ryan" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <h3 className="text-xl font-bold mb-1">Ryan Mitchell</h3>
+                <p className="text-collektiv-lightblue mb-3">Co-Founder</p>
+                <p className="text-gray-600">
+                  Angel investor and advisor with 16+ years in the Cloud, DevOps, and Cyber Security sectors. Holds certifications in AWS, Microsoft Azure, and ITILv4. Previous CFO of UK private equity business.
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -99,27 +116,27 @@ const About = () => {
             <div className="text-center mb-16">
               <h2 className="section-title">Our Values</h2>
               <p className="section-subtitle">
-                The core principles that guide everything we do at COLLEKTIV.CLUB.
+                The core principles that guide everything we do at The Collektiv Club.
               </p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
                 {
+                  title: "Transparency",
+                  description: "We maintain honest, open communication with investors, founders, and community members."
+                },
+                {
+                  title: "Accessibility",
+                  description: "We believe in lowering barriers to entry for quality investments."
+                },
+                {
                   title: "Community",
-                  description: "We believe in the power of togetherness and support."
+                  description: "We foster a supportive, engaged network of like-minded individuals."
                 },
                 {
-                  title: "Growth",
-                  description: "We're committed to continuous learning and development."
-                },
-                {
-                  title: "Integrity",
-                  description: "We operate with honesty and transparency in all we do."
-                },
-                {
-                  title: "Innovation",
-                  description: "We embrace new ideas and creative solutions."
+                  title: "Education",
+                  description: "We empower through knowledge-sharing and continuous learning."
                 }
               ].map((value, i) => (
                 <div key={i} className="p-6 border border-gray-200 rounded-lg hover:border-collektiv-blue hover:shadow-md transition-all">

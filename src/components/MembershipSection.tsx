@@ -1,7 +1,6 @@
 
 import React from "react";
 import { Check } from "lucide-react";
-import { Link } from "react-router-dom";
 
 const MembershipSection = () => {
   const plans = [
@@ -18,6 +17,7 @@ const MembershipSection = () => {
       ],
       button: "Start Trial",
       highlighted: false,
+      link: "https://airtable.com/appWGyTHcjHMgZrUz/pagHdPVxVwljspHTq/form"
     },
     {
       name: "Premium",
@@ -33,6 +33,7 @@ const MembershipSection = () => {
       ],
       button: "Join Premium",
       highlighted: false,
+      link: "https://airtable.com/appWGyTHcjHMgZrUz/pagXGRxiL7ToHR8Tb/form"
     },
     {
       name: "VIP",
@@ -50,6 +51,7 @@ const MembershipSection = () => {
       ],
       button: "Get Started",
       highlighted: true,
+      link: "https://airtable.com/appWGyTHcjHMgZrUz/pagcb1x8NOL2MCKy8/form"
     },
   ];
 
@@ -90,8 +92,10 @@ const MembershipSection = () => {
                   ))}
                 </div>
                 
-                <Link
-                  to={"/join"}
+                <a
+                  href={plan.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`w-full text-center block py-3 px-4 rounded-md font-medium transition-colors ${
                     plan.highlighted
                       ? "bg-collektiv-green text-white hover:bg-collektiv-lightgreen"
@@ -99,19 +103,10 @@ const MembershipSection = () => {
                   }`}
                 >
                   {plan.button}
-                </Link>
+                </a>
               </div>
             </div>
           ))}
-        </div>
-        
-        <div className="text-center mt-12">
-          <p className="text-gray-600 mb-4">
-            Need a custom solution? Contact us for personalized membership options.
-          </p>
-          <Link to="/membership" className="btn-secondary">
-            View All Membership Details
-          </Link>
         </div>
       </div>
     </section>

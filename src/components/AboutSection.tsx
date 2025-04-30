@@ -17,7 +17,7 @@ const AboutSection = () => {
     <section className="section bg-white" id="about">
       <div className="container">
         <div className="text-center mb-16">
-          <h2 className="section-title">About COLLEKTIV.CLUB</h2>
+          <h2 className="section-title">About The Collektiv Club</h2>
           <p className="section-subtitle">
             We are a community-driven organization dedicated to bringing together ambitious 
             individuals who believe in the power of collective growth.
@@ -30,7 +30,7 @@ const AboutSection = () => {
               Why Join Our Community?
             </h3>
             <p className="text-gray-700 mb-8">
-              At COLLEKTIV.CLUB, we believe that individual success is amplified through 
+              At The Collektiv Club, we believe that individual success is amplified through 
               community support. Our members gain access to exclusive resources, events, 
               and a network of like-minded individuals all committed to growth and excellence.
             </p>
