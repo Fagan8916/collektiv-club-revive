@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import { Facebook, Instagram, Twitter, Mail, Phone } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Mail } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -11,7 +11,7 @@ const Footer = () => {
           <div>
             <div className="mb-4">
               <img 
-                src="/public/lovable-uploads/d7216f53-dbaf-46e5-a9ae-e407297c311d.png" 
+                src="/public/lovable-uploads/0f5b4433-e83c-463c-a2e3-68e86eeb108e.png" 
                 alt="The Collektiv Club" 
                 className="h-12"
               />
@@ -21,14 +21,14 @@ const Footer = () => {
               connection, and collective success.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-green-100 hover:text-white transition-colors">
+              <a href="https://www.facebook.com" className="text-green-100 hover:text-white transition-colors">
                 <Facebook size={20} />
               </a>
-              <a href="#" className="text-green-100 hover:text-white transition-colors">
+              <a href="https://www.instagram.com/collektiv_club/?igsh=Y2liY2t5azM4MDFt" className="text-green-100 hover:text-white transition-colors">
                 <Instagram size={20} />
               </a>
-              <a href="#" className="text-green-100 hover:text-white transition-colors">
-                <Twitter size={20} />
+              <a href="https://www.linkedin.com/company/collektiv-club/" className="text-green-100 hover:text-white transition-colors">
+                <Linkedin size={20} />
               </a>
             </div>
           </div>
@@ -99,12 +99,6 @@ const Footer = () => {
                   info@collektiv.club
                 </a>
               </li>
-              <li className="flex items-center">
-                <Phone size={16} className="mr-2" />
-                <a href="tel:+441244456357" className="text-green-100 hover:text-white transition-colors">
-                  +44 1244 456357
-                </a>
-              </li>
             </ul>
           </div>
         </div>
@@ -112,7 +106,7 @@ const Footer = () => {
         <div className="border-t border-green-800 pt-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-green-100 text-sm mb-4 md:mb-0">
-              &copy; {new Date().getFullYear()} The Collektiv Club. All rights reserved.
+              &copy; {new Date().getFullYear()} Collektiv Ltd. All rights reserved.
             </p>
             <div className="flex space-x-4">
               <Link to="/privacy" className="text-green-100 hover:text-white text-sm transition-colors">

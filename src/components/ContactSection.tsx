@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, MapPin } from "lucide-react";
 
 const ContactSection = () => {
   return (
@@ -32,21 +32,6 @@ const ContactSection = () => {
                     className="text-collektiv-lightgreen hover:underline"
                   >
                     info@collektiv.club
-                  </a>
-                </div>
-              </div>
-              
-              <div className="flex items-start">
-                <div className="bg-collektiv-green/10 p-3 rounded-full mr-4">
-                  <Phone className="h-6 w-6 text-collektiv-green" />
-                </div>
-                <div>
-                  <h4 className="font-medium mb-1">Call Us</h4>
-                  <a 
-                    href="tel:+441244456357" 
-                    className="text-collektiv-lightgreen hover:underline"
-                  >
-                    +44 1244 456357
                   </a>
                 </div>
               </div>

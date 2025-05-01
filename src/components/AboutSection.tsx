@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const AboutSection = () => {
   const features = [
     "Exclusive networking events",
-    "Professional development workshops",
+    "Access to SaaS investment opportunities",
     "Access to industry experts",
     "Collaboration opportunities",
     "Community support system",
