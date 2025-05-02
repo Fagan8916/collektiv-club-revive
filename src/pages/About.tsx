@@ -76,12 +76,12 @@ const About = () => {
               <div className="bg-white p-6 rounded-lg shadow-md text-center">
                 <div className="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full">
                   <img 
-                    src="/public/lovable-uploads/ee4627e1-0e02-4963-a56a-4d5df5163b91.png"
+                    src="/lovable-uploads/ee4627e1-0e02-4963-a56a-4d5df5163b91.png"
                     alt="Manon" 
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <h3 className="text-xl font-bold mb-1">Manon Delaigue</h3>
+                <h3 className="text-xl font-bold mb-1">Manon Ligato</h3>
                 <p className="text-collektiv-lightblue mb-3">Co-Founder</p>
                 <p className="text-gray-600">
                   Manon has a proven track record of identifying high-potential companies and successfully scaling their market presence and revenue from the ground up. She has held pivotal leadership roles at Orange, HP, Gartner, Workday, Watershed, and Peakon, where she played a key role in driving market expansion, revenue growth, and go-to-market strategies. At Peakon, she was instrumental in generating over $10 million in new business, solidifying her reputation as a high-impact growth strategist.
@@ -97,12 +97,12 @@ const About = () => {
               <div className="bg-white p-6 rounded-lg shadow-md text-center">
                 <div className="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full">
                   <img 
-                    src="/public/lovable-uploads/6629ab08-b875-4e1c-bd6e-71059a6e9222.png"
+                    src="/lovable-uploads/58f95d67-a157-412c-a285-e0f7f7ba625b.png"
                     alt="Ryan" 
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <h3 className="text-xl font-bold mb-1">Ryan Mitchell</h3>
+                <h3 className="text-xl font-bold mb-1">Ryan Fagan</h3>
                 <p className="text-collektiv-lightblue mb-3">Co-Founder</p>
                 <p className="text-gray-600">
                   As a seasoned sales and leadership professional with over 15 years of experience in Go-to-Market (GTM) strategies, Ryan has navigated multiple SaaS journeys, guiding companies from early stages to significant growth milestones. Notably, Ryan was part of a successful SaaS journey that culminated in a remarkable exit exceeding $700 million.

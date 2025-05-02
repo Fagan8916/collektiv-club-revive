@@ -9,75 +9,99 @@ const Insights = () => {
   const articles = [
     {
       id: 1,
-      title: "COLLEKTIV.CLUB Announces New Workshop Series",
+      title: "Lessons from 483 Investments: Insights from Angel Investing Legend Charlie",
       excerpt:
-        "Join us for our upcoming workshop series focused on professional development and networking strategies.",
-      content: "Extended content about the workshop series would go here...",
+        "Charlie O'Donnell, a seasoned angel investor with nearly 500 investments, shares his invaluable insights and principles that have guided his successful investment journey.",
+      content: "Extended content about angel investing would go here...",
       date: "April 15, 2025",
       author: "Admin",
-      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23dbeafe'/%3E%3Cpath d='M0 0h800v400H0z' fill='%232563eb' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%231e3a8a' text-anchor='middle' dominant-baseline='middle'%3ECollektiv Workshop%3C/text%3E%3C/svg%3E",
-      slug: "new-workshop-series",
-      category: "Events",
+      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h800v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3EAngel Investment Lessons%3C/text%3E%3C/svg%3E",
+      slug: "lessons-from-483-investments",
+      category: "Angel Investing",
     },
     {
       id: 2,
-      title: "Member Spotlight: Success Stories from Our Community",
+      title: "SaaS Funding Agreements: Ups and Downs",
       excerpt:
-        "Read about the incredible achievements of our members and how the COLLEKTIV.CLUB community has supported their journey.",
-      content: "Extended content about member success stories would go here...",
+        "Understanding the complexities and trade-offs in SaaS funding agreements, including preferred share structures, participating preferred shares, and their implications for founders.",
+      content: "Extended content about SaaS funding agreements would go here...",
       date: "April 10, 2025",
       author: "Content Team",
-      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23dbeafe'/%3E%3Cpath d='M0 0h800v400H0z' fill='%232563eb' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%231e3a8a' text-anchor='middle' dominant-baseline='middle'%3EMember Success%3C/text%3E%3C/svg%3E",
-      slug: "member-spotlight",
-      category: "Member Stories",
+      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h800v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3ESaaS Funding%3C/text%3E%3C/svg%3E",
+      slug: "saas-funding-agreements",
+      category: "Funding",
     },
     {
       id: 3,
-      title: "Upcoming Networking Event in May",
+      title: "Unlock Success: Key Tips for Beginner Angel Investors",
       excerpt:
-        "Mark your calendars for our biggest networking event of the year, featuring guest speakers and opportunity to connect with industry leaders.",
-      content: "Extended content about the networking event would go here...",
+        "Essential guidance for new angel investors on portfolio strategy, due diligence, and the importance of both financial returns and personal fulfillment in early-stage investing.",
+      content: "Extended content about beginner angel investing would go here...",
       date: "April 5, 2025",
       author: "Events Team",
-      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23dbeafe'/%3E%3Cpath d='M0 0h800v400H0z' fill='%232563eb' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%231e3a8a' text-anchor='middle' dominant-baseline='middle'%3ENetworking Event%3C/text%3E%3C/svg%3E",
-      slug: "networking-event-may",
-      category: "Events",
+      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h800v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3EBeginner Angel Tips%3C/text%3E%3C/svg%3E",
+      slug: "tips-for-beginner-angel-investors",
+      category: "Angel Investing",
     },
     {
       id: 4,
-      title: "Industry Expert Interview: Leadership in 2025",
+      title: "EIS & SEIS: Tax-Efficient Investment Schemes",
       excerpt:
-        "We sat down with renowned leadership expert Dr. Jane Smith to discuss the future of leadership and management in today's evolving workplace.",
-      content: "Extended content about the interview would go here...",
+        "A comprehensive guide to the Enterprise Investment Scheme (EIS) and Seed Enterprise Investment Scheme (SEIS), their tax benefits, eligibility requirements, and investment limits.",
+      content: "Extended content about EIS and SEIS would go here...",
       date: "April 1, 2025",
       author: "Content Team",
-      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23dbeafe'/%3E%3Cpath d='M0 0h800v400H0z' fill='%232563eb' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%231e3a8a' text-anchor='middle' dominant-baseline='middle'%3EExpert Interview%3C/text%3E%3C/svg%3E",
-      slug: "leadership-interview",
-      category: "Interviews",
+      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h800v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3EEIS and SEIS%3C/text%3E%3C/svg%3E",
+      slug: "eis-seis-tax-schemes",
+      category: "Tax Relief",
     },
     {
       id: 5,
-      title: "New Resource Library Launch",
+      title: "Understanding Multiples in SaaS Valuations",
       excerpt:
-        "We're excited to announce the launch of our enhanced resource library, providing members with access to hundreds of new materials.",
-      content: "Extended content about the resource library would go here...",
+        "Exploring the concept of multiples in SaaS company valuations, how they're calculated, and their significance as a benchmark for comparing companies across different stages.",
+      content: "Extended content about multiples in SaaS valuations would go here...",
       date: "March 25, 2025",
       author: "Admin",
-      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23dbeafe'/%3E%3Cpath d='M0 0h800v400H0z' fill='%232563eb' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%231e3a8a' text-anchor='middle' dominant-baseline='middle'%3EResource Library%3C/text%3E%3C/svg%3E",
-      slug: "resource-library-launch",
-      category: "Resources",
+      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h800v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3EMultiples in SaaS%3C/text%3E%3C/svg%3E",
+      slug: "understanding-multiples",
+      category: "Valuation",
     },
     {
       id: 6,
-      title: "Community Spotlight: Volunteer Initiative",
+      title: "Top Metrics to Evaluate When Investing in SaaS Startups",
       excerpt:
-        "Learn about our community's recent volunteer efforts and how COLLEKTIV.CLUB members are making a difference.",
-      content: "Extended content about volunteer initiatives would go here...",
+        "Analyzing the crucial metrics investors should consider when evaluating SaaS companies, from Annual Recurring Revenue (ARR) to Customer Acquisition Cost (CAC) and Churn Rate.",
+      content: "Extended content about SaaS metrics would go here...",
       date: "March 20, 2025",
       author: "Community Manager",
-      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23dbeafe'/%3E%3Cpath d='M0 0h800v400H0z' fill='%232563eb' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%231e3a8a' text-anchor='middle' dominant-baseline='middle'%3EVolunteer Initiative%3C/text%3E%3C/svg%3E",
-      slug: "volunteer-initiative",
-      category: "Community",
+      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h800v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3ESaaS Metrics%3C/text%3E%3C/svg%3E",
+      slug: "saas-metrics-evaluation",
+      category: "Metrics",
+    },
+    {
+      id: 7,
+      title: "Valuations: The Art and Science of Startup Worth",
+      excerpt:
+        "An in-depth look at startup valuations, the methodologies used, and the factors that influence them, from revenue multiples to market conditions and investor sentiment.",
+      content: "Extended content about valuations would go here...",
+      date: "March 15, 2025",
+      author: "Finance Team",
+      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h800v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3EStartup Valuations%3C/text%3E%3C/svg%3E",
+      slug: "startup-valuations",
+      category: "Valuation",
+    },
+    {
+      id: 8,
+      title: "Understanding Angel Syndicates for SaaS Startups",
+      excerpt:
+        "A guide to angel syndicates, their structure, benefits, and considerations for both founders seeking funding and investors looking to participate in syndicated deals.",
+      content: "Extended content about angel syndicates would go here...",
+      date: "March 10, 2025",
+      author: "Investment Team",
+      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h800v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3EAngel Syndicates%3C/text%3E%3C/svg%3E",
+      slug: "angel-syndicates",
+      category: "Angel Investing",
     },
   ];
 
@@ -204,9 +228,6 @@ const Insights = () => {
                     </a>
                     <a href="#" className="px-4 py-2 border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50">
                       2
-                    </a>
-                    <a href="#" className="px-4 py-2 border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50">
-                      3
                     </a>
                     <a href="#" className="px-4 py-2 border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50">
                       Next
