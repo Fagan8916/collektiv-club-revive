@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import { Facebook, Instagram, Linkedin, Mail } from "lucide-react";
+import { Instagram, Linkedin, Mail } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -11,7 +11,7 @@ const Footer = () => {
           <div>
             <div className="mb-4">
               <img 
-                src="/public/lovable-uploads/a3fd0962-db0c-4a92-8c9a-96d807501887.png" 
+                src="/lovable-uploads/d2b32cb1-2010-4268-ad82-4e4c6bdf7e7f.png" 
                 alt="The Collektiv Club" 
                 className="h-12"
               />
@@ -21,9 +21,6 @@ const Footer = () => {
               connection, and collective success.
             </p>
             <div className="flex space-x-4">
-              <a href="https://www.facebook.com" className="text-green-100 hover:text-white transition-colors">
-                <Facebook size={20} />
-              </a>
               <a href="https://www.instagram.com/collektiv_club/?igsh=Y2liY2t5azM4MDFt" className="text-green-100 hover:text-white transition-colors">
                 <Instagram size={20} />
               </a>
@@ -54,6 +51,11 @@ const Footer = () => {
               <li>
                 <Link to="/insights" className="text-green-100 hover:text-white transition-colors">
                   Insights
+                </Link>
+              </li>
+              <li>
+                <Link to="/calculator" className="text-green-100 hover:text-white transition-colors">
+                  Calculator
                 </Link>
               </li>
               <li>
