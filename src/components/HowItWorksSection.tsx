@@ -20,7 +20,7 @@ const HowItWorksSection = () => {
       number: "3",
       title: "Meet the Founders",
       description: "Meet the founders in a video call, hear them pitch, ask questions and consider the investment",
-      image: "https://images.unsplash.com/photo-1565398305018-19de9b73fff8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1752&q=80"
+      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
     },
     {
       number: "4",
@@ -48,7 +48,7 @@ const HowItWorksSection = () => {
         <div className="text-center mb-16">
           <h2 className="section-title">How It Works</h2>
           <p className="section-subtitle">
-            Joining the Collektiv Club is simple. Here's how to become part of our community.
+            Joining the Collektiv Club is simple. Here's how to start investing and be part of our community.
           </p>
         </div>
 

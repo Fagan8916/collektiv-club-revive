@@ -23,20 +23,6 @@ const Contact = () => {
 
         {/* Contact Form Section */}
         <ContactSection />
-
-        {/* Map Section - Placeholder */}
-        <section className="section bg-white">
-          <div className="container">
-            <div className="bg-gray-100 rounded-xl h-96 flex items-center justify-center">
-              <div className="text-center">
-                <h3 className="text-xl font-bold text-collektiv-blue mb-2">Location Map</h3>
-                <p className="text-gray-600">
-                  Interactive map would be displayed here showing the office location.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
       <Footer />
     </div>

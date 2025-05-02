@@ -6,14 +6,6 @@ const ContactSection = () => {
   return (
     <section className="section bg-gray-50" id="contact">
       <div className="container">
-        <div className="text-center mb-16">
-          <h2 className="section-title">Get In Touch</h2>
-          <p className="section-subtitle">
-            Have questions about membership or want to learn more about the Collektiv Club?
-            We'd love to hear from you.
-          </p>
-        </div>
-
         <div className="max-w-4xl mx-auto">
           <div>
             <h3 className="text-2xl font-bold mb-6 text-collektiv-green">
