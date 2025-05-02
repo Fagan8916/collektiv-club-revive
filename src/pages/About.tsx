@@ -15,7 +15,7 @@ const About = () => {
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="text-4xl md:text-5xl font-bold mb-6 text-collektiv-blue">About The Collektiv Club</h1>
               <p className="text-xl text-gray-700">
-                Learn more about our mission, vision, and the community that makes us special.
+                With over 30 years of combined experience working with top organisations, we bring a deep understanding of market growth, strategic business development, and financial expertise. This experience gives us the insight to identify high-potential opportunities and the trusted network to access them early.
               </p>
             </div>
           </div>
@@ -28,9 +28,7 @@ const About = () => {
               <div>
                 <h2 className="text-3xl font-bold mb-6 text-collektiv-blue">Our Mission</h2>
                 <p className="text-gray-700 mb-6">
-                  The Collektiv Club was founded with a simple yet powerful mission: to create a 
-                  community where ambitious individuals can come together, share knowledge, 
-                  and support each other on their journey to success.
+                  Revolutionising tech investing through our commitment to sourcing great opportunities, low fees, high transparency, and continuous investor education.
                 </p>
                 <p className="text-gray-700">
                   We believe that when like-minded individuals collaborate and connect, 
@@ -42,9 +40,7 @@ const About = () => {
               <div className="bg-collektiv-blue/5 p-8 rounded-xl">
                 <h2 className="text-3xl font-bold mb-6 text-collektiv-blue">Our Vision</h2>
                 <p className="text-gray-700 mb-6">
-                  We envision a world where success is not defined by competition but by 
-                  collaboration. Where professionals from all walks of life can find their 
-                  tribe and thrive together.
+                  We believe investing in technology start-ups should be accessible to all investors, not just a select few. We set out to break down barriers and empower people.
                 </p>
                 <div className="space-y-3">
                   <div className="flex items-start">
@@ -80,7 +76,7 @@ const About = () => {
               <div className="bg-white p-6 rounded-lg shadow-md text-center">
                 <div className="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full">
                   <img 
-                    src="/public/lovable-uploads/540d3588-f37f-46c5-b02f-9f3a90db2559.png"
+                    src="/public/lovable-uploads/ee4627e1-0e02-4963-a56a-4d5df5163b91.png"
                     alt="Manon" 
                     className="w-full h-full object-cover"
                   />
@@ -88,14 +84,20 @@ const About = () => {
                 <h3 className="text-xl font-bold mb-1">Manon Delaigue</h3>
                 <p className="text-collektiv-lightblue mb-3">Co-Founder</p>
                 <p className="text-gray-600">
-                  Previously Deloitte Ventures, supporting growth strategies for technology startups and establishing strategic partnerships. MBA from Hult International Business School in San Francisco.
+                  Manon has a proven track record of identifying high-potential companies and successfully scaling their market presence and revenue from the ground up. She has held pivotal leadership roles at Orange, HP, Gartner, Workday, Watershed, and Peakon, where she played a key role in driving market expansion, revenue growth, and go-to-market strategies. At Peakon, she was instrumental in generating over $10 million in new business, solidifying her reputation as a high-impact growth strategist.
+                </p>
+                <p className="text-gray-600 mt-3">
+                  With deep expertise in go-to-market strategy, business development, and global expansion, Manon has helped numerous organisations unlock their full potential and achieve sustainable growth. Her ability to build and execute revenue strategies, identify market opportunities, and scale businesses across industries makes her a key player in driving startup success and market leadership.
+                </p>
+                <p className="text-gray-600 mt-3">
+                  Now, as a co-founder of Collektiv Club, Manon leverages her industry expertise and strategic vision to identify, support, and invest in the next generation of high-growth startups. She is passionate about backing visionary founders, accelerating early-stage companies, and providing hands-on guidance to drive long-term success.
                 </p>
               </div>
               
               <div className="bg-white p-6 rounded-lg shadow-md text-center">
                 <div className="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full">
                   <img 
-                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h200v200H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='16' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3ERyan%3C/text%3E%3C/svg%3E"
+                    src="/public/lovable-uploads/6629ab08-b875-4e1c-bd6e-71059a6e9222.png"
                     alt="Ryan" 
                     className="w-full h-full object-cover"
                   />
@@ -103,7 +105,13 @@ const About = () => {
                 <h3 className="text-xl font-bold mb-1">Ryan Mitchell</h3>
                 <p className="text-collektiv-lightblue mb-3">Co-Founder</p>
                 <p className="text-gray-600">
-                  Angel investor and advisor with 16+ years in the Cloud, DevOps, and Cyber Security sectors. Holds certifications in AWS, Microsoft Azure, and ITILv4. Previous CFO of UK private equity business.
+                  As a seasoned sales and leadership professional with over 15 years of experience in Go-to-Market (GTM) strategies, Ryan has navigated multiple SaaS journeys, guiding companies from early stages to significant growth milestones. Notably, Ryan was part of a successful SaaS journey that culminated in a remarkable exit exceeding $700 million.
+                </p>
+                <p className="text-gray-600 mt-3">
+                  Beyond operational roles, Ryan has also established a strong track record as an angel investor, backing numerous startups with strategic guidance and capital. This blend of operational expertise and investment acumen positions Ryan as a valuable partner for early-stage companies seeking to scale effectively.
+                </p>
+                <p className="text-gray-600 mt-3">
+                  With a deep understanding of what drives growth and success in the SaaS sector, Ryan brings a unique perspective to our angel syndicate, helping identify and support promising startups on their path to achieving scalable and sustainable growth.
                 </p>
               </div>
             </div>
@@ -120,33 +128,27 @@ const About = () => {
               </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                {
-                  title: "Transparency",
-                  description: "We maintain honest, open communication with investors, founders, and community members."
-                },
-                {
-                  title: "Accessibility",
-                  description: "We believe in lowering barriers to entry for quality investments."
-                },
-                {
-                  title: "Community",
-                  description: "We foster a supportive, engaged network of like-minded individuals."
-                },
-                {
-                  title: "Education",
-                  description: "We empower through knowledge-sharing and continuous learning."
-                }
-              ].map((value, i) => (
-                <div key={i} className="p-6 border border-gray-200 rounded-lg hover:border-collektiv-blue hover:shadow-md transition-all">
-                  <div className="w-12 h-12 bg-collektiv-blue/10 rounded-full flex items-center justify-center mb-4">
-                    <span className="text-collektiv-blue font-bold">{i + 1}</span>
-                  </div>
-                  <h3 className="text-xl font-bold mb-3 text-collektiv-blue">{value.title}</h3>
-                  <p className="text-gray-600">{value.description}</p>
-                </div>
-              ))}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="p-6 border border-gray-200 rounded-lg hover:border-collektiv-blue hover:shadow-md transition-all">
+                <h3 className="text-xl font-bold mb-3 text-collektiv-blue">United We Rise</h3>
+                <p className="text-gray-600">
+                  We believe in the power of collaboration, working closely with startups, investors, and industry experts to create mutually beneficial opportunities. By combining our strengths and expertise, we achieve greater success and drive innovation forward together.
+                </p>
+              </div>
+              
+              <div className="p-6 border border-gray-200 rounded-lg hover:border-collektiv-blue hover:shadow-md transition-all">
+                <h3 className="text-xl font-bold mb-3 text-collektiv-blue">Champion Changemakers</h3>
+                <p className="text-gray-600">
+                  We stand behind those who are making a positive impact through their work, providing them with the resources, support, and platform they need to drive meaningful change. By championing changemakers, we empower them to innovate, disrupt, and solve some of the world's most pressing challenges, creating a better future for all.
+                </p>
+              </div>
+              
+              <div className="p-6 border border-gray-200 rounded-lg hover:border-collektiv-blue hover:shadow-md transition-all">
+                <h3 className="text-xl font-bold mb-3 text-collektiv-blue">Data Drives Us</h3>
+                <p className="text-gray-600">
+                  We rely on data and analytics to inform our investment decisions, ensuring that our strategies are evidence-based and effective. We prioritise evidence-based decision-making over intuition alone.
+                </p>
+              </div>
             </div>
           </div>
         </section>

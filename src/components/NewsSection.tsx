@@ -3,11 +3,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Calendar, User, ArrowRight } from "lucide-react";
 
-const NewsSection = () => {
+const InsightsSection = () => {
   const articles = [
     {
       id: 1,
-      title: "the Collektiv Club Announces New Investment Opportunities",
+      title: "The Collektiv Club Announces New Investment Opportunities",
       excerpt:
         "Discover our latest curated investment opportunities focused on high-growth potential startups with EIS & SEIS benefits.",
       date: "April 15, 2025",
@@ -38,10 +38,10 @@ const NewsSection = () => {
   ];
 
   return (
-    <section className="section bg-white" id="news">
+    <section className="section bg-white" id="insights">
       <div className="container">
         <div className="text-center mb-16">
-          <h2 className="section-title">Latest News & Updates</h2>
+          <h2 className="section-title">Latest Insights & Updates</h2>
           <p className="section-subtitle">
             Stay informed about our latest events, member achievements, and community updates.
           </p>
@@ -73,7 +73,7 @@ const NewsSection = () => {
                   {article.excerpt}
                 </p>
                 <Link 
-                  to={`/news/${article.slug}`}
+                  to={`/insights/${article.slug}`}
                   className="inline-flex items-center text-collektiv-green font-medium hover:text-collektiv-lightgreen transition-colors"
                 >
                   Read More
@@ -85,8 +85,8 @@ const NewsSection = () => {
         </div>
 
         <div className="text-center mt-12">
-          <Link to="/news" className="btn-primary">
-            View All News
+          <Link to="/insights" className="btn-primary">
+            View All Insights
           </Link>
         </div>
       </div>
@@ -94,4 +94,4 @@ const NewsSection = () => {
   );
 };
 
-export default NewsSection;
+export default InsightsSection;

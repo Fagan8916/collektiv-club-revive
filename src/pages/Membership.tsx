@@ -5,8 +5,52 @@ import Footer from "@/components/Footer";
 import MembershipSection from "@/components/MembershipSection";
 import { Link } from "react-router-dom";
 import { Check, ArrowRight } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const Membership = () => {
+  const faqs = [
+    {
+      q: "How do I join the Collektiv Club?",
+      a: "Joining is easy! Simply click the 'Join Now' button, select your preferred membership plan, and complete the registration process. Once approved, you'll receive access to all member benefits based on your chosen plan."
+    },
+    {
+      q: "What are the investment fees?",
+      a: "Our fees vary by membership tier: VIP members pay 0% Investment fee, Premium members pay 4%, and Trial members pay 12.5%. There are no Annual Investment fees or Carry/Performance fees across all tiers."
+    },
+    {
+      q: "What is KYC and why is it included?",
+      a: "KYC (Know Your Customer) is a verification process required for financial investments. We include the £100 KYC cost in our VIP and Premium memberships to make the investment process smoother for our members."
+    },
+    {
+      q: "How do I access member-only content?",
+      a: "After joining, you'll receive login credentials to our member portal where you can access all digital resources, event information, and investment opportunities."
+    },
+    {
+      q: "Is there a minimum investment amount?",
+      a: "Yes, our minimum investment is £500 per deal. This allows more people to start investing in early-stage companies without requiring large sums of capital."
+    },
+    {
+      q: "What types of companies do you invest in?",
+      a: "We focus primarily on technology startups with strong growth potential, particularly those eligible for EIS and SEIS tax benefits. Our investment committee carefully vets all opportunities before presenting them to our members."
+    },
+    {
+      q: "How many investment opportunities will I see?",
+      a: "We present 6-12 investment opportunities per year. We believe in quality over quantity and thoroughly vet each opportunity before offering it to our members."
+    },
+    {
+      q: "What happens after I invest?",
+      a: "After investing, you'll receive formal documentation confirming your investment. You'll also get regular updates about the companies you've invested in through our investor portal."
+    },
+    {
+      q: "Do I need to be based in the UK to join?",
+      a: "No, we welcome members from around the world. However, some investment opportunities may have geographic restrictions, and tax benefits like EIS/SEIS are only available to UK taxpayers."
+    },
+    {
+      q: "What support do I get as a member?",
+      a: "All members receive access to our community platform, educational resources, and investment opportunities. Premium and VIP members get additional benefits including access to our Founder and Member Slack Community and priority access to certain deals."
+    }
+  ];
+
   return (
     <div className="min-h-screen">
       <Header />
@@ -39,13 +83,40 @@ const Membership = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-12">
               <div>
                 <img 
-                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h600v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3ENetworking Events%3C/text%3E%3C/svg%3E" 
-                  alt="Networking Events" 
+                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h600v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3EInvestment Opportunities%3C/text%3E%3C/svg%3E" 
+                  alt="Investment Opportunities" 
                   className="rounded-xl shadow-lg"
                 />
               </div>
               
               <div>
+                <h3 className="text-2xl font-bold mb-4 text-collektiv-green">Investment Opportunities</h3>
+                <p className="text-gray-700 mb-4">
+                  Gain access to curated investment opportunities and expert insights to help grow your portfolio.
+                </p>
+                <ul className="space-y-3">
+                  <li className="flex items-start">
+                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                    <span>Curated EIS & SEIS investment opportunities</span>
+                  </li>
+                  <li className="flex items-start">
+                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                    <span>Expert evaluation and due diligence</span>
+                  </li>
+                  <li className="flex items-start">
+                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                    <span>Preferential investment terms for members</span>
+                  </li>
+                  <li className="flex items-start">
+                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                    <span>Regular investment updates and portfolio tracking</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-12">
+              <div className="order-2 md:order-1">
                 <h3 className="text-2xl font-bold mb-4 text-collektiv-green">Exclusive Events & Networking</h3>
                 <p className="text-gray-700 mb-4">
                   Access members-only events, workshops, and networking opportunities 
@@ -70,38 +141,11 @@ const Membership = () => {
                   </li>
                 </ul>
               </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-12">
-              <div className="order-2 md:order-1">
-                <h3 className="text-2xl font-bold mb-4 text-collektiv-green">Investment Opportunities</h3>
-                <p className="text-gray-700 mb-4">
-                  Gain access to curated investment opportunities and expert insights to help grow your portfolio.
-                </p>
-                <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Curated EIS & SEIS investment opportunities</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Expert evaluation and due diligence</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Preferential investment terms for members</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Regular investment updates and portfolio tracking</span>
-                  </li>
-                </ul>
-              </div>
               
               <div className="order-1 md:order-2">
                 <img 
-                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h600v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3EInvestment Opportunities%3C/text%3E%3C/svg%3E" 
-                  alt="Investment Opportunities" 
+                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h600v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3ENetworking Events%3C/text%3E%3C/svg%3E" 
+                  alt="Networking Events" 
                   className="rounded-xl shadow-lg"
                 />
               </div>
@@ -120,29 +164,18 @@ const Membership = () => {
             </div>
 
             <div className="max-w-3xl mx-auto">
-              {[
-                {
-                  q: "How do I join the Collektiv Club?",
-                  a: "Joining is easy! Simply click the 'Join Now' button, select your preferred membership plan, and complete the registration process. Once approved, you'll receive access to all member benefits based on your chosen plan."
-                },
-                {
-                  q: "What are the investment fees?",
-                  a: "Our fees vary by membership tier: VIP members pay 0% Investment fee, Premium members pay 4%, and Trial members pay 12.5%. There are no Annual Investment fees or Carry/Performance fees across all tiers."
-                },
-                {
-                  q: "What is KYC and why is it included?",
-                  a: "KYC (Know Your Customer) is a verification process required for financial investments. We include the £100 KYC cost in our VIP and Premium memberships to make the investment process smoother for our members."
-                },
-                {
-                  q: "How do I access member-only content?",
-                  a: "After joining, you'll receive login credentials to our member portal where you can access all digital resources, event information, and investment opportunities."
-                },
-              ].map((item, i) => (
-                <div key={i} className="mb-6 bg-white p-6 rounded-lg shadow-sm">
-                  <h3 className="text-xl font-bold mb-3 text-collektiv-green">{item.q}</h3>
-                  <p className="text-gray-600">{item.a}</p>
-                </div>
-              ))}
+              <Accordion type="single" collapsible className="w-full">
+                {faqs.map((faq, index) => (
+                  <AccordionItem key={index} value={`item-${index}`}>
+                    <AccordionTrigger className="text-xl font-bold text-collektiv-green text-left">
+                      {faq.q}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-gray-600">
+                      {faq.a}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
             </div>
 
             <div className="text-center mt-12">

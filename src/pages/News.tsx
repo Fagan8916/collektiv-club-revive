@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
 import { Calendar, User, ArrowRight, Search } from "lucide-react";
 
-const News = () => {
+const Insights = () => {
   const articles = [
     {
       id: 1,
@@ -91,7 +91,7 @@ const News = () => {
         <section className="pt-32 pb-16 bg-gradient-to-r from-blue-50 to-white">
           <div className="container">
             <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-collektiv-blue">News & Updates</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-collektiv-blue">Insights & Updates</h1>
               <p className="text-xl text-gray-700 mb-8">
                 Stay informed with the latest news, events, and stories from our community.
               </p>
@@ -182,7 +182,7 @@ const News = () => {
                           {article.excerpt}
                         </p>
                         <Link 
-                          to={`/news/${article.slug}`}
+                          to={`/insights/${article.slug}`}
                           className="inline-flex items-center text-collektiv-blue font-medium hover:text-collektiv-lightblue transition-colors"
                         >
                           Read More
@@ -223,4 +223,4 @@ const News = () => {
   );
 };
 
-export default News;
+export default Insights;
