@@ -11,7 +11,7 @@ const Footer = () => {
           <div>
             <div className="mb-4">
               <img 
-                src="/lovable-uploads/f441bcee-cca9-44b3-a318-0f6c0672b942.png" 
+                src="/lovable-uploads/3468aaff-30a6-4edb-b803-6dd7c381b2a5.png" 
                 alt="The Collektiv Club" 
                 className="h-12"
               />
@@ -80,7 +80,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/join" className="text-green-100 hover:text-white transition-colors">
+                <Link to="/membership" className="text-green-100 hover:text-white transition-colors">
                   Join Now
                 </Link>
               </li>

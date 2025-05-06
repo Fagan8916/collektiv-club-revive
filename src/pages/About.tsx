@@ -97,7 +97,7 @@ const About = () => {
               <div className="bg-white p-6 rounded-lg shadow-md text-center">
                 <div className="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full">
                   <img 
-                    src="/lovable-uploads/f441bcee-cca9-44b3-a318-0f6c0672b942.png"
+                    src="/lovable-uploads/03149ce6-7c37-433a-b8b6-422cfba27eca.png"
                     alt="Ryan Fagan" 
                     className="w-full h-full object-cover"
                   />
