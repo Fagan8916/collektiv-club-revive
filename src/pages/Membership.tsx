@@ -54,7 +54,7 @@ const Membership = () => {
     },
     {
       q: "How do these fees compare to other similar groups?",
-      a: "Collektiv offers highly competitive fees compared to traditional angel syndicates. While traditional syndicates typically charge 2-15% investment fees, we charge only 0-12.5% depending on your membership tier. For performance/carry fees, syndicates typically charge 20%, while we charge 0%. Annual investment fees for syndicates range from 0-10%, while ours are always 0%. Regarding membership costs, our fees cap at £985 per annum, while syndicate memberships can run up to £10,000 per annum. Don't take our word for it, <a href=\"https://www.perplexity.ai/search/give-me-a-breakdown-of-the-ave-NluXPHO.Tmm2zFG_DM8jaw#0\" target=\"_blank\" rel=\"noopener noreferrer\" className=\"text-collektiv-blue hover:underline\">ask Perplexity about typical fees</a>."
+      a: "Collektiv offers highly competitive fees compared to traditional angel syndicates. While traditional syndicates typically charge 2-15% investment fees, we charge only 0-12.5% depending on your membership tier. For performance/carry fees, syndicates typically charge 20%, while we charge 0%. Annual investment fees for syndicates range from 0-10%, while ours are always 0%. Regarding membership costs, our fees cap at £985 per annum, while syndicate memberships can run up to £10,000 per annum. <a href=\"https://www.perplexity.ai/search/give-me-a-breakdown-of-the-ave-NluXPHO.Tmm2zFG_DM8jaw#0\" target=\"_blank\" rel=\"noopener noreferrer\" className=\"text-collektiv-blue hover:underline\">Don't take our word for it, ask Perplexity about typical fees</a>."
     },
     {
       q: "How many investment opportunities will I see?",
