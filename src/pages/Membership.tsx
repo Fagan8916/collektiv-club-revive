@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -201,8 +200,7 @@ const Membership = () => {
                     <AccordionTrigger className="text-xl font-bold text-collektiv-green text-left">
                       {faq.q}
                     </AccordionTrigger>
-                    <AccordionContent className="text-gray-600" dangerouslySetInnerHTML={{ __html: faq.a }}>
-                    </AccordionContent>
+                    <AccordionContent dangerouslySetInnerHTML={{ __html: faq.a }} />
                   </AccordionItem>
                 ))}
               </Accordion>
