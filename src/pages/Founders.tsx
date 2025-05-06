@@ -1,4 +1,3 @@
-
 import React from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -266,6 +265,15 @@ const Founders = () => {
                   </h3>
                   <p className="text-gray-600">
                     Beyond capital, we provide strategic guidance, connections to potential customers and partners, help with future fundraising, and access to our network of industry experts.
+                  </p>
+                </div>
+                
+                <div className="bg-white rounded-lg shadow p-6">
+                  <h3 className="text-lg font-bold mb-2 text-gray-800">
+                    Do you charge to pitch?
+                  </h3>
+                  <p className="text-gray-600">
+                    No, we do not charge an upfront fee to pitch to our members however, we do charge a success fee of 8% of the total funds raised to support our operational costs, including SPV creation.
                   </p>
                 </div>
               </div>

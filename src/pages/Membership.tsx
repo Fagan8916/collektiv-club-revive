@@ -61,10 +61,6 @@ const Membership = () => {
       a: "We present 6-12 investment opportunities per year. We believe in quality over quantity and thoroughly vet each opportunity before offering it to our members."
     },
     {
-      q: "Do you charge to pitch?",
-      a: "No, we do not charge an upfront fee to pitch to our members however, we do charge a success fee of 8% of the total funds raised to support our operational costs, including SPV creation."
-    },
-    {
       q: "What happens after I invest?",
       a: "After investing, you'll receive formal documentation confirming your investment. You'll also get regular updates about the companies you've invested in through our investor portal."
     },
@@ -175,7 +171,7 @@ const Membership = () => {
               
               <div className="order-1 md:order-2">
                 <img 
-                  src="https://images.unsplash.com/photo-1540304453527-62f9d01a6c28?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" 
+                  src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" 
                   alt="Networking Events" 
                   className="rounded-xl shadow-lg h-64 w-full object-cover"
                 />

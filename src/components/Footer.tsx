@@ -4,6 +4,14 @@ import { Link } from "react-router-dom";
 import { Instagram, Linkedin, Mail } from "lucide-react";
 
 const Footer = () => {
+  // Function to scroll to top when navigating through Link component
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  };
+
   return (
     <footer className="bg-collektiv-green text-white pt-16 pb-6">
       <div className="container">
@@ -34,32 +42,32 @@ const Footer = () => {
             <h3 className="text-xl font-bold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="text-green-100 hover:text-white transition-colors">
+                <Link to="/" onClick={scrollToTop} className="text-green-100 hover:text-white transition-colors">
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-green-100 hover:text-white transition-colors">
+                <Link to="/about" onClick={scrollToTop} className="text-green-100 hover:text-white transition-colors">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link to="/membership" className="text-green-100 hover:text-white transition-colors">
+                <Link to="/membership" onClick={scrollToTop} className="text-green-100 hover:text-white transition-colors">
                   Membership
                 </Link>
               </li>
               <li>
-                <Link to="/insights" className="text-green-100 hover:text-white transition-colors">
+                <Link to="/insights" onClick={scrollToTop} className="text-green-100 hover:text-white transition-colors">
                   Insights
                 </Link>
               </li>
               <li>
-                <Link to="/calculator" className="text-green-100 hover:text-white transition-colors">
+                <Link to="/calculator" onClick={scrollToTop} className="text-green-100 hover:text-white transition-colors">
                   Investment Calculator
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-green-100 hover:text-white transition-colors">
+                <Link to="/contact" onClick={scrollToTop} className="text-green-100 hover:text-white transition-colors">
                   Contact
                 </Link>
               </li>
@@ -70,22 +78,22 @@ const Footer = () => {
             <h3 className="text-xl font-bold mb-4">Membership</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/membership#why-join-the-collektiv-club" className="text-green-100 hover:text-white transition-colors">
+                <Link to="/membership#why-join-the-collektiv-club" onClick={() => setTimeout(scrollToTop, 100)} className="text-green-100 hover:text-white transition-colors">
                   Benefits
                 </Link>
               </li>
               <li>
-                <Link to="/membership#membership" className="text-green-100 hover:text-white transition-colors">
+                <Link to="/membership#membership" onClick={() => setTimeout(scrollToTop, 100)} className="text-green-100 hover:text-white transition-colors">
                   Pricing
                 </Link>
               </li>
               <li>
-                <Link to="/membership" className="text-green-100 hover:text-white transition-colors">
+                <Link to="/membership" onClick={scrollToTop} className="text-green-100 hover:text-white transition-colors">
                   Join Now
                 </Link>
               </li>
               <li>
-                <Link to="/membership#faq" className="text-green-100 hover:text-white transition-colors">
+                <Link to="/membership#faq" onClick={() => setTimeout(scrollToTop, 100)} className="text-green-100 hover:text-white transition-colors">
                   FAQ
                 </Link>
               </li>
@@ -111,16 +119,16 @@ const Footer = () => {
               &copy; {new Date().getFullYear()} Collektiv Ltd. All rights reserved.
             </p>
             <div className="flex space-x-4">
-              <Link to="/privacy" className="text-green-100 hover:text-white text-sm transition-colors">
+              <Link to="/privacy" onClick={scrollToTop} className="text-green-100 hover:text-white text-sm transition-colors">
                 Privacy Policy
               </Link>
-              <Link to="/terms" className="text-green-100 hover:text-white text-sm transition-colors">
+              <Link to="/terms" onClick={scrollToTop} className="text-green-100 hover:text-white text-sm transition-colors">
                 Terms of Service
               </Link>
             </div>
           </div>
           <div className="mt-4 text-xs text-green-200">
-            Investing in early-stage businesses involves significant risks, including illiquidity, lack of dividends, loss of investment, and dilution. These opportunities are intended exclusively for high-net-worth individuals and sophisticated investors who understand these risks (<Link to="/hnwi-si" className="underline">See here for more details</Link>). Capital is at risk. Please seek independent financial advice if you are unsure about investing
+            Investing in early-stage businesses involves significant risks, including illiquidity, lack of dividends, loss of investment, and dilution. These opportunities are intended exclusively for high-net-worth individuals and sophisticated investors who understand these risks (<Link to="/hnwi-si" onClick={scrollToTop} className="underline">See here for more details</Link>). Capital is at risk. Please seek independent financial advice if you are unsure about investing
           </div>
         </div>
       </div>
