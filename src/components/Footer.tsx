@@ -11,7 +11,7 @@ const Footer = () => {
           <div>
             <div className="mb-4">
               <img 
-                src="/lovable-uploads/d2b32cb1-2010-4268-ad82-4e4c6bdf7e7f.png" 
+                src="/lovable-uploads/f441bcee-cca9-44b3-a318-0f6c0672b942.png" 
                 alt="The Collektiv Club" 
                 className="h-12"
               />
@@ -55,7 +55,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link to="/calculator" className="text-green-100 hover:text-white transition-colors">
-                  Calculator
+                  Investment Calculator
                 </Link>
               </li>
               <li>

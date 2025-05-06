@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Calendar, User, ArrowRight } from "lucide-react";
 
-const InsightsSection = () => {
+const NewsSection = () => {
   const articles = [
     {
       id: 1,
@@ -12,7 +12,7 @@ const InsightsSection = () => {
         "Charlie O'Donnell, a seasoned angel investor with nearly 500 investments, shares his invaluable insights and principles that have guided his successful investment journey.",
       date: "April 15, 2025",
       author: "Admin",
-      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h800v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3EAngel Investment Lessons%3C/text%3E%3C/svg%3E",
+      image: "https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       slug: "lessons-from-483-investments",
     },
     {
@@ -22,7 +22,7 @@ const InsightsSection = () => {
         "Understanding the complexities and trade-offs in SaaS funding agreements, including preferred share structures, participating preferred shares, and their implications for founders.",
       date: "April 10, 2025",
       author: "Content Team",
-      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h800v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3ESaaS Funding%3C/text%3E%3C/svg%3E",
+      image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       slug: "saas-funding-agreements",
     },
     {
@@ -32,7 +32,7 @@ const InsightsSection = () => {
         "Essential guidance for new angel investors on portfolio strategy, due diligence, and the importance of both financial returns and personal fulfillment in early-stage investing.",
       date: "April 5, 2025",
       author: "Events Team",
-      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h800v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3EBeginner Angel Tips%3C/text%3E%3C/svg%3E",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       slug: "tips-for-beginner-angel-investors",
     },
   ];
@@ -94,4 +94,4 @@ const InsightsSection = () => {
   );
 };
 
-export default InsightsSection;
+export default NewsSection;

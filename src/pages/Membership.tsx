@@ -1,13 +1,28 @@
 
-import React from "react";
+import React, { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MembershipSection from "@/components/MembershipSection";
 import { Link } from "react-router-dom";
 import { Check, ArrowRight } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { toast } from "@/components/ui/use-toast";
 
 const Membership = () => {
+  const [email, setEmail] = useState("");
+  
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    // In a real implementation, you'd send this to your backend
+    console.log("Subscribing email:", email);
+    toast({
+      title: "Thank you for subscribing to our newsletter",
+      description: "Please add Info@collektiv.club to your contacts",
+      duration: 5000,
+    });
+    setEmail("");
+  };
+  
   const faqs = [
     {
       q: "How do I join the Collektiv Club?",
@@ -83,7 +98,7 @@ const Membership = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-12">
               <div>
                 <img 
-                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h600v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3EInvestment Opportunities%3C/text%3E%3C/svg%3E" 
+                  src="https://images.unsplash.com/photo-1579226905180-636b76d96082?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
                   alt="Investment Opportunities" 
                   className="rounded-xl shadow-lg"
                 />
@@ -101,7 +116,11 @@ const Membership = () => {
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Expert evaluation and due diligence</span>
+                    <span>Expert evaluation and vetting process</span>
+                  </li>
+                  <li className="flex items-start">
+                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                    <span>You're in full control, you decide what to invest in</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
@@ -117,7 +136,7 @@ const Membership = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-12">
               <div className="order-2 md:order-1">
-                <h3 className="text-2xl font-bold mb-4 text-collektiv-green">Exclusive Events & Networking</h3>
+                <h3 className="text-2xl font-bold mb-4 text-collektiv-green">Exclusive Insights, Events & Networking</h3>
                 <p className="text-gray-700 mb-4">
                   Access members-only events, workshops, and networking opportunities 
                   designed to help you connect with industry leaders and like-minded professionals.
@@ -125,15 +144,15 @@ const Membership = () => {
                 <ul className="space-y-3">
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Monthly networking mixers</span>
+                    <span>Monthly insights newsletter</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Quarterly professional development workshops</span>
+                    <span>Quarterly network events</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Annual member conference</span>
+                    <span>In person pitch days</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
@@ -144,7 +163,7 @@ const Membership = () => {
               
               <div className="order-1 md:order-2">
                 <img 
-                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h600v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3ENetworking Events%3C/text%3E%3C/svg%3E" 
+                  src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
                   alt="Networking Events" 
                   className="rounded-xl shadow-lg"
                 />

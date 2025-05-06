@@ -28,7 +28,7 @@ const About = () => {
               <div>
                 <h2 className="text-3xl font-bold mb-6 text-collektiv-blue">Our Mission</h2>
                 <p className="text-gray-700 mb-6">
-                  Revolutionising tech investing through our commitment to sourcing great opportunities, low fees, high transparency, and continuous investor education.
+                  To empower individuals to invest together in high-potential tech startups by sourcing vetted opportunities, keeping fees low, providing clear information, and supporting continuous investor learning.
                 </p>
                 <p className="text-gray-700">
                   We believe that when like-minded individuals collaborate and connect, 
@@ -77,7 +77,7 @@ const About = () => {
                 <div className="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full">
                   <img 
                     src="/lovable-uploads/ee4627e1-0e02-4963-a56a-4d5df5163b91.png"
-                    alt="Manon" 
+                    alt="Manon Ligato" 
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -97,8 +97,8 @@ const About = () => {
               <div className="bg-white p-6 rounded-lg shadow-md text-center">
                 <div className="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full">
                   <img 
-                    src="/lovable-uploads/58f95d67-a157-412c-a285-e0f7f7ba625b.png"
-                    alt="Ryan" 
+                    src="/lovable-uploads/f441bcee-cca9-44b3-a318-0f6c0672b942.png"
+                    alt="Ryan Fagan" 
                     className="w-full h-full object-cover"
                   />
                 </div>

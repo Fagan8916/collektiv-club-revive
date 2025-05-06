@@ -1,11 +1,26 @@
 
-import React from "react";
+import React, { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
 import { Calendar, User, ArrowRight, Search } from "lucide-react";
+import { toast } from "@/components/ui/use-toast";
 
 const Insights = () => {
+  const [email, setEmail] = useState("");
+  
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    // In a real implementation, you'd send this to your backend
+    console.log("Subscribing email:", email, "to be sent to info@collektiv.club");
+    toast({
+      title: "Thank you for subscribing to our newsletter",
+      description: "Please add Info@collektiv.club to your contacts",
+      duration: 5000,
+    });
+    setEmail("");
+  };
+  
   const articles = [
     {
       id: 1,
@@ -15,7 +30,7 @@ const Insights = () => {
       content: "Extended content about angel investing would go here...",
       date: "April 15, 2025",
       author: "Admin",
-      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h800v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3EAngel Investment Lessons%3C/text%3E%3C/svg%3E",
+      image: "https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       slug: "lessons-from-483-investments",
       category: "Angel Investing",
     },
@@ -27,7 +42,7 @@ const Insights = () => {
       content: "Extended content about SaaS funding agreements would go here...",
       date: "April 10, 2025",
       author: "Content Team",
-      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h800v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3ESaaS Funding%3C/text%3E%3C/svg%3E",
+      image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       slug: "saas-funding-agreements",
       category: "Funding",
     },
@@ -39,7 +54,7 @@ const Insights = () => {
       content: "Extended content about beginner angel investing would go here...",
       date: "April 5, 2025",
       author: "Events Team",
-      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h800v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3EBeginner Angel Tips%3C/text%3E%3C/svg%3E",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       slug: "tips-for-beginner-angel-investors",
       category: "Angel Investing",
     },
@@ -51,7 +66,7 @@ const Insights = () => {
       content: "Extended content about EIS and SEIS would go here...",
       date: "April 1, 2025",
       author: "Content Team",
-      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h800v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3EEIS and SEIS%3C/text%3E%3C/svg%3E",
+      image: "https://images.unsplash.com/photo-1586486942328-8d6f740b8262?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       slug: "eis-seis-tax-schemes",
       category: "Tax Relief",
     },
@@ -63,7 +78,7 @@ const Insights = () => {
       content: "Extended content about multiples in SaaS valuations would go here...",
       date: "March 25, 2025",
       author: "Admin",
-      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h800v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3EMultiples in SaaS%3C/text%3E%3C/svg%3E",
+      image: "https://images.unsplash.com/photo-1543286386-713bdd548da4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       slug: "understanding-multiples",
       category: "Valuation",
     },
@@ -75,7 +90,7 @@ const Insights = () => {
       content: "Extended content about SaaS metrics would go here...",
       date: "March 20, 2025",
       author: "Community Manager",
-      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h800v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3ESaaS Metrics%3C/text%3E%3C/svg%3E",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       slug: "saas-metrics-evaluation",
       category: "Metrics",
     },
@@ -87,7 +102,7 @@ const Insights = () => {
       content: "Extended content about valuations would go here...",
       date: "March 15, 2025",
       author: "Finance Team",
-      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h800v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3EStartup Valuations%3C/text%3E%3C/svg%3E",
+      image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       slug: "startup-valuations",
       category: "Valuation",
     },
@@ -99,7 +114,7 @@ const Insights = () => {
       content: "Extended content about angel syndicates would go here...",
       date: "March 10, 2025",
       author: "Investment Team",
-      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23E3FBF8'/%3E%3Cpath d='M0 0h800v400H0z' fill='%2300815D' fill-opacity='.2'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='24' fill='%2300815D' text-anchor='middle' dominant-baseline='middle'%3EAngel Syndicates%3C/text%3E%3C/svg%3E",
+      image: "https://images.unsplash.com/photo-1559526324-593bc073d938?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       slug: "angel-syndicates",
       category: "Angel Investing",
     },
@@ -158,18 +173,26 @@ const Insights = () => {
                 </div>
 
                 <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
-                  <h3 className="text-xl font-bold mb-4 text-collektiv-blue">Subscribe</h3>
+                  <h3 className="text-xl font-bold mb-4 text-collektiv-blue">Subscribe to the newsletter</h3>
                   <p className="text-gray-600 mb-4">
                     Get the latest updates delivered directly to your inbox.
                   </p>
-                  <input
-                    type="email"
-                    placeholder="Your email address"
-                    className="w-full px-4 py-2 mb-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-collektiv-blue"
-                  />
-                  <button className="w-full bg-collektiv-blue text-white px-4 py-2 rounded-md hover:bg-collektiv-lightblue transition-colors">
-                    Subscribe
-                  </button>
+                  <form onSubmit={handleSubscribe}>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Your email address"
+                      required
+                      className="w-full px-4 py-2 mb-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-collektiv-blue"
+                    />
+                    <button 
+                      type="submit"
+                      className="w-full bg-collektiv-green text-white px-4 py-2 rounded-md hover:bg-collektiv-lightgreen transition-colors font-bold"
+                    >
+                      Subscribe
+                    </button>
+                  </form>
                 </div>
               </div>
 

@@ -13,7 +13,7 @@ const HeroSection = () => {
         <div className="max-w-3xl mx-auto text-center">
           <div className="flex justify-center mb-6">
             <img 
-              src="/public/lovable-uploads/d7216f53-dbaf-46e5-a9ae-e407297c311d.png" 
+              src="/lovable-uploads/d7216f53-dbaf-46e5-a9ae-e407297c311d.png" 
               alt="the Collektiv Club" 
               className="h-24 md:h-32 animate-fade-in" 
             />
@@ -24,12 +24,12 @@ const HeroSection = () => {
           <div className="mb-8">
             <h4 className="text-lg md:text-xl font-semibold mb-3 text-collektiv-green">Our Mission</h4>
             <p className="text-lg md:text-xl text-gray-700 mb-6">
-              Revolutionising tech investing through our commitment to sourcing great opportunities, low fees, high transparency, and continuous investor education
+              To empower individuals to invest together in high-potential tech startups by sourcing vetted opportunities, keeping fees low, providing clear information, and supporting continuous investor learning.
             </p>
           </div>
           
           <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
-            <Link to="/join" className="btn-primary flex items-center">
+            <Link to="/membership" className="btn-primary flex items-center">
               Become a Member
               <ArrowRight size={18} className="ml-2" />
             </Link>
