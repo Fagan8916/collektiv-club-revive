@@ -19,78 +19,110 @@ const Terms = () => {
         <section className="section bg-white">
           <div className="container">
             <div className="max-w-4xl mx-auto prose prose-lg">
-              <h2>Terms of Service for The Collektiv Club</h2>
+              <h2 className="font-bold">Terms and Conditions of Service</h2>
               
-              <p>Last updated: 14 February 2023</p>
-              
-              <h3>Introduction</h3>
-              <p>These terms and conditions outline the rules and regulations for the use of The Collektiv Club's Website, located at www.collektiv.club.</p>
-              <p>By accessing this website we assume you accept these terms and conditions. Do not continue to use The Collektiv Club if you do not agree to take all of the terms and conditions stated on this page.</p>
-              
-              <h3>Interpretation and Definitions</h3>
-              <p><strong>Interpretation</strong><br />
-              The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.</p>
-              
-              <p><strong>Definitions</strong><br />
-              For the purposes of these Terms and Conditions:</p>
+              <p>Last Updated: February 1st, 2023</p>
+
+              <p>The following Terms and Conditions of Service ("Terms") constitute a legal agreement between you and Collektiv Club ltd established under the laws of England and Wales ("Collektiv", "we", "us", "our"). These Terms govern your use of our website available at <a href="http://www.collektiv.club" className="text-collektiv-green">www.collektiv.club</a> ("Website") and our proprietary platform available through it, including related applications, mobile applications, documentation, forums, functionalities, information and other services (collectively the "Platform").</p>
+
+              <p>Detailed information about Collektiv:</p>
               <ul>
-                <li><strong>"Company"</strong> (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to The Collektiv Club.</li>
-                <li><strong>"Device"</strong> means any device that can access the Website such as a computer, a cellphone or a digital tablet.</li>
-                <li><strong>"Service"</strong> refers to the Website.</li>
-                <li><strong>"Website"</strong> refers to The Collektiv Club, accessible from www.collektiv.club</li>
-                <li><strong>"You"</strong> means the individual accessing or using the Website, or the company, or other legal entity on behalf of which such individual is accessing or using the Website, as applicable.</li>
+                <li>Company name: Collektiv Club ltd</li>
+                <li>Principal place of business: 20-22 Wenlock Road | London N1 7GU</li>
+                <li>Company Registration Number: 14624076</li>
+                <li>Email: <a href="mailto:info@collektiv.club" className="text-collektiv-green">info@collektiv.club</a></li>
               </ul>
-              
-              <h3>Acknowledgment</h3>
-              <p>These are the Terms and Conditions governing the use of this Website and the agreement that operates between You and the Company. These Terms and Conditions set out the rights and obligations of all users regarding the use of the Website.</p>
-              <p>Your access to and use of the Website is conditioned on Your acceptance of and compliance with these Terms and Conditions. These Terms and Conditions apply to all visitors, users and others who access or use the Website.</p>
-              <p>By accessing or using the Website You agree to be bound by these Terms and Conditions. If You disagree with any part of these Terms and Conditions then You may not access the Website.</p>
-              
-              <h3>Intellectual Property Rights</h3>
-              <p>Other than the content You own, under these Terms, the Company and/or its licensors own all the intellectual property rights and materials contained in this Website.</p>
-              <p>You are granted limited license only for purposes of viewing the material contained on this Website.</p>
-              
-              <h3>Restrictions</h3>
-              <p>You are specifically restricted from all of the following:</p>
-              <ul>
-                <li>Publishing any Website material in any other media;</li>
-                <li>Selling, sublicensing and/or otherwise commercializing any Website material;</li>
-                <li>Publicly performing and/or showing any Website material;</li>
-                <li>Using this Website in any way that is or may be damaging to this Website;</li>
-                <li>Using this Website in any way that impacts user access to this Website;</li>
-                <li>Using this Website contrary to applicable laws and regulations, or in any way may cause harm to the Website, or to any person or business entity;</li>
-                <li>Engaging in any data mining, data harvesting, data extracting or any other similar activity in relation to this Website;</li>
-                <li>Using this Website to engage in any advertising or marketing.</li>
-              </ul>
-              <p>Certain areas of this Website are restricted from being access by You and the Company may further restrict access by You to any areas of this Website, at any time, in absolute discretion. Any user ID and password you may have for this Website are confidential and you must maintain confidentiality as well.</p>
-              
-              <h3>Your Content</h3>
-              <p>In these Terms and Conditions, "Your Content" shall mean any audio, video text, images or other material you choose to display on this Website. By displaying Your Content, You grant the Company a non-exclusive, worldwide irrevocable, sub licensable license to use, reproduce, adapt, publish, translate and distribute it in any and all media.</p>
-              <p>Your Content must be your own and must not be invading any third-party's rights. The Company reserves the right to remove any of Your Content from this Website at any time without notice.</p>
-              
-              <h3>No warranties</h3>
-              <p>This Website is provided "as is," with all faults, and the Company express no representations or warranties, of any kind related to this Website or the materials contained on this Website. Also, nothing contained on this Website shall be interpreted as advising You.</p>
-              
-              <h3>Limitation of liability</h3>
-              <p>In no event shall the Company, nor any of its officers, directors and employees, shall be held liable for anything arising out of or in any way connected with your use of this Website whether such liability is under contract. The Company, including its officers, directors and employees shall not be held liable for any indirect, consequential or special liability arising out of or in any way related to your use of this Website.</p>
-              
-              <h3>Indemnification</h3>
-              <p>You hereby indemnify to the fullest extent the Company from and against any and/or all liabilities, costs, demands, causes of action, damages and expenses arising in any way related to your breach of any of the provisions of these Terms.</p>
-              
-              <h3>Severability</h3>
-              <p>If any provision of these Terms is found to be invalid under any applicable law, such provisions shall be deleted without affecting the remaining provisions herein.</p>
-              
-              <h3>Variation of Terms</h3>
-              <p>The Company is permitted to revise these Terms at any time as it sees fit, and by using this Website you are expected to review these Terms on a regular basis.</p>
-              
-              <h3>Assignment</h3>
-              <p>The Company is allowed to assign, transfer, and subcontract its rights and/or obligations under these Terms without any notification. However, you are not allowed to assign, transfer, or subcontract any of your rights and/or obligations under these Terms.</p>
-              
-              <h3>Entire Agreement</h3>
-              <p>These Terms constitute the entire agreement between the Company and you in relation to your use of this Website, and supersede all prior agreements and understandings.</p>
-              
-              <h3>Governing Law & Jurisdiction</h3>
-              <p>These Terms will be governed by and interpreted in accordance with the laws of the UK, and you submit to the non-exclusive jurisdiction of the state and federal courts located in UK for the resolution of any disputes.</p>
+
+              <p>BY ACCESSING OR USING THE PLATFORM, YOU ACKNOWLEDGE THAT YOU HAVE READ, UNDERSTOOD AND AGREE TO BE BOUND BY THESE TERMS. IF YOU DO NOT AGREE WITH THESE TERMS YOU ARE PROHIBITED FROM USING THE PLATFORM.</p>
+
+              <h3 className="font-bold">1. YOUR ELIGIBILITY</h3>
+              <p>By using our Platform and/or by agreeing to these Terms you warrant and represent that you:</p>
+              <ol className="list-decimal pl-6">
+                <li>Are at least 18 years of age. We do not permit those under 18 to use our Platform;</li>
+                <li>Have full legal capacity to enter into a legally binding agreement with us;</li>
+                <li>Are not legally barred from using our Platform under the laws of your country or the laws of any other relevant jurisdiction;</li>
+              </ol>
+
+              <h3 className="font-bold">2. OUR SERVICES</h3>
+              <p>The Platform enables you to efficiently track and manage early-stage investments.</p>
+              <p>You are not obligated to use our services and are free to use other services. These Terms, however, apply when you use our Platform.</p>
+              <p>To provide the Platform, we may engage various third-party vendors, suppliers, and subcontractors as appropriate from time to time. The selection of these third parties is at our discretion.</p>
+              <p>You understand and acknowledge that our Platform is a technical means of organizing investment opportunities and is not an investment advisor and our Platform materials do not constitute investment advice.</p>
+
+              <h3 className="font-bold">3. YOUR ACCOUNT</h3>
+              <p>To access our Platform, you need to register an account.</p>
+              <p>By registering an account, you agree to:</p>
+              <ol className="list-decimal pl-6">
+                <li>Provide accurate, current, and complete information during the registration process;</li>
+                <li>Update your information to keep it accurate, current, and complete;</li>
+                <li>Keep your password confidential;</li>
+                <li>Notify us immediately if you detect any security breach or unauthorized use of your account;</li>
+                <li>Accept responsibility for all activities that occur under your account;</li>
+                <li>Not impersonate any person or entity, not falsely state or misrepresent your affiliation with a person or entity, and not create any false identity on the Platform.</li>
+              </ol>
+              <p>We reserve the right to suspend or delete your account if any information provided proves to be inaccurate, false, or outdated.</p>
+
+              <h3 className="font-bold">4. PAYMENT TERMS</h3>
+              <p>The fees and other charges for using our Platform ("Fees") are described on our Website. Fees exclude VAT and other applicable taxes.</p>
+              <p>We may update our Fees at any time. We will notify you of any material changes at least 15 days before they become effective. Your continued use of the Platform after such notice constitutes your acceptance of the updated Fees.</p>
+              <p>Fees may be paid using our selected payment methods. By providing your payment details, you represent and warrant that you are legally authorized to use the selected payment method.</p>
+              <p>All Fees due are non-refundable unless otherwise stated in these Terms or required by law.</p>
+
+              <h3 className="font-bold">5. COMMUNICATIONS AND NOTICES</h3>
+              <p>You agree that we may send you notices and messages through the Platform, email, text message, or by posting notices on the Website. You consent to receive communications from us electronically and agree that all agreements, notices, disclosures, and other communications we provide to you electronically satisfy any legal requirement that such communications be in writing.</p>
+              <p>Our electronic communications to you are considered delivered when we send them. Your electronic communications to us are considered delivered when we receive them.</p>
+
+              <h3 className="font-bold">6. YOUR RESPONSIBILITIES</h3>
+              <p>When using our Platform, you agree to:</p>
+              <ol className="list-decimal pl-6">
+                <li>Take all reasonable precautions to prevent unauthorized access to our Platform;</li>
+                <li>Only use the Platform in accordance with these Terms and applicable laws;</li>
+                <li>Not misuse the Platform or use it for harmful, illegal, or unethical purposes.</li>
+              </ol>
+
+              <h3 className="font-bold">7. COMPLIANCE WITH REGULATORY LAWS</h3>
+              <p>You must comply with all applicable laws, regulations, and rules concerning your use of the Platform. We may require additional documentation or verification of your identity, source of funds, or other information in order to comply with applicable laws. You agree to promptly provide such information upon our request.</p>
+
+              <h3 className="font-bold">8. WARRANTIES AND LIMITATION OF LIABILITY</h3>
+              <p>The Platform is provided on an "as is" and "as available" basis. We do not warrant that the Platform will be uninterrupted, secure, or error-free. To the maximum extent permitted by law, we disclaim all warranties, express or implied, including implied warranties of merchantability, fitness for a particular purpose, and non-infringement.</p>
+              <p>We shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenue, whether incurred directly or indirectly, or any loss of data, use, goodwill, or other intangible losses, resulting from (a) your use or inability to use the Platform; (b) any unauthorized access to or use of our servers and/or any personal information stored therein; or (c) any interruption or cessation of transmission to or from the Platform.</p>
+              <p>Our total liability for any claims related to these Terms shall not exceed the amount you have paid us in the 3 months preceding the claim.</p>
+
+              <h3 className="font-bold">9. INTELLECTUAL PROPERTY RIGHTS</h3>
+              <p>We own all intellectual property rights in the Platform. These Terms do not grant you any right, title, or interest in or to any intellectual property rights in the Platform. You may not reproduce, modify, or create derivative works based on the Platform or any part thereof without our prior written consent.</p>
+
+              <h3 className="font-bold">10. TERMINATION</h3>
+              <p>We may suspend or terminate your access to the Platform at any time, with or without cause, and with or without notice.</p>
+              <p>You may terminate your account at any time by following the instructions on the Platform or by contacting us.</p>
+              <p>Upon termination:</p>
+              <ol className="list-decimal pl-6">
+                <li>Your right to use the Platform will immediately cease;</li>
+                <li>We may delete your account and all associated data;</li>
+                <li>Provisions of these Terms that, by their nature, should survive termination shall survive termination, including, without limitation, ownership provisions, warranty disclaimers, indemnity, and limitations of liability.</li>
+              </ol>
+
+              <h3 className="font-bold">11. CONFIDENTIALITY</h3>
+              <p>You agree to keep confidential any non-public information about the Platform and other users that you obtain through the Platform.</p>
+
+              <h3 className="font-bold">12. PRIVACY</h3>
+              <p>Our Privacy Policy describes how we collect, use, and disclose information about you. By using the Platform, you agree to our collection, use, and disclosure of information as described in our Privacy Policy.</p>
+
+              <h3 className="font-bold">13. GOVERNING LAW AND DISPUTE RESOLUTION</h3>
+              <p>These Terms shall be governed by and construed in accordance with the laws of England and Wales.</p>
+              <p>Any dispute arising out of or in connection with these Terms shall be subject to the exclusive jurisdiction of the courts of England and Wales.</p>
+
+              <h3 className="font-bold">14. CHANGES TO THESE TERMS</h3>
+              <p>We may modify these Terms at any time at our sole discretion. If we make material changes to these Terms, we will provide you with notice as appropriate under the circumstances, such as by displaying a prominent notice within the Platform or by sending you an email. Your continued use of the Platform after such notice constitutes your acceptance of the modified Terms.</p>
+
+              <h3 className="font-bold">15. MISCELLANEOUS</h3>
+              <p>These Terms constitute the entire agreement between you and us regarding the Platform and supersede all prior agreements and understandings, whether written or oral, regarding the Platform.</p>
+              <p>Our failure to enforce any right or provision of these Terms will not be deemed a waiver of such right or provision.</p>
+              <p>If any provision of these Terms is held to be invalid or unenforceable, the remaining provisions will remain in full force and effect.</p>
+              <p>You may not assign or transfer these Terms, by operation of law or otherwise, without our prior written consent. Any attempt by you to assign or transfer these Terms without such consent will be null and void. We may assign or transfer these Terms, at our sole discretion, without restriction.</p>
+              <p>The section titles in these Terms are for convenience only and have no legal or contractual effect.</p>
+
+              <h3 className="font-bold">Contact Us</h3>
+              <p>If you have any questions about these Terms, please contact us at <a href="mailto:info@collektiv.club" className="text-collektiv-green">info@collektiv.club</a>.</p>
             </div>
           </div>
         </section>

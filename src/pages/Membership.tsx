@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -109,7 +110,7 @@ const Membership = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-12">
               <div>
                 <img 
-                  src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                  src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" 
                   alt="Investment Opportunities" 
                   className="rounded-xl shadow-lg h-64 w-full object-cover"
                 />
@@ -174,7 +175,7 @@ const Membership = () => {
               
               <div className="order-1 md:order-2">
                 <img 
-                  src="https://images.unsplash.com/photo-1540304453527-62f9d01a6c28?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                  src="https://images.unsplash.com/photo-1540304453527-62f9d01a6c28?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" 
                   alt="Networking Events" 
                   className="rounded-xl shadow-lg h-64 w-full object-cover"
                 />

@@ -47,7 +47,7 @@ const Header = () => {
           className="flex items-center"
         >
           <img 
-            src="/public/lovable-uploads/d7216f53-dbaf-46e5-a9ae-e407297c311d.png" 
+            src="/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png" 
             alt="the Collektiv Club" 
             className="h-12"
           />
@@ -63,7 +63,7 @@ const Header = () => {
               {item.name}
             </Link>
           ))}
-          <Link to="/join" className="btn-primary">
+          <Link to="/membership" className="btn-primary">
             Join Now
           </Link>
         </div>
@@ -99,7 +99,7 @@ const Header = () => {
             </Link>
           ))}
           <Link
-            to="/join"
+            to="/membership"
             className="btn-primary w-full text-center mt-6"
             onClick={() => setMobileMenuOpen(false)}
           >

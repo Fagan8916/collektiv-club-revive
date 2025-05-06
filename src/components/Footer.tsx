@@ -11,7 +11,7 @@ const Footer = () => {
           <div>
             <div className="mb-4">
               <img 
-                src="/lovable-uploads/3468aaff-30a6-4edb-b803-6dd7c381b2a5.png" 
+                src="/lovable-uploads/f2fa4572-ad28-4141-9d35-e83e2d2d4660.png" 
                 alt="The Collektiv Club" 
                 className="h-12"
               />
@@ -70,12 +70,12 @@ const Footer = () => {
             <h3 className="text-xl font-bold mb-4">Membership</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/membership#benefits" className="text-green-100 hover:text-white transition-colors">
+                <Link to="/membership#why-join-the-collektiv-club" className="text-green-100 hover:text-white transition-colors">
                   Benefits
                 </Link>
               </li>
               <li>
-                <Link to="/membership#pricing" className="text-green-100 hover:text-white transition-colors">
+                <Link to="/membership#membership" className="text-green-100 hover:text-white transition-colors">
                   Pricing
                 </Link>
               </li>

@@ -13,7 +13,7 @@ const HeroSection = () => {
         <div className="max-w-3xl mx-auto text-center">
           <div className="flex justify-center mb-6">
             <img 
-              src="/lovable-uploads/d7216f53-dbaf-46e5-a9ae-e407297c311d.png" 
+              src="/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png" 
               alt="the Collektiv Club" 
               className="h-24 md:h-32 animate-fade-in" 
             />
