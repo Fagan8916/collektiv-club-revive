@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -267,26 +266,6 @@ const Insights = () => {
                   <div className="text-center py-12">
                     <h3 className="text-xl font-bold text-gray-600 mb-2">No articles found</h3>
                     <p className="text-gray-500">Try adjusting your search or category filter</p>
-                  </div>
-                )}
-
-                {/* Pagination - Only show if we have articles */}
-                {filteredArticles.length > 0 && (
-                  <div className="flex justify-center mt-12">
-                    <div className="flex space-x-1">
-                      <a href="#" className="px-4 py-2 border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50">
-                        Previous
-                      </a>
-                      <a href="#" className="px-4 py-2 bg-collektiv-green text-white rounded-md">
-                        1
-                      </a>
-                      <a href="#" className="px-4 py-2 border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50">
-                        2
-                      </a>
-                      <a href="#" className="px-4 py-2 border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50">
-                        Next
-                      </a>
-                    </div>
                   </div>
                 )}
               </div>
