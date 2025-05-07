@@ -9,7 +9,7 @@ const EISSEIS = () => {
       date="April 1, 2025"
       author="Content Team"
       category="Tax Relief"
-      image="https://images.unsplash.com/photo-1586486942328-8d6f740b8262?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80"
+      image="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80"
       content={
         <>
           <h2>Introduction to EIS/SEIS Investment Schemes</h2>
