@@ -1,10 +1,9 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Calendar, User, ArrowLeft } from "lucide-react";
+import { Calendar, User, ArrowLeft, ImageIcon } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
 
 interface ArticleLayoutProps {
   title: string;
@@ -23,6 +22,8 @@ const ArticleLayout: React.FC<ArticleLayoutProps> = ({
   content,
   image = "https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80"
 }) => {
+  const [imageError, setImageError] = useState(false);
+
   // Scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -61,11 +62,18 @@ const ArticleLayout: React.FC<ArticleLayoutProps> = ({
         {/* Featured Image */}
         <div className="container my-8">
           <div className="max-w-4xl mx-auto">
-            <img 
-              src={image} 
-              alt={title} 
-              className="w-full h-80 object-cover rounded-xl shadow-md"
-            />
+            {imageError ? (
+              <div className="w-full h-80 bg-gray-100 rounded-xl shadow-md flex items-center justify-center">
+                <ImageIcon size={48} className="text-gray-400" />
+              </div>
+            ) : (
+              <img 
+                src={image} 
+                alt={title}
+                className="w-full h-80 object-cover rounded-xl shadow-md"
+                onError={() => setImageError(true)}
+              />
+            )}
           </div>
         </div>
 
