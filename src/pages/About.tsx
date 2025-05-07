@@ -13,7 +13,7 @@ const About = () => {
         <section className="pt-32 pb-16 bg-gradient-to-r from-blue-50 to-white">
           <div className="container">
             <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-collektiv-blue">About The Collektiv Club</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-collektiv-green">About The Collektiv Club</h1>
               <p className="text-xl text-gray-700">
                 With over 30 years of combined experience working with top organisations, we bring a deep understanding of market growth, strategic business development, and financial expertise. This experience gives us the insight to identify high-potential opportunities and the trusted network to access them early.
               </p>
@@ -26,7 +26,7 @@ const About = () => {
           <div className="container">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div>
-                <h2 className="text-3xl font-bold mb-6 text-collektiv-blue">Our Mission</h2>
+                <h2 className="text-3xl font-bold mb-6 text-collektiv-green">Our Mission</h2>
                 <p className="text-gray-700 mb-6">
                   To empower individuals to invest together in high-potential tech startups by sourcing vetted opportunities, keeping fees low, providing clear information, and supporting continuous investor learning.
                 </p>
@@ -38,7 +38,7 @@ const About = () => {
               </div>
               
               <div className="bg-collektiv-blue/5 p-8 rounded-xl">
-                <h2 className="text-3xl font-bold mb-6 text-collektiv-blue">Our Vision</h2>
+                <h2 className="text-3xl font-bold mb-6 text-collektiv-green">Our Vision</h2>
                 <p className="text-gray-700 mb-6">
                   We believe investing in technology start-ups should be accessible to all investors, not just a select few. We set out to break down barriers and empower people.
                 </p>
@@ -81,7 +81,7 @@ const About = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <h3 className="text-xl font-bold mb-1">Manon Ligato</h3>
+                <h3 className="text-xl font-bold mb-1 text-collektiv-green">Manon Ligato</h3>
                 <p className="text-collektiv-lightblue mb-3">Co-Founder</p>
                 <p className="text-gray-600">
                   Manon has a proven track record of identifying high-potential companies and successfully scaling their market presence and revenue from the ground up. She has held pivotal leadership roles at Orange, HP, Gartner, Workday, Watershed, and Peakon, where she played a key role in driving market expansion, revenue growth, and go-to-market strategies. At Peakon, she was instrumental in generating over $10 million in new business, solidifying her reputation as a high-impact growth strategist.
@@ -102,7 +102,7 @@ const About = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <h3 className="text-xl font-bold mb-1">Ryan Fagan</h3>
+                <h3 className="text-xl font-bold mb-1 text-collektiv-green">Ryan Fagan</h3>
                 <p className="text-collektiv-lightblue mb-3">Co-Founder</p>
                 <p className="text-gray-600">
                   As a seasoned sales and leadership professional with over 15 years of experience in Go-to-Market (GTM) strategies, Ryan has navigated multiple SaaS journeys, guiding companies from early stages to significant growth milestones. Notably, Ryan was part of a successful SaaS journey that culminated in a remarkable exit exceeding $700 million.
@@ -130,21 +130,21 @@ const About = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="p-6 border border-gray-200 rounded-lg hover:border-collektiv-blue hover:shadow-md transition-all">
-                <h3 className="text-xl font-bold mb-3 text-collektiv-blue">United We Rise</h3>
+                <h3 className="text-xl font-bold mb-3 text-collektiv-green">United We Rise</h3>
                 <p className="text-gray-600">
                   We believe in the power of collaboration, working closely with startups, investors, and industry experts to create mutually beneficial opportunities. By combining our strengths and expertise, we achieve greater success and drive innovation forward together.
                 </p>
               </div>
               
               <div className="p-6 border border-gray-200 rounded-lg hover:border-collektiv-blue hover:shadow-md transition-all">
-                <h3 className="text-xl font-bold mb-3 text-collektiv-blue">Champion Changemakers</h3>
+                <h3 className="text-xl font-bold mb-3 text-collektiv-green">Champion Changemakers</h3>
                 <p className="text-gray-600">
                   We stand behind those who are making a positive impact through their work, providing them with the resources, support, and platform they need to drive meaningful change. By championing changemakers, we empower them to innovate, disrupt, and solve some of the world's most pressing challenges, creating a better future for all.
                 </p>
               </div>
               
               <div className="p-6 border border-gray-200 rounded-lg hover:border-collektiv-blue hover:shadow-md transition-all">
-                <h3 className="text-xl font-bold mb-3 text-collektiv-blue">Data Drives Us</h3>
+                <h3 className="text-xl font-bold mb-3 text-collektiv-green">Data Drives Us</h3>
                 <p className="text-gray-600">
                   We rely on data and analytics to inform our investment decisions, ensuring that our strategies are evidence-based and effective. We prioritise evidence-based decision-making over intuition alone.
                 </p>

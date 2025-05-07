@@ -8,6 +8,8 @@ import { toast } from "@/components/ui/use-toast";
 
 const Insights = () => {
   const [email, setEmail] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [activeCategory, setActiveCategory] = useState("All Articles");
   
   const handleSubscribe = (e) => {
     e.preventDefault();
@@ -32,6 +34,7 @@ const Insights = () => {
       author: "Admin",
       image: "https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       slug: "lessons-from-483-investments",
+      route: "/insights/lessons-from-483-investments",
       category: "Angel Investing",
     },
     {
@@ -44,6 +47,7 @@ const Insights = () => {
       author: "Content Team",
       image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       slug: "saas-funding-agreements",
+      route: "/insights/saas-funding-agreements",
       category: "Funding",
     },
     {
@@ -56,6 +60,7 @@ const Insights = () => {
       author: "Events Team",
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       slug: "tips-for-beginner-angel-investors",
+      route: "/insights/beginner-angel-investors",
       category: "Angel Investing",
     },
     {
@@ -68,6 +73,7 @@ const Insights = () => {
       author: "Content Team",
       image: "https://images.unsplash.com/photo-1586486942328-8d6f740b8262?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       slug: "eis-seis-tax-schemes",
+      route: "/insights/eis-seis-tax-schemes",
       category: "Tax Relief",
     },
     {
@@ -80,6 +86,7 @@ const Insights = () => {
       author: "Admin",
       image: "https://images.unsplash.com/photo-1543286386-713bdd548da4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       slug: "understanding-multiples",
+      route: "/insights/understanding-multiples",
       category: "Valuation",
     },
     {
@@ -92,6 +99,7 @@ const Insights = () => {
       author: "Community Manager",
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       slug: "saas-metrics-evaluation",
+      route: "/insights/saas-metrics-evaluation",
       category: "Metrics",
     },
     {
@@ -104,6 +112,7 @@ const Insights = () => {
       author: "Finance Team",
       image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       slug: "startup-valuations",
+      route: "/insights/startup-valuations",
       category: "Valuation",
     },
     {
@@ -116,11 +125,23 @@ const Insights = () => {
       author: "Investment Team",
       image: "https://images.unsplash.com/photo-1559526324-593bc073d938?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       slug: "angel-syndicates",
+      route: "/insights/angel-syndicates",
       category: "Angel Investing",
     },
   ];
 
-  const categories = Array.from(new Set(articles.map(article => article.category)));
+  const categories = ["All Articles", ...Array.from(new Set(articles.map(article => article.category)))];
+  
+  // Filter articles based on search term and category
+  const filteredArticles = articles.filter(article => {
+    const matchesSearch = article.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                        article.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        article.category.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesCategory = activeCategory === "All Articles" || article.category === activeCategory;
+    
+    return matchesSearch && matchesCategory;
+  });
 
   return (
     <div className="min-h-screen">
@@ -130,7 +151,7 @@ const Insights = () => {
         <section className="pt-32 pb-16 bg-gradient-to-r from-blue-50 to-white">
           <div className="container">
             <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-collektiv-blue">Insights & Updates</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-collektiv-green">Insights & Updates</h1>
               <p className="text-xl text-gray-700 mb-8">
                 Stay informed with the latest news, events, and stories from our community.
               </p>
@@ -140,9 +161,11 @@ const Insights = () => {
                 <input
                   type="text"
                   placeholder="Search articles..."
-                  className="w-full px-5 py-3 pr-12 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-collektiv-blue"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full px-5 py-3 pr-12 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-collektiv-green"
                 />
-                <button className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-collektiv-blue">
+                <button className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-collektiv-green">
                   <Search size={20} />
                 </button>
               </div>
@@ -157,23 +180,23 @@ const Insights = () => {
               {/* Sidebar */}
               <div className="lg:col-span-1">
                 <div className="bg-gray-50 p-6 rounded-lg shadow-sm mb-6">
-                  <h3 className="text-xl font-bold mb-4 text-collektiv-blue">Categories</h3>
+                  <h3 className="text-xl font-bold mb-4 text-collektiv-green">Categories</h3>
                   <ul className="space-y-2">
-                    <li>
-                      <a href="#" className="text-collektiv-blue font-medium hover:underline">All Articles</a>
-                    </li>
                     {categories.map((category, index) => (
                       <li key={index}>
-                        <a href="#" className="text-gray-700 hover:text-collektiv-blue transition-colors">
+                        <button 
+                          onClick={() => setActiveCategory(category)}
+                          className={`text-${activeCategory === category ? 'collektiv-green font-medium' : 'gray-700'} hover:text-collektiv-green transition-colors`}
+                        >
                           {category}
-                        </a>
+                        </button>
                       </li>
                     ))}
                   </ul>
                 </div>
 
                 <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
-                  <h3 className="text-xl font-bold mb-4 text-collektiv-blue">Subscribe to the newsletter</h3>
+                  <h3 className="text-xl font-bold mb-4 text-collektiv-green">Subscribe to the newsletter</h3>
                   <p className="text-gray-600 mb-4">
                     Get the latest updates delivered directly to your inbox.
                   </p>
@@ -184,7 +207,7 @@ const Insights = () => {
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="Your email address"
                       required
-                      className="w-full px-4 py-2 mb-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-collektiv-blue"
+                      className="w-full px-4 py-2 mb-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-collektiv-green"
                     />
                     <button 
                       type="submit"
@@ -198,65 +221,74 @@ const Insights = () => {
 
               {/* Articles Grid */}
               <div className="lg:col-span-3">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {articles.map((article) => (
-                    <div key={article.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all">
-                      <img 
-                        src={article.image} 
-                        alt={article.title}
-                        className="w-full h-48 object-cover"
-                      />
-                      <div className="p-6">
-                        <div className="mb-3">
-                          <span className="inline-block bg-collektiv-blue/10 text-collektiv-blue text-sm px-3 py-1 rounded-full">
-                            {article.category}
-                          </span>
-                        </div>
-                        <h3 className="text-xl font-bold mb-3 text-gray-800 line-clamp-2">
-                          {article.title}
-                        </h3>
-                        <div className="flex items-center text-sm text-gray-500 mb-3 space-x-4">
-                          <div className="flex items-center">
-                            <Calendar size={14} className="mr-1" />
-                            <span>{article.date}</span>
+                {filteredArticles.length > 0 ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {filteredArticles.map((article) => (
+                      <div key={article.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all">
+                        <img 
+                          src={article.image} 
+                          alt={article.title}
+                          className="w-full h-48 object-cover"
+                        />
+                        <div className="p-6">
+                          <div className="mb-3">
+                            <span className="inline-block bg-collektiv-green/10 text-collektiv-green text-sm px-3 py-1 rounded-full">
+                              {article.category}
+                            </span>
                           </div>
-                          <div className="flex items-center">
-                            <User size={14} className="mr-1" />
-                            <span>{article.author}</span>
+                          <h3 className="text-xl font-bold mb-3 text-gray-800 line-clamp-2">
+                            {article.title}
+                          </h3>
+                          <div className="flex items-center text-sm text-gray-500 mb-3 space-x-4">
+                            <div className="flex items-center">
+                              <Calendar size={14} className="mr-1" />
+                              <span>{article.date}</span>
+                            </div>
+                            <div className="flex items-center">
+                              <User size={14} className="mr-1" />
+                              <span>{article.author}</span>
+                            </div>
                           </div>
+                          <p className="text-gray-600 mb-4 line-clamp-3">
+                            {article.excerpt}
+                          </p>
+                          <Link 
+                            to={article.route}
+                            className="inline-flex items-center text-collektiv-green font-medium hover:text-collektiv-lightgreen transition-colors"
+                          >
+                            Read More
+                            <ArrowRight size={16} className="ml-1" />
+                          </Link>
                         </div>
-                        <p className="text-gray-600 mb-4 line-clamp-3">
-                          {article.excerpt}
-                        </p>
-                        <Link 
-                          to={`/insights/${article.slug}`}
-                          className="inline-flex items-center text-collektiv-blue font-medium hover:text-collektiv-lightblue transition-colors"
-                        >
-                          Read More
-                          <ArrowRight size={16} className="ml-1" />
-                        </Link>
                       </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Pagination */}
-                <div className="flex justify-center mt-12">
-                  <div className="flex space-x-1">
-                    <a href="#" className="px-4 py-2 border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50">
-                      Previous
-                    </a>
-                    <a href="#" className="px-4 py-2 bg-collektiv-blue text-white rounded-md">
-                      1
-                    </a>
-                    <a href="#" className="px-4 py-2 border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50">
-                      2
-                    </a>
-                    <a href="#" className="px-4 py-2 border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50">
-                      Next
-                    </a>
+                    ))}
                   </div>
-                </div>
+                ) : (
+                  <div className="text-center py-12">
+                    <h3 className="text-xl font-bold text-gray-600 mb-2">No articles found</h3>
+                    <p className="text-gray-500">Try adjusting your search or category filter</p>
+                  </div>
+                )}
+
+                {/* Pagination - Only show if we have articles */}
+                {filteredArticles.length > 0 && (
+                  <div className="flex justify-center mt-12">
+                    <div className="flex space-x-1">
+                      <a href="#" className="px-4 py-2 border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50">
+                        Previous
+                      </a>
+                      <a href="#" className="px-4 py-2 bg-collektiv-green text-white rounded-md">
+                        1
+                      </a>
+                      <a href="#" className="px-4 py-2 border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50">
+                        2
+                      </a>
+                      <a href="#" className="px-4 py-2 border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50">
+                        Next
+                      </a>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

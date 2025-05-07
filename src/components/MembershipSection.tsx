@@ -8,7 +8,6 @@ const MembershipSection = () => {
       name: "Trial",
       price: "Free*",
       period: "",
-      description: "Suggested for members investing <£3,499 per annum",
       features: [
         "12.5% Investment fee",
         "0% Annual Investment fee",
@@ -23,7 +22,6 @@ const MembershipSection = () => {
       name: "Premium",
       price: "£395",
       period: "per Annum",
-      description: "Suggested for members investing >£3,500 per annum",
       features: [
         "4% Investment fee",
         "0% Annual Investment fee",
@@ -39,7 +37,6 @@ const MembershipSection = () => {
       name: "VIP",
       price: "£985",
       period: "per Annum",
-      description: "Suggested for members investing >£15,000 per annum",
       features: [
         "0% Investment fee",
         "0% Annual Investment fee",
@@ -81,7 +78,6 @@ const MembershipSection = () => {
                   <span className="text-4xl font-bold text-collektiv-green">{plan.price}</span>
                   <span className="text-gray-500 ml-1">{plan.period}</span>
                 </div>
-                <p className="text-gray-600 mb-6">{plan.description}</p>
                 
                 <div className="space-y-3 mb-8">
                   {plan.features.map((feature, idx) => (
@@ -107,6 +103,11 @@ const MembershipSection = () => {
               </div>
             </div>
           ))}
+        </div>
+        
+        {/* KYC Note for Free membership */}
+        <div className="mt-6 text-center text-gray-600 text-sm">
+          <p>*Free Members are required to pay a £100 one-off KYC (Know Your Customer) check directly to our SPV (Special Purpose Vehicle) provider when investing for the first time</p>
         </div>
       </div>
     </section>

@@ -78,12 +78,12 @@ const Footer = () => {
             <h3 className="text-xl font-bold mb-4">Membership</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/membership#why-join-the-collektiv-club" onClick={() => setTimeout(scrollToTop, 100)} className="text-green-100 hover:text-white transition-colors">
+                <Link to="/membership#why-join-the-collektiv-club" onClick={scrollToTop} className="text-green-100 hover:text-white transition-colors">
                   Benefits
                 </Link>
               </li>
               <li>
-                <Link to="/membership#membership" onClick={() => setTimeout(scrollToTop, 100)} className="text-green-100 hover:text-white transition-colors">
+                <Link to="/membership#membership" onClick={scrollToTop} className="text-green-100 hover:text-white transition-colors">
                   Pricing
                 </Link>
               </li>
@@ -93,7 +93,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/membership#faq" onClick={() => setTimeout(scrollToTop, 100)} className="text-green-100 hover:text-white transition-colors">
+                <Link to="/membership#faq" onClick={scrollToTop} className="text-green-100 hover:text-white transition-colors">
                   FAQ
                 </Link>
               </li>

@@ -14,6 +14,8 @@ const NewsSection = () => {
       author: "Admin",
       image: "https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       slug: "lessons-from-483-investments",
+      route: "/insights/lessons-from-483-investments",
+      category: "Angel Investing"
     },
     {
       id: 2,
@@ -24,6 +26,8 @@ const NewsSection = () => {
       author: "Content Team",
       image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       slug: "saas-funding-agreements",
+      route: "/insights/saas-funding-agreements",
+      category: "Funding"
     },
     {
       id: 3,
@@ -34,6 +38,8 @@ const NewsSection = () => {
       author: "Events Team",
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       slug: "tips-for-beginner-angel-investors",
+      route: "/insights/beginner-angel-investors",
+      category: "Angel Investing"
     },
   ];
 
@@ -73,7 +79,7 @@ const NewsSection = () => {
                   {article.excerpt}
                 </p>
                 <Link 
-                  to={`/insights/${article.slug}`}
+                  to={article.route}
                   className="inline-flex items-center text-collektiv-green font-medium hover:text-collektiv-lightgreen transition-colors"
                 >
                   Read More

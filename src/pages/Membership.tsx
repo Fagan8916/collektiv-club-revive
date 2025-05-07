@@ -90,10 +90,7 @@ const Membership = () => {
           </div>
         </section>
 
-        {/* Membership Plans */}
-        <MembershipSection />
-
-        {/* Benefits in Detail */}
+        {/* Benefits in Detail - Moved this section up */}
         <section className="section bg-white" id="benefits">
           <div className="container">
             <div className="text-center mb-16">
@@ -179,6 +176,9 @@ const Membership = () => {
             </div>
           </div>
         </section>
+
+        {/* Membership Plans - Moved this section down */}
+        <MembershipSection />
 
         {/* FAQ Section */}
         <section className="section bg-gray-50" id="faq">
