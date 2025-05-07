@@ -71,7 +71,7 @@ const ArticleLayout: React.FC<ArticleLayoutProps> = ({
 
         {/* Article Content */}
         <article className="container my-12">
-          <div className="max-w-3xl mx-auto prose prose-lg prose-green">
+          <div className="max-w-3xl mx-auto article-content">
             {content}
           </div>
         </article>
