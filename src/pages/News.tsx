@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -70,7 +71,7 @@ const Insights = () => {
       content: "Extended content about EIS and SEIS would go here...",
       date: "April 1, 2025",
       author: "Content Team",
-      image: "https://images.unsplash.com/photo-1586486942328-8d6f740b8262?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       slug: "eis-seis-tax-schemes",
       route: "/insights/eis-seis-tax-schemes",
       category: "Tax Relief",
@@ -228,6 +229,9 @@ const Insights = () => {
                           src={article.image} 
                           alt={article.title}
                           className="w-full h-48 object-cover"
+                          onError={(e) => {
+                            e.currentTarget.src = "https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80";
+                          }}
                         />
                         <div className="p-6">
                           <div className="mb-3">
