@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -16,6 +16,7 @@ const navigation = [
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,6 +33,19 @@ const Header = () => {
     };
   }, []);
 
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  // Function to scroll to top when navigating
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  };
+
   return (
     <header
       className={cn(
@@ -45,6 +59,7 @@ const Header = () => {
         <Link 
           to="/" 
           className="flex items-center"
+          onClick={scrollToTop}
         >
           <img 
             src="/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png" 
@@ -59,11 +74,16 @@ const Header = () => {
               key={item.name}
               to={item.href}
               className="text-gray-700 hover:text-collektiv-green font-medium transition-colors"
+              onClick={scrollToTop}
             >
               {item.name}
             </Link>
           ))}
-          <Link to="/membership" className="btn-primary">
+          <Link 
+            to="/membership" 
+            className="btn-primary"
+            onClick={scrollToTop}
+          >
             Join Now
           </Link>
         </div>
@@ -93,7 +113,10 @@ const Header = () => {
               key={item.name}
               to={item.href}
               className="text-gray-700 hover:text-collektiv-green text-xl font-medium transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={() => {
+                setMobileMenuOpen(false);
+                scrollToTop();
+              }}
             >
               {item.name}
             </Link>
@@ -101,7 +124,10 @@ const Header = () => {
           <Link
             to="/membership"
             className="btn-primary w-full text-center mt-6"
-            onClick={() => setMobileMenuOpen(false)}
+            onClick={() => {
+              setMobileMenuOpen(false);
+              scrollToTop();
+            }}
           >
             Join Now
           </Link>
