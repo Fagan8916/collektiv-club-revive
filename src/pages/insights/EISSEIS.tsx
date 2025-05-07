@@ -12,131 +12,140 @@ const EISSEIS = () => {
       image="https://images.unsplash.com/photo-1586486942328-8d6f740b8262?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80"
       content={
         <>
-          <h2>EIS & SEIS: Tax-Efficient Investment Schemes</h2>
+          <h2>Introduction to EIS/SEIS Investment Schemes</h2>
 
-          <p>The UK offers several tax-efficient investment schemes designed to encourage investment in early-stage, high-risk companies. Two of the most significant are the Enterprise Investment Scheme (EIS) and the Seed Enterprise Investment Scheme (SEIS). These schemes can provide substantial tax benefits to investors while helping startups access critical funding.</p>
+          <p>If you're in the UK looking to invest or grow a startup, you'll likely come across the Enterprise Investment Scheme (EIS) and the Seed Enterprise Investment Scheme (SEIS). These UK government plans give big tax breaks to investors in new start-ups while helping young businesses grow. This guide will help you understand EIS and SEIS, their importance, benefits, and what you need to do to get started. If you're an investor seeking opportunities or an entrepreneur aiming for growth, learning about these schemes could be a game-changer. Let's see how EIS and SEIS can help you.</p>
 
-          <p>This article explores these schemes in detail, outlining how they work, the tax benefits they offer, and the requirements for both companies and investors.</p>
+          <h3>What is the Enterprise Investment Scheme (EIS)?</h3>
 
-          <h3>What are EIS and SEIS?</h3>
+          <h4>Definition</h4>
+          <p>The Enterprise Investment Scheme (EIS) is a UK government plan that helps investors back smaller, private companies with some big tax breaks. This scheme helps boost the UK economy by funding early-stage businesses.</p>
 
-          <p>Both schemes were created to help smaller, higher-risk trading companies raise finance by offering tax reliefs to investors who purchase new shares in these companies.</p>
+          <h4>Purpose and Goals</h4>
+          <p>EIS aims to help the UK economy grow by supporting high-potential businesses. By giving tax breaks, the scheme attracts investors who are ready to take on plans that might seem a bit risky, leading to new ideas, jobs, and overall economic growth in the UK.</p>
+
+          <h4>Key Benefits for Investors</h4>
+          <p>EIS gives many benefits to investors, like:</p>
+
+          <ol>
+            <li><strong>Income Tax Relief:</strong> You can get up to 30% back on your income tax for investing up to £1 million yearly.</li>
+            <li><strong>Capital Gains Tax Exemption:</strong> If you hold onto your EIS shares for at least three years, you won't pay Capital Gains Tax on them.</li>
+            <li><strong>Inheritance Tax Relief:</strong> EIS shares might lower any Inheritance Tax if you've held them for at least two years.</li>
+          </ol>
+
+          <h3>Understanding the Seed Enterprise Investment Scheme (SEIS)</h3>
+
+          <h4>Definition</h4>
+          <p>The Seed Enterprise Investment Scheme (SEIS) also helps investors put money into small, new start-up businesses. SEIS offers even better tax reliefs compared to EIS to help new companies.</p>
+
+          <h4>Goals and Objectives</h4>
+          <p>SEIS helps UK economic growth by backing small businesses in their early, challenging years. The scheme helps bring new ideas to life by making early-stage investments more accessible.</p>
+
+          <h4>Benefits for Investors</h4>
+          <p>SEIS gives several advantages, such as:</p>
+
+          <ol>
+            <li><strong>Higher Income Tax Relief:</strong> You can get up to 50% back on your income tax for investments up to £100,000 every tax year.</li>
+            <li><strong>Capital Gains Reinvestment Relief:</strong> Any gains you reinvest into SEIS-qualified shares are exempt from Capital Gains Tax.</li>
+            <li><strong>Loss Relief:</strong> If the business doesn't do well, investors can claim loss relief against their income tax or capital gains tax, making it less risky.</li>
+          </ol>
+
+          <h3>Distinguishing Between EIS and SEIS Schemes</h3>
+
+          <p>Knowing how EIS and SEIS differ is essential for investors and entrepreneurs:</p>
 
           <ul>
-            <li><strong>Enterprise Investment Scheme (EIS)</strong> was launched in 1994 to help small, unlisted trading companies raise capital.</li>
-            <li><strong>Seed Enterprise Investment Scheme (SEIS)</strong> was introduced in 2012 to help very early-stage companies raise funds. It offers more generous tax reliefs than EIS but has lower investment limits.</li>
+            <li><strong>Investment Limits:</strong> SEIS has a £100,000 annual limit, but EIS allows up to £1 million.</li>
+            <li><strong>Company Size:</strong> SEIS is for companies with up to £200,000 in assets and fewer than 25 workers, while EIS is for companies with up to £15 million in assets.</li>
+            <li><strong>Risk Level:</strong> SEIS investments are riskier since they are for newer companies, whereas EIS is for more established ventures.</li>
+            <li><strong>Tax Relief Levels:</strong> SEIS offers higher income tax relief but allows a smaller maximum investment than EIS.</li>
+            <li><strong>Business Stage:</strong> EIS is for more established businesses, while SEIS supports new companies just getting started.</li>
           </ul>
 
-          <h3>Tax Benefits for Investors</h3>
+          <h3>Eligibility Criteria for UK EIS/SEIS</h3>
 
-          <h4>Enterprise Investment Scheme (EIS)</h4>
-
-          <ul>
-            <li><strong>Income Tax Relief:</strong> 30% tax relief on investments up to £1 million per tax year (or £2 million if at least £1 million is invested in knowledge-intensive companies).</li>
-            <li><strong>Capital Gains Tax (CGT) Exemption:</strong> No CGT payable on profits earned on shares held for at least three years.</li>
-            <li><strong>Loss Relief:</strong> If shares are disposed of at a loss, the loss can be set against the investor's income or capital gains to reduce tax.</li>
-            <li><strong>CGT Deferral Relief:</strong> Payment of CGT on a gain can be deferred if the gain is invested in EIS qualifying shares.</li>
-            <li><strong>Inheritance Tax:</strong> EIS shares held for at least two years qualify for Business Relief, making them exempt from inheritance tax.</li>
-          </ul>
-
-          <h4>Seed Enterprise Investment Scheme (SEIS)</h4>
+          <h4>For Companies</h4>
+          <p>Only certain UK companies can qualify for EIS/SEIS:</p>
 
           <ul>
-            <li><strong>Income Tax Relief:</strong> 50% tax relief on investments up to £100,000 per tax year.</li>
-            <li><strong>Capital Gains Tax Exemption:</strong> No CGT payable on profits from SEIS shares held for at least three years.</li>
-            <li><strong>Loss Relief:</strong> Similar to EIS, losses on SEIS investments can be offset against income or capital gains.</li>
-            <li><strong>Capital Gains Reinvestment Relief:</strong> 50% CGT relief on gains reinvested into SEIS-qualifying companies.</li>
-            <li><strong>Inheritance Tax:</strong> Like EIS, SEIS shares held for at least two years qualify for Business Relief.</li>
-          </ul>
-
-          <h3>An Example of Tax Relief in Action</h3>
-
-          <p>To illustrate the powerful impact of these reliefs, consider this example for a £10,000 SEIS investment:</p>
-
-          <ul>
-            <li>Initial investment: £10,000</li>
-            <li>Income tax relief (50%): £5,000</li>
-            <li>Net cost of investment: £5,000</li>
-          </ul>
-
-          <p>If the investment performs well and doubles in value to £20,000 after three years, the investor pays no CGT on the £10,000 gain.</p>
-
-          <p>If the investment fails completely (worst-case scenario):</p>
-
-          <ul>
-            <li>Loss on investment: £10,000</li>
-            <li>Less income tax already claimed: £5,000</li>
-            <li>Net loss before further relief: £5,000</li>
-            <li>Further loss relief at 45% (if higher rate taxpayer): £2,250</li>
-            <li>Total cost of failed £10,000 investment: £2,750</li>
-          </ul>
-
-          <p>This example demonstrates how tax reliefs can significantly reduce the risk of early-stage investing.</p>
-
-          <h3>Eligibility Requirements</h3>
-
-          <h4>For Companies to Qualify for EIS</h4>
-
-          <ul>
-            <li>Must be an unquoted UK company with a permanent establishment in the UK</li>
-            <li>Must have fewer than 250 full-time equivalent employees</li>
-            <li>Gross assets must not exceed £15 million before investment and £16 million after</li>
-            <li>Must be within 7 years of first commercial sale (10 years for knowledge-intensive companies)</li>
-            <li>Can raise up to £5 million per year and £12 million lifetime limit (higher for knowledge-intensive companies)</li>
-            <li>Must conduct a qualifying trade</li>
-          </ul>
-
-          <h4>For Companies to Qualify for SEIS</h4>
-
-          <ul>
-            <li>Must be an unquoted UK company with a permanent establishment in the UK</li>
-            <li>Must have fewer than 25 employees</li>
-            <li>Gross assets must not exceed £350,000</li>
-            <li>Company must be less than 2 years old</li>
-            <li>Can raise up to £150,000 in total under SEIS</li>
-            <li>Must conduct a qualifying trade</li>
+            <li><strong>Size:</strong> EIS is for companies worth up to £15 million. SEIS focuses on smaller companies with up to £200,000 in assets.</li>
+            <li><strong>Industry:</strong> The businesses must not be in excluded industries like coal or steel production.</li>
+            <li><strong>Age:</strong> SEIS is for companies less than two years old. EIS is for slightly older but still early-stage businesses.</li>
           </ul>
 
           <h4>For Investors</h4>
+          <p>Investors also have to meet certain standards:</p>
 
           <ul>
-            <li>Must not be "connected" to the company (e.g., as an employee or holding more than 30% of shares)</li>
-            <li>Shares must be held for a minimum of three years to retain the tax benefits</li>
-            <li>Cannot have arrangements to protect against investment risks</li>
-            <li>Must subscribe for new ordinary shares</li>
+            <li><strong>Investment Caps:</strong> SEIS allows investments up to £100,000 per year; EIS allows up to £1 million.</li>
+            <li><strong>Holding Period:</strong> To get tax relief, you need to hold your investments for at least three years under both schemes.</li>
           </ul>
 
-          <h3>Advance Assurance</h3>
+          <h3>Advantages of Investing in EIS/SEIS Schemes in the UK</h3>
 
-          <p>Companies can apply to HMRC for 'advance assurance' that they meet the requirements for EIS or SEIS. This is not mandatory but provides comfort to potential investors that the investment will qualify for tax relief.</p>
+          <p>EIS and SEIS have lots of benefits:</p>
 
-          <h3>Practical Considerations for Investors</h3>
+          <ol>
+            <li><strong>Tax Benefits:</strong> The tax breaks reduce risks and provide financial safety.</li>
+            <li><strong>Support for Entrepreneurs:</strong> The schemes channel key funds to startups, supporting new businesses.</li>
+            <li><strong>Innovation:</strong> They encourage funding for new and exciting technologies and ideas.</li>
+            <li><strong>Potential Profit:</strong> With tax perks and possible growth, EIS/SEIS can offer good financial returns.</li>
+            <li><strong>Success Stories:</strong> Many UK startups, like Gousto and Monzo, have grown using EIS/SEIS funds.</li>
+          </ol>
 
-          <h4>The Timing of Relief</h4>
+          <h3>Risks with EIS/SEIS Investments</h3>
 
-          <p>Income tax relief is usually claimed after the company has been trading for four months or, if later, when the company has spent 70% of the money raised. The company will issue an EIS3 or SEIS3 certificate which the investor uses to claim tax relief.</p>
+          <p>Although there are benefits, there are also risks:</p>
 
-          <h4>Carry Back Feature</h4>
+          <ol>
+            <li><strong>Market Changes:</strong> Early-stage companies can be volatile, with chances of success or failure.</li>
+            <li><strong>Long-Term Investment:</strong> You can't quickly sell these shares; a long-term commitment is necessary.</li>
+            <li><strong>Tax Law Changes:</strong> If tax laws change, it could affect the benefits.</li>
+            <li><strong>Potential Loss:</strong> There's the risk of losing your investment if the business fails.</li>
+            <li><strong>High-Risk Ventures:</strong> You might need to balance these investments with safer ones in your portfolio.</li>
+          </ol>
 
-          <p>Both schemes allow investors to "carry back" their investment to the previous tax year, effectively allowing double the investment limit over a short period.</p>
+          <h3>How to Invest in EIS/SEIS Schemes in the UK</h3>
 
-          <h4>Risk vs. Reward</h4>
+          <p>Here's how to invest in these schemes:</p>
 
-          <p>While tax advantages are substantial, it's important to remember that EIS and SEIS investments are high-risk. Many early-stage businesses fail, and shares are usually illiquid with no established market for resale.</p>
+          <ol>
+            <li><strong>Find the Right Businesses:</strong> Do your research on companies with growth potential and that meet the scheme's rules.</li>
+            <li><strong>Use Platforms and Crowdfunding:</strong> Platforms like Seedrs and Crowdcube can help you invest.</li>
+            <li><strong>Know the Process:</strong> Be sure you understand the documents and requirements for investing.</li>
+            <li><strong>Do Your Homework:</strong> Look into the growth potential and risks before deciding.</li>
+            <li><strong>Get Advice:</strong> Talking to a financial advisor can give you helpful insights and protect your investments.</li>
+          </ol>
 
-          <h3>Conclusion</h3>
+          <h3>Case Studies: Successful UK EIS/SEIS Investments</h3>
 
-          <p>EIS and SEIS offer powerful tax incentives that can significantly enhance returns and reduce risks for investors in early-stage companies. For startups, these schemes provide access to a wider pool of investors willing to provide critical early funding.</p>
+          <p>Some successful examples of EIS/SEIS in action are:</p>
 
-          <p>Investors should:</p>
-          <ul>
-            <li>Consider the commercial case first, tax benefits second</li>
-            <li>Conduct thorough due diligence</li>
-            <li>Diversify across multiple EIS/SEIS investments</li>
-            <li>Consult with financial and tax advisors before investing</li>
-          </ul>
+          <ol>
+            <li><strong>Gousto:</strong> Used EIS to become a top recipe subscription service.</li>
+            <li><strong>Monzo:</strong> Raised early funds through SEIS to become a leading digital bank.</li>
+            <li><strong>Adbrain:</strong> Benefited from EIS to succeed in data intelligence.</li>
+          </ol>
 
-          <p>When approached strategically, EIS and SEIS can form valuable components of an investor's portfolio, offering the dual benefits of supporting innovative early-stage companies while enjoying significant tax advantages.</p>
+          <p>These show how EIS/SEIS funding can help startups grow into global leaders.</p>
+
+          <h3>Conclusion: Harnessing EIS/SEIS Opportunities</h3>
+
+          <p>In conclusion, EIS and SEIS offer fantastic opportunities for both investors and entrepreneurs. They provide tax breaks and promote new ideas, helping develop the UK's entrepreneurial scene. If you want tax advantages, want to try new investments, or need vital funding, understanding EIS/SEIS can open up lots of opportunities. At Collektiv, we're focused on creating chances that build inclusiveness and help UK entrepreneurs succeed.</p>
+
+          <h3>Additional Resources on EIS/SEIS Investments</h3>
+
+          <p>If you want to learn more about EIS and SEIS, check these resources:</p>
+
+          <ol>
+            <li><a href="https://www.gov.uk/guidance/venture-capital-schemes-apply-for-the-enterprise-investment-scheme">Official EIS Guidelines</a></li>
+            <li><a href="https://www.gov.uk/seed-enterprise-investment-scheme-background">Official SEIS Guidelines</a></li>
+            <li>Recommended Reading: The Lean Startup by Eric Ries</li>
+            <li>Contacts: Tax Advisors and Financial Experts at PwC, KPMG, Deloitte</li>
+            <li>Forums: UK Business Angels Association, Startup Investors Group</li>
+          </ol>
+
+          <p>At Collektiv, we want to support a community that makes investment more impactful. Join us and see how EIS/SEIS can make a big difference in the UK!</p>
         </>
       }
     />
