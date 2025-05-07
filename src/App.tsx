@@ -9,7 +9,6 @@ import About from "./pages/About";
 import Membership from "./pages/Membership";
 import Insights from "./pages/News"; // Renamed but using same component
 import Contact from "./pages/Contact";
-import Join from "./pages/Join";
 import NotFound from "./pages/NotFound";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
@@ -41,7 +40,6 @@ const App = () => (
           <Route path="/membership" element={<Membership />} />
           <Route path="/insights" element={<Insights />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/join" element={<Join />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/hnwi-si" element={<HNWISI />} />

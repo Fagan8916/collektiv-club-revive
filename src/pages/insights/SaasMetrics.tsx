@@ -135,7 +135,7 @@ const SaasMetrics = () => {
           <ul>
             <li>Strong and accelerating ARR growth</li>
             <li>High net revenue retention (120%+)</li>
-            <li>Efficient customer acquisition (LTV:CAC > 3)</li>
+            <li>Efficient customer acquisition (LTV:CAC ratio {'>'} 3)</li>
             <li>Scalable unit economics (short CAC payback periods)</li>
             <li>Healthy gross margins (80%+)</li>
             <li>Improving capital efficiency over time</li>
