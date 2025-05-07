@@ -36,7 +36,7 @@ const ArticleLayout: React.FC<ArticleLayoutProps> = ({
         <section className="pt-32 pb-16 bg-gradient-to-r from-blue-50 to-white">
           <div className="container">
             <div className="max-w-3xl mx-auto">
-              <Link to="/insights" className="inline-flex items-center text-collektiv-blue hover:text-collektiv-lightblue mb-6">
+              <Link to="/insights" className="inline-flex items-center text-collektiv-lightgreen hover:text-collektiv-green mb-6">
                 <ArrowLeft size={16} className="mr-2" />
                 Back to Insights
               </Link>
@@ -50,7 +50,7 @@ const ArticleLayout: React.FC<ArticleLayoutProps> = ({
                   <User size={16} className="mr-1" />
                   <span>{author}</span>
                 </div>
-                <div className="inline-block bg-collektiv-blue/10 text-collektiv-blue text-sm px-3 py-1 rounded-full">
+                <div className="inline-block bg-collektiv-lightgreen/10 text-collektiv-green text-sm px-3 py-1 rounded-full">
                   {category}
                 </div>
               </div>

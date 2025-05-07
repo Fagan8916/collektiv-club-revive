@@ -168,7 +168,7 @@
 }
 
 .article-content a {
-  @apply text-collektiv-blue hover:text-collektiv-lightgreen transition-colors underline underline-offset-2;
+  @apply text-collektiv-lightgreen hover:text-collektiv-green transition-colors underline underline-offset-2;
 }
 
 .article-content strong, 
@@ -187,4 +187,3 @@
 .article-content hr {
   @apply my-8 border-gray-200;
 }
-

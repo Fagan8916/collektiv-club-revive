@@ -66,6 +66,7 @@ export default {
 				collektiv: {
 					green: '#00815D',       // Primary green color
 					lightgreen: '#00B5AA',  // Secondary lighter green
+					blue: '#0EA5E9',        // Ocean blue color for links
 					accent: '#E3FBF8',      // Light accent color
 					gray: '#6b7280',
 					light: '#f9fafb'
