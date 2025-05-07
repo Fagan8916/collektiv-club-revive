@@ -12,71 +12,51 @@ const LessonsFromInvestments = () => {
       image="https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80"
       content={
         <>
-          <p>
-            Charlie O'Donnell, a seasoned angel investor with nearly 500 investments, 
-            shares his invaluable insights and principles that have guided his successful investment journey.
-          </p>
+          <p>This blog aims to share insights from Charlie O'Donnell, an experienced angel investor with nearly 500 investments. It follows a webinar Collektiv Club hosted with Charlie in early October (for members only) where he shared loads of insights. The conversation was captivating and these key takeaways below should be really valuable for your angel investing journey.</p>
 
-          <h2>Charlie's Core Investment Principles</h2>
+          <h2>The Follow-on Effect</h2>
           
-          <p>
-            Charlie O'Donnell has established himself as one of the most prolific angel investors in the startup ecosystem. After making 483 investments over his career, he recently shared the key principles that have guided his investment decisions and contributed to his success.
-          </p>
+          <p>Charlie highlights the significant "follow-on effect" where his investment choices influence larger institutions. His initial backing often leads to much larger sums from venture capital firms, creating a multiplier effect on his investment impact.</p>
+          
+          <h2>Founder Quality over Minor Details</h2>
+          
+          <p>Rather than getting caught up in minute investment term details, Charlie focuses on investing in exceptional founders and companies with strong potential. He believes the key to success lies in backing the right teams rather than negotiating every small term.</p>
 
-          <h3>The Follow-On Effect</h3>
-          <p>
-            One of Charlie's most significant insights is the importance of the "follow-on effect." He notes that institutional investors often follow the lead of trusted angel investors. When Charlie invests in a startup, it frequently attracts larger sums from venture capital firms and other institutional investors. This multiplier effect means that his initial investments can catalyze much larger funding rounds, benefiting both the startups and his investment portfolio.
-          </p>
+          <h2>Each Investor Has Their Unique Style</h2>
+          
+          <p>Charlie emphasizes that every investor needs to find their own style. Some may excel at deep technical evaluations, while others might be better at assessing founder quality or market opportunities. Recognizing and playing to your strengths can make you more effective.</p>
 
-          <h3>Focusing on What Matters</h3>
-          <p>
-            Charlie emphasizes the importance of focusing on elements that truly impact investment outcomes rather than getting caught up in minor details. He suggests that investors should prioritize:
-          </p>
-          <ul>
-            <li>Team quality and founder capabilities</li>
-            <li>Market size and growth potential</li>
-            <li>Product-market fit</li>
-            <li>Sustainable competitive advantages</li>
-          </ul>
+          <h2>Start Small and Learn</h2>
+          
+          <p>For new angel investors, Charlie recommends starting with smaller check sizes while building experience. This approach allows you to learn and refine your investment strategy without risking too much capital early on.</p>
 
-          <p>
-            Rather than obsessing over specific terms or valuation details, Charlie advocates for focusing on investing in exceptional companies that have the potential for significant growth.
-          </p>
+          <h2>The Importance of Collaboration</h2>
+          
+          <p>Investing alongside other angels you trust and respect adds tremendous value. Charlie notes that sharing perspectives, dividing due diligence responsibilities, and building a reputation within the angel community all contribute to investment success.</p>
 
-          <h3>Building Relationships, Not Just Portfolios</h3>
-          <p>
-            Charlie's approach to angel investing is deeply relationship-focused. He invests time in getting to know founders, understanding their vision, and providing valuable support beyond capital. This relationship-building approach has not only led to better investment outcomes but has also created a strong network of founders who refer other promising startups to him.
-          </p>
+          <h2>Being a Great Angel Investor</h2>
+          
+          <p>Charlie shares that his goal isn't just to make successful investments but to be the kind of investor founders genuinely want on their cap table. This means being supportive, helpful, and adding value beyond capital.</p>
 
-          <h2>Key Lessons from Charlie's Investment Journey</h2>
+          <h2>Having a Strategy</h2>
+          
+          <p>One key takeaway is the importance of developing a clear investment strategy. Whether focusing on specific sectors, founder types, or stages, having a consistent approach helps both with decision-making and with building expertise in your chosen areas.</p>
 
-          <h3>1. Portfolio Approach is Essential</h3>
-          <p>
-            Charlie advocates for a portfolio approach to early-stage investing, acknowledging that many investments will not succeed. By spreading investments across numerous startups, investors can manage risk while positioning themselves for the outsized returns that successful startups can provide.
-          </p>
+          <h2>Change Will Happen</h2>
+          
+          <p>Charlie emphasizes that startups inevitably evolve from their initial pitch. The ability to assess whether a team can successfully navigate these changes is often more important than evaluating the original business plan.</p>
 
-          <h3>2. Look Beyond Traditional Metrics</h3>
-          <p>
-            Traditional financial metrics often don't apply well to early-stage startups. Charlie suggests looking at indicators like team quality, problem-solving ability, market understanding, and adaptability rather than focusing solely on current revenue or profitability.
-          </p>
+          <h2>Building Relationships Takes Time</h2>
+          
+          <p>Establishing yourself in the startup ecosystem requires patience. Charlie points out that building meaningful relationships with founders, other investors, and industry experts is a long-term investment that pays dividends through better deal flow and collaborative opportunities.</p>
 
-          <h3>3. Be Cautious About FOMO</h3>
-          <p>
-            Fear of missing out (FOMO) can lead to poor investment decisions. Charlie advises maintaining discipline and sticking to your investment criteria rather than jumping into deals simply because they're generating buzz.
-          </p>
+          <h2>Each Deal Is Unique</h2>
+          
+          <p>While patterns and principles are valuable, Charlie reminds us that each investment opportunity presents unique circumstances. Flexibility and adaptability remain essential qualities for any angel investor.</p>
 
-          <h3>4. Support Goes Beyond Capital</h3>
-          <p>
-            The most valuable angel investors provide more than just money. Charlie's success has come from offering guidance, connections, and strategic advice to his portfolio companies. This hands-on approach has not only helped the startups succeed but has also given him deeper insight into market trends and opportunities.
-          </p>
-
-          <h2>Conclusion: The Charlie O'Donnell Approach</h2>
-          <p>
-            Charlie's journey through 483 investments highlights that successful angel investing combines disciplined analysis with relationship building. His approach emphasizes looking beyond the numbers to understand the people, vision, and potential behind each startup.
-          </p>
-          <p>
-            For aspiring angel investors, Charlie's lessons offer a valuable framework: diversify your investments, focus on the elements that truly matter, build meaningful relationships with founders, and provide support that goes beyond capital. By following these principles, investors can position themselves for success in the exciting but challenging world of early-stage investing.
-          </p>
+          <h2>Conclusion</h2>
+          
+          <p>Charlie O'Donnell's journey through 483 investments demonstrates that successful angel investing combines disciplined analysis with relationship building and a long-term perspective. For anyone looking to enter or improve their approach to angel investing, these insights provide valuable guidance on focusing on what truly matters: backing exceptional founders building meaningful companies.</p>
         </>
       }
     />
