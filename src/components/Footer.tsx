@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Instagram, Linkedin, Mail } from "lucide-react";
-import { getAssetPath, BASE_PATH } from "@/utils/assetUtils";
+import { getAssetPath } from "@/utils/assetUtils";
 
 const Footer = () => {
   // Function to scroll to top when navigating through Link component
@@ -12,8 +12,8 @@ const Footer = () => {
     });
   };
 
-  // For debugging
-  console.log("Footer rendering, logo path:", getAssetPath("/lovable-uploads/f2fa4572-ad28-4141-9d35-e83e2d2d4660.png"));
+  // Image path for logo
+  const logoPath = "/lovable-uploads/f2fa4572-ad28-4141-9d35-e83e2d2d4660.png";
 
   return (
     <footer className="bg-collektiv-green text-white pt-16 pb-6">
@@ -22,14 +22,18 @@ const Footer = () => {
           <div>
             <div className="mb-4">
               <img 
-                src={`${BASE_PATH}/lovable-uploads/f2fa4572-ad28-4141-9d35-e83e2d2d4660.png`} 
+                src={getAssetPath(logoPath)} 
                 alt="The Collektiv Club" 
                 className="h-12"
                 onError={(e) => {
                   console.error("Error loading footer logo:", e);
                   e.currentTarget.onerror = null;
-                  // Try fallback path if the first one fails
-                  e.currentTarget.src = "/collektiv-club-revive/lovable-uploads/f2fa4572-ad28-4141-9d35-e83e2d2d4660.png";
+                  // Try fallback path
+                  try {
+                    e.currentTarget.src = logoPath.startsWith('/') ? logoPath : `/${logoPath}`;
+                  } catch (err) {
+                    console.error("All logo loading attempts failed");
+                  }
                 }}
               />
             </div>

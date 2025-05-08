@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BASE_PATH } from "@/utils/assetUtils";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Membership from "./pages/Membership";
@@ -28,15 +29,12 @@ import AngelSyndicates from "./pages/insights/AngelSyndicates";
 
 const queryClient = new QueryClient();
 
-// Get basename from import.meta.env or default to repository name for GitHub Pages
-const basename = "/collektiv-club-revive";
-
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter basename={basename}>
+      <BrowserRouter basename={BASE_PATH}>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />

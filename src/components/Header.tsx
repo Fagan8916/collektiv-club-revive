@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { getAssetPath, BASE_PATH } from "@/utils/assetUtils";
+import { getAssetPath } from "@/utils/assetUtils";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -47,8 +47,8 @@ const Header = () => {
     });
   };
 
-  // For debugging
-  console.log("Header rendering, logo path:", getAssetPath("/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png"));
+  // Image path for logo
+  const logoPath = "/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png";
 
   return (
     <header
@@ -66,14 +66,18 @@ const Header = () => {
           onClick={scrollToTop}
         >
           <img 
-            src={`${BASE_PATH}/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png`} 
+            src={getAssetPath(logoPath)} 
             alt="the Collektiv Club" 
             className="h-12"
             onError={(e) => {
               console.error("Error loading logo:", e);
               e.currentTarget.onerror = null;
-              // Try fallback path if the first one fails
-              e.currentTarget.src = "/collektiv-club-revive/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png";
+              // Try multiple fallback paths
+              try {
+                e.currentTarget.src = logoPath.startsWith('/') ? logoPath : `/${logoPath}`;
+              } catch (err) {
+                console.error("All logo loading attempts failed");
+              }
             }}
           />
         </Link>
