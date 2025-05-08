@@ -24,8 +24,23 @@ export const getAssetPath = (path: string): string => {
 
 // Helper function to get correct image path considering environment
 export const getImagePath = (path: string): string => {
+  // Make sure path starts with /
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
-  
-  // Try the BASE_PATH version first, then fallback to direct path if needed
-  return import.meta.env.DEV ? normalizedPath : `${BASE_PATH}${normalizedPath}`;
+  return `${BASE_PATH}${normalizedPath}`;
+};
+
+// Ensure URLs are HTTPS
+export const ensureHttps = (url: string): string => {
+  if (url.startsWith('http:')) {
+    return url.replace('http:', 'https:');
+  }
+  return url;
+};
+
+// Get absolute URL with HTTPS
+export const getAbsoluteUrl = (path: string): string => {
+  const baseUrl = window.location.origin;
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  const absoluteUrl = `${baseUrl}${BASE_PATH}${normalizedPath}`;
+  return ensureHttps(absoluteUrl);
 };

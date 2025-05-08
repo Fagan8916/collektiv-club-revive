@@ -8,6 +8,14 @@
     <meta name="description" content="Join COLLEKTIV.CLUB, a community of like-minded individuals dedicated to growth, connection, and collective success." />
     <meta name="author" content="COLLEKTIV.CLUB" />
 
+    <!-- Enforce HTTPS -->
+    <script type="text/javascript">
+      // Redirect to HTTPS if currently on HTTP
+      if (window.location.protocol === 'http:' && window.location.hostname !== 'localhost') {
+        window.location.href = window.location.href.replace('http:', 'https:');
+      }
+    </script>
+
     <meta property="og:title" content="COLLEKTIV.CLUB - Community for Growth and Connection" />
     <meta property="og:description" content="Join COLLEKTIV.CLUB, a community of like-minded individuals dedicated to growth, connection, and collective success." />
     <meta property="og:type" content="website" />

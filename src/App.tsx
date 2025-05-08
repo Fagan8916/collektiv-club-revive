@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { BASE_PATH } from "@/utils/assetUtils";
 import Index from "./pages/Index";
 import About from "./pages/About";
@@ -56,6 +56,9 @@ const App = () => (
           <Route path="/insights/saas-metrics-evaluation" element={<SaasMetrics />} />
           <Route path="/insights/startup-valuations" element={<Valuations />} />
           <Route path="/insights/angel-syndicates" element={<AngelSyndicates />} />
+          
+          {/* Redirect from potential incorrect paths */}
+          <Route path={`${BASE_PATH}/*`} element={<Navigate to="/" replace />} />
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
