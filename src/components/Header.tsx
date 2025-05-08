@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { getAssetPath } from "@/utils/assetUtils";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -62,7 +63,7 @@ const Header = () => {
           onClick={scrollToTop}
         >
           <img 
-            src="/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png" 
+            src={getAssetPath("/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png")} 
             alt="the Collektiv Club" 
             className="h-12"
           />
