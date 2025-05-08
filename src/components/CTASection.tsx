@@ -17,7 +17,7 @@ const CTASection = () => {
           </p>
           <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
             <Link 
-              to="/join" 
+              to="/membership" 
               className="bg-white text-collektiv-green px-8 py-3 rounded-md font-medium hover:bg-green-50 transition-colors flex items-center justify-center"
             >
               Join Now
