@@ -1,4 +1,3 @@
-
 import React from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -11,7 +10,7 @@ const Terms = () => {
         <section className="pt-32 pb-16 bg-gradient-to-r from-blue-50 to-white">
           <div className="container">
             <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-collektiv-blue">Terms of Service</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-collektiv-green">Terms of Service</h1>
             </div>
           </div>
         </section>
@@ -171,7 +170,7 @@ const Terms = () => {
 
               <h2 className="font-bold">19. LIMITATION OF LIABILITY</h2>
               
-              <p>The user of the Collektiv website expressly understands and agrees that Collektiv shall not be liable for any direct, indirect, incidental, special, consequential or exemplary damages, including but not limited to, damages for loss of profits, goodwill, use, data or other intangible losses (even if Collektiv has been advised of the possibility of such damages), resulting from: (i) the use or the inability to use the Service; (ii) the cost of procurement of substitute goods and services resulting from any goods, data, information or services purchased or obtained or messages received or transactions entered into through or from the Service; (iii) unauthorised access to or alteration of transmissions or data of the user of the Collektiv website; (iv) statements or conduct of any third party on the Service; (v) any agreement, understanding or relationship the user of the Collektiv enters into with any of the Contributors or any other person or entity with whom it has been put in contact through the Collektiv website; or (vi) any other matter relating to the Service.</p>
+              <p>The user of the Collektiv website expressly understands and agrees that Collektiv shall not be liable for any direct, indirect, incidental, special, consequential or exemplary damages, including but not limited to, damages for loss of profits, goodwill, use, data or other intangible losses (even if Collektiv has been advised of the possibility of such damages), resulting from: (i) the use or the inability to use the Service; (ii) the cost of procurement of substitute goods and services resulting from any goods, data, information or services purchased or obtained or messages received or transactions entered into through or from the Service; (iii) unauthorised access to or alteration of transmissions or data of the user of the Collektiv website; (iv) statements or conduct of any third party on the Service; (v) any agreement, understanding or relationship the user of the Collektiv website enters into with any of the Contributors or any other person or entity with whom it has been put in contact through the Collektiv website; or (vi) any other matter relating to the Service.</p>
 
               <h2 className="font-bold">20. EXCLUSIONS AND LIMITATIONS</h2>
               
