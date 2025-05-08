@@ -14,25 +14,31 @@ export const BASE_PATH = import.meta.env.DEV ? '' : "/collektiv-club-revive";
  * @returns The correct path with base path prefixed
  */
 export const getAssetPath = (path: string): string => {
+  if (!path) return '';
+  
   // Make sure path starts with /
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
   
   // For debugging
-  console.log(`Asset path requested: ${normalizedPath}, BASE_PATH: ${BASE_PATH}, returning: ${BASE_PATH}${normalizedPath}`);
+  console.log(`getAssetPath: ${normalizedPath}, BASE_PATH: ${BASE_PATH}`);
   
   return `${BASE_PATH}${normalizedPath}`;
 };
 
 // Helper function to get correct image path considering environment
 export const getImagePath = (path: string): string => {
+  if (!path) return '';
+  
   // Make sure path starts with /
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
-  console.log(`Image path: ${normalizedPath}, using BASE_PATH: ${BASE_PATH}`);
+  console.log(`getImagePath: ${normalizedPath}`);
   return getAssetPath(normalizedPath);
 };
 
 // Ensure URLs are HTTPS
 export const ensureHttps = (url: string): string => {
+  if (!url) return '';
+  
   if (url.startsWith('http:')) {
     return url.replace('http:', 'https:');
   }
@@ -41,6 +47,8 @@ export const ensureHttps = (url: string): string => {
 
 // Get absolute URL with HTTPS
 export const getAbsoluteUrl = (path: string): string => {
+  if (!path) return '';
+  
   const baseUrl = window.location.origin;
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
   const absoluteUrl = `${baseUrl}${BASE_PATH}${normalizedPath}`;
