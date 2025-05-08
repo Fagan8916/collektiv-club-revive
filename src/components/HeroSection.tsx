@@ -2,13 +2,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { getAssetPath } from "@/utils/assetUtils";
 
 const HeroSection = () => {
-  // Use a function to correctly generate URLs with the base path
-  const getAssetPath = (path: string) => {
-    return `/collektiv-club-revive${path}`;
-  };
-
   return (
     <section className="relative min-h-screen flex items-center pt-20 bg-gradient-to-br from-collektiv-accent to-white">
       <div className="absolute inset-0 z-0 overflow-hidden">
