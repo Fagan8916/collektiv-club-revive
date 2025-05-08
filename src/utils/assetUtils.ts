@@ -4,11 +4,12 @@
  * Uses the import.meta.env.BASE_URL value from Vite
  */
 export const getAssetPath = (path: string): string => {
-  // Hardcoding the GitHub Pages base path for production
-  const basePath = "/collektiv-club-revive/";
-  // Remove leading slash if the basePath already has one
+  // We're switching to use relative paths with the HashRouter approach
+  // This simplifies asset loading with GitHub Pages
+  
+  // Remove leading slash if present
   const normalizedPath = path.startsWith('/') ? path.slice(1) : path;
-  return `${basePath}${normalizedPath}`;
+  return normalizedPath;
 };
 
 // Common asset paths

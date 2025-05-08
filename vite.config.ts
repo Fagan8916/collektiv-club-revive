@@ -6,7 +6,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  // Use repository name as base for GitHub Pages - setting as absolute path
+  // Important: Use absolute path for base URL
   base: "/collektiv-club-revive/",
   server: {
     host: "::",
@@ -20,6 +20,17 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+    },
+  },
+  build: {
+    outDir: "dist",
+    assetsDir: "assets",
+    sourcemap: true,
+    // Output all necessary files for SPA routing
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      },
     },
   },
 }));

@@ -9,12 +9,15 @@
     // MIT License - https://github.com/rafgraph/spa-github-pages
     var segmentCount = 1;
     var l = window.location;
-    l.replace(
-      l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-      l.pathname.split('/').slice(0, 1 + segmentCount).join('/') + '/?/' +
+    console.log("404 redirect starting. Current path:", l.pathname);
+    var newPath = l.pathname.split('/').slice(0, 1 + segmentCount).join('/') + '/?/' +
       l.pathname.slice(1).split('/').slice(segmentCount).join('/').replace(/&/g, '~and~') +
       (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
-      l.hash
+      l.hash;
+    
+    console.log("Redirecting to:", newPath);
+    l.replace(
+      l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + newPath
     );
   </script>
 </head>

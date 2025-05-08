@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Membership from "./pages/Membership";
@@ -28,40 +28,46 @@ import AngelSyndicates from "./pages/insights/AngelSyndicates";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter basename="/collektiv-club-revive">
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/membership" element={<Membership />} />
-          <Route path="/insights" element={<Insights />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/hnwi-si" element={<HNWISI />} />
-          <Route path="/calculator" element={<Calculator />} />
-          <Route path="/founders" element={<Founders />} />
-          
-          {/* Individual article routes */}
-          <Route path="/insights/lessons-from-483-investments" element={<LessonsFromInvestments />} />
-          <Route path="/insights/saas-funding-agreements" element={<SaasFundingAgreements />} />
-          <Route path="/insights/beginner-angel-investors" element={<BeginnerAngelInvestors />} />
-          <Route path="/insights/eis-seis-tax-schemes" element={<EISSEIS />} />
-          <Route path="/insights/understanding-multiples" element={<MultiplesInValuations />} />
-          <Route path="/insights/saas-metrics-evaluation" element={<SaasMetrics />} />
-          <Route path="/insights/startup-valuations" element={<Valuations />} />
-          <Route path="/insights/angel-syndicates" element={<AngelSyndicates />} />
-          
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+// Use HashRouter instead of BrowserRouter for GitHub Pages
+// This works better with GitHub Pages because it uses #/ instead of real paths
+const App = () => {
+  console.log("App component rendering");
+  
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <HashRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/membership" element={<Membership />} />
+            <Route path="/insights" element={<Insights />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/hnwi-si" element={<HNWISI />} />
+            <Route path="/calculator" element={<Calculator />} />
+            <Route path="/founders" element={<Founders />} />
+            
+            {/* Individual article routes */}
+            <Route path="/insights/lessons-from-483-investments" element={<LessonsFromInvestments />} />
+            <Route path="/insights/saas-funding-agreements" element={<SaasFundingAgreements />} />
+            <Route path="/insights/beginner-angel-investors" element={<BeginnerAngelInvestors />} />
+            <Route path="/insights/eis-seis-tax-schemes" element={<EISSEIS />} />
+            <Route path="/insights/understanding-multiples" element={<MultiplesInValuations />} />
+            <Route path="/insights/saas-metrics-evaluation" element={<SaasMetrics />} />
+            <Route path="/insights/startup-valuations" element={<Valuations />} />
+            <Route path="/insights/angel-syndicates" element={<AngelSyndicates />} />
+            
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </HashRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
