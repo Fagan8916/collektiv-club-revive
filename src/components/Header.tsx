@@ -1,9 +1,8 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { getAssetPath, BASE_PATH } from "@/utils/assetUtils";
+import { getImagePath } from "@/utils/assetUtils";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -17,6 +16,7 @@ const navigation = [
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -49,17 +49,13 @@ const Header = () => {
 
   // Image path for logo
   const logoPath = "/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png";
-  const absoluteLogoPath = `${BASE_PATH}${logoPath}`;
+  const imageSrc = getImagePath(logoPath);
+  const fallbackImage = "https://placehold.co/200x60/1a1a1a/dddddd?text=COLLEKTIV.CLUB";
   
   // Handle image loading errors
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    console.error("Error loading header logo");
-    e.currentTarget.onerror = null; // Prevent infinite error loop
-    
-    // Try alternative paths
-    const altPath = `${window.location.origin}${BASE_PATH}${logoPath}`;
-    console.log("Trying alternative path:", altPath);
-    e.currentTarget.src = altPath;
+  const handleImageError = () => {
+    console.log("Header logo failed to load, using fallback");
+    setImageError(true);
   };
 
   return (
@@ -78,7 +74,7 @@ const Header = () => {
           onClick={scrollToTop}
         >
           <img 
-            src={absoluteLogoPath} 
+            src={imageError ? fallbackImage : imageSrc}
             alt="the Collektiv Club" 
             className="h-12"
             onError={handleImageError}

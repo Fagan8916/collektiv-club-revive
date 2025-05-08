@@ -17,6 +17,7 @@
       }
     </script>
 
+    <!-- Open Graph / Social Media Meta Tags -->
     <meta property="og:title" content="COLLEKTIV.CLUB - Community for Growth and Connection" />
     <meta property="og:description" content="Join COLLEKTIV.CLUB, a community of like-minded individuals dedicated to growth, connection, and collective success." />
     <meta property="og:type" content="website" />
@@ -33,8 +34,8 @@
       (function(l) {
         console.log("index.html - URL before processing: " + l.href);
         
-        // Check for redirect from 404.html
-        if (l.search[1] === '/' ) {
+        // Only process the URL if there's a search parameter that starts with '/'
+        if (l.search[1] === '/') {
           var decoded = l.search.slice(1).split('&').map(function(s) { 
             return s.replace(/~and~/g, '&')
           }).join('?');

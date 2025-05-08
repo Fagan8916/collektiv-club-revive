@@ -1,24 +1,27 @@
-
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import { getAssetPath, BASE_PATH } from "@/utils/assetUtils";
+import { getImagePath } from "@/utils/assetUtils";
 
 const HeroSection = () => {
+  // Use state to handle image loading
+  const [imageError, setImageError] = useState(false);
+  
   // Image path for logo - using direct path for public directory assets
   const logoPath = "/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png";
-  const absoluteLogoPath = `${BASE_PATH}${logoPath}`;
   
   // Handling image loading errors
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    console.error("Error loading hero logo");
+    console.log("Image error occurred, trying fallback");
     e.currentTarget.onerror = null; // Prevent infinite error loop
-    
-    // Try alternative paths
-    const altPath = `${window.location.origin}${BASE_PATH}${logoPath}`;
-    console.log("Trying alternative path:", altPath);
-    e.currentTarget.src = altPath;
+    setImageError(true);
   };
+
+  // Use the processed image path
+  const imageSrc = getImagePath(logoPath);
+  
+  // Fallback image if the main one fails to load
+  const fallbackImage = "https://placehold.co/300x100/1a1a1a/dddddd?text=COLLEKTIV.CLUB";
 
   return (
     <section className="relative min-h-screen flex items-center pt-20 bg-gradient-to-br from-collektiv-accent to-white">
@@ -29,7 +32,7 @@ const HeroSection = () => {
         <div className="max-w-3xl mx-auto text-center">
           <div className="flex justify-center mb-6">
             <img 
-              src={absoluteLogoPath}
+              src={imageError ? fallbackImage : imageSrc}
               alt="the Collektiv Club" 
               className="h-24 md:h-32 animate-fade-in"
               onError={handleImageError}

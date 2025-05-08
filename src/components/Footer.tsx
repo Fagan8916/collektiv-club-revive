@@ -1,10 +1,11 @@
-
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Instagram, Linkedin, Mail } from "lucide-react";
-import { getAssetPath, BASE_PATH } from "@/utils/assetUtils";
+import { getImagePath } from "@/utils/assetUtils";
 
 const Footer = () => {
+  const [imageError, setImageError] = useState(false);
+  
   // Function to scroll to top when navigating through Link component
   const scrollToTop = () => {
     window.scrollTo({
@@ -15,17 +16,13 @@ const Footer = () => {
 
   // Image path for logo
   const logoPath = "/lovable-uploads/f2fa4572-ad28-4141-9d35-e83e2d2d4660.png";
-  const absoluteLogoPath = `${BASE_PATH}${logoPath}`;
+  const imageSrc = getImagePath(logoPath);
+  const fallbackImage = "https://placehold.co/200x60/ffffff/1a1a1a?text=COLLEKTIV.CLUB";
   
   // Handle image loading errors
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    console.error("Error loading footer logo");
-    e.currentTarget.onerror = null; // Prevent infinite error loop
-    
-    // Try alternative paths
-    const altPath = `${window.location.origin}${BASE_PATH}${logoPath}`;
-    console.log("Trying alternative path:", altPath);
-    e.currentTarget.src = altPath;
+  const handleImageError = () => {
+    console.log("Footer logo failed to load, using fallback");
+    setImageError(true);
   };
 
   return (
@@ -35,7 +32,7 @@ const Footer = () => {
           <div>
             <div className="mb-4">
               <img 
-                src={absoluteLogoPath} 
+                src={imageError ? fallbackImage : imageSrc}
                 alt="The Collektiv Club" 
                 className="h-12"
                 onError={handleImageError}
