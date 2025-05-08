@@ -11,7 +11,7 @@ const HNWISI = () => {
         <section className="pt-32 pb-16 bg-gradient-to-r from-blue-50 to-white">
           <div className="container">
             <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-collektiv-blue">High Net Worth & Sophisticated Investors</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-collektiv-green">High Net Worth & Sophisticated Investors</h1>
             </div>
           </div>
         </section>
