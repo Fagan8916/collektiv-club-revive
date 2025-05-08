@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Membership from "./pages/Membership";
@@ -28,8 +28,6 @@ import AngelSyndicates from "./pages/insights/AngelSyndicates";
 
 const queryClient = new QueryClient();
 
-// Use HashRouter instead of BrowserRouter for GitHub Pages
-// This works better with GitHub Pages because it uses #/ instead of real paths
 const App = () => {
   console.log("App component rendering");
   
@@ -61,7 +59,7 @@ const App = () => {
             <Route path="/insights/startup-valuations" element={<Valuations />} />
             <Route path="/insights/angel-syndicates" element={<AngelSyndicates />} />
             
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            {/* Catch-all route */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </HashRouter>

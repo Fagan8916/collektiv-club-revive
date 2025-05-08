@@ -1,10 +1,12 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { getAssetPath } from "@/utils/assetUtils";
 
 const HeroSection = () => {
-  // Use import.meta.env.BASE_URL for correct image paths
-  const basePath = import.meta.env.BASE_URL || '';
+  // Use the getAssetPath utility for correct image paths
+  const logoPath = getAssetPath("lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png");
   
   return (
     <section className="relative min-h-screen flex items-center pt-20 bg-gradient-to-br from-collektiv-accent to-white">
@@ -15,7 +17,7 @@ const HeroSection = () => {
         <div className="max-w-3xl mx-auto text-center">
           <div className="flex justify-center mb-6">
             <img 
-              src={`${basePath}lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png`}
+              src={logoPath}
               alt="the Collektiv Club" 
               className="h-24 md:h-32 animate-fade-in" 
             />

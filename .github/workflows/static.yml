@@ -40,6 +40,14 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+      - name: Copy .nojekyll file
+        run: cp public/.nojekyll dist/
+      - name: Debug dist directory
+        run: |
+          echo "Contents of dist directory:"
+          ls -la dist/
+          echo "Contents of dist/assets directory:"
+          ls -la dist/assets/ || echo "No assets directory found"
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

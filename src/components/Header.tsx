@@ -1,7 +1,9 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { getAssetPath } from "@/utils/assetUtils";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -17,8 +19,8 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   
-  // Use import.meta.env.BASE_URL for correct image paths
-  const basePath = import.meta.env.BASE_URL || '';
+  // Get the logo path using our utility function
+  const logoPath = getAssetPath("lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -64,7 +66,7 @@ const Header = () => {
           onClick={scrollToTop}
         >
           <img 
-            src={`${basePath}lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png`}
+            src={logoPath}
             alt="the Collektiv Club" 
             className="h-12"
           />
