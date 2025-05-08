@@ -5,19 +5,13 @@
   <meta charset="utf-8">
   <title>COLLEKTIV.CLUB - Redirecting...</title>
   <script type="text/javascript">
-    // Single Page Apps for GitHub Pages
-    // This script takes the current URL and converts the path
-    // to work with GitHub Pages and HashRouter
-    var pathSegmentsToKeep = 1; // Keep /collektiv-club-revive/ but remove everything after
+    // Single Page Apps for GitHub Pages and custom domains
     var l = window.location;
     
     console.log("404 redirect starting. Current path:", l.pathname);
     
-    // Get the repository name from the pathname
-    var repoName = l.pathname.split('/')[1];
-    
     // Redirect to the root with a hash route
-    var newPath = l.origin + '/' + repoName + '/#' + l.pathname.slice(('/' + repoName).length);
+    var newPath = l.origin + '/#' + l.pathname;
     
     console.log("Redirecting to:", newPath);
     window.location.replace(newPath);
@@ -25,6 +19,6 @@
 </head>
 <body>
   <h1>Redirecting...</h1>
-  <p>If you are not redirected automatically, <a href="/collektiv-club-revive/#/">click here</a>.</p>
+  <p>If you are not redirected automatically, <a href="/">click here</a>.</p>
 </body>
 </html>

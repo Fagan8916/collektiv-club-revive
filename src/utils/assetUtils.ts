@@ -4,7 +4,7 @@
  * Uses the import.meta.env.BASE_URL value from Vite
  */
 export const getAssetPath = (path: string): string => {
-  const basePath = import.meta.env.BASE_URL || '';
+  const basePath = import.meta.env.BASE_URL || '/';
   
   // Remove leading slash if present
   const normalizedPath = path.startsWith('/') ? path.slice(1) : path;
