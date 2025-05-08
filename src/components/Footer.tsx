@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { Instagram, Linkedin, Mail } from "lucide-react";
@@ -110,6 +111,10 @@ const Footer = () => {
                 <a href="mailto:info@collektiv.club" className="text-green-100 hover:text-white transition-colors">
                   info@collektiv.club
                 </a>
+              </li>
+              <li className="text-green-100 pt-2">
+                4th Floor, 4 Tabernacle Street<br />
+                London, United Kingdom, EC2A 4LU
               </li>
             </ul>
           </div>
