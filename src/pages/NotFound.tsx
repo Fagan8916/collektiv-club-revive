@@ -1,7 +1,7 @@
 
 import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
-import { getAssetPath } from "@/utils/assetUtils";
+import { BASE_PATH, getAssetPath } from "@/utils/assetUtils";
 
 const NotFound = () => {
   const location = useLocation();
@@ -13,8 +13,10 @@ const NotFound = () => {
       location.pathname
     );
     
-    // Log the current BASE_PATH value to help debug routing issues
-    console.log("Current BASE_PATH:", getAssetPath(''));
+    // Log environment information to help debug routing issues
+    console.log("Current BASE_PATH:", BASE_PATH);
+    console.log("Full computed path:", getAssetPath('/'));
+    console.log("Window location:", window.location.href);
   }, [location.pathname]);
 
   return (
@@ -26,7 +28,7 @@ const NotFound = () => {
           The page you're looking for ({location.pathname}) doesn't exist or has been moved.
         </p>
         <Link 
-          to={getAssetPath('/')} 
+          to="/"
           className="inline-block bg-collektiv-green text-white px-6 py-3 rounded-lg hover:bg-opacity-90 transition-colors"
           onClick={() => console.log("Navigating to home page from 404")}
         >

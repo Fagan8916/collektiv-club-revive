@@ -18,22 +18,22 @@
     var l = window.location;
     console.log("404.html - Processing URL: " + l.href);
     
-    // Parse the repository name from the pathname
-    var repoName = l.pathname.split('/')[1];
-    console.log("404.html - Detected repo name: " + repoName);
+    // Get the repository name from the URL path
+    // For GitHub Pages, this is the first segment after the domain
+    var repoName = "collektiv-club-revive";
+    console.log("404.html - Using repo name: " + repoName);
     
-    // Handle the case where we're at the root of the domain (no repo name)
-    var pathSegmentsToKeep = repoName ? 1 : 0;
-    
+    // Build the redirect URL
     var newUrl = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-      (repoName ? '/' + repoName : '') + '/?/' +
-      l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+      '/' + repoName + '/?/' +
+      l.pathname.slice(1).replace('/' + repoName, '').replace(/&/g, '~and~') +
       (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
       l.hash;
     
     console.log("404.html - Redirecting to: " + newUrl);
     document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('redirect-url').textContent = newUrl;
+      document.getElementById('manual-redirect').href = '/' + repoName;
     });
     
     // Perform the redirect
@@ -71,10 +71,5 @@
     <p>If you are not redirected automatically, please click <a id="manual-redirect" href="/">here</a> to go to the homepage.</p>
     <p><small>Debug info: <span id="redirect-url">Calculating redirect...</span></small></p>
   </div>
-  <script>
-    // Set the manual redirect link with correct base path
-    var repoName = window.location.pathname.split('/')[1];
-    document.getElementById('manual-redirect').href = repoName ? '/' + repoName : '/';
-  </script>
 </body>
 </html>

@@ -2,12 +2,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import { getAssetPath } from "@/utils/assetUtils";
+import { getAssetPath, BASE_PATH } from "@/utils/assetUtils";
 
 const HeroSection = () => {
-  // Image path for logo
+  // Image path for logo - using direct path for public directory assets
   const logoPath = "/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png";
+  const absoluteLogoPath = `${BASE_PATH}${logoPath}`;
   
+  // Handling image loading errors
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    console.error("Error loading hero logo");
+    e.currentTarget.onerror = null; // Prevent infinite error loop
+    
+    // Try alternative paths
+    const altPath = `${window.location.origin}${BASE_PATH}${logoPath}`;
+    console.log("Trying alternative path:", altPath);
+    e.currentTarget.src = altPath;
+  };
+
   return (
     <section className="relative min-h-screen flex items-center pt-20 bg-gradient-to-br from-collektiv-accent to-white">
       <div className="absolute inset-0 z-0 overflow-hidden">
@@ -17,19 +29,10 @@ const HeroSection = () => {
         <div className="max-w-3xl mx-auto text-center">
           <div className="flex justify-center mb-6">
             <img 
-              src={getAssetPath(logoPath)}
+              src={absoluteLogoPath}
               alt="the Collektiv Club" 
               className="h-24 md:h-32 animate-fade-in"
-              onError={(e) => {
-                console.error("Error loading hero logo:", e);
-                e.currentTarget.onerror = null;
-                // Try fallback path
-                try {
-                  e.currentTarget.src = logoPath.startsWith('/') ? logoPath : `/${logoPath}`;
-                } catch (err) {
-                  console.error("All logo loading attempts failed");
-                }
-              }}
+              onError={handleImageError}
             />
           </div>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-collektiv-green">Invest in Start-ups</h2>

@@ -19,6 +19,9 @@ export const getAssetPath = (path: string): string => {
   // Make sure path starts with /
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
   
+  // Debug log to help troubleshoot path issues
+  console.log(`getAssetPath: Path=${path}, normalizedPath=${normalizedPath}, result=${BASE_PATH}${normalizedPath}`);
+  
   return `${BASE_PATH}${normalizedPath}`;
 };
 
@@ -26,8 +29,14 @@ export const getAssetPath = (path: string): string => {
 export const getImagePath = (path: string): string => {
   if (!path) return '';
   
-  // Make sure path starts with /
+  // Handle both relative and absolute paths
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  
+  // For images in the public directory, they should be accessed directly
+  if (normalizedPath.startsWith('/lovable-uploads/')) {
+    return `${BASE_PATH}${normalizedPath}`;
+  }
+  
   return getAssetPath(normalizedPath);
 };
 
