@@ -28,12 +28,15 @@ import AngelSyndicates from "./pages/insights/AngelSyndicates";
 
 const queryClient = new QueryClient();
 
+// Get basename from import.meta.env or default to repository name for GitHub Pages
+const basename = "/collektiv-club-revive";
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      <BrowserRouter basename={basename}>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
