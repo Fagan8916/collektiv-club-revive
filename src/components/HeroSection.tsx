@@ -1,29 +1,9 @@
 
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import { getImagePath, LOGO_PATHS } from "@/utils/assetUtils";
 
 const HeroSection = () => {
-  // Use state to handle image loading
-  const [imageError, setImageError] = useState(false);
-  
-  // Use the new main logo path
-  const logoPath = LOGO_PATHS.main;
-  
-  // Handling image loading errors
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    console.log("Image error occurred, trying fallback");
-    e.currentTarget.onerror = null; // Prevent infinite error loop
-    setImageError(true);
-  };
-
-  // Use the processed image path
-  const imageSrc = getImagePath(logoPath);
-  
-  // Fallback image if the main one fails to load
-  const fallbackImage = "https://placehold.co/300x100/1a1a1a/dddddd?text=COLLEKTIV.CLUB";
-
   return (
     <section className="relative min-h-screen flex items-center pt-20 bg-gradient-to-br from-collektiv-accent to-white">
       <div className="absolute inset-0 z-0 overflow-hidden">
@@ -33,10 +13,9 @@ const HeroSection = () => {
         <div className="max-w-3xl mx-auto text-center">
           <div className="flex justify-center mb-6">
             <img 
-              src={imageError ? fallbackImage : imageSrc}
+              src="/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png" 
               alt="the Collektiv Club" 
-              className="h-32 md:h-40 animate-fade-in"
-              onError={handleImageError}
+              className="h-24 md:h-32 animate-fade-in" 
             />
           </div>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-collektiv-green">Invest in Start-ups</h2>

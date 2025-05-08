@@ -6,8 +6,8 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  // Use the repository name for GitHub Pages
-  base: "/collektiv-club-revive/",
+  // Use a relative base path for GitHub Pages
+  base: "./",
   server: {
     host: "::",
     port: 8080,

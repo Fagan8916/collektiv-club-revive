@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { getImagePath, LOGO_PATHS } from "@/utils/assetUtils";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -17,7 +16,6 @@ const navigation = [
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [imageError, setImageError] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -48,17 +46,6 @@ const Header = () => {
     });
   };
 
-  // Use the new main logo path
-  const logoPath = LOGO_PATHS.main;
-  const imageSrc = getImagePath(logoPath);
-  const fallbackImage = "https://placehold.co/200x60/1a1a1a/dddddd?text=COLLEKTIV.CLUB";
-  
-  // Handle image loading errors
-  const handleImageError = () => {
-    console.log("Header logo failed to load, using fallback");
-    setImageError(true);
-  };
-
   return (
     <header
       className={cn(
@@ -75,10 +62,9 @@ const Header = () => {
           onClick={scrollToTop}
         >
           <img 
-            src={imageError ? fallbackImage : imageSrc}
+            src="/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png" 
             alt="the Collektiv Club" 
             className="h-12"
-            onError={handleImageError}
           />
         </Link>
 

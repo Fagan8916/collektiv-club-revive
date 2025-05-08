@@ -1,29 +1,15 @@
 
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { Instagram, Linkedin, Mail } from "lucide-react";
-import { getImagePath, LOGO_PATHS } from "@/utils/assetUtils";
 
 const Footer = () => {
-  const [imageError, setImageError] = useState(false);
-  
   // Function to scroll to top when navigating through Link component
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: "smooth"
     });
-  };
-
-  // Use the new white logo path for footer
-  const logoPath = LOGO_PATHS.white;
-  const imageSrc = getImagePath(logoPath);
-  const fallbackImage = "https://placehold.co/200x60/ffffff/1a1a1a?text=COLLEKTIV.CLUB";
-  
-  // Handle image loading errors
-  const handleImageError = () => {
-    console.log("Footer logo failed to load, using fallback");
-    setImageError(true);
   };
 
   return (
@@ -33,10 +19,9 @@ const Footer = () => {
           <div>
             <div className="mb-4">
               <img 
-                src={imageError ? fallbackImage : imageSrc}
+                src="/lovable-uploads/f2fa4572-ad28-4141-9d35-e83e2d2d4660.png" 
                 alt="The Collektiv Club" 
-                className="h-16"
-                onError={handleImageError}
+                className="h-12"
               />
             </div>
             <p className="mb-4 text-green-100">
