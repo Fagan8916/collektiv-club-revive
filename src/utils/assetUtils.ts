@@ -5,6 +5,7 @@
  */
 
 // Base path matching the one in vite.config.ts
+// Use an empty string for development and the correct path for production
 export const BASE_PATH = import.meta.env.DEV ? '' : "/collektiv-club-revive";
 
 /**
@@ -17,7 +18,7 @@ export const getAssetPath = (path: string): string => {
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
   
   // For debugging
-  console.log(`Asset path requested: ${normalizedPath}, returning: ${BASE_PATH}${normalizedPath}`);
+  console.log(`Asset path requested: ${normalizedPath}, BASE_PATH: ${BASE_PATH}, returning: ${BASE_PATH}${normalizedPath}`);
   
   return `${BASE_PATH}${normalizedPath}`;
 };
@@ -26,7 +27,8 @@ export const getAssetPath = (path: string): string => {
 export const getImagePath = (path: string): string => {
   // Make sure path starts with /
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
-  return `${BASE_PATH}${normalizedPath}`;
+  console.log(`Image path: ${normalizedPath}, using BASE_PATH: ${BASE_PATH}`);
+  return getAssetPath(normalizedPath);
 };
 
 // Ensure URLs are HTTPS

@@ -8,7 +8,7 @@
     <meta name="description" content="Join COLLEKTIV.CLUB, a community of like-minded individuals dedicated to growth, connection, and collective success." />
     <meta name="author" content="COLLEKTIV.CLUB" />
 
-    <!-- Enforce HTTPS -->
+    <!-- Force HTTPS -->
     <script type="text/javascript">
       // Redirect to HTTPS if currently on HTTP
       if (window.location.protocol === 'http:' && window.location.hostname !== 'localhost') {
@@ -27,15 +27,17 @@
     
     <link rel="icon" href="/collektiv-club-revive/lovable-uploads/a3fd0962-db0c-4a92-8c9a-96d807501887.png" type="image/png">
 
-    <!-- Start Single Page Apps for GitHub Pages -->
+    <!-- Start Single Page Apps for GitHub Pages - Modified for better debugging -->
     <script type="text/javascript">
       // Single Page Apps for GitHub Pages
       // MIT License - https://github.com/rafgraph/spa-github-pages
       (function(l) {
+        console.log("index.html - Checking redirect: path=" + l.pathname + " search=" + l.search);
         if (l.search[1] === '/' ) {
           var decoded = l.search.slice(1).split('&').map(function(s) { 
             return s.replace(/~and~/g, '&')
           }).join('?');
+          console.log("index.html - Redirecting, decoded path: " + decoded);
           window.history.replaceState(null, null,
               l.pathname.slice(0, -1) + decoded + l.hash
           );

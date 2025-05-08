@@ -2,7 +2,7 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { BASE_PATH } from "@/utils/assetUtils";
+import { getAssetPath } from "@/utils/assetUtils";
 
 const NotFound = () => {
   const location = useLocation();
@@ -19,7 +19,11 @@ const NotFound = () => {
       <div className="text-center">
         <h1 className="text-4xl font-bold mb-4">404</h1>
         <p className="text-xl text-gray-600 mb-4">Oops! Page not found</p>
-        <Link to="/" className="text-blue-500 hover:text-blue-700 underline">
+        <Link 
+          to="/" 
+          className="text-blue-500 hover:text-blue-700 underline"
+          onClick={() => console.log("Attempting to navigate to home page")}
+        >
           Return to Home
         </Link>
       </div>
