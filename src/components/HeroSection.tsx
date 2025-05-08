@@ -1,14 +1,15 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import { getImagePath } from "@/utils/assetUtils";
+import { getImagePath, LOGO_PATHS } from "@/utils/assetUtils";
 
 const HeroSection = () => {
   // Use state to handle image loading
   const [imageError, setImageError] = useState(false);
   
-  // Image path for logo - using direct path for public directory assets
-  const logoPath = "/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png";
+  // Use the new main logo path
+  const logoPath = LOGO_PATHS.main;
   
   // Handling image loading errors
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
@@ -34,7 +35,7 @@ const HeroSection = () => {
             <img 
               src={imageError ? fallbackImage : imageSrc}
               alt="the Collektiv Club" 
-              className="h-24 md:h-32 animate-fade-in"
+              className="h-32 md:h-40 animate-fade-in"
               onError={handleImageError}
             />
           </div>

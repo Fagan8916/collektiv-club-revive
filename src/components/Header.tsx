@@ -1,8 +1,9 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { getImagePath } from "@/utils/assetUtils";
+import { getImagePath, LOGO_PATHS } from "@/utils/assetUtils";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -47,8 +48,8 @@ const Header = () => {
     });
   };
 
-  // Image path for logo
-  const logoPath = "/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png";
+  // Use the new main logo path
+  const logoPath = LOGO_PATHS.main;
   const imageSrc = getImagePath(logoPath);
   const fallbackImage = "https://placehold.co/200x60/1a1a1a/dddddd?text=COLLEKTIV.CLUB";
   

@@ -1,7 +1,7 @@
 
 import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
-import { BASE_PATH, getAssetPath } from "@/utils/assetUtils";
+import { BASE_PATH, getAssetPath, getImagePath, LOGO_PATHS } from "@/utils/assetUtils";
 import { Home, ArrowLeft } from "lucide-react";
 
 const NotFound = () => {
@@ -26,6 +26,13 @@ const NotFound = () => {
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
       <div className="w-full max-w-lg p-8 bg-white shadow-lg rounded-lg text-center">
         <div className="mb-6">
+          <div className="mb-6 flex justify-center">
+            <img 
+              src={getImagePath(LOGO_PATHS.main)}
+              alt="the Collektiv Club" 
+              className="h-16 mb-4" 
+            />
+          </div>
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-red-100 mb-4">
             <span className="text-4xl font-bold text-red-500">404</span>
           </div>

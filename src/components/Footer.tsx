@@ -1,7 +1,8 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Instagram, Linkedin, Mail } from "lucide-react";
-import { getImagePath } from "@/utils/assetUtils";
+import { getImagePath, LOGO_PATHS } from "@/utils/assetUtils";
 
 const Footer = () => {
   const [imageError, setImageError] = useState(false);
@@ -14,8 +15,8 @@ const Footer = () => {
     });
   };
 
-  // Image path for logo
-  const logoPath = "/lovable-uploads/f2fa4572-ad28-4141-9d35-e83e2d2d4660.png";
+  // Use the new white logo path for footer
+  const logoPath = LOGO_PATHS.white;
   const imageSrc = getImagePath(logoPath);
   const fallbackImage = "https://placehold.co/200x60/ffffff/1a1a1a?text=COLLEKTIV.CLUB";
   
@@ -34,7 +35,7 @@ const Footer = () => {
               <img 
                 src={imageError ? fallbackImage : imageSrc}
                 alt="The Collektiv Club" 
-                className="h-12"
+                className="h-16"
                 onError={handleImageError}
               />
             </div>

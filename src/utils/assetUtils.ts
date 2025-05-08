@@ -56,3 +56,9 @@ export const getAbsoluteUrl = (path: string): string => {
   const absoluteUrl = `${baseUrl}${BASE_PATH}${normalizedPath}`;
   return ensureHttps(absoluteUrl);
 };
+
+// Define logo paths in one place for consistency
+export const LOGO_PATHS = {
+  main: "/lovable-uploads/362d0615-13ed-4ca0-bb17-ad46b9292ce0.png",  // Main green logo
+  white: "/lovable-uploads/781e5abd-984e-4d48-9b80-604a94bc61ec.png"   // White logo for footer
+};
