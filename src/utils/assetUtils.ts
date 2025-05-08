@@ -19,9 +19,6 @@ export const getAssetPath = (path: string): string => {
   // Make sure path starts with /
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
   
-  // For debugging
-  console.log(`getAssetPath: ${normalizedPath}, BASE_PATH: ${BASE_PATH}`);
-  
   return `${BASE_PATH}${normalizedPath}`;
 };
 
@@ -31,7 +28,6 @@ export const getImagePath = (path: string): string => {
   
   // Make sure path starts with /
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
-  console.log(`getImagePath: ${normalizedPath}`);
   return getAssetPath(normalizedPath);
 };
 
@@ -39,7 +35,7 @@ export const getImagePath = (path: string): string => {
 export const ensureHttps = (url: string): string => {
   if (!url) return '';
   
-  if (url.startsWith('http:')) {
+  if (url.startsWith('http:') && window.location.hostname !== 'localhost') {
     return url.replace('http:', 'https:');
   }
   return url;

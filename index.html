@@ -8,10 +8,11 @@
     <meta name="description" content="Join COLLEKTIV.CLUB, a community of like-minded individuals dedicated to growth, connection, and collective success." />
     <meta name="author" content="COLLEKTIV.CLUB" />
 
-    <!-- Force HTTPS -->
+    <!-- Always force HTTPS -->
     <script type="text/javascript">
       // Redirect to HTTPS if currently on HTTP
       if (window.location.protocol === 'http:' && window.location.hostname !== 'localhost') {
+        console.log("Redirecting from HTTP to HTTPS");
         window.location.href = window.location.href.replace('http:', 'https:');
       }
     </script>
@@ -40,9 +41,13 @@
           
           console.log("index.html - Redirect found, processing path: " + decoded);
           
+          // Extract the repository name from the pathname for GitHub Pages
+          var repoName = l.pathname.split('/')[1];
+          console.log("index.html - Repository name: " + repoName);
+          
           // Update the URL without causing a page refresh
           window.history.replaceState(null, null,
-              l.pathname.slice(0, -1) + decoded + l.hash
+              (repoName ? '/' + repoName : '') + decoded + l.hash
           );
           
           console.log("index.html - URL after processing: " + window.location.href);

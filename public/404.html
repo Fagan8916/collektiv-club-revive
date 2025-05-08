@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <title>Page Not Found</title>
-  <!-- Enforce HTTPS -->
+  <!-- Always force HTTPS -->
   <script type="text/javascript">
     // Redirect to HTTPS if currently on HTTP
     if (window.location.protocol === 'http:' && window.location.hostname !== 'localhost') {
@@ -18,11 +18,15 @@
     var l = window.location;
     console.log("404.html - Processing URL: " + l.href);
     
-    // For GitHub Pages with repo name in URL, this should be 1
-    var pathSegmentsToKeep = 1;
+    // Parse the repository name from the pathname
+    var repoName = l.pathname.split('/')[1];
+    console.log("404.html - Detected repo name: " + repoName);
+    
+    // Handle the case where we're at the root of the domain (no repo name)
+    var pathSegmentsToKeep = repoName ? 1 : 0;
     
     var newUrl = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-      l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
+      (repoName ? '/' + repoName : '') + '/?/' +
       l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
       (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
       l.hash;
@@ -69,7 +73,8 @@
   </div>
   <script>
     // Set the manual redirect link with correct base path
-    document.getElementById('manual-redirect').href = window.location.pathname.split('/').slice(0, 2).join('/');
+    var repoName = window.location.pathname.split('/')[1];
+    document.getElementById('manual-redirect').href = repoName ? '/' + repoName : '/';
   </script>
 </body>
 </html>
