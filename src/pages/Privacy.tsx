@@ -19,54 +19,32 @@ const Privacy = () => {
         <section className="section bg-white">
           <div className="container">
             <div className="max-w-4xl mx-auto prose prose-lg">
-              <h2>Privacy Policy</h2>
-              
-              <p>Last updated: April 1, 2023</p>
-              
-              <h3>1. Introduction</h3>
-              <p>Welcome to The Collektiv Club's Privacy Policy. We respect your privacy and are committed to protecting your personal data. This Privacy Policy will inform you as to how we look after your personal data when you visit our website and tell you about your privacy rights and how the law protects you.</p>
-              
-              <h3>2. Data We Collect</h3>
-              <p>We may collect, use, store and transfer different kinds of personal data about you which we have grouped together as follows:</p>
+              <h1>Privacy Policy</h1>
+              <p><strong>Last updated: February 10, 2025</strong></p>
+
+              <p>This Privacy Notice for Collektiv Ltd ("we", "us", or "our") describes how and why we might collect, store, use, and/or share ("process") your personal information when you use our services, including when you:</p>
               <ul>
-                <li>Identity Data: includes first name, last name, username or similar identifier.</li>
-                <li>Contact Data: includes billing address, delivery address, email address and telephone numbers.</li>
-                <li>Financial Data: includes bank account and payment card details for membership payments.</li>
-                <li>Transaction Data: includes details about payments to and from you and other details of products and services you have purchased from us.</li>
-                <li>Technical Data: includes internet protocol (IP) address, your login data, browser type and version, time zone setting and location, browser plug-in types and versions, operating system and platform, and other technology on the devices you use to access this website.</li>
-                <li>Profile Data: includes your username and password, purchases or orders made by you, your interests, preferences, feedback and survey responses.</li>
-                <li>Usage Data: includes information about how you use our website, products and services.</li>
-                <li>Marketing and Communications Data: includes your preferences in receiving marketing from us and our third parties and your communication preferences.</li>
+                <li>Visit our website at <a href="http://www.collektiv.club" target="_blank">www.collektiv.club</a> or any website of ours that links to this Privacy Notice</li>
+                <li>Use Angel (an angel syndicate network allowing investments into founder-led businesses)</li>
+                <li>Engage with us in other related ways, including sales, marketing, or events</li>
               </ul>
-              
-              <h3>3. How We Use Your Data</h3>
-              <p>We will only use your personal data when the law allows us to. Most commonly, we will use your personal data in the following circumstances:</p>
+
+              <p><strong>Questions or concerns?</strong> Reading this Privacy Notice will help you understand your privacy rights and choices. If you do not agree with our policies and practices, please do not use our Services. If you have any questions, contact us at <a href="mailto:info@collektiv.club">info@collektiv.club</a>.</p>
+
+              <h2>Summary of Key Points</h2>
               <ul>
-                <li>To register you as a new member.</li>
-                <li>To process and deliver your membership benefits.</li>
-                <li>To manage our relationship with you.</li>
-                <li>To administer and protect our business and this website.</li>
-                <li>To deliver relevant website content and advertisements to you.</li>
-                <li>To use data analytics to improve our website, products/services, marketing, customer relationships and experiences.</li>
+                <li><strong>What personal information do we process?</strong> We may process personal information depending on how you interact with us and the Services, the choices you make, and the products and features you use.</li>
+                <li><strong>Do we process any sensitive personal information?</strong> Some information may be considered 'special' or 'sensitive' in certain jurisdictions. We may process sensitive personal information with your consent or as permitted by law.</li>
+                <li><strong>Do we collect any information from third parties?</strong> We do not collect information from third parties.</li>
+                <li><strong>How do we process your information?</strong> We process your information to provide, improve, and administer our Services, communicate with you, for security and fraud prevention, and to comply with the law.</li>
+                <li><strong>When and with whom do we share personal information?</strong> We may share information in specific situations and with specific third parties.</li>
+                <li><strong>What are your rights?</strong> Depending on your location, you may have certain rights regarding your personal information.</li>
+                <li><strong>How do you exercise your rights?</strong> The easiest way is by submitting a <a href="https://app.termly.io/notify/b2ff46fd-db4e-46af-8c7f-b46de404d940" target="_blank">data subject access request</a> or by contacting us.</li>
               </ul>
-              
-              <h3>4. Data Security</h3>
-              <p>We have put in place appropriate security measures to prevent your personal data from being accidentally lost, used or accessed in an unauthorised way, altered or disclosed. In addition, we limit access to your personal data to those employees, agents, contractors and other third parties who have a business need to know.</p>
-              
-              <h3>5. Data Retention</h3>
-              <p>We will only retain your personal data for as long as necessary to fulfil the purposes we collected it for, including for the purposes of satisfying any legal, accounting, or reporting requirements.</p>
-              
-              <h3>6. Your Legal Rights</h3>
-              <p>Under certain circumstances, you have rights under data protection laws in relation to your personal data, including the right to request access, correction, erasure, restriction, transfer, to object to processing, to portability of data and (where the lawful ground of processing is consent) to withdraw consent.</p>
-              
-              <h3>7. Third-Party Links</h3>
-              <p>This website may include links to third-party websites, plug-ins and applications. Clicking on those links or enabling those connections may allow third parties to collect or share data about you. We do not control these third-party websites and are not responsible for their privacy statements.</p>
-              
-              <h3>8. Changes to This Privacy Policy</h3>
-              <p>We may update this Privacy Policy from time to time. The updated version will be indicated by an updated "Last Updated" date and the updated version will be effective as soon as it is accessible.</p>
-              
-              <h3>9. Contact Us</h3>
-              <p>If you have any questions about this Privacy Policy, please contact us at info@collektiv.club.</p>
+
+              <h2>Contact Us</h2>
+              <p>Email: <a href="mailto:info@collektiv.club">info@collektiv.club</a></p>
+              <p>Address: Collektiv Ltd, 25 Firs Park Avenue, London N21 2PR, United Kingdom</p>
             </div>
           </div>
         </section>
