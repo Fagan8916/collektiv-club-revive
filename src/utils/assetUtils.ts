@@ -15,5 +15,9 @@ export const BASE_PATH = "/collektiv-club-revive";
 export const getAssetPath = (path: string): string => {
   // Make sure path starts with /
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  
+  // For debugging
+  console.log(`Asset path requested: ${normalizedPath}, returning: ${BASE_PATH}${normalizedPath}`);
+  
   return `${BASE_PATH}${normalizedPath}`;
 };

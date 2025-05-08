@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
@@ -47,7 +48,7 @@ const Header = () => {
   };
 
   // For debugging
-  console.log("Logo path:", getAssetPath("/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png"));
+  console.log("Header rendering, logo path:", getAssetPath("/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png"));
 
   return (
     <header
@@ -65,13 +66,14 @@ const Header = () => {
           onClick={scrollToTop}
         >
           <img 
-            src={getAssetPath("/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png")} 
+            src={`${BASE_PATH}/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png`} 
             alt="the Collektiv Club" 
             className="h-12"
             onError={(e) => {
               console.error("Error loading logo:", e);
               e.currentTarget.onerror = null;
-              e.currentTarget.src = `${BASE_PATH}/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png`;
+              // Try fallback path if the first one fails
+              e.currentTarget.src = "/collektiv-club-revive/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png";
             }}
           />
         </Link>

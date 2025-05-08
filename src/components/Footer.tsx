@@ -1,8 +1,7 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Instagram, Linkedin, Mail } from "lucide-react";
-import { getAssetPath } from "@/utils/assetUtils";
+import { getAssetPath, BASE_PATH } from "@/utils/assetUtils";
 
 const Footer = () => {
   // Function to scroll to top when navigating through Link component
@@ -13,6 +12,9 @@ const Footer = () => {
     });
   };
 
+  // For debugging
+  console.log("Footer rendering, logo path:", getAssetPath("/lovable-uploads/f2fa4572-ad28-4141-9d35-e83e2d2d4660.png"));
+
   return (
     <footer className="bg-collektiv-green text-white pt-16 pb-6">
       <div className="container">
@@ -20,12 +22,14 @@ const Footer = () => {
           <div>
             <div className="mb-4">
               <img 
-                src={getAssetPath("/lovable-uploads/f2fa4572-ad28-4141-9d35-e83e2d2d4660.png")} 
+                src={`${BASE_PATH}/lovable-uploads/f2fa4572-ad28-4141-9d35-e83e2d2d4660.png`} 
                 alt="The Collektiv Club" 
                 className="h-12"
                 onError={(e) => {
                   console.error("Error loading footer logo:", e);
                   e.currentTarget.onerror = null;
+                  // Try fallback path if the first one fails
+                  e.currentTarget.src = "/collektiv-club-revive/lovable-uploads/f2fa4572-ad28-4141-9d35-e83e2d2d4660.png";
                 }}
               />
             </div>

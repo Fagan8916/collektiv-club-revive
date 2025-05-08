@@ -1,10 +1,12 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import { getAssetPath } from "@/utils/assetUtils";
+import { getAssetPath, BASE_PATH } from "@/utils/assetUtils";
 
 const HeroSection = () => {
+  // For debugging
+  console.log("Hero rendering, logo path:", getAssetPath("/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png"));
+  
   return (
     <section className="relative min-h-screen flex items-center pt-20 bg-gradient-to-br from-collektiv-accent to-white">
       <div className="absolute inset-0 z-0 overflow-hidden">
@@ -14,9 +16,15 @@ const HeroSection = () => {
         <div className="max-w-3xl mx-auto text-center">
           <div className="flex justify-center mb-6">
             <img 
-              src={getAssetPath("/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png")}
+              src={`${BASE_PATH}/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png`}
               alt="the Collektiv Club" 
-              className="h-24 md:h-32 animate-fade-in" 
+              className="h-24 md:h-32 animate-fade-in"
+              onError={(e) => {
+                console.error("Error loading hero logo:", e);
+                e.currentTarget.onerror = null;
+                // Try fallback path
+                e.currentTarget.src = "/collektiv-club-revive/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png";
+              }}
             />
           </div>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-collektiv-green">Invest in Start-ups</h2>
