@@ -2,6 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Instagram, Linkedin, Mail } from "lucide-react";
+import { getAssetPath } from "@/utils/assetUtils";
 
 const Footer = () => {
   // Function to scroll to top when navigating through Link component
@@ -19,9 +20,13 @@ const Footer = () => {
           <div>
             <div className="mb-4">
               <img 
-                src="/lovable-uploads/f2fa4572-ad28-4141-9d35-e83e2d2d4660.png" 
+                src={getAssetPath("/lovable-uploads/f2fa4572-ad28-4141-9d35-e83e2d2d4660.png")} 
                 alt="The Collektiv Club" 
                 className="h-12"
+                onError={(e) => {
+                  console.error("Error loading footer logo:", e);
+                  e.currentTarget.onerror = null;
+                }}
               />
             </div>
             <p className="mb-4 text-green-100">
