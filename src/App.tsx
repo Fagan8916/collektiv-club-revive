@@ -28,12 +28,15 @@ import AngelSyndicates from "./pages/insights/AngelSyndicates";
 
 const queryClient = new QueryClient();
 
+// Read the base path from import.meta.env
+const basePath = import.meta.env.BASE_URL || '/collektiv-club-revive/';
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      <BrowserRouter basename={basePath}>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />

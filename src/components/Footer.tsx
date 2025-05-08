@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Instagram, Linkedin, Mail } from "lucide-react";
@@ -11,6 +10,9 @@ const Footer = () => {
       behavior: "smooth"
     });
   };
+  
+  // Use import.meta.env.BASE_URL for correct image paths
+  const basePath = import.meta.env.BASE_URL || '';
 
   return (
     <footer className="bg-collektiv-green text-white pt-16 pb-6">
@@ -19,7 +21,7 @@ const Footer = () => {
           <div>
             <div className="mb-4">
               <img 
-                src="/lovable-uploads/f2fa4572-ad28-4141-9d35-e83e2d2d4660.png" 
+                src={`${basePath}lovable-uploads/f2fa4572-ad28-4141-9d35-e83e2d2d4660.png`}
                 alt="The Collektiv Club" 
                 className="h-12"
               />

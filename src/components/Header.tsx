@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
@@ -17,6 +16,9 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  
+  // Use import.meta.env.BASE_URL for correct image paths
+  const basePath = import.meta.env.BASE_URL || '';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,7 +64,7 @@ const Header = () => {
           onClick={scrollToTop}
         >
           <img 
-            src="/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png" 
+            src={`${basePath}lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png`}
             alt="the Collektiv Club" 
             className="h-12"
           />

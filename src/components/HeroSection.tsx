@@ -1,9 +1,11 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 
 const HeroSection = () => {
+  // Use import.meta.env.BASE_URL for correct image paths
+  const basePath = import.meta.env.BASE_URL || '';
+  
   return (
     <section className="relative min-h-screen flex items-center pt-20 bg-gradient-to-br from-collektiv-accent to-white">
       <div className="absolute inset-0 z-0 overflow-hidden">
@@ -13,7 +15,7 @@ const HeroSection = () => {
         <div className="max-w-3xl mx-auto text-center">
           <div className="flex justify-center mb-6">
             <img 
-              src="/lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png" 
+              src={`${basePath}lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png`}
               alt="the Collektiv Club" 
               className="h-24 md:h-32 animate-fade-in" 
             />
