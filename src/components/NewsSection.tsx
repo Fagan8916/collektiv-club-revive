@@ -7,6 +7,18 @@ const NewsSection = () => {
   const articles = [
     {
       id: 1,
+      title: "Convertible Loan Notes: A Smart Financing Tool for Early-Stage SaaS Companies",
+      excerpt:
+        "Raising capital is a critical milestone for early-stage SaaS companies. One increasingly popular and effective method to secure funding without immediately diluting equity is through convertible loan notes (CLNs).",
+      date: "May 13, 2025",
+      author: "Finance Team",
+      image: "https://images.unsplash.com/photo-1589666564514-cf2089595b42?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      slug: "convertible-loan-notes",
+      route: "/insights/convertible-loan-notes",
+      category: "Funding"
+    },
+    {
+      id: 2,
       title: "Lessons from 483 Investments: Insights from Angel Investing Legend Charlie",
       excerpt:
         "Charlie O'Donnell, a seasoned angel investor with nearly 500 investments, shares his invaluable insights and principles that have guided his successful investment journey.",
@@ -18,7 +30,7 @@ const NewsSection = () => {
       category: "Angel Investing"
     },
     {
-      id: 2,
+      id: 3,
       title: "SaaS Funding Agreements: Ups and Downs",
       excerpt:
         "Understanding the complexities and trade-offs in SaaS funding agreements, including preferred share structures, participating preferred shares, and their implications for founders.",
@@ -28,18 +40,6 @@ const NewsSection = () => {
       slug: "saas-funding-agreements",
       route: "/insights/saas-funding-agreements",
       category: "Funding"
-    },
-    {
-      id: 3,
-      title: "Unlock Success: Key Tips for Beginner Angel Investors",
-      excerpt:
-        "Essential guidance for new angel investors on portfolio strategy, due diligence, and the importance of both financial returns and personal fulfillment in early-stage investing.",
-      date: "April 5, 2025",
-      author: "Events Team",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-      slug: "tips-for-beginner-angel-investors",
-      route: "/insights/beginner-angel-investors",
-      category: "Angel Investing"
     },
   ];
 

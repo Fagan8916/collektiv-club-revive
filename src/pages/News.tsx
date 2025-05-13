@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -26,6 +25,19 @@ const Insights = () => {
   const articles = [
     {
       id: 1,
+      title: "Convertible Loan Notes: A Smart Financing Tool for Early-Stage SaaS Companies",
+      excerpt:
+        "Raising capital is a critical milestone for early-stage SaaS companies. One increasingly popular and effective method to secure funding without immediately diluting equity is through convertible loan notes (CLNs).",
+      content: "Extended content about convertible loan notes would go here...",
+      date: "May 13, 2025",
+      author: "Finance Team",
+      image: "https://images.unsplash.com/photo-1589666564514-cf2089595b42?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      slug: "convertible-loan-notes",
+      route: "/insights/convertible-loan-notes",
+      category: "Funding",
+    },
+    {
+      id: 2,
       title: "Lessons from 483 Investments: Insights from Angel Investing Legend Charlie",
       excerpt:
         "Charlie O'Donnell, a seasoned angel investor with nearly 500 investments, shares his invaluable insights and principles that have guided his successful investment journey.",
@@ -38,7 +50,7 @@ const Insights = () => {
       category: "Angel Investing",
     },
     {
-      id: 2,
+      id: 3,
       title: "SaaS Funding Agreements: Ups and Downs",
       excerpt:
         "Understanding the complexities and trade-offs in SaaS funding agreements, including preferred share structures, participating preferred shares, and their implications for founders.",
@@ -51,7 +63,7 @@ const Insights = () => {
       category: "Funding",
     },
     {
-      id: 3,
+      id: 4,
       title: "Unlock Success: Key Tips for Beginner Angel Investors",
       excerpt:
         "Essential guidance for new angel investors on portfolio strategy, due diligence, and the importance of both financial returns and personal fulfillment in early-stage investing.",
@@ -64,7 +76,7 @@ const Insights = () => {
       category: "Angel Investing",
     },
     {
-      id: 4,
+      id: 5,
       title: "EIS & SEIS: Tax-Efficient Investment Schemes",
       excerpt:
         "A comprehensive guide to the Enterprise Investment Scheme (EIS) and Seed Enterprise Investment Scheme (SEIS), their tax benefits, eligibility requirements, and investment limits.",
@@ -77,7 +89,7 @@ const Insights = () => {
       category: "Tax Relief",
     },
     {
-      id: 5,
+      id: 6,
       title: "Understanding Multiples in SaaS Valuations",
       excerpt:
         "Exploring the concept of multiples in SaaS company valuations, how they're calculated, and their significance as a benchmark for comparing companies across different stages.",
@@ -90,7 +102,7 @@ const Insights = () => {
       category: "Valuation",
     },
     {
-      id: 6,
+      id: 7,
       title: "Top Metrics to Evaluate When Investing in SaaS Startups",
       excerpt:
         "Analyzing the crucial metrics investors should consider when evaluating SaaS companies, from Annual Recurring Revenue (ARR) to Customer Acquisition Cost (CAC) and Churn Rate.",
@@ -103,7 +115,7 @@ const Insights = () => {
       category: "Metrics",
     },
     {
-      id: 7,
+      id: 8,
       title: "Valuations: The Art and Science of Startup Worth",
       excerpt:
         "An in-depth look at startup valuations, the methodologies used, and the factors that influence them, from revenue multiples to market conditions and investor sentiment.",
@@ -116,7 +128,7 @@ const Insights = () => {
       category: "Valuation",
     },
     {
-      id: 8,
+      id: 9,
       title: "Understanding Angel Syndicates for SaaS Startups",
       excerpt:
         "A guide to angel syndicates, their structure, benefits, and considerations for both founders seeking funding and investors looking to participate in syndicated deals.",

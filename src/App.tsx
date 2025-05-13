@@ -17,6 +17,7 @@ import Calculator from "./pages/Calculator"; // New Calculator page
 import Founders from "./pages/Founders"; // New Founders page
 
 // Import individual article pages
+import ConvertibleLoanNotes from "./pages/insights/ConvertibleLoanNotes";
 import LessonsFromInvestments from "./pages/insights/LessonsFromInvestments";
 import SaasFundingAgreements from "./pages/insights/SaasFundingAgreements";
 import BeginnerAngelInvestors from "./pages/insights/BeginnerAngelInvestors";
@@ -50,6 +51,7 @@ const App = () => {
             <Route path="/founders" element={<Founders />} />
             
             {/* Individual article routes */}
+            <Route path="/insights/convertible-loan-notes" element={<ConvertibleLoanNotes />} />
             <Route path="/insights/lessons-from-483-investments" element={<LessonsFromInvestments />} />
             <Route path="/insights/saas-funding-agreements" element={<SaasFundingAgreements />} />
             <Route path="/insights/beginner-angel-investors" element={<BeginnerAngelInvestors />} />
