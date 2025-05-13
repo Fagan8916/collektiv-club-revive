@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -31,7 +32,7 @@ const Insights = () => {
       content: "Extended content about convertible loan notes would go here...",
       date: "May 13, 2025",
       author: "Finance Team",
-      image: "https://images.unsplash.com/photo-1589666564514-cf2089595b42?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       slug: "convertible-loan-notes",
       route: "/insights/convertible-loan-notes",
       category: "Funding",
