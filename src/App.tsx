@@ -16,6 +16,7 @@ import Calculator from "./pages/Calculator"; // New Calculator page
 import Founders from "./pages/Founders"; // New Founders page
 import Login from "./pages/Login";
 import Members from "./pages/Members";
+import ResetPassword from "./pages/ResetPassword"; // Add this import
 
 // Import individual article pages
 import ConvertibleLoanNotes from "./pages/insights/ConvertibleLoanNotes";
@@ -52,6 +53,7 @@ const App = () => {
             <Route path="/founders" element={<Founders />} />
             <Route path="/login" element={<Login />} />
             <Route path="/members" element={<Members />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             
             {/* Individual article routes */}
             <Route path="/insights/convertible-loan-notes" element={<ConvertibleLoanNotes />} />

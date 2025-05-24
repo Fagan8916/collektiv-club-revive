@@ -48,7 +48,7 @@ const Login = () => {
     e.preventDefault();
     setForgotLoading(true);
     const { error } = await supabase.auth.resetPasswordForEmail(forgotEmail, {
-      redirectTo: window.location.origin + "/#/login",
+      redirectTo: window.location.origin + "/#/reset-password",
     });
     setForgotLoading(false);
     setShowForgot(false);
