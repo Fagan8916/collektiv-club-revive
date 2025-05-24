@@ -9,7 +9,6 @@ import { toast } from "@/components/ui/use-toast";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [mode, setMode] = useState<"login" | "signup">("login");
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<any>(null);
   const navigate = useNavigate();
@@ -17,7 +16,6 @@ const Login = () => {
   useEffect(() => {
     const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ?? null);
-      // Redirect logged-in users to members zone
       if (session?.user) navigate("/members", { replace: true });
     });
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -30,20 +28,23 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const fn = mode === "login" ? supabase.auth.signInWithPassword : supabase.auth.signUp;
-    const { error } = await fn({ email, password });
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
     if (error) {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
+      let message =
+        error.message === "Invalid login credentials"
+          ? "Access restricted. Please contact the admin if you require access."
+          : error.message;
+      toast({ title: "Login failed", description: message, variant: "destructive" });
     } else {
-      toast({ title: "Check your inbox", description: "Confirm your email if prompted." });
+      toast({ title: "Success", description: "Login successful!" });
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-collektiv-accent">
       <div className="max-w-md w-full bg-white p-8 rounded shadow border mx-2">
-        <h2 className="text-2xl font-bold mb-6 text-center">{mode === "login" ? "Member Login" : "Sign Up"}</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Member Login</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <Input
             type="email"
@@ -58,25 +59,17 @@ const Login = () => {
             type="password"
             placeholder="Password"
             value={password}
-            autoComplete={mode === "signup" ? "new-password" : "current-password"}
+            autoComplete="current-password"
             required
             onChange={e => setPassword(e.target.value)}
             disabled={loading}
           />
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Please wait..." : mode === "login" ? "Login" : "Create account"}
+            {loading ? "Please wait..." : "Login"}
           </Button>
         </form>
-        <div className="text-center mt-4">
-          {mode === "login" ? (
-            <span>Don&apos;t have an account?{" "}
-              <button className="text-collektiv-green underline" onClick={() => setMode("signup")}>Sign Up</button>
-            </span>
-          ) : (
-            <span>Already have an account?{" "}
-              <button className="text-collektiv-green underline" onClick={() => setMode("login")}>Login</button>
-            </span>
-          )}
+        <div className="text-center mt-4 text-xs text-gray-500">
+          Access is restricted. Please contact an admin if you need an account.
         </div>
       </div>
     </div>
