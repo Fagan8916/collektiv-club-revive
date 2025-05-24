@@ -1,0 +1,101 @@
+
+import {
+  Body,
+  Container,
+  Head,
+  Html,
+  Preview,
+  Heading,
+  Link,
+  Text,
+} from 'npm:@react-email/components@0.0.22'
+import * as React from 'npm:react@18.3.1'
+
+interface ConfirmNewEmailProps {
+  site_url: string
+  confirmation_url: string
+}
+
+export const ConfirmNewEmail = ({
+  site_url,
+  confirmation_url,
+}: ConfirmNewEmailProps) => (
+  <Html>
+    <Head />
+    <Preview>Confirm your new email address</Preview>
+    <Body style={main}>
+      <Container style={container}>
+        <Heading as="h2" style={h2}>
+          Confirm your new email address
+        </Heading>
+        <Text style={text}>
+          To confirm the change to your new email address for <b>{site_url}</b>, click the link below:
+        </Text>
+        <div style={{ margin: '22px 0' }}>
+          <Link
+            href={confirmation_url}
+            style={button}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Confirm new email
+          </Link>
+        </div>
+        <Text style={footer}>
+          If you did not request this, you can safely ignore this email.
+        </Text>
+      </Container>
+    </Body>
+  </Html>
+)
+
+export default ConfirmNewEmail
+
+const main = {
+  backgroundColor: '#fff',
+  fontFamily: 'sans-serif',
+}
+
+const container = {
+  padding: '32px 18px',
+  maxWidth: '456px',
+  margin: '0 auto',
+  backgroundColor: '#fff',
+  border: '1px solid #e5e5e5',
+  borderRadius: '8px',
+}
+
+const h2 = {
+  fontFamily: 'sans-serif',
+  color: '#205a3d',
+  fontSize: '1.6em',
+  fontWeight: 700,
+  margin: '0 0 18px 0',
+}
+
+const text = {
+  fontFamily: 'sans-serif',
+  color: '#222',
+  margin: '0 0 14px 0',
+  fontSize: '1em',
+  lineHeight: 1.5,
+}
+
+const button = {
+  background: '#1dc67d',
+  color: 'white',
+  padding: '10px 16px',
+  borderRadius: '5px',
+  textDecoration: 'none',
+  fontFamily: 'inherit',
+  fontWeight: 600,
+  fontSize: '1.09em',
+  display: 'inline-block',
+}
+
+const footer = {
+  fontFamily: 'sans-serif',
+  fontSize: '0.96em',
+  color: '#555',
+  marginTop: '24px',
+}
