@@ -1,9 +1,11 @@
 
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, X, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getAssetPath } from "@/utils/assetUtils";
+import { supabase } from "@/integrations/supabase/client";
+import { Button } from "@/components/ui/button";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -17,37 +19,36 @@ const navigation = [
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
   const location = useLocation();
-  
-  // Get the logo path using our utility function
+  const navigate = useNavigate();
   const logoPath = getAssetPath("lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png");
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user ?? null);
+    });
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+    return () => { listener?.subscription?.unsubscribe(); };
   }, []);
 
-  // Scroll to top on route change
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
-  // Function to scroll to top when navigating
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: "smooth"
     });
+  };
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+    navigate("/");
   };
 
   return (
@@ -90,6 +91,18 @@ const Header = () => {
           >
             Join Now
           </Link>
+          {user ? (
+            <>
+              <Link to="/members" className="ml-4 flex items-center text-collektiv-green">
+                <User className="mr-1" size={18} /> Members
+              </Link>
+              <Button variant="ghost" className="ml-2" onClick={handleLogout}>Log out</Button>
+            </>
+          ) : (
+            <Button variant="outline" className="ml-4" onClick={() => navigate("/login")}>
+              Log In
+            </Button>
+          )}
         </div>
 
         <button
@@ -135,6 +148,22 @@ const Header = () => {
           >
             Join Now
           </Link>
+          {user ? (
+            <>
+              <Link
+                to="/members"
+                className="text-collektiv-green text-lg mt-4 flex items-center"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <User className="mr-1" size={20} /> Members
+              </Link>
+              <Button variant="ghost" className="mt-2" onClick={handleLogout}>Log out</Button>
+            </>
+          ) : (
+            <Button variant="outline" className="mt-6" onClick={() => { setMobileMenuOpen(false); navigate("/login"); }}>
+              Log In
+            </Button>
+          )}
         </div>
       </div>
     </header>

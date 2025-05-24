@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -15,6 +14,8 @@ import Terms from "./pages/Terms";
 import HNWISI from "./pages/HNWISI";
 import Calculator from "./pages/Calculator"; // New Calculator page
 import Founders from "./pages/Founders"; // New Founders page
+import Login from "./pages/Login";
+import Members from "./pages/Members";
 
 // Import individual article pages
 import ConvertibleLoanNotes from "./pages/insights/ConvertibleLoanNotes";
@@ -49,6 +50,8 @@ const App = () => {
             <Route path="/hnwi-si" element={<HNWISI />} />
             <Route path="/calculator" element={<Calculator />} />
             <Route path="/founders" element={<Founders />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/members" element={<Members />} />
             
             {/* Individual article routes */}
             <Route path="/insights/convertible-loan-notes" element={<ConvertibleLoanNotes />} />
