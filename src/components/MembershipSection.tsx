@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Check } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -70,50 +69,38 @@ const MembershipSection = () => {
             <Table>
               <TableHeader>
                 <TableRow className="bg-collektiv-green text-white">
-                  <TableHead className="text-white font-bold text-left">Costs</TableHead>
+                  <TableHead className="text-white font-bold text-left">Fee Type</TableHead>
                   <TableHead className="text-white font-bold text-center">Collektiv</TableHead>
-                  <TableHead className="text-white font-bold text-center">Syndicates</TableHead>
+                  <TableHead className="text-white font-bold text-center">Traditional Syndicates</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 <TableRow>
-                  <TableCell className="font-medium">
-                    <div className="font-semibold mb-1">Investment Fee</div>
-                    <div className="text-sm text-gray-600">A percentage-based carry fee applied on the amount invested, used to cover legal and transaction costs</div>
-                  </TableCell>
+                  <TableCell className="font-medium">Investment Fee</TableCell>
                   <TableCell className="text-center font-bold text-collektiv-green">0-12.5%</TableCell>
                   <TableCell className="text-center font-bold">2-15%</TableCell>
                 </TableRow>
                 <TableRow className="bg-gray-50">
-                  <TableCell className="font-medium">
-                    <div className="font-semibold mb-1">Performance/Carry Fee</div>
-                    <div className="text-sm text-gray-600">A percentage-based carry fee is applied to the realised gains after a business exits. For example, with a 20% Carry fee, if an initial investment of £2,000 that grows to £20,000, the carry fee will be 20% of the £18,000 profit = £3,600 fee</div>
-                  </TableCell>
+                  <TableCell className="font-medium">Performance/Carry Fee</TableCell>
                   <TableCell className="text-center font-bold text-collektiv-green">0%</TableCell>
                   <TableCell className="text-center font-bold">20%</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell className="font-medium">
-                    <div className="font-semibold mb-1">Annual Investment Fee</div>
-                    <div className="text-sm text-gray-600">An annual recurring investment fee is a percentage-based charge on your total investment assets, covering ongoing services like asset management and administration</div>
-                  </TableCell>
+                  <TableCell className="font-medium">Annual Investment Fee</TableCell>
                   <TableCell className="text-center font-bold text-collektiv-green">0%</TableCell>
                   <TableCell className="text-center font-bold">0-10%</TableCell>
                 </TableRow>
                 <TableRow className="bg-gray-50">
-                  <TableCell className="font-medium">
-                    <div className="font-semibold mb-1">Membership</div>
-                    <div className="text-sm text-gray-600">A membership fee typically involves a recurring charge, often annual, which grants access to exclusive investment opportunities, networking, and educational resources</div>
-                  </TableCell>
-                  <TableCell className="text-center font-bold text-collektiv-green">Up to £985 PA</TableCell>
-                  <TableCell className="text-center font-bold">Up to £10,000 PA</TableCell>
+                  <TableCell className="font-medium">Annual Membership</TableCell>
+                  <TableCell className="text-center font-bold text-collektiv-green">Up to £985</TableCell>
+                  <TableCell className="text-center font-bold">Up to £10,000</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
           </div>
           <div className="text-center mt-4">
             <p className="text-sm text-gray-600">
-              <strong>Why choose us?</strong> We offer significantly lower fees across all categories, helping you keep more of your investment returns.
+              <strong>Lower fees = more returns in your pocket</strong>
             </p>
           </div>
         </div>
