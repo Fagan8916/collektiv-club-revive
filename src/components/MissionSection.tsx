@@ -20,9 +20,8 @@ const MissionSection = () => {
             </p>
             <Link to="/about">
               <Button 
-                variant="outline" 
                 size="lg"
-                className="border-collektiv-green text-collektiv-green hover:bg-collektiv-green hover:text-white"
+                className="bg-collektiv-green text-white hover:bg-collektiv-lightgreen"
               >
                 Learn More About Us →
               </Button>
