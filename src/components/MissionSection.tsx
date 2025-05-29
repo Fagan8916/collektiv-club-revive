@@ -1,29 +1,45 @@
 
 import React from "react";
-import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 const MissionSection = () => {
+  const slides = [
+    {
+      title: "The Collektiv Revolution",
+      content: "Creating a thriving ecosystem where members can connect, collaborate, and grow together."
+    },
+    {
+      title: "Democratising Investment",
+      content: "Making startup investment accessible to everyone, not just the wealthy elite. Lower fees mean more returns in your pocket."
+    },
+    {
+      title: "Community-Driven Learning",
+      content: "Access our exclusive Slack community, educational resources, and learn from experienced investors and successful founders."
+    }
+  ];
+
   return (
-    <section className="py-16 bg-white">
+    <section className="section bg-collektiv-green text-white" id="mission">
       <div className="container">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-collektiv-accent rounded-lg p-8 shadow-sm">
-            <h2 className="text-2xl md:text-3xl font-bold mb-6 text-collektiv-green text-center">Our Investment Philosophy</h2>
-            <p className="text-lg text-gray-700 mb-6">
-              We believe investing in technology start-ups should be accessible to all investors, not just a select few. 
-              We set out to break down barriers and empower people.{" "}
-              <strong>Begin investing in the future with as little as £500 per investment</strong>.
-              As a member, you'll gain access to exclusive early-stage investment opportunities, 
-              expert insights, and a powerful network.
-            </p>
-            <div className="flex justify-center mt-8">
-              <Link to="/about" className="btn-secondary flex items-center">
-                Learn More About Us
-                <ArrowRight size={18} className="ml-2" />
-              </Link>
-            </div>
-          </div>
+          <Carousel className="w-full">
+            <CarouselContent>
+              {slides.map((slide, index) => (
+                <CarouselItem key={index}>
+                  <div className="text-center py-8">
+                    <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+                      {slide.title}
+                    </h2>
+                    <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+                      {slide.content}
+                    </p>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="text-collektiv-green bg-white hover:bg-white/90" />
+            <CarouselNext className="text-collektiv-green bg-white hover:bg-white/90" />
+          </Carousel>
         </div>
       </div>
     </section>
