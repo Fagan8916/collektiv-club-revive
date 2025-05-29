@@ -1,47 +1,28 @@
 
 import React from "react";
+import { Button } from "@/components/ui/button";
 
 const MissionSection = () => {
   return (
     <section className="section bg-gray-50" id="philosophy">
       <div className="container">
-        <div className="text-center mb-16">
-          <h2 className="section-title">Our Investment Philosophy</h2>
-          <p className="section-subtitle">
-            We believe in backing exceptional founders with innovative solutions to real-world problems.
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-8 text-collektiv-green">
+            Our Investment Philosophy
+          </h2>
+          <p className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed">
+            We believe investing in technology start-ups should be accessible to all investors, not just a 
+            select few. We set out to break down barriers and empower people. <strong>Begin investing in the future 
+            with as little as £500 per investment.</strong> As a member, you'll gain access to exclusive early-stage 
+            investment opportunities, expert insights, and a powerful network.
           </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="text-center">
-            <div className="bg-collektiv-green text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl font-bold">1</span>
-            </div>
-            <h3 className="text-xl font-bold mb-3 text-collektiv-green">Early Stage Focus</h3>
-            <p className="text-gray-700">
-              We invest in pre-seed and seed stage companies where we can make the biggest impact and achieve the highest returns.
-            </p>
-          </div>
-
-          <div className="text-center">
-            <div className="bg-collektiv-green text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl font-bold">2</span>
-            </div>
-            <h3 className="text-xl font-bold mb-3 text-collektiv-green">Founder-First</h3>
-            <p className="text-gray-700">
-              Great companies are built by great founders. We prioritize exceptional teams with domain expertise and proven execution ability.
-            </p>
-          </div>
-
-          <div className="text-center">
-            <div className="bg-collektiv-green text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl font-bold">3</span>
-            </div>
-            <h3 className="text-xl font-bold mb-3 text-collektiv-green">Market Opportunity</h3>
-            <p className="text-gray-700">
-              We look for large, growing markets with clear monetization paths and sustainable competitive advantages.
-            </p>
-          </div>
+          <Button 
+            variant="outline" 
+            size="lg"
+            className="border-collektiv-green text-collektiv-green hover:bg-collektiv-green hover:text-white"
+          >
+            Learn More About Us →
+          </Button>
         </div>
       </div>
     </section>
