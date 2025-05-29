@@ -6,7 +6,7 @@ const WhatToLookForInFounders = () => {
   const content = (
     <div className="prose prose-lg max-w-none">
       <p className="text-lg text-gray-700 mb-6">
-        At COLLEKTIV, we meet with dozens of founders every month, and if there's one thing we know, it's that the quality of a founding team is the single biggest predictor of a startup's success. While a great idea is important, it's the founders who turn vision into reality, weather storms, and inspire teams to go the distance. So, what should investors look for when evaluating founders? Here's a breakdown of the traits and qualities that set exceptional founders apart.
+        At Collektiv, we meet with dozens of founders every month, and if there's one thing we know, it's that the quality of a founding team is the single biggest predictor of a startup's success. While a great idea is important, it's the founders who turn vision into reality, weather storms, and inspire teams to go the distance. So, what should investors look for when evaluating founders? Here's a breakdown of the traits and qualities that set exceptional founders apart.
       </p>
 
       <h2 className="text-2xl font-bold text-collektiv-green mb-4">Visionary Thinking</h2>
@@ -59,9 +59,9 @@ const WhatToLookForInFounders = () => {
         The best founders know their strengths and weaknesses. They're humble enough to seek help, hire complementary talent, and learn from mistakes. Self-awareness enables continuous growth and better decision-making.
       </p>
 
-      <h2 className="text-2xl font-bold text-collektiv-green mb-4">The COLLEKTIV Approach</h2>
+      <h2 className="text-2xl font-bold text-collektiv-green mb-4">The Collektiv Approach</h2>
       <p className="mb-6">
-        At COLLEKTIV, our screening process puts founders at the centre. We meet them face-to-face, ask tough questions, and look for these core traits. Our members conduct their own due diligence, focusing not just on the pitch, but on the people behind it. Because in early-stage investing, you're not just backing a product, you're backing the people who will bring it to life.
+        At Collektiv, our screening process puts founders at the centre. We meet them face-to-face, ask tough questions, and look for these core traits. Our members conduct their own due diligence, focusing not just on the pitch, but on the people behind it. Because in early-stage investing, you're not just backing a product, you're backing the people who will bring it to life.
       </p>
 
       <p className="text-lg font-medium text-gray-800 mb-6">
@@ -69,7 +69,7 @@ const WhatToLookForInFounders = () => {
       </p>
 
       <p className="text-lg text-collektiv-green font-medium">
-        Ready to meet the founders shaping the future? Join COLLEKTIV and get access to the next wave of high-potential startups.
+        Ready to meet the founders shaping the future? Join Collektiv and get access to the next wave of high-potential startups.
       </p>
     </div>
   );
@@ -81,7 +81,7 @@ const WhatToLookForInFounders = () => {
       author="Investment Team"
       category="Founder Evaluation"
       content={content}
-      image="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80"
+      image="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80"
     />
   );
 };
