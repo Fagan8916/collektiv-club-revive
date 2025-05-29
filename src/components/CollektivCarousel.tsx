@@ -6,15 +6,23 @@ const CollektivCarousel = () => {
   const slides = [
     {
       title: "The Collektiv Revolution",
-      content: "Creating a thriving ecosystem where members can connect, collaborate, and grow together."
+      content: "Creating a thriving ecosystem where members can connect, collaborate, and grow together through exclusive investment opportunities."
     },
     {
       title: "Democratising Investment",
-      content: "Making startup investment accessible to everyone, not just the wealthy elite. Lower fees mean more returns in your pocket."
+      content: "Making startup investment accessible to everyone, not just the wealthy elite. Lower fees mean more returns in your pocket and greater portfolio diversity."
     },
     {
       title: "Community-Driven Learning",
-      content: "Access our exclusive Slack community, educational resources, and learn from experienced investors and successful founders."
+      content: "Access our exclusive Slack community, educational resources, and learn from experienced investors and successful founders who share real insights."
+    },
+    {
+      title: "Expert Due Diligence",
+      content: "Our team conducts thorough research and analysis on every opportunity, providing you with detailed investment reports and risk assessments."
+    },
+    {
+      title: "Exclusive Deal Flow",
+      content: "Get early access to high-potential startups before they become available to the general public. Join a select network of forward-thinking investors."
     }
   ];
 
