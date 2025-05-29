@@ -5,8 +5,8 @@ import { Calendar, User, ArrowRight } from "lucide-react";
 import { articles } from "@/data/articles";
 
 const NewsSection = () => {
-  // Show only the first 3 articles for the home page
-  const featuredArticles = articles.slice(0, 3);
+  // Show the first 4 articles for the home page
+  const featuredArticles = articles.slice(0, 4);
 
   return (
     <section className="section bg-white" id="insights">
@@ -18,7 +18,7 @@ const NewsSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {featuredArticles.map((article) => (
             <div key={article.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all">
               <img 
