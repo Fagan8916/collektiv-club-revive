@@ -11,6 +11,7 @@ import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 import InvestmentStatsSection from "@/components/InvestmentStatsSection";
 import MissionSection from "@/components/MissionSection";
+import CollektivCarousel from "@/components/CollektivCarousel";
 
 const Index = () => {
   return (
@@ -22,6 +23,7 @@ const Index = () => {
         <MissionSection />
         <HowItWorksSection />
         <AboutSection />
+        <CollektivCarousel />
         <MembershipSection />
         <NewsSection />
         <ContactSection />
