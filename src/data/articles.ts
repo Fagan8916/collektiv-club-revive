@@ -1,3 +1,4 @@
+
 export const articles = [
   {
     id: 1,
@@ -40,19 +41,6 @@ export const articles = [
   },
   {
     id: 4,
-    title: "Building a Diversified Investment Portfolio: Strategy for New Angel Investors",
-    excerpt:
-      "Learn how to build a well-balanced investment portfolio as a new angel investor. Discover key strategies for risk management, sector diversification, and optimizing returns in early-stage investments.",
-    content: "Extended content about portfolio diversification would go here...",
-    date: "May 31, 2025",
-    author: "Investment Team",
-    image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    slug: "building-diversified-portfolio",
-    route: "/insights/building-diversified-portfolio",
-    category: "Portfolio Strategy",
-  },
-  {
-    id: 5,
     title: "SaaS Funding Agreements: Ups and Downs",
     excerpt:
       "Understanding the complexities and trade-offs in SaaS funding agreements, including preferred share structures, participating preferred shares, and their implications for founders.",
@@ -65,7 +53,7 @@ export const articles = [
     category: "Funding",
   },
   {
-    id: 6,
+    id: 5,
     title: "Unlock Success: Key Tips for Beginner Angel Investors",
     excerpt:
       "Essential guidance for new angel investors on portfolio strategy, due diligence, and the importance of both financial returns and personal fulfillment in early-stage investing.",
@@ -78,7 +66,7 @@ export const articles = [
     category: "Angel Investing",
   },
   {
-    id: 7,
+    id: 6,
     title: "EIS & SEIS: Tax-Efficient Investment Schemes",
     excerpt:
       "A comprehensive guide to the Enterprise Investment Scheme (EIS) and Seed Enterprise Investment Scheme (SEIS), their tax benefits, eligibility requirements, and investment limits.",
@@ -91,7 +79,7 @@ export const articles = [
     category: "Tax Relief",
   },
   {
-    id: 8,
+    id: 7,
     title: "Understanding Multiples in SaaS Valuations",
     excerpt:
       "Exploring the concept of multiples in SaaS company valuations, how they're calculated, and their significance as a benchmark for comparing companies across different stages.",
@@ -104,7 +92,7 @@ export const articles = [
     category: "Valuation",
   },
   {
-    id: 9,
+    id: 8,
     title: "Top Metrics to Evaluate When Investing in SaaS Startups",
     excerpt:
       "Analysing the crucial metrics investors should consider when evaluating SaaS companies, from Annual Recurring Revenue (ARR) to Customer Acquisition Cost (CAC) and Churn Rate.",
@@ -117,7 +105,7 @@ export const articles = [
     category: "Metrics",
   },
   {
-    id: 10,
+    id: 9,
     title: "Valuations: The Art and Science of Startup Worth",
     excerpt:
       "An in-depth look at startup valuations, the methodologies used, and the factors that influence them, from revenue multiples to market conditions and investor sentiment.",
@@ -130,7 +118,7 @@ export const articles = [
     category: "Valuation",
   },
   {
-    id: 11,
+    id: 10,
     title: "Understanding Angel Syndicates for SaaS Startups",
     excerpt:
       "A guide to angel syndicates, their structure, benefits, and considerations for both founders seeking funding and investors looking to participate in syndicated deals.",
