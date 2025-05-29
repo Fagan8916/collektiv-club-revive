@@ -21,7 +21,8 @@ const MissionSection = () => {
             <Link to="/about">
               <Button 
                 size="lg"
-                className="bg-collektiv-green text-white hover:bg-collektiv-lightgreen"
+                variant="outline"
+                className="border-collektiv-green text-collektiv-green hover:bg-collektiv-green hover:text-white"
               >
                 Learn More About Us →
               </Button>
