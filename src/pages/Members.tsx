@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
+import InvestmentsSection from "@/components/InvestmentsSection";
 
 const catalogs = [
   {
@@ -42,31 +43,39 @@ const Members = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center py-10 bg-gradient-to-r from-collektiv-accent to-white">
-      <h1 className="text-3xl font-bold mb-4 text-collektiv-green">Members Zone</h1>
-      <div className="max-w-xl w-full bg-white p-6 rounded shadow-lg mb-8">
-        <div className="grid gap-6">
-          {catalogs.map((cat, i) => (
-            <a
-              href={cat.url}
-              key={i}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block border p-4 rounded hover:shadow transition bg-gray-50 hover:bg-collektiv-accent"
-            >
-              <div className="flex items-center">
-                <ExternalLink className="text-collektiv-green mr-3" size={18} />
-                <div>
-                  <div className="font-bold">{cat.title}</div>
-                  <div className="text-sm text-gray-600">{cat.description}</div>
+    <div className="min-h-screen py-10 bg-gradient-to-r from-collektiv-accent to-white">
+      <div className="container mx-auto px-4">
+        <h1 className="text-3xl font-bold mb-8 text-collektiv-green text-center">Members Zone</h1>
+        
+        {/* Investments Section */}
+        <InvestmentsSection />
+        
+        {/* Resources Section */}
+        <div className="max-w-xl mx-auto bg-white p-6 rounded shadow-lg mb-8">
+          <h2 className="text-2xl font-bold mb-6 text-collektiv-green">Resources</h2>
+          <div className="grid gap-6">
+            {catalogs.map((cat, i) => (
+              <a
+                href={cat.url}
+                key={i}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block border p-4 rounded hover:shadow transition bg-gray-50 hover:bg-collektiv-accent"
+              >
+                <div className="flex items-center">
+                  <ExternalLink className="text-collektiv-green mr-3" size={18} />
+                  <div>
+                    <div className="font-bold">{cat.title}</div>
+                    <div className="text-sm text-gray-600">{cat.description}</div>
+                  </div>
                 </div>
-              </div>
-            </a>
-          ))}
+              </a>
+            ))}
+          </div>
+          <Button variant="secondary" onClick={handleLogout} className="mt-6 w-full">
+            Log out
+          </Button>
         </div>
-        <Button variant="secondary" onClick={handleLogout} className="mt-6 w-full">
-          Log out
-        </Button>
       </div>
     </div>
   );

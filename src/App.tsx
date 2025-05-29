@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -29,6 +30,12 @@ import SaasMetrics from "./pages/insights/SaasMetrics";
 import Valuations from "./pages/insights/Valuations";
 import AngelSyndicates from "./pages/insights/AngelSyndicates";
 
+// Import investment pages
+import Loxa from "./pages/members/investments/Loxa";
+import Pandektes from "./pages/members/investments/Pandektes";
+import Loyative from "./pages/members/investments/Loyative";
+import Propane from "./pages/members/investments/Propane";
+
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -54,6 +61,12 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/members" element={<Members />} />
             <Route path="/reset-password" element={<ResetPassword />} />
+            
+            {/* Investment pages */}
+            <Route path="/members/investments/loxa" element={<Loxa />} />
+            <Route path="/members/investments/pandektes" element={<Pandektes />} />
+            <Route path="/members/investments/loyative" element={<Loyative />} />
+            <Route path="/members/investments/propane" element={<Propane />} />
             
             {/* Individual article routes */}
             <Route path="/insights/convertible-loan-notes" element={<ConvertibleLoanNotes />} />
