@@ -23,7 +23,7 @@ const MissionSection = () => {
                 <Button 
                   size="lg"
                   variant="outline"
-                  className="border-collektiv-green text-collektiv-green hover:bg-collektiv-green hover:text-white"
+                  className="bg-transparent border-collektiv-green text-collektiv-green hover:bg-collektiv-green hover:text-white"
                 >
                   Learn More About Us →
                 </Button>
