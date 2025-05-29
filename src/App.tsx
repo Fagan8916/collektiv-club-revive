@@ -20,6 +20,7 @@ import Members from "./pages/Members";
 import ResetPassword from "./pages/ResetPassword"; // Add this import
 
 // Import individual article pages
+import WhatToLookForInFounders from "./pages/insights/WhatToLookForInFounders";
 import ConvertibleLoanNotes from "./pages/insights/ConvertibleLoanNotes";
 import LessonsFromInvestments from "./pages/insights/LessonsFromInvestments";
 import SaasFundingAgreements from "./pages/insights/SaasFundingAgreements";
@@ -69,6 +70,7 @@ const App = () => {
             <Route path="/members/investments/propane" element={<Propane />} />
             
             {/* Individual article routes */}
+            <Route path="/insights/what-to-look-for-in-founders" element={<WhatToLookForInFounders />} />
             <Route path="/insights/convertible-loan-notes" element={<ConvertibleLoanNotes />} />
             <Route path="/insights/lessons-from-483-investments" element={<LessonsFromInvestments />} />
             <Route path="/insights/saas-funding-agreements" element={<SaasFundingAgreements />} />

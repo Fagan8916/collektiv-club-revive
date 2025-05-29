@@ -7,6 +7,18 @@ const NewsSection = () => {
   const articles = [
     {
       id: 1,
+      title: "What to Look for in Founders: A Guide for Investors",
+      excerpt:
+        "At COLLEKTIV, we meet with dozens of founders every month. The quality of a founding team is the single biggest predictor of a startup's success. Here's what exceptional founders have in common.",
+      date: "May 29, 2025",
+      author: "Investment Team",
+      image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      slug: "what-to-look-for-in-founders",
+      route: "/insights/what-to-look-for-in-founders",
+      category: "Founder Evaluation"
+    },
+    {
+      id: 2,
       title: "Convertible Loan Notes: A Smart Financing Tool for Early-Stage SaaS Companies",
       excerpt:
         "Raising capital is a critical milestone for early-stage SaaS companies. One increasingly popular and effective method to secure funding without immediately diluting equity is through convertible loan notes (CLNs).",
@@ -18,7 +30,7 @@ const NewsSection = () => {
       category: "Funding"
     },
     {
-      id: 2,
+      id: 3,
       title: "Lessons from 483 Investments: Insights from Angel Investing Legend Charlie",
       excerpt:
         "Charlie O'Donnell, a seasoned angel investor with nearly 500 investments, shares his invaluable insights and principles that have guided his successful investment journey.",
@@ -28,18 +40,6 @@ const NewsSection = () => {
       slug: "lessons-from-483-investments",
       route: "/insights/lessons-from-483-investments",
       category: "Angel Investing"
-    },
-    {
-      id: 3,
-      title: "SaaS Funding Agreements: Ups and Downs",
-      excerpt:
-        "Understanding the complexities and trade-offs in SaaS funding agreements, including preferred share structures, participating preferred shares, and their implications for founders.",
-      date: "April 10, 2025",
-      author: "Content Team",
-      image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-      slug: "saas-funding-agreements",
-      route: "/insights/saas-funding-agreements",
-      category: "Funding"
     },
   ];
 
