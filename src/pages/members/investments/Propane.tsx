@@ -33,7 +33,7 @@ const Propane = () => {
                   Investment Memo
                 </a>
               </Button>
-              <Button asChild size="lg" variant="outline" className="border-collektiv-green text-collektiv-green hover:bg-collektiv-green hover:text-white text-lg px-8 py-4">
+              <Button asChild size="lg" className="bg-collektiv-green hover:bg-collektiv-lightgreen text-lg px-8 py-4">
                 <a 
                   href="https://drive.google.com/drive/folders/1kqKMVnhRJmGSEsE8uBd4lVGEUy6ifoyy" 
                   target="_blank" 
