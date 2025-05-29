@@ -2,6 +2,7 @@
 import React from "react";
 import { CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 const AboutSection = () => {
   const features = [
@@ -11,6 +12,29 @@ const AboutSection = () => {
     "Collaboration opportunities",
     "Community support system",
     "Digital and physical resources"
+  ];
+
+  const carouselSlides = [
+    {
+      title: "The Collektiv Revolution",
+      content: "Creating a thriving ecosystem where members can connect, collaborate, and grow together."
+    },
+    {
+      title: "Democratising Investment",
+      content: "Making startup investment accessible to everyone, not just the wealthy elite. Lower fees mean more returns in your pocket."
+    },
+    {
+      title: "Community-Driven Learning",
+      content: "Access our exclusive Slack community, educational resources, and learn from experienced investors and successful founders."
+    },
+    {
+      title: "Exclusive Deal Flow",
+      content: "Get first access to curated investment opportunities from our network of vetted startups and innovative companies."
+    },
+    {
+      title: "Expert Mentorship",
+      content: "Learn from seasoned investors and successful entrepreneurs who share their knowledge and insights with our community."
+    }
   ];
 
   return (
@@ -51,18 +75,30 @@ const AboutSection = () => {
           
           <div className="order-1 lg:order-2">
             <div className="aspect-w-4 aspect-h-3 rounded-xl overflow-hidden shadow-xl">
-              <div className="bg-gradient-to-br from-collektiv-green to-collektiv-lightgreen h-full w-full flex items-center justify-center p-8">
-                <div className="text-center text-white">
-                  <h3 className="text-3xl font-bold mb-4">The Collektiv Revolution</h3>
-                  <p className="text-green-100 mb-6">
-                    Creating a thriving ecosystem where members can connect, collaborate, and grow together.
-                  </p>
-                  <div className="flex justify-center space-x-2">
-                    <div className="bg-white/20 h-2 w-2 rounded-full"></div>
-                    <div className="bg-white h-2 w-4 rounded-full"></div>
-                    <div className="bg-white/20 h-2 w-2 rounded-full"></div>
-                  </div>
-                </div>
+              <div className="bg-gradient-to-br from-collektiv-green to-collektiv-lightgreen h-full w-full relative">
+                <Carousel className="w-full h-full" opts={{ align: "start", loop: true }}>
+                  <CarouselContent className="h-full">
+                    {carouselSlides.map((slide, index) => (
+                      <CarouselItem key={index} className="h-full">
+                        <div className="h-full flex items-center justify-center p-8">
+                          <div className="text-center text-white">
+                            <h3 className="text-3xl font-bold mb-4">{slide.title}</h3>
+                            <p className="text-green-100 mb-6">
+                              {slide.content}
+                            </p>
+                            <div className="flex justify-center space-x-2">
+                              <div className="bg-white/20 h-2 w-2 rounded-full"></div>
+                              <div className="bg-white h-2 w-4 rounded-full"></div>
+                              <div className="bg-white/20 h-2 w-2 rounded-full"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  <CarouselPrevious className="text-collektiv-green bg-white hover:bg-white/90 left-4" />
+                  <CarouselNext className="text-collektiv-green bg-white hover:bg-white/90 right-4" />
+                </Carousel>
               </div>
             </div>
           </div>
