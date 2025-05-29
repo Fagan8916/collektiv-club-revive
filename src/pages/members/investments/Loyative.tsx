@@ -23,6 +23,17 @@ const Loyative = () => {
                 className="h-20 w-auto object-contain"
               />
             </div>
+            <div className="mb-6">
+              <Button asChild size="lg" className="bg-collektiv-green hover:bg-collektiv-lightgreen text-lg px-8 py-4">
+                <a 
+                  href="https://drive.google.com/drive/folders/10hbwiJi40XExL8rem7KdhWOfhJWepATc?usp=drive_link" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  Demo & Data Room
+                </a>
+              </Button>
+            </div>
             <CardTitle className="text-3xl text-collektiv-green">Loyative</CardTitle>
             <a 
               href="https://www.Loytaive.com/" 
@@ -55,18 +66,6 @@ const Loyative = () => {
                 <li>Multi-channel integration</li>
                 <li>Real-time performance tracking</li>
               </ul>
-            </div>
-            
-            <div className="text-center pt-4">
-              <Button asChild className="bg-collektiv-green hover:bg-collektiv-lightgreen">
-                <a 
-                  href="https://drive.google.com/drive/folders/10hbwiJi40XExL8rem7KdhWOfhJWepATc?usp=drive_link" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                >
-                  Demo & Data Room
-                </a>
-              </Button>
             </div>
           </CardContent>
         </Card>

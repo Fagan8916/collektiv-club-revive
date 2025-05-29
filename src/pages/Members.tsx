@@ -3,22 +3,7 @@ import React, { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ExternalLink } from "lucide-react";
 import InvestmentsSection from "@/components/InvestmentsSection";
-
-const catalogs = [
-  {
-    title: "2024 Client Catalog",
-    description: "All our published work for clients in 2024.",
-    url: "https://drive.google.com/drive/folders/<<EXAMPLE_FOLDER_ID_A>>",
-  },
-  {
-    title: "Startup Investment Guide",
-    description: "A curated set of resources for early-stage founders.",
-    url: "https://drive.google.com/file/d/<<EXAMPLE_FILE_ID_B>>/view",
-  },
-  // Add more items as needed!
-];
 
 const Members = () => {
   const [user, setUser] = useState<any>(null);
@@ -50,29 +35,9 @@ const Members = () => {
         {/* Investments Section */}
         <InvestmentsSection />
         
-        {/* Resources Section */}
-        <div className="max-w-xl mx-auto bg-white p-6 rounded shadow-lg mb-8">
-          <h2 className="text-2xl font-bold mb-6 text-collektiv-green">Resources</h2>
-          <div className="grid gap-6">
-            {catalogs.map((cat, i) => (
-              <a
-                href={cat.url}
-                key={i}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block border p-4 rounded hover:shadow transition bg-gray-50 hover:bg-collektiv-accent"
-              >
-                <div className="flex items-center">
-                  <ExternalLink className="text-collektiv-green mr-3" size={18} />
-                  <div>
-                    <div className="font-bold">{cat.title}</div>
-                    <div className="text-sm text-gray-600">{cat.description}</div>
-                  </div>
-                </div>
-              </a>
-            ))}
-          </div>
-          <Button variant="secondary" onClick={handleLogout} className="mt-6 w-full">
+        {/* Logout Button */}
+        <div className="max-w-xl mx-auto text-center">
+          <Button variant="secondary" onClick={handleLogout} className="mt-6">
             Log out
           </Button>
         </div>
