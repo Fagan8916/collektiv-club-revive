@@ -21,12 +21,12 @@ const CollektivCarousel = () => {
   return (
     <section className="section bg-collektiv-green text-white">
       <div className="container">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto relative">
           <Carousel className="w-full" opts={{ align: "start", loop: true }}>
-            <CarouselContent>
+            <CarouselContent className="-ml-4">
               {slides.map((slide, index) => (
-                <CarouselItem key={index}>
-                  <div className="text-center py-8">
+                <CarouselItem key={index} className="pl-4">
+                  <div className="text-center py-8 px-4">
                     <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
                       {slide.title}
                     </h2>
@@ -37,8 +37,8 @@ const CollektivCarousel = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="text-collektiv-green bg-white hover:bg-white/90 -left-12" />
-            <CarouselNext className="text-collektiv-green bg-white hover:bg-white/90 -right-12" />
+            <CarouselPrevious className="text-collektiv-green bg-white hover:bg-white/90" />
+            <CarouselNext className="text-collektiv-green bg-white hover:bg-white/90" />
           </Carousel>
         </div>
       </div>
