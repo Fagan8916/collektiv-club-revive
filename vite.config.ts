@@ -12,20 +12,8 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 8080,
     fs: {
-      // Restrict files that can be served by Vite's dev server
-      deny: [
-        '.env',
-        '.env.*',
-        '*.{pem,crt,key}',
-        'node_modules/.cache/**'
-      ]
-    },
-    headers: {
-      // Security headers
-      'X-Content-Type-Options': 'nosniff',
-      'X-Frame-Options': 'DENY',
-      'X-XSS-Protection': '1; mode=block',
-      'Referrer-Policy': 'strict-origin-when-cross-origin'
+      // Allow serving files from the entire project
+      allow: ['..']
     }
   },
   plugins: [
@@ -42,38 +30,14 @@ export default defineConfig(({ mode }) => ({
     outDir: "dist",
     assetsDir: "assets",
     sourcemap: true,
-    // Security improvements for build
     rollupOptions: {
       output: {
         manualChunks: undefined,
-        // Ensure assets are properly isolated
-        assetFileNames: (assetInfo) => {
-          const info = assetInfo.name?.split('.') || [];
-          let extType = info[info.length - 1];
-          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
-            extType = 'img';
-          }
-          return `assets/${extType}/[name]-[hash][extname]`;
-        },
-        chunkFileNames: 'assets/js/[name]-[hash].js',
-        entryFileNames: 'assets/js/[name]-[hash].js',
       },
     },
-    // Additional security settings
-    target: 'esnext',
-    minify: 'esbuild',
   },
   // Define to prevent issues with external requests
   define: {
     global: 'globalThis',
-  },
-  // Enhanced security for preview mode
-  preview: {
-    headers: {
-      'X-Content-Type-Options': 'nosniff',
-      'X-Frame-Options': 'DENY',
-      'X-XSS-Protection': '1; mode=block',
-      'Referrer-Policy': 'strict-origin-when-cross-origin'
-    }
   }
 }));
