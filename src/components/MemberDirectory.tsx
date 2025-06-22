@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Building2, Linkedin, Globe, User } from "lucide-react";
+import { MapPin, Building2, Linkedin, Globe, User, Briefcase } from "lucide-react";
 import { Tables } from "@/integrations/supabase/types";
 
 type MemberProfile = Tables<"member_profiles">;
@@ -111,6 +111,18 @@ const MemberDirectory = () => {
                   <p className="text-sm text-gray-600 mb-4 line-clamp-3">
                     {member.bio}
                   </p>
+                )}
+
+                {member.services_offered && (
+                  <div className="mb-4">
+                    <div className="flex items-center text-sm font-medium text-collektiv-green mb-2">
+                      <Briefcase className="h-4 w-4 mr-1" />
+                      Services Offered
+                    </div>
+                    <p className="text-sm text-gray-600 line-clamp-2">
+                      {member.services_offered}
+                    </p>
+                  </div>
                 )}
 
                 {member.expertise && member.expertise.length > 0 && (

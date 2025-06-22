@@ -20,6 +20,7 @@ interface ProfileSubmissionData {
   website_url?: string;
   location?: string;
   profile_image_url?: string;
+  services_offered?: string;
 }
 
 const ProfileSubmissionForm = () => {
@@ -38,6 +39,7 @@ const ProfileSubmissionForm = () => {
       website_url: "",
       location: "",
       profile_image_url: "",
+      services_offered: "",
     },
   });
 
@@ -77,6 +79,7 @@ const ProfileSubmissionForm = () => {
           website_url: data.website_url || null,
           location: data.location || null,
           profile_image_url: data.profile_image_url || null,
+          services_offered: data.services_offered || null,
           expertise: expertise.length > 0 ? expertise : null,
         });
 
@@ -192,6 +195,24 @@ const ProfileSubmissionForm = () => {
                   <FormLabel>Location</FormLabel>
                   <FormControl>
                     <Input placeholder="City, Country" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="services_offered"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Services Offered to Other Members</FormLabel>
+                  <FormControl>
+                    <Textarea 
+                      placeholder="What services can you offer to fellow members? (e.g., consulting, mentorship, partnerships, etc.)"
+                      className="min-h-[80px]"
+                      {...field} 
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
