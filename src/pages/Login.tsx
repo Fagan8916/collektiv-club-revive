@@ -18,26 +18,40 @@ const Login = () => {
   const [showForgot, setShowForgot] = useState(false);
   const [forgotEmail, setForgotEmail] = useState("");
   const [forgotLoading, setForgotLoading] = useState(false);
+  const [initializing, setInitializing] = useState(true);
   const navigate = useNavigate();
   const { isAdmin, isApprovedMember, loading: roleLoading } = useUserRole();
 
   useEffect(() => {
-    const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log("Login page - Auth state change:", event, !!session);
-      setUser(session?.user ?? null);
-    });
+    let mounted = true;
     
+    // Check for existing session first
     supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log("Login page - Initial session:", !!session);
-      setUser(session?.user ?? null);
+      if (mounted) {
+        console.log("Login page - Initial session check:", !!session);
+        setUser(session?.user ?? null);
+        setInitializing(false);
+      }
+    });
+
+    // Set up auth state listener
+    const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
+      if (mounted) {
+        console.log("Login page - Auth state change:", event, !!session);
+        setUser(session?.user ?? null);
+        setInitializing(false);
+      }
     });
     
-    return () => { listener?.subscription?.unsubscribe(); };
+    return () => { 
+      mounted = false;
+      listener?.subscription?.unsubscribe(); 
+    };
   }, []);
 
   // Handle redirect after authentication
   useEffect(() => {
-    if (user && !roleLoading) {
+    if (!initializing && user && !roleLoading) {
       console.log("User authenticated, checking roles:", { isAdmin, isApprovedMember });
       
       if (isAdmin || isApprovedMember) {
@@ -48,7 +62,7 @@ const Login = () => {
         navigate("/pending-approval", { replace: true });
       }
     }
-  }, [user, isAdmin, isApprovedMember, roleLoading, navigate]);
+  }, [initializing, user, isAdmin, isApprovedMember, roleLoading, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -114,7 +128,7 @@ const Login = () => {
   };
 
   // Show loading while checking authentication status
-  if (user && roleLoading) {
+  if (initializing || (user && roleLoading)) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-collektiv-accent via-white to-green-50">
         <div className="text-center">
