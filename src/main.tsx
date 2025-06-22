@@ -1,10 +1,12 @@
 
+import React from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 
 // Enhanced debugging
 console.log("Application initializing...");
+console.log("React version:", React.version);
 console.log("Base URL:", import.meta.env.BASE_URL);
 console.log("Current URL:", window.location.href);
 console.log("Pathname:", window.location.pathname);
@@ -20,7 +22,7 @@ try {
   } else {
     console.log("Root element found, rendering application");
     const root = createRoot(rootElement);
-    root.render(<App />);
+    root.render(React.createElement(App));
     console.log("Render complete");
   }
 } catch (error) {

@@ -1,4 +1,5 @@
 
+import React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -40,55 +41,53 @@ import Propane from "./pages/members/investments/Propane";
 
 const queryClient = new QueryClient();
 
-const App = () => {
+const App: React.FC = () => {
   console.log("App component rendering");
   
-  return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <HashRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/membership" element={<Membership />} />
-            <Route path="/insights" element={<Insights />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/hnwi-si" element={<HNWISI />} />
-            <Route path="/calculator" element={<Calculator />} />
-            <Route path="/founders" element={<Founders />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/members" element={<Members />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            
-            {/* Investment pages */}
-            <Route path="/members/investments/loxa" element={<Loxa />} />
-            <Route path="/members/investments/pandektes" element={<Pandektes />} />
-            <Route path="/members/investments/loyative" element={<Loyative />} />
-            <Route path="/members/investments/propane" element={<Propane />} />
-            
-            {/* Individual article routes */}
-            <Route path="/insights/zero-to-one-million-saas-journey" element={<ZeroToOneMillion />} />
-            <Route path="/insights/what-to-look-for-in-founders" element={<WhatToLookForInFounders />} />
-            <Route path="/insights/convertible-loan-notes" element={<ConvertibleLoanNotes />} />
-            <Route path="/insights/lessons-from-483-investments" element={<LessonsFromInvestments />} />
-            <Route path="/insights/saas-funding-agreements" element={<SaasFundingAgreements />} />
-            <Route path="/insights/beginner-angel-investors" element={<BeginnerAngelInvestors />} />
-            <Route path="/insights/eis-seis-tax-schemes" element={<EISSEIS />} />
-            <Route path="/insights/understanding-multiples" element={<MultiplesInValuations />} />
-            <Route path="/insights/saas-metrics-evaluation" element={<SaasMetrics />} />
-            <Route path="/insights/startup-valuations" element={<Valuations />} />
-            <Route path="/insights/angel-syndicates" element={<AngelSyndicates />} />
-            
-            {/* Catch-all route */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </HashRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
+  return React.createElement(QueryClientProvider, { client: queryClient },
+    React.createElement(TooltipProvider, null,
+      React.createElement(Toaster, null),
+      React.createElement(Sonner, null),
+      React.createElement(HashRouter, null,
+        React.createElement(Routes, null,
+          React.createElement(Route, { path: "/", element: React.createElement(Index) }),
+          React.createElement(Route, { path: "/about", element: React.createElement(About) }),
+          React.createElement(Route, { path: "/membership", element: React.createElement(Membership) }),
+          React.createElement(Route, { path: "/insights", element: React.createElement(Insights) }),
+          React.createElement(Route, { path: "/contact", element: React.createElement(Contact) }),
+          React.createElement(Route, { path: "/privacy", element: React.createElement(Privacy) }),
+          React.createElement(Route, { path: "/terms", element: React.createElement(Terms) }),
+          React.createElement(Route, { path: "/hnwi-si", element: React.createElement(HNWISI) }),
+          React.createElement(Route, { path: "/calculator", element: React.createElement(Calculator) }),
+          React.createElement(Route, { path: "/founders", element: React.createElement(Founders) }),
+          React.createElement(Route, { path: "/login", element: React.createElement(Login) }),
+          React.createElement(Route, { path: "/members", element: React.createElement(Members) }),
+          React.createElement(Route, { path: "/reset-password", element: React.createElement(ResetPassword) }),
+          
+          // Investment pages
+          React.createElement(Route, { path: "/members/investments/loxa", element: React.createElement(Loxa) }),
+          React.createElement(Route, { path: "/members/investments/pandektes", element: React.createElement(Pandektes) }),
+          React.createElement(Route, { path: "/members/investments/loyative", element: React.createElement(Loyative) }),
+          React.createElement(Route, { path: "/members/investments/propane", element: React.createElement(Propane) }),
+          
+          // Individual article routes
+          React.createElement(Route, { path: "/insights/zero-to-one-million-saas-journey", element: React.createElement(ZeroToOneMillion) }),
+          React.createElement(Route, { path: "/insights/what-to-look-for-in-founders", element: React.createElement(WhatToLookForInFounders) }),
+          React.createElement(Route, { path: "/insights/convertible-loan-notes", element: React.createElement(ConvertibleLoanNotes) }),
+          React.createElement(Route, { path: "/insights/lessons-from-483-investments", element: React.createElement(LessonsFromInvestments) }),
+          React.createElement(Route, { path: "/insights/saas-funding-agreements", element: React.createElement(SaasFundingAgreements) }),
+          React.createElement(Route, { path: "/insights/beginner-angel-investors", element: React.createElement(BeginnerAngelInvestors) }),
+          React.createElement(Route, { path: "/insights/eis-seis-tax-schemes", element: React.createElement(EISSEIS) }),
+          React.createElement(Route, { path: "/insights/understanding-multiples", element: React.createElement(MultiplesInValuations) }),
+          React.createElement(Route, { path: "/insights/saas-metrics-evaluation", element: React.createElement(SaasMetrics) }),
+          React.createElement(Route, { path: "/insights/startup-valuations", element: React.createElement(Valuations) }),
+          React.createElement(Route, { path: "/insights/angel-syndicates", element: React.createElement(AngelSyndicates) }),
+          
+          // Catch-all route
+          React.createElement(Route, { path: "*", element: React.createElement(NotFound) })
+        )
+      )
+    )
   );
 };
 
