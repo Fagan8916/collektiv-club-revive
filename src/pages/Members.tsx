@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +14,7 @@ import { useUserRole } from "@/hooks/useUserRole";
 
 const Members = () => {
   const [user, setUser] = useState<any>(null);
+  const [userProfile, setUserProfile] = useState<any>(null);
   const navigate = useNavigate();
   const { isAdmin } = useUserRole();
 
@@ -30,10 +30,37 @@ const Members = () => {
     return () => { listener?.subscription?.unsubscribe(); };
   }, [navigate]);
 
+  // Fetch user profile when user is available
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      if (user?.id) {
+        const { data: profile } = await supabase
+          .from('member_profiles')
+          .select('full_name')
+          .eq('user_id', user.id)
+          .single();
+        
+        setUserProfile(profile);
+      }
+    };
+
+    fetchUserProfile();
+  }, [user]);
+
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setUser(null);
     navigate("/");
+  };
+
+  // Extract first name from full name or fall back to email username
+  const getDisplayName = () => {
+    if (userProfile?.full_name) {
+      const firstName = userProfile.full_name.split(' ')[0];
+      return firstName;
+    }
+    // Fallback to email username if no profile or full name
+    return user?.email?.split('@')[0] || 'Member';
   };
 
   const stats = [
@@ -71,7 +98,7 @@ const Members = () => {
         <div className="relative container mx-auto px-4 py-16">
           <div className="text-center text-white">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Welcome Back, {user?.email?.split('@')[0] || 'Member'}
+              Welcome back, {getDisplayName()}
             </h1>
             <p className="text-xl text-green-100 mb-8 max-w-2xl mx-auto">
               Your gateway to exclusive investments, community insights, and collaborative growth opportunities.
