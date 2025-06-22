@@ -1,0 +1,169 @@
+
+import React, { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { Card, CardContent } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { MapPin, Building2, Linkedin, Globe, User } from "lucide-react";
+import { Tables } from "@/integrations/supabase/types";
+
+type MemberProfile = Tables<"member_profiles">;
+
+const MemberDirectory = () => {
+  const [members, setMembers] = useState<MemberProfile[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchMembers();
+  }, []);
+
+  const fetchMembers = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("member_profiles")
+        .select("*")
+        .eq("is_visible", true)
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+      setMembers(data || []);
+    } catch (error) {
+      console.error("Error fetching members:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getInitials = (name: string) => {
+    return name
+      .split(" ")
+      .map(word => word[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2);
+  };
+
+  if (loading) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {[...Array(6)].map((_, i) => (
+          <Card key={i} className="animate-pulse">
+            <CardContent className="p-6">
+              <div className="flex items-center space-x-4 mb-4">
+                <div className="rounded-full bg-gray-200 h-16 w-16"></div>
+                <div className="space-y-2">
+                  <div className="h-4 bg-gray-200 rounded w-24"></div>
+                  <div className="h-3 bg-gray-200 rounded w-32"></div>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <div className="h-3 bg-gray-200 rounded"></div>
+                <div className="h-3 bg-gray-200 rounded w-3/4"></div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      {members.length === 0 ? (
+        <Card className="text-center py-12">
+          <CardContent>
+            <User className="mx-auto h-12 w-12 text-gray-400 mb-4" />
+            <h3 className="text-lg font-semibold text-gray-600 mb-2">No members found</h3>
+            <p className="text-gray-500">Be the first to create your profile!</p>
+          </CardContent>
+        </Card>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {members.map((member) => (
+            <Card key={member.id} className="hover:shadow-lg transition-shadow bg-white">
+              <CardContent className="p-6">
+                <div className="flex items-start space-x-4 mb-4">
+                  <Avatar className="h-16 w-16">
+                    <AvatarImage src={member.profile_image_url || ""} alt={member.full_name} />
+                    <AvatarFallback className="bg-collektiv-green text-white text-lg">
+                      {getInitials(member.full_name)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-bold text-lg text-collektiv-dark truncate">
+                      {member.full_name}
+                    </h3>
+                    {member.position && member.company && (
+                      <p className="text-sm text-gray-600 mb-2">
+                        {member.position} at {member.company}
+                      </p>
+                    )}
+                    {member.location && (
+                      <div className="flex items-center text-sm text-gray-500">
+                        <MapPin className="h-3 w-3 mr-1" />
+                        {member.location}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {member.bio && (
+                  <p className="text-sm text-gray-600 mb-4 line-clamp-3">
+                    {member.bio}
+                  </p>
+                )}
+
+                {member.expertise && member.expertise.length > 0 && (
+                  <div className="mb-4">
+                    <div className="flex flex-wrap gap-1">
+                      {member.expertise.slice(0, 3).map((skill, index) => (
+                        <Badge key={index} variant="secondary" className="text-xs">
+                          {skill}
+                        </Badge>
+                      ))}
+                      {member.expertise.length > 3 && (
+                        <Badge variant="outline" className="text-xs">
+                          +{member.expertise.length - 3} more
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex items-center space-x-3 pt-4 border-t">
+                  {member.linkedin_url && (
+                    <a
+                      href={member.linkedin_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:text-blue-800 transition-colors"
+                    >
+                      <Linkedin className="h-4 w-4" />
+                    </a>
+                  )}
+                  {member.website_url && (
+                    <a
+                      href={member.website_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-600 hover:text-gray-800 transition-colors"
+                    >
+                      <Globe className="h-4 w-4" />
+                    </a>
+                  )}
+                  {member.company && (
+                    <div className="flex items-center text-gray-500">
+                      <Building2 className="h-4 w-4" />
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default MemberDirectory;
