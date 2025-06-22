@@ -23,6 +23,7 @@ export type Database = {
           profile_image_url: string | null
           reviewed_at: string | null
           reviewed_by: string | null
+          services_offered: string | null
           status: string | null
           submitted_at: string
           user_id: string
@@ -41,6 +42,7 @@ export type Database = {
           profile_image_url?: string | null
           reviewed_at?: string | null
           reviewed_by?: string | null
+          services_offered?: string | null
           status?: string | null
           submitted_at?: string
           user_id: string
@@ -59,6 +61,7 @@ export type Database = {
           profile_image_url?: string | null
           reviewed_at?: string | null
           reviewed_by?: string | null
+          services_offered?: string | null
           status?: string | null
           submitted_at?: string
           user_id?: string
@@ -79,6 +82,7 @@ export type Database = {
           location: string | null
           position: string | null
           profile_image_url: string | null
+          services_offered: string | null
           updated_at: string
           user_id: string
           website_url: string | null
@@ -95,6 +99,7 @@ export type Database = {
           location?: string | null
           position?: string | null
           profile_image_url?: string | null
+          services_offered?: string | null
           updated_at?: string
           user_id: string
           website_url?: string | null
@@ -111,6 +116,7 @@ export type Database = {
           location?: string | null
           position?: string | null
           profile_image_url?: string | null
+          services_offered?: string | null
           updated_at?: string
           user_id?: string
           website_url?: string | null

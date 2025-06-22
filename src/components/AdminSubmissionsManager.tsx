@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Textarea } from "@/components/ui/textarea";
-import { Check, X, MapPin, Building2, Linkedin, Globe, Calendar } from "lucide-react";
+import { Check, X, MapPin, Building2, Linkedin, Globe, Calendar, Briefcase } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Tables } from "@/integrations/supabase/types";
 
@@ -230,6 +230,16 @@ const AdminSubmissionsManager = () => {
                 </a>
               )}
             </div>
+
+            {submission.services_offered && (
+              <div>
+                <div className="flex items-center text-sm font-medium text-collektiv-green mb-2">
+                  <Briefcase className="h-4 w-4 mr-1" />
+                  Services Offered
+                </div>
+                <p className="text-sm text-gray-600">{submission.services_offered}</p>
+              </div>
+            )}
 
             {submission.expertise && submission.expertise.length > 0 && (
               <div>
