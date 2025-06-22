@@ -100,7 +100,7 @@ const Header = () => {
             </>
           ) : (
             <Button variant="outline" className="ml-4" onClick={() => navigate("/login")}>
-              Log In
+              Member Zone
             </Button>
           )}
         </div>
@@ -161,7 +161,7 @@ const Header = () => {
             </>
           ) : (
             <Button variant="outline" className="mt-6" onClick={() => { setMobileMenuOpen(false); navigate("/login"); }}>
-              Log In
+              Member Zone
             </Button>
           )}
         </div>
