@@ -8,6 +8,7 @@ import { toast } from "@/components/ui/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Mail, Lock, Chrome } from "lucide-react";
+import { useUserRole } from "@/hooks/useUserRole";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -18,43 +19,69 @@ const Login = () => {
   const [forgotEmail, setForgotEmail] = useState("");
   const [forgotLoading, setForgotLoading] = useState(false);
   const navigate = useNavigate();
+  const { isAdmin, isApprovedMember, loading: roleLoading } = useUserRole();
 
   useEffect(() => {
     const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log("Login page - Auth state change:", event, !!session);
       setUser(session?.user ?? null);
-      if (session?.user) navigate("/members", { replace: true });
     });
+    
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log("Login page - Initial session:", !!session);
       setUser(session?.user ?? null);
-      if (session?.user) navigate("/members", { replace: true });
     });
+    
     return () => { listener?.subscription?.unsubscribe(); };
-  }, [navigate]);
+  }, []);
+
+  // Handle redirect after authentication
+  useEffect(() => {
+    if (user && !roleLoading) {
+      console.log("User authenticated, checking roles:", { isAdmin, isApprovedMember });
+      
+      if (isAdmin || isApprovedMember) {
+        console.log("User has access, redirecting to members");
+        navigate("/members", { replace: true });
+      } else {
+        console.log("User needs approval, redirecting to pending approval");
+        navigate("/pending-approval", { replace: true });
+      }
+    }
+  }, [user, isAdmin, isApprovedMember, roleLoading, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    
+    console.log("Attempting email/password login");
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
+    
     if (error) {
+      console.error("Login error:", error);
       let message =
         error.message === "Invalid login credentials"
           ? "Access restricted. Please contact the admin if you require access."
           : error.message;
       toast({ title: "Login failed", description: message, variant: "destructive" });
     } else {
+      console.log("Email/password login successful");
       toast({ title: "Success", description: "Login successful!" });
     }
   };
 
   const handleGoogleSignIn = async () => {
+    console.log("Attempting Google sign in");
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: window.location.origin + "/#/members",
+        redirectTo: `${window.location.origin}/#/members`,
       }
     });
+    
     if (error) {
+      console.error("Google sign in error:", error);
       toast({
         title: "Error signing in with Google",
         description: error.message,
@@ -85,6 +112,18 @@ const Login = () => {
     }
     setForgotEmail("");
   };
+
+  // Show loading while checking authentication status
+  if (user && roleLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-collektiv-accent via-white to-green-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-collektiv-green mx-auto"></div>
+          <p className="mt-4 text-collektiv-green">Checking your access...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-collektiv-accent via-white to-green-50 p-4">

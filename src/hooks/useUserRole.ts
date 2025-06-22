@@ -8,15 +8,24 @@ export const useUserRole = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let mounted = true;
+
     const checkUserRole = async () => {
       try {
+        console.log("Checking user role...");
         const { data: { user } } = await supabase.auth.getUser();
+        
+        if (!mounted) return;
+        
         if (!user) {
+          console.log("No user found");
           setIsAdmin(false);
           setIsApprovedMember(false);
           setLoading(false);
           return;
         }
+
+        console.log("User found:", user.id);
 
         // Check if user is admin
         const { data: adminData, error: adminError } = await supabase
@@ -24,13 +33,14 @@ export const useUserRole = () => {
           .select("role")
           .eq("user_id", user.id)
           .eq("role", "admin")
-          .single();
+          .maybeSingle();
 
         if (adminError && adminError.code !== "PGRST116") {
           console.error("Error checking admin role:", adminError);
         }
 
-        setIsAdmin(!!adminData);
+        const isUserAdmin = !!adminData;
+        console.log("Is admin:", isUserAdmin);
 
         // Check if user is approved member
         const { data: memberData, error: memberError } = await supabase
@@ -39,29 +49,52 @@ export const useUserRole = () => {
           .eq("user_id", user.id)
           .eq("role", "member")
           .eq("status", "approved")
-          .single();
+          .maybeSingle();
 
         if (memberError && memberError.code !== "PGRST116") {
           console.error("Error checking member status:", memberError);
         }
 
-        setIsApprovedMember(!!memberData);
+        const isUserApprovedMember = !!memberData;
+        console.log("Is approved member:", isUserApprovedMember);
+
+        if (mounted) {
+          setIsAdmin(isUserAdmin);
+          setIsApprovedMember(isUserApprovedMember);
+          setLoading(false);
+        }
       } catch (error) {
         console.error("Error in checkUserRole:", error);
-        setIsAdmin(false);
-        setIsApprovedMember(false);
-      } finally {
-        setLoading(false);
+        if (mounted) {
+          setIsAdmin(false);
+          setIsApprovedMember(false);
+          setLoading(false);
+        }
       }
     };
 
     checkUserRole();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(() => {
-      checkUserRole();
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log("Auth state changed:", event, !!session);
+      if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+        // Small delay to ensure user record is available
+        setTimeout(() => {
+          checkUserRole();
+        }, 100);
+      } else if (event === 'SIGNED_OUT') {
+        if (mounted) {
+          setIsAdmin(false);
+          setIsApprovedMember(false);
+          setLoading(false);
+        }
+      }
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   return { isAdmin, isApprovedMember, loading };
