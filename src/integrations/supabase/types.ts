@@ -9,6 +9,63 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      member_profile_submissions: {
+        Row: {
+          admin_notes: string | null
+          bio: string | null
+          company: string | null
+          expertise: string[] | null
+          full_name: string
+          id: string
+          linkedin_url: string | null
+          location: string | null
+          position: string | null
+          profile_image_url: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string | null
+          submitted_at: string
+          user_id: string
+          website_url: string | null
+        }
+        Insert: {
+          admin_notes?: string | null
+          bio?: string | null
+          company?: string | null
+          expertise?: string[] | null
+          full_name: string
+          id?: string
+          linkedin_url?: string | null
+          location?: string | null
+          position?: string | null
+          profile_image_url?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string | null
+          submitted_at?: string
+          user_id: string
+          website_url?: string | null
+        }
+        Update: {
+          admin_notes?: string | null
+          bio?: string | null
+          company?: string | null
+          expertise?: string[] | null
+          full_name?: string
+          id?: string
+          linkedin_url?: string | null
+          location?: string | null
+          position?: string | null
+          profile_image_url?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string | null
+          submitted_at?: string
+          user_id?: string
+          website_url?: string | null
+        }
+        Relationships: []
+      }
       member_profiles: {
         Row: {
           bio: string | null
@@ -60,15 +117,43 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      approve_member_submission: {
+        Args: { submission_id: string }
+        Returns: undefined
+      }
+      has_role: {
+        Args: {
+          _user_id: string
+          _role: Database["public"]["Enums"]["app_role"]
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "member"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -183,6 +268,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "member"],
+    },
   },
 } as const

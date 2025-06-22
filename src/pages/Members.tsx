@@ -8,10 +8,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Building2, Users, TrendingUp, Award } from "lucide-react";
 import InvestmentsSection from "@/components/InvestmentsSection";
 import MemberDirectory from "@/components/MemberDirectory";
+import ProfileSubmissionForm from "@/components/ProfileSubmissionForm";
+import AdminSubmissionsManager from "@/components/AdminSubmissionsManager";
+import { useUserRole } from "@/hooks/useUserRole";
 
 const Members = () => {
   const [user, setUser] = useState<any>(null);
   const navigate = useNavigate();
+  const { isAdmin } = useUserRole();
 
   useEffect(() => {
     const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
@@ -95,13 +99,21 @@ const Members = () => {
       <div className="container mx-auto px-4 pb-16">
         <Tabs defaultValue="investments" className="w-full">
           <div className="flex justify-center mb-8">
-            <TabsList className="grid w-full max-w-md grid-cols-2 bg-white shadow-lg">
+            <TabsList className={`grid w-full max-w-fit grid-cols-${isAdmin ? '4' : '3'} bg-white shadow-lg`}>
               <TabsTrigger value="investments" className="data-[state=active]:bg-collektiv-green data-[state=active]:text-white">
-                Investments to Date
+                Investments
               </TabsTrigger>
               <TabsTrigger value="directory" className="data-[state=active]:bg-collektiv-green data-[state=active]:text-white">
-                Member Directory
+                Directory
               </TabsTrigger>
+              <TabsTrigger value="submit-profile" className="data-[state=active]:bg-collektiv-green data-[state=active]:text-white">
+                Submit Profile
+              </TabsTrigger>
+              {isAdmin && (
+                <TabsTrigger value="admin" className="data-[state=active]:bg-collektiv-green data-[state=active]:text-white">
+                  Admin
+                </TabsTrigger>
+              )}
             </TabsList>
           </div>
 
@@ -124,6 +136,22 @@ const Members = () => {
             </div>
             <MemberDirectory />
           </TabsContent>
+
+          <TabsContent value="submit-profile" className="space-y-8">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-collektiv-green mb-4">Join the Directory</h2>
+              <p className="text-gray-600 max-w-2xl mx-auto">
+                Share your expertise and connect with other members by submitting your profile to our directory.
+              </p>
+            </div>
+            <ProfileSubmissionForm />
+          </TabsContent>
+
+          {isAdmin && (
+            <TabsContent value="admin" className="space-y-8">
+              <AdminSubmissionsManager />
+            </TabsContent>
+          )}
         </Tabs>
 
         {/* Logout Button */}
