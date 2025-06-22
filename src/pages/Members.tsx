@@ -34,13 +34,22 @@ const Members = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       if (user?.id) {
-        const { data: profile } = await supabase
-          .from('member_profiles')
-          .select('full_name')
-          .eq('user_id', user.id)
-          .single();
-        
-        setUserProfile(profile);
+        try {
+          const { data: profile, error } = await supabase
+            .from('member_profiles')
+            .select('full_name')
+            .eq('user_id', user.id)
+            .maybeSingle();
+          
+          if (error) {
+            console.log("Error fetching profile:", error);
+          } else {
+            setUserProfile(profile);
+          }
+        } catch (error) {
+          console.log("Profile fetch failed:", error);
+          setUserProfile(null);
+        }
       }
     };
 
@@ -53,13 +62,27 @@ const Members = () => {
     navigate("/");
   };
 
-  // Extract first name from full name or fall back to email username
+  // Extract first name from various sources
   const getDisplayName = () => {
+    // First try member profile full_name
     if (userProfile?.full_name) {
       const firstName = userProfile.full_name.split(' ')[0];
       return firstName;
     }
-    // Fallback to email username if no profile or full name
+    
+    // Then try user metadata full_name (from Google SSO)
+    if (user?.user_metadata?.full_name) {
+      const firstName = user.user_metadata.full_name.split(' ')[0];
+      return firstName;
+    }
+    
+    // Then try user metadata name (alternative from Google SSO)
+    if (user?.user_metadata?.name) {
+      const firstName = user.user_metadata.name.split(' ')[0];
+      return firstName;
+    }
+    
+    // Fallback to email username
     return user?.email?.split('@')[0] || 'Member';
   };
 
