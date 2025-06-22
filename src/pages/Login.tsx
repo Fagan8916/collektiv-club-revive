@@ -63,22 +63,6 @@ const Login = () => {
     }
   };
 
-  const handleMicrosoftSignIn = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'azure',
-      options: {
-        redirectTo: window.location.origin + "/#/members",
-      }
-    });
-    if (error) {
-      toast({
-        title: "Error signing in with Microsoft",
-        description: error.message,
-        variant: "destructive",
-      });
-    }
-  };
-
   const handleForgotPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     setForgotLoading(true);
@@ -110,7 +94,7 @@ const Login = () => {
           <p className="text-gray-600 mt-2">Access your exclusive member area</p>
         </CardHeader>
         <CardContent className="space-y-6">
-          {/* SSO Buttons */}
+          {/* SSO Button */}
           <div className="space-y-3">
             <Button
               onClick={handleGoogleSignIn}
@@ -119,16 +103,6 @@ const Login = () => {
             >
               <Chrome className="mr-2 h-4 w-4 text-blue-500" />
               Continue with Google
-            </Button>
-            <Button
-              onClick={handleMicrosoftSignIn}
-              variant="outline"
-              className="w-full h-11 border-gray-300 hover:bg-gray-50"
-            >
-              <div className="mr-2 h-4 w-4 bg-blue-600 rounded-sm flex items-center justify-center">
-                <span className="text-white text-xs font-bold">M</span>
-              </div>
-              Continue with Microsoft
             </Button>
           </div>
 
