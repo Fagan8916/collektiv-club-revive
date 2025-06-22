@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 export const useUserRole = () => {
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isApprovedMember, setIsApprovedMember] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -12,25 +13,43 @@ export const useUserRole = () => {
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) {
           setIsAdmin(false);
+          setIsApprovedMember(false);
           setLoading(false);
           return;
         }
 
-        const { data, error } = await supabase
+        // Check if user is admin
+        const { data: adminData, error: adminError } = await supabase
           .from("user_roles")
           .select("role")
           .eq("user_id", user.id)
           .eq("role", "admin")
           .single();
 
-        if (error && error.code !== "PGRST116") {
-          console.error("Error checking user role:", error);
+        if (adminError && adminError.code !== "PGRST116") {
+          console.error("Error checking admin role:", adminError);
         }
 
-        setIsAdmin(!!data);
+        setIsAdmin(!!adminData);
+
+        // Check if user is approved member
+        const { data: memberData, error: memberError } = await supabase
+          .from("user_roles")
+          .select("role, status")
+          .eq("user_id", user.id)
+          .eq("role", "member")
+          .eq("status", "approved")
+          .single();
+
+        if (memberError && memberError.code !== "PGRST116") {
+          console.error("Error checking member status:", memberError);
+        }
+
+        setIsApprovedMember(!!memberData);
       } catch (error) {
         console.error("Error in checkUserRole:", error);
         setIsAdmin(false);
+        setIsApprovedMember(false);
       } finally {
         setLoading(false);
       }
@@ -45,5 +64,5 @@ export const useUserRole = () => {
     return () => subscription.unsubscribe();
   }, []);
 
-  return { isAdmin, loading };
+  return { isAdmin, isApprovedMember, loading };
 };

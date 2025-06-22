@@ -125,18 +125,30 @@ export type Database = {
       }
       user_roles: {
         Row: {
+          approved_at: string | null
+          approved_by: string | null
           id: string
+          requested_at: string | null
           role: Database["public"]["Enums"]["app_role"]
+          status: string | null
           user_id: string
         }
         Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
           id?: string
+          requested_at?: string | null
           role: Database["public"]["Enums"]["app_role"]
+          status?: string | null
           user_id: string
         }
         Update: {
+          approved_at?: string | null
+          approved_by?: string | null
           id?: string
+          requested_at?: string | null
           role?: Database["public"]["Enums"]["app_role"]
+          status?: string | null
           user_id?: string
         }
         Relationships: []
@@ -150,11 +162,19 @@ export type Database = {
         Args: { submission_id: string }
         Returns: undefined
       }
+      approve_user_membership: {
+        Args: { target_user_id: string }
+        Returns: undefined
+      }
       has_role: {
         Args: {
           _user_id: string
           _role: Database["public"]["Enums"]["app_role"]
         }
+        Returns: boolean
+      }
+      is_approved_member: {
+        Args: { _user_id: string }
         Returns: boolean
       }
     }

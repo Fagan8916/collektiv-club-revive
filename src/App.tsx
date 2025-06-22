@@ -18,6 +18,7 @@ import Calculator from "./pages/Calculator"; // New Calculator page
 import Founders from "./pages/Founders"; // New Founders page
 import Login from "./pages/Login";
 import Members from "./pages/Members";
+import PendingApproval from "./pages/PendingApproval"; // New pending approval page
 import ResetPassword from "./pages/ResetPassword"; // Add this import
 
 // Import individual article pages
@@ -62,6 +63,7 @@ const App: React.FC = () => {
           React.createElement(Route, { path: "/founders", element: React.createElement(Founders) }),
           React.createElement(Route, { path: "/login", element: React.createElement(Login) }),
           React.createElement(Route, { path: "/members", element: React.createElement(Members) }),
+          React.createElement(Route, { path: "/pending-approval", element: React.createElement(PendingApproval) }),
           React.createElement(Route, { path: "/reset-password", element: React.createElement(ResetPassword) }),
           
           // Investment pages

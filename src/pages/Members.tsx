@@ -10,13 +10,14 @@ import MemberDirectory from "@/components/MemberDirectory";
 import MemberEvents from "@/components/MemberEvents";
 import ProfileSubmissionForm from "@/components/ProfileSubmissionForm";
 import AdminSubmissionsManager from "@/components/AdminSubmissionsManager";
+import MembershipManager from "@/components/MembershipManager";
 import { useUserRole } from "@/hooks/useUserRole";
 
 const Members = () => {
   const [user, setUser] = useState<any>(null);
   const [userProfile, setUserProfile] = useState<any>(null);
   const navigate = useNavigate();
-  const { isAdmin } = useUserRole();
+  const { isAdmin, isApprovedMember, loading } = useUserRole();
 
   useEffect(() => {
     const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
@@ -29,6 +30,13 @@ const Members = () => {
     });
     return () => { listener?.subscription?.unsubscribe(); };
   }, [navigate]);
+
+  // Check approval status and redirect if needed
+  useEffect(() => {
+    if (!loading && user && !isAdmin && !isApprovedMember) {
+      navigate("/pending-approval", { replace: true });
+    }
+  }, [loading, user, isAdmin, isApprovedMember, navigate]);
 
   // Fetch user profile when user is available
   useEffect(() => {
@@ -112,6 +120,18 @@ const Members = () => {
       description: "Positive returns"
     }
   ];
+
+  // Show loading while checking approval status
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-collektiv-accent via-white to-green-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-collektiv-green"></div>
+          <p className="mt-4 text-collektiv-green">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-collektiv-accent via-white to-green-50">
@@ -222,7 +242,22 @@ const Members = () => {
 
           {isAdmin && (
             <TabsContent value="admin" className="space-y-8">
-              <AdminSubmissionsManager />
+              <Tabs defaultValue="submissions" className="w-full">
+                <div className="flex justify-center mb-6">
+                  <TabsList className="bg-gray-100">
+                    <TabsTrigger value="submissions">Profile Submissions</TabsTrigger>
+                    <TabsTrigger value="memberships">Membership Requests</TabsTrigger>
+                  </TabsList>
+                </div>
+                
+                <TabsContent value="submissions">
+                  <AdminSubmissionsManager />
+                </TabsContent>
+                
+                <TabsContent value="memberships">
+                  <MembershipManager />
+                </TabsContent>
+              </Tabs>
             </TabsContent>
           )}
         </Tabs>
