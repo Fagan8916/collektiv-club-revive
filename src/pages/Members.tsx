@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Building2, Users, TrendingUp, Award } from "lucide-react";
 import InvestmentsSection from "@/components/InvestmentsSection";
 import MemberDirectory from "@/components/MemberDirectory";
+import MemberEvents from "@/components/MemberEvents";
 import ProfileSubmissionForm from "@/components/ProfileSubmissionForm";
 import AdminSubmissionsManager from "@/components/AdminSubmissionsManager";
 import { useUserRole } from "@/hooks/useUserRole";
@@ -99,15 +100,15 @@ const Members = () => {
       <div className="container mx-auto px-4 pb-16">
         <Tabs defaultValue="investments" className="w-full">
           <div className="flex justify-center mb-8">
-            <TabsList className={`grid w-full max-w-fit grid-cols-${isAdmin ? '4' : '3'} bg-white shadow-lg`}>
+            <TabsList className={`grid w-full max-w-fit ${isAdmin ? 'grid-cols-4' : 'grid-cols-3'} bg-white shadow-lg`}>
               <TabsTrigger value="investments" className="data-[state=active]:bg-collektiv-green data-[state=active]:text-white">
                 Investments
               </TabsTrigger>
               <TabsTrigger value="directory" className="data-[state=active]:bg-collektiv-green data-[state=active]:text-white">
-                Directory
+                Member Directory
               </TabsTrigger>
-              <TabsTrigger value="submit-profile" className="data-[state=active]:bg-collektiv-green data-[state=active]:text-white">
-                Submit Profile
+              <TabsTrigger value="events" className="data-[state=active]:bg-collektiv-green data-[state=active]:text-white">
+                Member Events
               </TabsTrigger>
               {isAdmin && (
                 <TabsTrigger value="admin" className="data-[state=active]:bg-collektiv-green data-[state=active]:text-white">
@@ -134,17 +135,39 @@ const Members = () => {
                 Connect with fellow members of the Collektiv Club. Discover their expertise, background, and areas of interest.
               </p>
             </div>
-            <MemberDirectory />
+            
+            <Tabs defaultValue="view-directory" className="w-full">
+              <div className="flex justify-center mb-6">
+                <TabsList className="bg-gray-100">
+                  <TabsTrigger value="view-directory">View Directory</TabsTrigger>
+                  <TabsTrigger value="submit-profile">Submit Profile</TabsTrigger>
+                </TabsList>
+              </div>
+              
+              <TabsContent value="view-directory">
+                <MemberDirectory />
+              </TabsContent>
+              
+              <TabsContent value="submit-profile">
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl font-bold text-collektiv-green mb-4">Join the Directory</h3>
+                  <p className="text-gray-600 max-w-2xl mx-auto">
+                    Share your expertise and connect with other members by submitting your profile to our directory.
+                  </p>
+                </div>
+                <ProfileSubmissionForm />
+              </TabsContent>
+            </Tabs>
           </TabsContent>
 
-          <TabsContent value="submit-profile" className="space-y-8">
+          <TabsContent value="events" className="space-y-8">
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-collektiv-green mb-4">Join the Directory</h2>
+              <h2 className="text-3xl font-bold text-collektiv-green mb-4">Member Events</h2>
               <p className="text-gray-600 max-w-2xl mx-auto">
-                Share your expertise and connect with other members by submitting your profile to our directory.
+                Stay connected through exclusive networking events, workshops, and member gatherings designed to foster collaboration and growth.
               </p>
             </div>
-            <ProfileSubmissionForm />
+            <MemberEvents />
           </TabsContent>
 
           {isAdmin && (
