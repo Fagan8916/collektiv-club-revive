@@ -22,15 +22,18 @@ const InvitationCodeInput: React.FC<InvitationCodeInputProps> = ({ onValidCode }
     setLoading(true);
 
     try {
-      // Validate invitation code
+      // Validate invitation code using raw SQL query
       const { data: invitation, error: invitationError } = await supabase
-        .from('invitations')
-        .select('id, email, used_at')
-        .eq('code', invitationCode)
-        .eq('email', email)
-        .maybeSingle();
+        .rpc('sql', {
+          query: `
+            SELECT id, email, used_at 
+            FROM public.invitations 
+            WHERE code = $1 AND email = $2
+          `,
+          params: [invitationCode, email]
+        });
 
-      if (invitationError || !invitation) {
+      if (invitationError || !invitation || invitation.length === 0) {
         toast({
           title: "Invalid Invitation",
           description: "The invitation code is invalid or doesn't match your email.",
@@ -40,7 +43,8 @@ const InvitationCodeInput: React.FC<InvitationCodeInputProps> = ({ onValidCode }
         return;
       }
 
-      if (invitation.used_at) {
+      const invitationRecord = invitation[0];
+      if (invitationRecord.used_at) {
         toast({
           title: "Invitation Already Used",
           description: "This invitation code has already been used.",
@@ -70,17 +74,21 @@ const InvitationCodeInput: React.FC<InvitationCodeInputProps> = ({ onValidCode }
       }
 
       // Mark invitation as used
-      await supabase
-        .from('invitations')
-        .update({ used_at: new Date().toISOString() })
-        .eq('id', invitation.id);
+      await supabase.rpc('sql', {
+        query: `
+          UPDATE public.invitations 
+          SET used_at = now() 
+          WHERE id = $1
+        `,
+        params: [invitationRecord.id]
+      });
 
       toast({
         title: "Registration Successful",
         description: "Your account has been created. Please check your email to verify your account.",
       });
 
-      onValidCode(invitation.id);
+      onValidCode(invitationRecord.id);
     } catch (error) {
       console.error("Registration error:", error);
       toast({

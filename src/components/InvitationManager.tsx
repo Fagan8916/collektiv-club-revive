@@ -28,10 +28,14 @@ const InvitationManager = () => {
 
   const fetchInvitations = async () => {
     try {
-      const { data, error } = await supabase
-        .from('invitations')
-        .select('*')
-        .order('created_at', { ascending: false });
+      // Use raw SQL query to fetch invitations
+      const { data, error } = await supabase.rpc('sql', {
+        query: `
+          SELECT id, email, code, created_at, used_at, created_by
+          FROM public.invitations 
+          ORDER BY created_at DESC
+        `
+      });
 
       if (error) throw error;
       setInvitations(data || []);
@@ -92,10 +96,10 @@ const InvitationManager = () => {
 
   const deleteInvitation = async (id: string) => {
     try {
-      const { error } = await supabase
-        .from('invitations')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.rpc('sql', {
+        query: 'DELETE FROM public.invitations WHERE id = $1',
+        params: [id]
+      });
 
       if (error) throw error;
 

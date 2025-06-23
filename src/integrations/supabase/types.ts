@@ -9,6 +9,33 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      invitations: {
+        Row: {
+          code: string
+          created_at: string
+          created_by: string
+          email: string
+          id: string
+          used_at: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          created_by: string
+          email: string
+          id?: string
+          used_at?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          created_by?: string
+          email?: string
+          id?: string
+          used_at?: string | null
+        }
+        Relationships: []
+      }
       member_profile_submissions: {
         Row: {
           admin_notes: string | null
@@ -164,6 +191,10 @@ export type Database = {
       }
       approve_user_membership: {
         Args: { target_user_id: string }
+        Returns: undefined
+      }
+      create_invitation: {
+        Args: { p_email: string }
         Returns: undefined
       }
       has_role: {
