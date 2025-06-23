@@ -43,9 +43,9 @@ export const useUserRole = () => {
           return;
         }
 
-        console.log("useUserRole: User roles:", userRoles);
+        console.log("useUserRole: User roles from database:", userRoles);
 
-        // Check for admin role
+        // Check for admin role (admin role doesn't need approval status check)
         const hasAdminRole = userRoles?.some(role => role.role === 'admin') || false;
         
         // Check for approved member role
@@ -53,8 +53,7 @@ export const useUserRole = () => {
           role.role === 'member' && role.status === 'approved'
         ) || false;
 
-        console.log("useUserRole: Admin status:", hasAdminRole);
-        console.log("useUserRole: Approved member status:", hasApprovedMemberRole);
+        console.log("useUserRole: Final status - Admin:", hasAdminRole, "Approved member:", hasApprovedMemberRole);
 
         if (mounted) {
           setIsAdmin(hasAdminRole);

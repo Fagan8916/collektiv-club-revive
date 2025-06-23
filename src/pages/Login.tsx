@@ -40,10 +40,12 @@ const Login = () => {
     if (user && !roleLoading) {
       console.log("Login: User authenticated, roles loaded. Admin:", isAdmin, "Approved:", isApprovedMember);
       
+      // If user is admin OR approved member, go to members page
       if (isAdmin || isApprovedMember) {
         console.log("Login: User has access, redirecting to members");
         navigate("/members", { replace: true });
       } else {
+        // Only redirect to pending approval if user is NOT admin and NOT approved member
         console.log("Login: User needs approval, redirecting to pending");
         navigate("/pending-approval", { replace: true });
       }
