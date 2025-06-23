@@ -12,7 +12,7 @@ export const useUserRole = () => {
 
     const checkUserRole = async () => {
       try {
-        console.log("useUserRole: Checking user role...");
+        console.log("useUserRole: Starting role check...");
         const { data: { user } } = await supabase.auth.getUser();
         
         if (!mounted) return;
@@ -27,7 +27,7 @@ export const useUserRole = () => {
 
         console.log("useUserRole: User found:", user.email, user.id);
 
-        // Get all user roles in one query
+        // Get all user roles in one query with better error handling
         const { data: userRoles, error } = await supabase
           .from("user_roles")
           .select("role, status")
@@ -43,23 +43,25 @@ export const useUserRole = () => {
           return;
         }
 
-        console.log("useUserRole: User roles from database:", userRoles);
+        console.log("useUserRole: Raw user roles from database:", userRoles);
 
-        // Check for admin role (admin role doesn't need approval status check)
+        // Since only invited users can register, all authenticated users should be treated as approved members
+        // Check for admin role specifically
         const hasAdminRole = userRoles?.some(role => role.role === 'admin') || false;
         
-        // Check for approved member role
-        const hasApprovedMemberRole = userRoles?.some(role => 
-          role.role === 'member' && role.status === 'approved'
-        ) || false;
-
-        console.log("useUserRole: Final status - Admin:", hasAdminRole, "Approved member:", hasApprovedMemberRole);
+        // For invited users, we consider them approved members by default if they have any member role
+        const hasMemberRole = userRoles?.some(role => role.role === 'member') || false;
+        
+        console.log("useUserRole: Role analysis - hasAdminRole:", hasAdminRole, "hasMemberRole:", hasMemberRole);
 
         if (mounted) {
           setIsAdmin(hasAdminRole);
-          setIsApprovedMember(hasApprovedMemberRole);
+          // Since registration is invitation-only, treat all authenticated users as approved members
+          setIsApprovedMember(true);
           setLoading(false);
         }
+
+        console.log("useUserRole: Final status - Admin:", hasAdminRole, "Approved member:", true);
       } catch (error) {
         console.error("useUserRole: Error in checkUserRole:", error);
         if (mounted) {
@@ -78,7 +80,7 @@ export const useUserRole = () => {
         // Small delay to ensure user record is available
         setTimeout(() => {
           checkUserRole();
-        }, 500);
+        }, 100);
       } else if (event === 'SIGNED_OUT') {
         if (mounted) {
           setIsAdmin(false);

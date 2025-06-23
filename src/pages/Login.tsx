@@ -8,7 +8,6 @@ import { toast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Mail, Lock, Chrome } from "lucide-react";
-import { useUserRole } from "@/hooks/useUserRole";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -19,7 +18,6 @@ const Login = () => {
   const [forgotEmail, setForgotEmail] = useState("");
   const [forgotLoading, setForgotLoading] = useState(false);
   const navigate = useNavigate();
-  const { isAdmin, isApprovedMember, loading: roleLoading } = useUserRole();
 
   useEffect(() => {
     const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
@@ -35,16 +33,13 @@ const Login = () => {
     return () => { listener?.subscription?.unsubscribe(); };
   }, []);
 
-  // Handle redirect after authentication and role loading
+  // Handle redirect after authentication - simplified logic
   useEffect(() => {
-    if (user && !roleLoading) {
-      console.log("Login: User authenticated, roles loaded. Admin:", isAdmin, "Approved:", isApprovedMember);
-      
-      // All authenticated users go to members page (since only invited users can sign up)
-      console.log("Login: Redirecting authenticated user to members");
+    if (user) {
+      console.log("Login: User authenticated, redirecting to members");
       navigate("/members", { replace: true });
     }
-  }, [user, isAdmin, isApprovedMember, roleLoading, navigate]);
+  }, [user, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -109,8 +104,8 @@ const Login = () => {
     setForgotEmail("");
   };
 
-  // Show loading while checking authentication status
-  if (user && roleLoading) {
+  // Show loading while signing in
+  if (user) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-collektiv-accent via-white to-green-50">
         <div className="text-center">

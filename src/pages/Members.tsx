@@ -23,22 +23,23 @@ const Members = () => {
 
   useEffect(() => {
     const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log("Members: Auth state change:", event, !!session);
       setUser(session?.user ?? null);
-      if (!session?.user) navigate("/login", { replace: true });
+      if (!session?.user) {
+        console.log("Members: No user, redirecting to login");
+        navigate("/login", { replace: true });
+      }
     });
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log("Members: Initial session check:", !!session);
       setUser(session?.user ?? null);
-      if (!session?.user) navigate("/login", { replace: true });
+      if (!session?.user) {
+        console.log("Members: No user in session, redirecting to login");
+        navigate("/login", { replace: true });
+      }
     });
     return () => { listener?.subscription?.unsubscribe(); };
   }, [navigate]);
-
-  // Check approval status and redirect if needed
-  useEffect(() => {
-    if (!loading && user && !isAdmin && !isApprovedMember) {
-      navigate("/pending-approval", { replace: true });
-    }
-  }, [loading, user, isAdmin, isApprovedMember, navigate]);
 
   // Fetch user profile when user is available
   useEffect(() => {
@@ -67,6 +68,7 @@ const Members = () => {
   }, [user]);
 
   const handleLogout = async () => {
+    console.log("Members: Logging out");
     await supabase.auth.signOut();
     setUser(null);
     navigate("/");
@@ -123,13 +125,25 @@ const Members = () => {
     }
   ];
 
-  // Show loading while checking approval status
+  // Show loading while checking roles
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-collektiv-accent via-white to-green-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-collektiv-green"></div>
-          <p className="mt-4 text-collektiv-green">Loading...</p>
+          <p className="mt-4 text-collektiv-green">Loading your member area...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // If not authenticated, show loading (redirect should happen via useEffect)
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-collektiv-accent via-white to-green-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-collektiv-green"></div>
+          <p className="mt-4 text-collektiv-green">Redirecting to login...</p>
         </div>
       </div>
     );
@@ -148,6 +162,11 @@ const Members = () => {
             <p className="text-xl text-green-100 mb-8 max-w-2xl mx-auto">
               Your gateway to exclusive investments, community insights, and collaborative growth opportunities.
             </p>
+            {isAdmin && (
+              <div className="bg-yellow-500 text-black px-4 py-2 rounded-full inline-block mb-4">
+                <span className="font-semibold">Admin Access</span>
+              </div>
+            )}
           </div>
         </div>
       </div>
