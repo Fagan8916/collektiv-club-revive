@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/hooks/use-toast";
 import { Mail, Lock, KeyRound } from "lucide-react";
 
 interface InvitationCodeInputProps {
@@ -22,18 +22,15 @@ const InvitationCodeInput: React.FC<InvitationCodeInputProps> = ({ onValidCode }
     setLoading(true);
 
     try {
-      // Validate invitation code using raw SQL query
+      // Validate invitation code
       const { data: invitation, error: invitationError } = await supabase
-        .rpc('sql', {
-          query: `
-            SELECT id, email, used_at 
-            FROM public.invitations 
-            WHERE code = $1 AND email = $2
-          `,
-          params: [invitationCode, email]
-        });
+        .from('invitations')
+        .select('id, email, used_at')
+        .eq('code', invitationCode)
+        .eq('email', email)
+        .maybeSingle();
 
-      if (invitationError || !invitation || invitation.length === 0) {
+      if (invitationError || !invitation) {
         toast({
           title: "Invalid Invitation",
           description: "The invitation code is invalid or doesn't match your email.",
@@ -43,8 +40,7 @@ const InvitationCodeInput: React.FC<InvitationCodeInputProps> = ({ onValidCode }
         return;
       }
 
-      const invitationRecord = invitation[0];
-      if (invitationRecord.used_at) {
+      if (invitation.used_at) {
         toast({
           title: "Invitation Already Used",
           description: "This invitation code has already been used.",
@@ -74,21 +70,21 @@ const InvitationCodeInput: React.FC<InvitationCodeInputProps> = ({ onValidCode }
       }
 
       // Mark invitation as used
-      await supabase.rpc('sql', {
-        query: `
-          UPDATE public.invitations 
-          SET used_at = now() 
-          WHERE id = $1
-        `,
-        params: [invitationRecord.id]
-      });
+      const { error: updateError } = await supabase
+        .from('invitations')
+        .update({ used_at: new Date().toISOString() })
+        .eq('id', invitation.id);
+
+      if (updateError) {
+        console.error('Failed to mark invitation as used:', updateError);
+      }
 
       toast({
         title: "Registration Successful",
         description: "Your account has been created. Please check your email to verify your account.",
       });
 
-      onValidCode(invitationRecord.id);
+      onValidCode(invitation.id);
     } catch (error) {
       console.error("Registration error:", error);
       toast({

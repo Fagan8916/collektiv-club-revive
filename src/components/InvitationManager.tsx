@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/hooks/use-toast";
 import { Plus, Copy, Trash2, Mail, Calendar, CheckCircle } from "lucide-react";
 
 interface Invitation {
@@ -28,14 +28,10 @@ const InvitationManager = () => {
 
   const fetchInvitations = async () => {
     try {
-      // Use raw SQL query to fetch invitations
-      const { data, error } = await supabase.rpc('sql', {
-        query: `
-          SELECT id, email, code, created_at, used_at, created_by
-          FROM public.invitations 
-          ORDER BY created_at DESC
-        `
-      });
+      const { data, error } = await supabase
+        .from('invitations')
+        .select('id, email, code, created_at, used_at, created_by')
+        .order('created_at', { ascending: false });
 
       if (error) throw error;
       setInvitations(data || []);
@@ -96,10 +92,10 @@ const InvitationManager = () => {
 
   const deleteInvitation = async (id: string) => {
     try {
-      const { error } = await supabase.rpc('sql', {
-        query: 'DELETE FROM public.invitations WHERE id = $1',
-        params: [id]
-      });
+      const { error } = await supabase
+        .from('invitations')
+        .delete()
+        .eq('id', id);
 
       if (error) throw error;
 
