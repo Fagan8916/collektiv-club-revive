@@ -23,28 +23,28 @@ const Login = () => {
 
   useEffect(() => {
     const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log("Login page - Auth state change:", event, !!session);
+      console.log("Login: Auth state change:", event, !!session);
       setUser(session?.user ?? null);
     });
     
     supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log("Login page - Initial session:", !!session);
+      console.log("Login: Initial session:", !!session);
       setUser(session?.user ?? null);
     });
     
     return () => { listener?.subscription?.unsubscribe(); };
   }, []);
 
-  // Handle redirect after authentication
+  // Handle redirect after authentication and role loading
   useEffect(() => {
     if (user && !roleLoading) {
-      console.log("User authenticated, checking roles:", { isAdmin, isApprovedMember });
+      console.log("Login: User authenticated, roles loaded. Admin:", isAdmin, "Approved:", isApprovedMember);
       
       if (isAdmin || isApprovedMember) {
-        console.log("User has access, redirecting to members");
+        console.log("Login: User has access, redirecting to members");
         navigate("/members", { replace: true });
       } else {
-        console.log("User needs approval, redirecting to pending approval");
+        console.log("Login: User needs approval, redirecting to pending");
         navigate("/pending-approval", { replace: true });
       }
     }
@@ -54,25 +54,25 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     
-    console.log("Attempting email/password login");
+    console.log("Login: Attempting email/password login");
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
     
     if (error) {
-      console.error("Login error:", error);
+      console.error("Login: Email/password error:", error);
       let message =
         error.message === "Invalid login credentials"
           ? "Access restricted. Please contact the admin if you require access."
           : error.message;
       toast({ title: "Login failed", description: message, variant: "destructive" });
     } else {
-      console.log("Email/password login successful");
+      console.log("Login: Email/password login successful");
       toast({ title: "Success", description: "Login successful!" });
     }
   };
 
   const handleGoogleSignIn = async () => {
-    console.log("Attempting Google sign in");
+    console.log("Login: Attempting Google sign in");
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
@@ -81,7 +81,7 @@ const Login = () => {
     });
     
     if (error) {
-      console.error("Google sign in error:", error);
+      console.error("Login: Google sign in error:", error);
       toast({
         title: "Error signing in with Google",
         description: error.message,
