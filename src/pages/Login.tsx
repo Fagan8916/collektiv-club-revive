@@ -62,7 +62,7 @@ const Login = () => {
       console.error("Login: Email/password error:", error);
       let message =
         error.message === "Invalid login credentials"
-          ? "Access restricted. Please contact the admin if you require access."
+          ? "Invalid email or password. Please check your credentials and try again."
           : error.message;
       toast({ title: "Login failed", description: message, variant: "destructive" });
     } else {
@@ -76,7 +76,7 @@ const Login = () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}`,
+        redirectTo: window.location.origin,
       }
     });
     
@@ -189,7 +189,7 @@ const Login = () => {
             </Button>
           </form>
 
-          <div className="text-center">
+          <div className="text-center space-y-2">
             <button
               type="button"
               className="text-sm text-collektiv-green hover:text-collektiv-dark underline"
@@ -197,10 +197,16 @@ const Login = () => {
             >
               Forgot your password?
             </button>
+            <div className="text-sm">
+              <span className="text-gray-600">Need an account? </span>
+              <a href="/register" className="text-collektiv-green hover:text-collektiv-dark underline">
+                Register with invitation code
+              </a>
+            </div>
           </div>
 
           <div className="text-center text-xs text-gray-500 mt-6 p-4 bg-gray-50 rounded-lg">
-            Access is restricted to members only. Please contact an admin if you need an account.
+            Access is by invitation only. Contact an admin for an invitation code.
           </div>
         </CardContent>
 

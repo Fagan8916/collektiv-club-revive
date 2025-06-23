@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +12,7 @@ import MemberEvents from "@/components/MemberEvents";
 import ProfileSubmissionForm from "@/components/ProfileSubmissionForm";
 import AdminSubmissionsManager from "@/components/AdminSubmissionsManager";
 import MembershipManager from "@/components/MembershipManager";
+import InvitationManager from "@/components/InvitationManager";
 import { useUserRole } from "@/hooks/useUserRole";
 
 const Members = () => {
@@ -242,13 +244,24 @@ const Members = () => {
 
           {isAdmin && (
             <TabsContent value="admin" className="space-y-8">
-              <Tabs defaultValue="submissions" className="w-full">
+              <Tabs defaultValue="invitations" className="w-full">
                 <div className="flex justify-center mb-6">
                   <TabsList className="bg-gray-100">
+                    <TabsTrigger value="invitations">Manage Invitations</TabsTrigger>
                     <TabsTrigger value="submissions">Profile Submissions</TabsTrigger>
                     <TabsTrigger value="memberships">Membership Requests</TabsTrigger>
                   </TabsList>
                 </div>
+                
+                <TabsContent value="invitations">
+                  <div className="text-center mb-8">
+                    <h3 className="text-2xl font-bold text-collektiv-green mb-4">Invitation Management</h3>
+                    <p className="text-gray-600 max-w-2xl mx-auto">
+                      Create and manage invitation codes for new members to join the Collektiv Club.
+                    </p>
+                  </div>
+                  <InvitationManager />
+                </TabsContent>
                 
                 <TabsContent value="submissions">
                   <AdminSubmissionsManager />
