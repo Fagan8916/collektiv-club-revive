@@ -23,23 +23,27 @@ const Login = () => {
     const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
       console.log("Login: Auth state change:", event, !!session);
       setUser(session?.user ?? null);
+      
+      // Redirect to members page when user is authenticated
+      if (session?.user) {
+        console.log("Login: User authenticated, redirecting to /members");
+        navigate("/members", { replace: true });
+      }
     });
     
     supabase.auth.getSession().then(({ data: { session } }) => {
       console.log("Login: Initial session:", !!session);
       setUser(session?.user ?? null);
+      
+      // If already authenticated, redirect immediately
+      if (session?.user) {
+        console.log("Login: Already authenticated, redirecting to /members");
+        navigate("/members", { replace: true });
+      }
     });
     
     return () => { listener?.subscription?.unsubscribe(); };
-  }, []);
-
-  // Handle redirect after authentication - simplified logic
-  useEffect(() => {
-    if (user) {
-      console.log("Login: User authenticated, redirecting to members");
-      navigate("/members", { replace: true });
-    }
-  }, [user, navigate]);
+  }, [navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,6 +63,7 @@ const Login = () => {
     } else {
       console.log("Login: Email/password login successful");
       toast({ title: "Success", description: "Login successful!" });
+      // Navigation will be handled by the auth state change listener
     }
   };
 
@@ -67,7 +72,7 @@ const Login = () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: window.location.origin,
+        redirectTo: `${window.location.origin}/members`,
       }
     });
     
