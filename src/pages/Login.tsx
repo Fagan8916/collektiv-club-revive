@@ -40,15 +40,9 @@ const Login = () => {
     if (user && !roleLoading) {
       console.log("Login: User authenticated, roles loaded. Admin:", isAdmin, "Approved:", isApprovedMember);
       
-      // If user is admin OR approved member, go to members page
-      if (isAdmin || isApprovedMember) {
-        console.log("Login: User has access, redirecting to members");
-        navigate("/members", { replace: true });
-      } else {
-        // Only redirect to pending approval if user is NOT admin and NOT approved member
-        console.log("Login: User needs approval, redirecting to pending");
-        navigate("/pending-approval", { replace: true });
-      }
+      // All authenticated users go to members page (since only invited users can sign up)
+      console.log("Login: Redirecting authenticated user to members");
+      navigate("/members", { replace: true });
     }
   }, [user, isAdmin, isApprovedMember, roleLoading, navigate]);
 
@@ -121,7 +115,7 @@ const Login = () => {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-collektiv-accent via-white to-green-50">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-collektiv-green mx-auto"></div>
-          <p className="mt-4 text-collektiv-green">Checking your access...</p>
+          <p className="mt-4 text-collektiv-green">Signing you in...</p>
         </div>
       </div>
     );

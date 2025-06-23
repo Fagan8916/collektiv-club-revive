@@ -9,7 +9,6 @@ import Founders from './pages/Founders';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Members from './pages/Members';
-import PendingApproval from './pages/PendingApproval';
 import Register from './pages/Register';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -29,7 +28,6 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
             <Route path="/members" element={<Members />} />
-            <Route path="/pending-approval" element={<PendingApproval />} />
             <Route path="/register" element={<Register />} />
           </Routes>
         </div>
