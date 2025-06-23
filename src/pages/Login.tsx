@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Mail, Lock, Chrome } from "lucide-react";
@@ -206,7 +206,8 @@ const Login = () => {
           </div>
 
           <div className="text-center text-xs text-gray-500 mt-6 p-4 bg-gray-50 rounded-lg">
-            Access is by invitation only. Contact an admin for an invitation code.
+            <strong>Invitation-Only Registration</strong><br />
+            New members must be invited by an existing admin. Contact an admin for an invitation code to join the Collektiv Club.
           </div>
         </CardContent>
 
