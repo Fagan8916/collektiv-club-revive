@@ -44,7 +44,7 @@ const Privacy = () => {
                 <li><strong>Do we process any sensitive personal information?</strong><br />
                 Some of the information may be considered 'special' or 'sensitive' in certain jurisdictions, for example your racial or ethnic origins, sexual orientation, and religious beliefs. We may process sensitive personal information when necessary with your consent or as otherwise permitted by applicable law. Learn more about <a href="#sensitive-information">sensitive information we process</a>.</li>
                 <li><strong>Do we collect any information from third parties?</strong><br />
-                We do not collect any information from third parties.</li>
+                We collect information from Google when you choose to sign in with Google OAuth. Learn more about <a href="#third-party-login-services">third-party login services</a>.</li>
                 <li><strong>How do we process your information?</strong><br />
                 We process your information to provide, improve, and administer our Services, communicate with you, for security and fraud prevention, and to comply with law. We may also process your information for other purposes with your consent. We process your information only when we have a valid legal reason to do so. Learn more about <a href="#how-do-we-process-your-information">how we process your information</a>.</li>
                 <li><strong>In what situations and with which types of parties do we share personal information?</strong><br />
@@ -65,6 +65,7 @@ const Privacy = () => {
                 <li><a href="#how-do-we-process-your-information">HOW DO WE PROCESS YOUR INFORMATION?</a></li>
                 <li><a href="#what-legal-bases-do-we-rely-on-to-process-your-personal-information">WHAT LEGAL BASES DO WE RELY ON TO PROCESS YOUR PERSONAL INFORMATION?</a></li>
                 <li><a href="#when-and-with-whom-do-we-share-your-personal-information">WHEN AND WITH WHOM DO WE SHARE YOUR PERSONAL INFORMATION?</a></li>
+                <li><a href="#third-party-login-services">THIRD-PARTY LOGIN SERVICES</a></li>
                 <li><a href="#do-we-use-cookies-and-other-tracking-technologies">DO WE USE COOKIES AND OTHER TRACKING TECHNOLOGIES?</a></li>
                 <li><a href="#how-long-do-we-keep-your-information">HOW LONG DO WE KEEP YOUR INFORMATION?</a></li>
                 <li><a href="#do-we-collect-information-from-minors">DO WE COLLECT INFORMATION FROM MINORS?</a></li>
@@ -177,7 +178,40 @@ const Privacy = () => {
 
               <hr />
 
-              <h2 id="do-we-use-cookies-and-other-tracking-technologies">5. DO WE USE COOKIES AND OTHER TRACKING TECHNOLOGIES?</h2>
+              <h2 id="third-party-login-services">5. THIRD-PARTY LOGIN SERVICES</h2>
+              <p><strong>In Short:</strong><br />
+              We offer Google OAuth as a login option and process information we receive from Google in accordance with their policies and our privacy practices.</p>
+
+              <h3>Google OAuth Integration</h3>
+              <p>When you choose to sign in with Google, we collect and process the following information from your Google account:</p>
+              <ul>
+                <li><strong>Basic Profile Information:</strong> Your name, email address, and profile picture</li>
+                <li><strong>Email Address:</strong> Used for account identification and communication</li>
+                <li><strong>Google User ID:</strong> Used to link your Google account to our services</li>
+              </ul>
+
+              <h3>How We Use Google OAuth Data</h3>
+              <p>Information obtained through Google OAuth is used exclusively for:</p>
+              <ul>
+                <li>Creating and maintaining your user account</li>
+                <li>Providing authentication services</li>
+                <li>Sending service-related communications</li>
+                <li>Ensuring account security and preventing fraud</li>
+              </ul>
+
+              <h3>Google Data Retention and Deletion</h3>
+              <p>We store Google OAuth data only as long as necessary to provide our services. You can:</p>
+              <ul>
+                <li>Request deletion of your account and associated Google data by contacting us at info@collektiv.club</li>
+                <li>Revoke our access to your Google account at any time through your <a href="https://myaccount.google.com/permissions" target="_blank">Google Account permissions page</a></li>
+              </ul>
+
+              <h3>Google API Services User Data Policy Compliance</h3>
+              <p>Our use of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank">Google API Services User Data Policy</a>, including the Limited Use requirements. We do not use Google user data for any purpose other than providing and improving our services.</p>
+
+              <hr />
+
+              <h2 id="do-we-use-cookies-and-other-tracking-technologies">6. DO WE USE COOKIES AND OTHER TRACKING TECHNOLOGIES?</h2>
               <p><strong>In Short:</strong><br />
               We may use cookies and other tracking technologies to collect and store your information.</p>
 
@@ -194,7 +228,7 @@ const Privacy = () => {
 
               <hr />
 
-              <h2 id="how-long-do-we-keep-your-information">6. HOW LONG DO WE KEEP YOUR INFORMATION?</h2>
+              <h2 id="how-long-do-we-keep-your-information">7. HOW LONG DO WE KEEP YOUR INFORMATION?</h2>
               <p><strong>In Short:</strong><br />
               We keep your information for as long as necessary to fulfil the purposes outlined in this Privacy Notice unless otherwise required by law.</p>
 
@@ -204,7 +238,7 @@ const Privacy = () => {
 
               <hr />
 
-              <h2 id="do-we-collect-information-from-minors">7. DO WE COLLECT INFORMATION FROM MINORS?</h2>
+              <h2 id="do-we-collect-information-from-minors">8. DO WE COLLECT INFORMATION FROM MINORS?</h2>
               <p><strong>In Short:</strong><br />
               We do not knowingly collect data from or market to children under 18 years of age.</p>
 
@@ -212,7 +246,7 @@ const Privacy = () => {
 
               <hr />
 
-              <h2 id="what-are-your-privacy-rights">8. WHAT ARE YOUR PRIVACY RIGHTS?</h2>
+              <h2 id="what-are-your-privacy-rights">9. WHAT ARE YOUR PRIVACY RIGHTS?</h2>
               <p><strong>In Short:</strong><br />
               In some regions, such as the European Economic Area (EEA), United Kingdom (UK), and Switzerland, you have rights that allow you greater access to and control over your personal information.</p>
 
@@ -235,16 +269,26 @@ const Privacy = () => {
 
               <p>Upon your request to terminate your account, we will deactivate or delete your account and information from our active databases. However, we may retain some information in our files to prevent fraud, troubleshoot problems, assist with any investigations, enforce our legal terms and/or comply with applicable legal requirements.</p>
 
+              <h3>Data Deletion Rights</h3>
+              <p><strong>You have the right to request deletion of your personal information.</strong> To request deletion of your personal data, including any information obtained through Google OAuth, please:</p>
+              <ul>
+                <li>Email us at info@collektiv.club with the subject line "Data Deletion Request"</li>
+                <li>Include your account email address and specify what data you want deleted</li>
+                <li>Allow up to 30 days for processing your request</li>
+              </ul>
+
+              <p>We will delete your personal information from our active systems within 30 days of receiving your request, except where we are required to retain certain information for legal or regulatory purposes.</p>
+
               <p>If you have questions or comments about your privacy rights, you may email us at Info@Collektiv.club.</p>
 
               <hr />
 
-              <h2 id="controls-for-do-not-track-features">9. CONTROLS FOR DO-NOT-TRACK FEATURES</h2>
+              <h2 id="controls-for-do-not-track-features">10. CONTROLS FOR DO-NOT-TRACK FEATURES</h2>
               <p>Most web browsers and some mobile operating systems and mobile applications include a Do-Not-Track ("DNT") feature or setting you can activate to signal your privacy preference not to have data about your online browsing activities monitored and collected. At this stage, no uniform technology standard for recognising and implementing DNT signals has been finalised. As such, we do not currently respond to DNT browser signals or any other mechanism that automatically communicates your choice not to be tracked online. If a standard for online tracking is adopted that we must follow in the future, we will inform you about that practice in a revised version of this Privacy Notice.</p>
 
               <hr />
 
-              <h2 id="do-we-make-updates-to-this-notice">10. DO WE MAKE UPDATES TO THIS NOTICE?</h2>
+              <h2 id="do-we-make-updates-to-this-notice">11. DO WE MAKE UPDATES TO THIS NOTICE?</h2>
               <p><strong>In Short:</strong><br />
               Yes, we will update this notice as necessary to stay compliant with relevant laws.</p>
 
@@ -252,7 +296,7 @@ const Privacy = () => {
 
               <hr />
 
-              <h2 id="how-can-you-contact-us-about-this-notice">11. HOW CAN YOU CONTACT US ABOUT THIS NOTICE?</h2>
+              <h2 id="how-can-you-contact-us-about-this-notice">12. HOW CAN YOU CONTACT US ABOUT THIS NOTICE?</h2>
               <p>If you have questions or comments about this notice, you may email us at info@collektiv.club or contact us by post at:</p>
 
               <p><strong>Collektiv Ltd</strong><br />
@@ -261,7 +305,7 @@ const Privacy = () => {
 
               <hr />
 
-              <h2 id="how-can-you-review-update-or-delete-the-data-we-collect-from-you">12. HOW CAN YOU REVIEW, UPDATE, OR DELETE THE DATA WE COLLECT FROM YOU?</h2>
+              <h2 id="how-can-you-review-update-or-delete-the-data-we-collect-from-you">13. HOW CAN YOU REVIEW, UPDATE, OR DELETE THE DATA WE COLLECT FROM YOU?</h2>
               <p>Based on the applicable laws of your country, you may have the right to request access to the personal information we collect from you, details about how we have processed it, correct inaccuracies, or delete your personal information. You may also have the right to withdraw your consent to our processing of your personal information. These rights may be limited in some circumstances by applicable law. To request to review, update, or delete your personal information, please <a href="https://app.termly.io/notify/b2ff46fd-db4e-46af-8c7f-b46de404d940" target="_blank">fill out and submit a data subject access request</a>.</p>
             </div>
           </div>
