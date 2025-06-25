@@ -44,7 +44,12 @@ const Header = () => {
   };
 
   const handleMemberZoneClick = () => {
-    console.log("Header: Member Zone clicked, authenticated:", isAuthenticated);
+    console.log("Header: Member Zone clicked, loading:", loading, "authenticated:", isAuthenticated);
+    
+    if (loading) {
+      console.log("Header: Still loading auth state, waiting...");
+      return;
+    }
     
     if (isAuthenticated) {
       console.log("Header: User authenticated, navigating to members");

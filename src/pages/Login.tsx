@@ -55,10 +55,15 @@ const Login = () => {
 
   const handleGoogleSignIn = async () => {
     console.log("Login: Attempting Google sign in");
+    
+    // Get current origin for redirect
+    const redirectUrl = `${window.location.origin}/members`;
+    console.log("Login: Google redirect URL:", redirectUrl);
+    
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/members`,
+        redirectTo: redirectUrl,
       }
     });
     
