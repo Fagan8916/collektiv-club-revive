@@ -13,7 +13,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState<any>(null);
+  const [session, setSession] = useState<any>(null);
   const [showForgot, setShowForgot] = useState(false);
   const [forgotEmail, setForgotEmail] = useState("");
   const [forgotLoading, setForgotLoading] = useState(false);
@@ -25,15 +25,15 @@ const Login = () => {
 
     const checkInitialAuth = async () => {
       console.log("Login: Checking initial auth state");
-      const { data: { session } } = await supabase.auth.getSession();
+      const { data: { session: currentSession } } = await supabase.auth.getSession();
       
       if (mounted) {
-        console.log("Login: Initial session check:", !!session);
-        setUser(session?.user ?? null);
+        console.log("Login: Initial session check:", !!currentSession);
+        setSession(currentSession);
         setInitialLoad(false);
         
         // If already authenticated, redirect immediately
-        if (session?.user) {
+        if (currentSession?.user) {
           console.log("Login: Already authenticated, redirecting to /members");
           navigate("/members", { replace: true });
         }
@@ -42,11 +42,11 @@ const Login = () => {
 
     checkInitialAuth();
 
-    const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (!mounted) return;
       
       console.log("Login: Auth state change:", event, !!session);
-      setUser(session?.user ?? null);
+      setSession(session);
       
       // Only redirect on successful sign in events, not initial session
       if (event === 'SIGNED_IN' && session?.user) {
@@ -57,7 +57,7 @@ const Login = () => {
     
     return () => {
       mounted = false;
-      listener?.subscription?.unsubscribe();
+      subscription?.unsubscribe();
     };
   }, [navigate]);
 
@@ -66,7 +66,7 @@ const Login = () => {
     setLoading(true);
     
     console.log("Login: Attempting email/password login");
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
     
     if (error) {
@@ -76,10 +76,10 @@ const Login = () => {
           ? "Invalid email or password. Please check your credentials and try again."
           : error.message;
       toast({ title: "Login failed", description: message, variant: "destructive" });
-    } else {
-      console.log("Login: Email/password login successful");
+    } else if (data.session) {
+      console.log("Login: Email/password login successful, session:", !!data.session);
       toast({ title: "Success", description: "Login successful!" });
-      // Navigation will be handled by the auth state change listener
+      // The auth state change listener will handle the redirect
     }
   };
 
@@ -137,8 +137,8 @@ const Login = () => {
     );
   }
 
-  // Show loading while signing in
-  if (user) {
+  // Show loading while signed in and redirecting
+  if (session?.user) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-collektiv-accent via-white to-green-50">
         <div className="text-center">

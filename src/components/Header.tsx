@@ -20,25 +20,45 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [session, setSession] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
   const logoPath = getAssetPath("lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png");
 
   useEffect(() => {
-    const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
+    let mounted = true;
+
+    const initAuth = async () => {
+      console.log("Header: Initializing auth");
+      
+      // Get current session first
+      const { data: { session: currentSession } } = await supabase.auth.getSession();
+      console.log("Header: Current session:", !!currentSession);
+      
+      if (mounted) {
+        setSession(currentSession);
+        setUser(currentSession?.user ?? null);
+        setLoading(false);
+      }
+    };
+
+    initAuth();
+
+    // Set up auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (!mounted) return;
+      
       console.log("Header: Auth state change:", event, !!session);
+      setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
     });
     
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log("Header: Initial session:", !!session);
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
-    
-    return () => { listener?.subscription?.unsubscribe(); };
+    return () => {
+      mounted = false;
+      subscription?.unsubscribe();
+    };
   }, []);
 
   useEffect(() => {
@@ -55,12 +75,16 @@ const Header = () => {
   const handleLogout = async () => {
     console.log("Header: Logging out");
     await supabase.auth.signOut();
+    setSession(null);
     setUser(null);
     navigate("/");
   };
 
   const handleMemberZoneClick = () => {
-    if (user) {
+    console.log("Header: Member Zone clicked, session:", !!session, "user:", !!user);
+    
+    // Check both session and user for better reliability
+    if (session?.user || user) {
       console.log("Header: User authenticated, navigating to members");
       navigate("/members");
     } else {
@@ -68,6 +92,9 @@ const Header = () => {
       navigate("/login");
     }
   };
+
+  // Use session for more reliable auth state
+  const isAuthenticated = !loading && (session?.user || user);
 
   return (
     <header
@@ -110,7 +137,7 @@ const Header = () => {
             Join Now
           </Link>
           {!loading && (
-            user ? (
+            isAuthenticated ? (
               <>
                 <Link to="/members" className="ml-4 flex items-center text-collektiv-green">
                   <User className="mr-1" size={18} /> Members
@@ -169,7 +196,7 @@ const Header = () => {
             Join Now
           </Link>
           {!loading && (
-            user ? (
+            isAuthenticated ? (
               <>
                 <Link
                   to="/members"
