@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -72,6 +73,7 @@ const Login = () => {
     console.log("Login: Attempting Google sign in");
     console.log("Login: Current URL:", window.location.href);
     console.log("Login: Current origin:", window.location.origin);
+    console.log("Login: User agent:", navigator.userAgent);
     
     // Use the correct redirect URL without hash for browser routing
     const redirectUrl = window.location.origin + '/members';
@@ -93,6 +95,11 @@ const Login = () => {
       
       if (error) {
         console.error("Login: Google sign in error:", error);
+        console.error("Login: Error details:", {
+          message: error.message,
+          status: error.status,
+          statusText: error.statusText
+        });
         toast({
           title: "Error signing in with Google",
           description: error.message,
@@ -100,6 +107,13 @@ const Login = () => {
         });
       } else {
         console.log("Login: Google OAuth initiated successfully");
+        console.log("Login: OAuth URL generated:", data?.url);
+        
+        // Try opening in a new tab to see if it works there
+        if (data?.url) {
+          console.log("Login: Attempting to redirect to:", data.url);
+          window.location.href = data.url;
+        }
       }
     } catch (err) {
       console.error("Login: Unexpected error during Google sign in:", err);
