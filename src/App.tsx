@@ -17,6 +17,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 const queryClient = new QueryClient();
 
 function App() {
+  console.log('App: Rendering with current location:', window.location.pathname);
+  
   return (
     <QueryClientProvider client={queryClient}>
       <Router>

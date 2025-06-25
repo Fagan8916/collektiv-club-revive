@@ -17,13 +17,19 @@ import { useUserRole } from "@/hooks/useUserRole";
 import { useAuth } from "@/hooks/useAuth";
 
 const Members = () => {
+  console.log('Members: Component rendering, current URL:', window.location.href);
+  console.log('Members: Component rendering, current pathname:', window.location.pathname);
+  
   const [userProfile, setUserProfile] = useState<any>(null);
   const navigate = useNavigate();
   const { user, isAuthenticated, loading: authLoading, signOut } = useAuth();
   const { isAdmin, loading: roleLoading } = useUserRole();
 
+  console.log('Members: Auth state - loading:', authLoading, 'authenticated:', isAuthenticated, 'user:', !!user);
+
   // Redirect if not authenticated
   useEffect(() => {
+    console.log('Members: Auth effect - authLoading:', authLoading, 'isAuthenticated:', isAuthenticated);
     if (!authLoading && !isAuthenticated) {
       console.log("Members: User not authenticated, redirecting to login");
       navigate("/login", { replace: true });
@@ -115,6 +121,7 @@ const Members = () => {
 
   // Show loading while checking auth and roles
   if (authLoading || roleLoading) {
+    console.log('Members: Showing loading screen - authLoading:', authLoading, 'roleLoading:', roleLoading);
     return (
       <div className="min-h-screen bg-gradient-to-br from-collektiv-accent via-white to-green-50 flex items-center justify-center">
         <div className="text-center">
@@ -127,6 +134,7 @@ const Members = () => {
 
   // If not authenticated, show loading (redirect should happen via useEffect)
   if (!isAuthenticated) {
+    console.log('Members: Not authenticated, showing redirect message');
     return (
       <div className="min-h-screen bg-gradient-to-br from-collektiv-accent via-white to-green-50 flex items-center justify-center">
         <div className="text-center">
@@ -136,6 +144,8 @@ const Members = () => {
       </div>
     );
   }
+
+  console.log('Members: Rendering main content');
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-collektiv-accent via-white to-green-50">
