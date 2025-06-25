@@ -4,8 +4,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getAssetPath } from "@/utils/assetUtils";
-import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -19,46 +19,17 @@ const navigation = [
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [user, setUser] = useState<any>(null);
-  const [session, setSession] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
+  const { isAuthenticated, loading, signOut } = useAuth();
   const logoPath = getAssetPath("lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png");
 
   useEffect(() => {
-    let mounted = true;
-
-    const initAuth = async () => {
-      console.log("Header: Initializing auth");
-      
-      // Get current session first
-      const { data: { session: currentSession } } = await supabase.auth.getSession();
-      console.log("Header: Current session:", !!currentSession);
-      
-      if (mounted) {
-        setSession(currentSession);
-        setUser(currentSession?.user ?? null);
-        setLoading(false);
-      }
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
     };
-
-    initAuth();
-
-    // Set up auth state listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (!mounted) return;
-      
-      console.log("Header: Auth state change:", event, !!session);
-      setSession(session);
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
-    
-    return () => {
-      mounted = false;
-      subscription?.unsubscribe();
-    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
@@ -72,29 +43,23 @@ const Header = () => {
     });
   };
 
-  const handleLogout = async () => {
-    console.log("Header: Logging out");
-    await supabase.auth.signOut();
-    setSession(null);
-    setUser(null);
-    navigate("/");
-  };
-
   const handleMemberZoneClick = () => {
-    console.log("Header: Member Zone clicked, session:", !!session, "user:", !!user);
+    console.log("Header: Member Zone clicked, authenticated:", isAuthenticated);
     
-    // Check both session and user for better reliability
-    if (session?.user || user) {
+    if (isAuthenticated) {
       console.log("Header: User authenticated, navigating to members");
       navigate("/members");
     } else {
-      console.log("Header: No user, navigating to login");
+      console.log("Header: User not authenticated, navigating to login");
       navigate("/login");
     }
   };
 
-  // Use session for more reliable auth state
-  const isAuthenticated = !loading && (session?.user || user);
+  const handleLogout = async () => {
+    console.log("Header: Logging out");
+    await signOut();
+    navigate("/");
+  };
 
   return (
     <header
@@ -136,10 +101,11 @@ const Header = () => {
           >
             Join Now
           </Link>
+          
           {!loading && (
             isAuthenticated ? (
               <>
-                <Link to="/members" className="ml-4 flex items-center text-collektiv-green">
+                <Link to="/members" className="ml-4 flex items-center text-collektiv-green hover:text-collektiv-dark transition-colors">
                   <User className="mr-1" size={18} /> Members
                 </Link>
                 <Button variant="ghost" className="ml-2" onClick={handleLogout}>Log out</Button>
@@ -195,17 +161,18 @@ const Header = () => {
           >
             Join Now
           </Link>
+          
           {!loading && (
             isAuthenticated ? (
               <>
                 <Link
                   to="/members"
-                  className="text-collektiv-green text-lg mt-4 flex items-center"
+                  className="text-collektiv-green text-lg mt-4 flex items-center hover:text-collektiv-dark transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <User className="mr-1" size={20} /> Members
                 </Link>
-                <Button variant="ghost" className="mt-2" onClick={handleLogout}>Log out</Button>
+                <Button variant="ghost" className="mt-2" onClick={() => { setMobileMenuOpen(false); handleLogout(); }}>Log out</Button>
               </>
             ) : (
               <Button variant="outline" className="mt-6" onClick={() => { setMobileMenuOpen(false); handleMemberZoneClick(); }}>

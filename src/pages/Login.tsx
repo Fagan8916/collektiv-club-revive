@@ -8,78 +8,48 @@ import { toast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Mail, Lock, Chrome } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [session, setSession] = useState<any>(null);
-  const [showForgot, setShowForgot] = useState(false);
-  const [forgotEmail, setForgotEmail] = useState("");
-  const [forgotLoading, setForgotLoading] = useState(false);
-  const [initialLoad, setInitialLoad] = useState(true);
   const navigate = useNavigate();
+  const { isAuthenticated, loading: authLoading } = useAuth();
 
+  // Redirect if already authenticated
   useEffect(() => {
-    let mounted = true;
+    if (!authLoading && isAuthenticated) {
+      console.log("Login: User already authenticated, redirecting to members");
+      navigate("/members", { replace: true });
+    }
+  }, [isAuthenticated, authLoading, navigate]);
 
-    const checkInitialAuth = async () => {
-      console.log("Login: Checking initial auth state");
-      const { data: { session: currentSession } } = await supabase.auth.getSession();
-      
-      if (mounted) {
-        console.log("Login: Initial session check:", !!currentSession);
-        setSession(currentSession);
-        setInitialLoad(false);
-        
-        // If already authenticated, redirect immediately
-        if (currentSession?.user) {
-          console.log("Login: Already authenticated, redirecting to /members");
-          navigate("/members", { replace: true });
-        }
-      }
-    };
-
-    checkInitialAuth();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (!mounted) return;
-      
-      console.log("Login: Auth state change:", event, !!session);
-      setSession(session);
-      
-      // Only redirect on successful sign in events, not initial session
-      if (event === 'SIGNED_IN' && session?.user) {
-        console.log("Login: User signed in, redirecting to /members");
-        navigate("/members", { replace: true });
-      }
-    });
-    
-    return () => {
-      mounted = false;
-      subscription?.unsubscribe();
-    };
-  }, [navigate]);
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     
     console.log("Login: Attempting email/password login");
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await supabase.auth.signInWithPassword({ 
+      email, 
+      password 
+    });
+    
     setLoading(false);
     
     if (error) {
       console.error("Login: Email/password error:", error);
-      let message =
-        error.message === "Invalid login credentials"
+      toast({ 
+        title: "Login failed", 
+        description: error.message === "Invalid login credentials" 
           ? "Invalid email or password. Please check your credentials and try again."
-          : error.message;
-      toast({ title: "Login failed", description: message, variant: "destructive" });
+          : error.message, 
+        variant: "destructive" 
+      });
     } else if (data.session) {
-      console.log("Login: Email/password login successful, session:", !!data.session);
+      console.log("Login: Email/password login successful");
       toast({ title: "Success", description: "Login successful!" });
-      // The auth state change listener will handle the redirect
+      navigate("/members", { replace: true });
     }
   };
 
@@ -102,48 +72,13 @@ const Login = () => {
     }
   };
 
-  const handleForgotPassword = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setForgotLoading(true);
-    const { error } = await supabase.auth.resetPasswordForEmail(forgotEmail, {
-      redirectTo: window.location.origin + "/#/reset-password",
-    });
-    setForgotLoading(false);
-    setShowForgot(false);
-    if (error) {
-      toast({
-        title: "Error sending reset link",
-        description: error.message,
-        variant: "destructive",
-      });
-    } else {
-      toast({
-        title: "Reset link sent",
-        description: "Please check your email for a password reset link.",
-      });
-    }
-    setForgotEmail("");
-  };
-
-  // Show loading during initial auth check
-  if (initialLoad) {
+  // Show loading while checking auth state
+  if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-collektiv-accent via-white to-green-50">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-collektiv-green mx-auto"></div>
           <p className="mt-4 text-collektiv-green">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Show loading while signed in and redirecting
-  if (session?.user) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-collektiv-accent via-white to-green-50">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-collektiv-green mx-auto"></div>
-          <p className="mt-4 text-collektiv-green">Signing you in...</p>
         </div>
       </div>
     );
@@ -157,17 +92,15 @@ const Login = () => {
           <p className="text-gray-600 mt-2">Access your exclusive member area</p>
         </CardHeader>
         <CardContent className="space-y-6">
-          {/* SSO Button */}
-          <div className="space-y-3">
-            <Button
-              onClick={handleGoogleSignIn}
-              variant="outline"
-              className="w-full h-11 border-gray-300 hover:bg-gray-50"
-            >
-              <Chrome className="mr-2 h-4 w-4 text-blue-500" />
-              Continue with Google
-            </Button>
-          </div>
+          {/* Google SSO Button */}
+          <Button
+            onClick={handleGoogleSignIn}
+            variant="outline"
+            className="w-full h-11 border-gray-300 hover:bg-gray-50"
+          >
+            <Chrome className="mr-2 h-4 w-4 text-blue-500" />
+            Continue with Google
+          </Button>
 
           <div className="relative">
             <Separator />
@@ -177,7 +110,7 @@ const Login = () => {
           </div>
 
           {/* Email/Password Form */}
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleEmailLogin} className="space-y-4">
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <Input
@@ -214,13 +147,6 @@ const Login = () => {
           </form>
 
           <div className="text-center space-y-2">
-            <button
-              type="button"
-              className="text-sm text-collektiv-green hover:text-collektiv-dark underline"
-              onClick={() => setShowForgot(true)}
-            >
-              Forgot your password?
-            </button>
             <div className="text-sm">
               <span className="text-gray-600">Need an account? </span>
               <a href="/register" className="text-collektiv-green hover:text-collektiv-dark underline">
@@ -234,46 +160,6 @@ const Login = () => {
             New members must be invited by an existing admin. Contact an admin for an invitation code to join the Collektiv Club.
           </div>
         </CardContent>
-
-        {/* Forgot password modal */}
-        {showForgot && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50 p-4">
-            <Card className="w-full max-w-sm">
-              <CardHeader>
-                <CardTitle className="text-lg">Reset your password</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <form onSubmit={handleForgotPassword} className="space-y-4">
-                  <Input
-                    type="email"
-                    placeholder="Enter your email"
-                    value={forgotEmail}
-                    onChange={e => setForgotEmail(e.target.value)}
-                    required
-                    autoFocus
-                    disabled={forgotLoading}
-                  />
-                  <div className="flex justify-end space-x-2">
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      onClick={() => {
-                        setShowForgot(false);
-                        setForgotEmail("");
-                      }}
-                      disabled={forgotLoading}
-                    >
-                      Cancel
-                    </Button>
-                    <Button type="submit" disabled={forgotLoading || forgotEmail.length === 0}>
-                      {forgotLoading ? "Sending..." : "Send reset link"}
-                    </Button>
-                  </div>
-                </form>
-              </CardContent>
-            </Card>
-          </div>
-        )}
       </Card>
     </div>
   );

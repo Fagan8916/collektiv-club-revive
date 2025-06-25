@@ -14,32 +14,21 @@ import AdminSubmissionsManager from "@/components/AdminSubmissionsManager";
 import MembershipManager from "@/components/MembershipManager";
 import InvitationManager from "@/components/InvitationManager";
 import { useUserRole } from "@/hooks/useUserRole";
+import { useAuth } from "@/hooks/useAuth";
 
 const Members = () => {
-  const [user, setUser] = useState<any>(null);
   const [userProfile, setUserProfile] = useState<any>(null);
   const navigate = useNavigate();
-  const { isAdmin, isApprovedMember, loading } = useUserRole();
+  const { user, isAuthenticated, loading: authLoading, signOut } = useAuth();
+  const { isAdmin, loading: roleLoading } = useUserRole();
 
+  // Redirect if not authenticated
   useEffect(() => {
-    const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log("Members: Auth state change:", event, !!session);
-      setUser(session?.user ?? null);
-      if (!session?.user) {
-        console.log("Members: No user, redirecting to login");
-        navigate("/login", { replace: true });
-      }
-    });
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log("Members: Initial session check:", !!session);
-      setUser(session?.user ?? null);
-      if (!session?.user) {
-        console.log("Members: No user in session, redirecting to login");
-        navigate("/login", { replace: true });
-      }
-    });
-    return () => { listener?.subscription?.unsubscribe(); };
-  }, [navigate]);
+    if (!authLoading && !isAuthenticated) {
+      console.log("Members: User not authenticated, redirecting to login");
+      navigate("/login", { replace: true });
+    }
+  }, [isAuthenticated, authLoading, navigate]);
 
   // Fetch user profile when user is available
   useEffect(() => {
@@ -69,8 +58,7 @@ const Members = () => {
 
   const handleLogout = async () => {
     console.log("Members: Logging out");
-    await supabase.auth.signOut();
-    setUser(null);
+    await signOut();
     navigate("/");
   };
 
@@ -125,8 +113,8 @@ const Members = () => {
     }
   ];
 
-  // Show loading while checking roles
-  if (loading) {
+  // Show loading while checking auth and roles
+  if (authLoading || roleLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-collektiv-accent via-white to-green-50 flex items-center justify-center">
         <div className="text-center">
@@ -138,7 +126,7 @@ const Members = () => {
   }
 
   // If not authenticated, show loading (redirect should happen via useEffect)
-  if (!user) {
+  if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-collektiv-accent via-white to-green-50 flex items-center justify-center">
         <div className="text-center">
