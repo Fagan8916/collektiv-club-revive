@@ -56,14 +56,18 @@ const Login = () => {
   const handleGoogleSignIn = async () => {
     console.log("Login: Attempting Google sign in");
     
-    // Get current origin for redirect
-    const redirectUrl = `${window.location.origin}/members`;
+    // Use the exact domain from your screenshot: https://www.collektiv.club
+    const redirectUrl = 'https://www.collektiv.club/members';
     console.log("Login: Google redirect URL:", redirectUrl);
     
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
         redirectTo: redirectUrl,
+        queryParams: {
+          access_type: 'offline',
+          prompt: 'consent',
+        },
       }
     });
     
