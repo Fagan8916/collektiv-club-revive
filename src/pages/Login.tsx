@@ -56,7 +56,7 @@ const Login = () => {
   const handleGoogleSignIn = async () => {
     console.log("Login: Attempting Google sign in");
     
-    // Use the exact domain from your screenshot: https://www.collektiv.club
+    // Use the production domain for consistency
     const redirectUrl = 'https://www.collektiv.club/members';
     console.log("Login: Google redirect URL:", redirectUrl);
     
@@ -66,7 +66,7 @@ const Login = () => {
         redirectTo: redirectUrl,
         queryParams: {
           access_type: 'offline',
-          prompt: 'consent',
+          prompt: 'select_account',
         },
       }
     });

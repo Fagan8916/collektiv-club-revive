@@ -45,23 +45,25 @@ export const useUserRole = () => {
 
         console.log("useUserRole: Raw user roles from database:", userRoles);
 
-        // Since only invited users can register, all authenticated users should be treated as approved members
-        // Check for admin role specifically
-        const hasAdminRole = userRoles?.some(role => role.role === 'admin') || false;
+        // Check for admin role specifically - only approved admin roles count
+        const hasAdminRole = userRoles?.some(role => 
+          role.role === 'admin' && role.status === 'approved'
+        ) || false;
         
-        // For invited users, we consider them approved members by default if they have any member role
-        const hasMemberRole = userRoles?.some(role => role.role === 'member') || false;
+        // Check for approved member role
+        const hasMemberRole = userRoles?.some(role => 
+          role.role === 'member' && role.status === 'approved'
+        ) || false;
         
         console.log("useUserRole: Role analysis - hasAdminRole:", hasAdminRole, "hasMemberRole:", hasMemberRole);
 
         if (mounted) {
           setIsAdmin(hasAdminRole);
-          // Since registration is invitation-only, treat all authenticated users as approved members
-          setIsApprovedMember(true);
+          setIsApprovedMember(hasMemberRole || hasAdminRole); // Admins are also approved members
           setLoading(false);
         }
 
-        console.log("useUserRole: Final status - Admin:", hasAdminRole, "Approved member:", true);
+        console.log("useUserRole: Final status - Admin:", hasAdminRole, "Approved member:", (hasMemberRole || hasAdminRole));
       } catch (error) {
         console.error("useUserRole: Error in checkUserRole:", error);
         if (mounted) {
