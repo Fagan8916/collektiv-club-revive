@@ -25,6 +25,22 @@ const Login = () => {
     }
   }, [isAuthenticated, authLoading, navigate]);
 
+  // Check for OAuth errors in URL parameters
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const error = urlParams.get('error');
+    const errorDescription = urlParams.get('error_description');
+    
+    if (error) {
+      console.error("Login: OAuth error detected:", error, errorDescription);
+      toast({
+        title: "Authentication Error",
+        description: errorDescription || error,
+        variant: "destructive",
+      });
+    }
+  }, []);
+
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -55,27 +71,58 @@ const Login = () => {
 
   const handleGoogleSignIn = async () => {
     console.log("Login: Attempting Google sign in");
+    console.log("Login: Current URL:", window.location.href);
+    console.log("Login: Current origin:", window.location.origin);
     
-    // Use the production domain for consistency
-    const redirectUrl = 'https://www.collektiv.club/members';
+    // Determine the correct redirect URL based on current environment
+    const currentUrl = window.location.href;
+    let redirectUrl;
+    
+    if (currentUrl.includes('lovableproject.com')) {
+      // Development environment
+      redirectUrl = `${window.location.origin}/members`;
+      console.log("Login: Using development redirect URL");
+    } else if (currentUrl.includes('collektiv.club')) {
+      // Production environment
+      redirectUrl = 'https://www.collektiv.club/members';
+      console.log("Login: Using production redirect URL");
+    } else {
+      // Fallback
+      redirectUrl = `${window.location.origin}/members`;
+      console.log("Login: Using fallback redirect URL");
+    }
+    
     console.log("Login: Google redirect URL:", redirectUrl);
     
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: redirectUrl,
-        queryParams: {
-          access_type: 'offline',
-          prompt: 'select_account',
-        },
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: redirectUrl,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'select_account',
+          },
+        }
+      });
+      
+      console.log("Login: Google OAuth response:", { data, error });
+      
+      if (error) {
+        console.error("Login: Google sign in error:", error);
+        toast({
+          title: "Error signing in with Google",
+          description: error.message,
+          variant: "destructive",
+        });
+      } else {
+        console.log("Login: Google OAuth initiated successfully");
       }
-    });
-    
-    if (error) {
-      console.error("Login: Google sign in error:", error);
+    } catch (err) {
+      console.error("Login: Unexpected error during Google sign in:", err);
       toast({
-        title: "Error signing in with Google",
-        description: error.message,
+        title: "Unexpected Error",
+        description: "An unexpected error occurred. Please try again.",
         variant: "destructive",
       });
     }
