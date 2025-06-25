@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -74,24 +73,8 @@ const Login = () => {
     console.log("Login: Current URL:", window.location.href);
     console.log("Login: Current origin:", window.location.origin);
     
-    // Determine the correct redirect URL based on current environment
-    const currentUrl = window.location.href;
-    let redirectUrl;
-    
-    if (currentUrl.includes('lovableproject.com')) {
-      // Development environment
-      redirectUrl = `${window.location.origin}/members`;
-      console.log("Login: Using development redirect URL");
-    } else if (currentUrl.includes('collektiv.club')) {
-      // Production environment
-      redirectUrl = 'https://www.collektiv.club/members';
-      console.log("Login: Using production redirect URL");
-    } else {
-      // Fallback
-      redirectUrl = `${window.location.origin}/members`;
-      console.log("Login: Using fallback redirect URL");
-    }
-    
+    // Use the correct redirect URL without hash for browser routing
+    const redirectUrl = window.location.origin + '/members';
     console.log("Login: Google redirect URL:", redirectUrl);
     
     try {
