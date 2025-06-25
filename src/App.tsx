@@ -18,10 +18,12 @@ const queryClient = new QueryClient();
 
 function App() {
   console.log('App: Rendering with current location:', window.location.pathname);
+  console.log('App: Full URL:', window.location.href);
+  console.log('App: Hash:', window.location.hash);
   
   return (
     <QueryClientProvider client={queryClient}>
-      <Router>
+      <Router basename="/">
         <div className="App">
           <Routes>
             <Route path="/" element={<Index />} />
