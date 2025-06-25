@@ -17,32 +17,48 @@ const Login = () => {
   const [showForgot, setShowForgot] = useState(false);
   const [forgotEmail, setForgotEmail] = useState("");
   const [forgotLoading, setForgotLoading] = useState(false);
+  const [initialLoad, setInitialLoad] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
+    let mounted = true;
+
+    const checkInitialAuth = async () => {
+      console.log("Login: Checking initial auth state");
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (mounted) {
+        console.log("Login: Initial session check:", !!session);
+        setUser(session?.user ?? null);
+        setInitialLoad(false);
+        
+        // If already authenticated, redirect immediately
+        if (session?.user) {
+          console.log("Login: Already authenticated, redirecting to /members");
+          navigate("/members", { replace: true });
+        }
+      }
+    };
+
+    checkInitialAuth();
+
     const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
+      if (!mounted) return;
+      
       console.log("Login: Auth state change:", event, !!session);
       setUser(session?.user ?? null);
       
-      // Redirect to members page when user is authenticated
-      if (session?.user) {
-        console.log("Login: User authenticated, redirecting to /members");
+      // Only redirect on successful sign in events, not initial session
+      if (event === 'SIGNED_IN' && session?.user) {
+        console.log("Login: User signed in, redirecting to /members");
         navigate("/members", { replace: true });
       }
     });
     
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log("Login: Initial session:", !!session);
-      setUser(session?.user ?? null);
-      
-      // If already authenticated, redirect immediately
-      if (session?.user) {
-        console.log("Login: Already authenticated, redirecting to /members");
-        navigate("/members", { replace: true });
-      }
-    });
-    
-    return () => { listener?.subscription?.unsubscribe(); };
+    return () => {
+      mounted = false;
+      listener?.subscription?.unsubscribe();
+    };
   }, [navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -108,6 +124,18 @@ const Login = () => {
     }
     setForgotEmail("");
   };
+
+  // Show loading during initial auth check
+  if (initialLoad) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-collektiv-accent via-white to-green-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-collektiv-green mx-auto"></div>
+          <p className="mt-4 text-collektiv-green">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   // Show loading while signing in
   if (user) {

@@ -20,17 +20,24 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
   const logoPath = getAssetPath("lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png");
 
   useEffect(() => {
     const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log("Header: Auth state change:", event, !!session);
       setUser(session?.user ?? null);
+      setLoading(false);
     });
+    
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log("Header: Initial session:", !!session);
       setUser(session?.user ?? null);
+      setLoading(false);
     });
+    
     return () => { listener?.subscription?.unsubscribe(); };
   }, []);
 
@@ -46,9 +53,20 @@ const Header = () => {
   };
 
   const handleLogout = async () => {
+    console.log("Header: Logging out");
     await supabase.auth.signOut();
     setUser(null);
     navigate("/");
+  };
+
+  const handleMemberZoneClick = () => {
+    if (user) {
+      console.log("Header: User authenticated, navigating to members");
+      navigate("/members");
+    } else {
+      console.log("Header: No user, navigating to login");
+      navigate("/login");
+    }
   };
 
   return (
@@ -91,17 +109,19 @@ const Header = () => {
           >
             Join Now
           </Link>
-          {user ? (
-            <>
-              <Link to="/members" className="ml-4 flex items-center text-collektiv-green">
-                <User className="mr-1" size={18} /> Members
-              </Link>
-              <Button variant="ghost" className="ml-2" onClick={handleLogout}>Log out</Button>
-            </>
-          ) : (
-            <Button variant="outline" className="ml-4" onClick={() => navigate("/login")}>
-              Member Zone
-            </Button>
+          {!loading && (
+            user ? (
+              <>
+                <Link to="/members" className="ml-4 flex items-center text-collektiv-green">
+                  <User className="mr-1" size={18} /> Members
+                </Link>
+                <Button variant="ghost" className="ml-2" onClick={handleLogout}>Log out</Button>
+              </>
+            ) : (
+              <Button variant="outline" className="ml-4" onClick={handleMemberZoneClick}>
+                Member Zone
+              </Button>
+            )
           )}
         </div>
 
@@ -148,21 +168,23 @@ const Header = () => {
           >
             Join Now
           </Link>
-          {user ? (
-            <>
-              <Link
-                to="/members"
-                className="text-collektiv-green text-lg mt-4 flex items-center"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <User className="mr-1" size={20} /> Members
-              </Link>
-              <Button variant="ghost" className="mt-2" onClick={handleLogout}>Log out</Button>
-            </>
-          ) : (
-            <Button variant="outline" className="mt-6" onClick={() => { setMobileMenuOpen(false); navigate("/login"); }}>
-              Member Zone
-            </Button>
+          {!loading && (
+            user ? (
+              <>
+                <Link
+                  to="/members"
+                  className="text-collektiv-green text-lg mt-4 flex items-center"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <User className="mr-1" size={20} /> Members
+                </Link>
+                <Button variant="ghost" className="mt-2" onClick={handleLogout}>Log out</Button>
+              </>
+            ) : (
+              <Button variant="outline" className="mt-6" onClick={() => { setMobileMenuOpen(false); handleMemberZoneClick(); }}>
+                Member Zone
+              </Button>
+            )
           )}
         </div>
       </div>
