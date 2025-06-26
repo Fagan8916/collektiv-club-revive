@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -97,8 +98,7 @@ const Login = () => {
         console.error("Login: Google sign in error:", error);
         console.error("Login: Error details:", {
           message: error.message,
-          status: error.status,
-          statusText: error.statusText
+          status: error.status
         });
         toast({
           title: "Error signing in with Google",
@@ -219,3 +219,4 @@ const Login = () => {
 };
 
 export default Login;
+
