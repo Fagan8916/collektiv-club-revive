@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -72,23 +70,18 @@ const Login = () => {
 
   const handleGoogleSignIn = async () => {
     console.log("Login: Attempting Google sign in");
-    console.log("Login: Current URL:", window.location.href);
-    console.log("Login: Current origin:", window.location.origin);
-    console.log("Login: User agent:", navigator.userAgent);
-    
-    // Use the correct redirect URL without hash for browser routing
-    const redirectUrl = window.location.origin + '/members';
-    console.log("Login: Google redirect URL:", redirectUrl);
     
     try {
+      // Use a more direct approach for Google OAuth
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: redirectUrl,
+          redirectTo: `${window.location.origin}/members`,
           queryParams: {
             access_type: 'offline',
-            prompt: 'select_account',
+            prompt: 'consent',
           },
+          skipBrowserRedirect: false,
         }
       });
       
@@ -96,24 +89,25 @@ const Login = () => {
       
       if (error) {
         console.error("Login: Google sign in error:", error);
-        console.error("Login: Error details:", {
-          message: error.message,
-          status: error.status
-        });
-        toast({
-          title: "Error signing in with Google",
-          description: error.message,
-          variant: "destructive",
-        });
-      } else {
-        console.log("Login: Google OAuth initiated successfully");
-        console.log("Login: OAuth URL generated:", data?.url);
         
-        // Try opening in a new tab to see if it works there
-        if (data?.url) {
-          console.log("Login: Attempting to redirect to:", data.url);
-          window.location.href = data.url;
+        // Check if it's a frame/popup blocking issue
+        if (error.message?.includes('popup') || error.message?.includes('frame')) {
+          toast({
+            title: "Popup Blocked",
+            description: "Please allow popups for this site and try again, or check your browser settings.",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Error signing in with Google",
+            description: error.message || "Please try again or contact support.",
+            variant: "destructive",
+          });
         }
+      } else if (data?.url) {
+        console.log("Login: Redirecting to Google OAuth URL:", data.url);
+        // Force redirect in the same window to avoid popup blockers
+        window.location.href = data.url;
       }
     } catch (err) {
       console.error("Login: Unexpected error during Google sign in:", err);
@@ -219,4 +213,3 @@ const Login = () => {
 };
 
 export default Login;
-
