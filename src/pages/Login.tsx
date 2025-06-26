@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -70,45 +71,30 @@ const Login = () => {
 
   const handleGoogleSignIn = async () => {
     console.log("Login: Attempting Google sign in");
+    console.log("Login: Current origin:", window.location.origin);
     
     try {
-      // Use a more direct approach for Google OAuth
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      // Try to sign in with Google using same-window redirect
+      const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo: `${window.location.origin}/members`,
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',
-          },
-          skipBrowserRedirect: false,
+          }
         }
       });
       
-      console.log("Login: Google OAuth response:", { data, error });
-      
       if (error) {
         console.error("Login: Google sign in error:", error);
-        
-        // Check if it's a frame/popup blocking issue
-        if (error.message?.includes('popup') || error.message?.includes('frame')) {
-          toast({
-            title: "Popup Blocked",
-            description: "Please allow popups for this site and try again, or check your browser settings.",
-            variant: "destructive",
-          });
-        } else {
-          toast({
-            title: "Error signing in with Google",
-            description: error.message || "Please try again or contact support.",
-            variant: "destructive",
-          });
-        }
-      } else if (data?.url) {
-        console.log("Login: Redirecting to Google OAuth URL:", data.url);
-        // Force redirect in the same window to avoid popup blockers
-        window.location.href = data.url;
+        toast({
+          title: "Google Sign In Error",
+          description: error.message || "Unable to sign in with Google. Please try again or use email/password login.",
+          variant: "destructive",
+        });
       }
+      // If successful, the browser will redirect to Google
     } catch (err) {
       console.error("Login: Unexpected error during Google sign in:", err);
       toast({
