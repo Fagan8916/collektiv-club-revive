@@ -27,7 +27,18 @@ export const useUserRole = () => {
 
         console.log("useUserRole: User found:", user.email, user.id);
 
-        // Get user roles
+        // Special case for fagan8916@gmail.com - grant admin access directly
+        if (user.email === 'fagan8916@gmail.com') {
+          console.log("useUserRole: Detected fagan8916@gmail.com - granting admin access");
+          if (mounted) {
+            setIsAdmin(true);
+            setIsApprovedMember(true);
+            setLoading(false);
+          }
+          return;
+        }
+
+        // Get user roles for other users
         const { data: userRoles, error } = await supabase
           .from("user_roles")
           .select("role, status")
