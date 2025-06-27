@@ -35,6 +35,8 @@ const GoogleSignInButton = ({ loading, setLoading }: GoogleSignInButtonProps) =>
           variant: "destructive",
         });
         setLoading(false);
+      } else {
+        console.log("Login: Google OAuth redirect initiated");
       }
       // If successful, the browser will redirect to Google, so we don't set loading to false here
     } catch (err) {

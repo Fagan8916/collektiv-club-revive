@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 import LoadingScreen from "@/components/auth/LoadingScreen";
 import GoogleSignInButton from "@/components/auth/GoogleSignInButton";
 import EmailLoginForm from "@/components/auth/EmailLoginForm";
@@ -22,6 +23,66 @@ const Login = () => {
     }
   }, [isAuthenticated, authLoading, navigate]);
 
+  // Handle OAuth callback
+  useEffect(() => {
+    const handleAuthCallback = async () => {
+      // Check if we're coming back from OAuth
+      const hashParams = new URLSearchParams(window.location.hash.substring(1));
+      const accessToken = hashParams.get('access_token');
+      const refreshToken = hashParams.get('refresh_token');
+      const error = hashParams.get('error');
+      const errorDescription = hashParams.get('error_description');
+      
+      if (error) {
+        console.error("Login: OAuth error:", error, errorDescription);
+        toast({
+          title: "Authentication Error",
+          description: errorDescription || error,
+          variant: "destructive",
+        });
+        // Clear the error from URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+        return;
+      }
+      
+      if (accessToken) {
+        console.log("Login: OAuth callback detected with access token");
+        
+        try {
+          // Set the session from the hash params
+          const { data, error: sessionError } = await supabase.auth.setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken || '',
+          });
+          
+          if (sessionError) {
+            console.error("Login: Error setting session:", sessionError);
+            toast({
+              title: "Session Error",
+              description: "Failed to establish session. Please try logging in again.",
+              variant: "destructive",
+            });
+          } else if (data.session) {
+            console.log("Login: Session established successfully, redirecting");
+            // Clean up the URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+            // Redirect to members page
+            navigate("/members", { replace: true });
+          }
+        } catch (err) {
+          console.error("Login: Error processing OAuth callback:", err);
+          toast({
+            title: "Authentication Error",
+            description: "An error occurred during sign in. Please try again.",
+            variant: "destructive",
+          });
+        }
+      }
+    };
+
+    handleAuthCallback();
+  }, [navigate]);
+
   // Check for OAuth errors in URL parameters
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -37,24 +98,6 @@ const Login = () => {
       });
     }
   }, []);
-
-  // Handle OAuth callback and redirect
-  useEffect(() => {
-    const handleAuthCallback = async () => {
-      const hashParams = new URLSearchParams(window.location.hash.substring(1));
-      const accessToken = hashParams.get('access_token');
-      
-      if (accessToken) {
-        console.log("Login: OAuth callback detected, redirecting to members");
-        // Small delay to ensure auth state is set
-        setTimeout(() => {
-          navigate("/members", { replace: true });
-        }, 100);
-      }
-    };
-
-    handleAuthCallback();
-  }, [navigate]);
 
   // Show loading while checking auth state
   if (authLoading) {
