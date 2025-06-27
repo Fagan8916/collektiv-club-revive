@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import Index from './pages/Index';
 import About from './pages/About';
 import Membership from './pages/Membership';
@@ -23,7 +23,7 @@ function App() {
   
   return (
     <QueryClientProvider client={queryClient}>
-      <Router basename="/">
+      <Router>
         <div className="App">
           <Routes>
             <Route path="/" element={<Index />} />

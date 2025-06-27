@@ -10,11 +10,15 @@
     
     console.log("404 redirect starting. Current path:", l.pathname);
     
-    // Redirect to the root with a hash route
-    var newPath = l.origin + '/#' + l.pathname;
-    
-    console.log("Redirecting to:", newPath);
-    window.location.replace(newPath);
+    // For hash routing, redirect to root with hash
+    if (l.pathname !== '/') {
+      var newPath = l.origin + '/#' + l.pathname + l.search;
+      console.log("Redirecting to:", newPath);
+      window.location.replace(newPath);
+    } else {
+      // If already at root, just go to the main page
+      window.location.replace(l.origin);
+    }
   </script>
 </head>
 <body>
