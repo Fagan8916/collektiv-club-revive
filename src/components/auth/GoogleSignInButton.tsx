@@ -19,7 +19,7 @@ const GoogleSignInButton = ({ loading, setLoading }: GoogleSignInButtonProps) =>
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/#/members`,
+          redirectTo: `${window.location.origin}/members`,
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',
@@ -36,7 +36,7 @@ const GoogleSignInButton = ({ loading, setLoading }: GoogleSignInButtonProps) =>
         });
         setLoading(false);
       } else {
-        console.log("Login: Google OAuth redirect initiated");
+        console.log("Login: Google OAuth redirect initiated", data);
       }
       // If successful, the browser will redirect to Google, so we don't set loading to false here
     } catch (err) {

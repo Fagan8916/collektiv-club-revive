@@ -23,15 +23,29 @@ const Login = () => {
     }
   }, [isAuthenticated, authLoading, navigate]);
 
-  // Handle OAuth callback
+  // Handle OAuth callback - check both hash and search params
   useEffect(() => {
     const handleAuthCallback = async () => {
-      // Check if we're coming back from OAuth
-      const hashParams = new URLSearchParams(window.location.hash.substring(1));
-      const accessToken = hashParams.get('access_token');
-      const refreshToken = hashParams.get('refresh_token');
-      const error = hashParams.get('error');
-      const errorDescription = hashParams.get('error_description');
+      console.log("Login: Checking for OAuth callback");
+      console.log("Login: Current URL:", window.location.href);
+      console.log("Login: Hash:", window.location.hash);
+      console.log("Login: Search:", window.location.search);
+      
+      // Check URL search params first (modern OAuth)
+      const urlParams = new URLSearchParams(window.location.search);
+      let accessToken = urlParams.get('access_token');
+      let refreshToken = urlParams.get('refresh_token');
+      let error = urlParams.get('error');
+      let errorDescription = urlParams.get('error_description');
+      
+      // If not found in search params, check hash params (legacy)
+      if (!accessToken && !error) {
+        const hashParams = new URLSearchParams(window.location.hash.substring(1));
+        accessToken = hashParams.get('access_token');
+        refreshToken = hashParams.get('refresh_token');
+        error = hashParams.get('error');
+        errorDescription = hashParams.get('error_description');
+      }
       
       if (error) {
         console.error("Login: OAuth error:", error, errorDescription);
@@ -49,7 +63,7 @@ const Login = () => {
         console.log("Login: OAuth callback detected with access token");
         
         try {
-          // Set the session from the hash params
+          // Set the session from the tokens
           const { data, error: sessionError } = await supabase.auth.setSession({
             access_token: accessToken,
             refresh_token: refreshToken || '',
@@ -63,11 +77,17 @@ const Login = () => {
               variant: "destructive",
             });
           } else if (data.session) {
-            console.log("Login: Session established successfully, redirecting");
+            console.log("Login: Session established successfully");
+            console.log("Login: User:", data.session.user?.email);
+            
             // Clean up the URL
             window.history.replaceState({}, document.title, window.location.pathname);
-            // Redirect to members page
-            navigate("/members", { replace: true });
+            
+            // Small delay to ensure auth state is updated
+            setTimeout(() => {
+              console.log("Login: Redirecting to members page");
+              navigate("/members", { replace: true });
+            }, 100);
           }
         } catch (err) {
           console.error("Login: Error processing OAuth callback:", err);
@@ -82,22 +102,6 @@ const Login = () => {
 
     handleAuthCallback();
   }, [navigate]);
-
-  // Check for OAuth errors in URL parameters
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const error = urlParams.get('error');
-    const errorDescription = urlParams.get('error_description');
-    
-    if (error) {
-      console.error("Login: OAuth error detected:", error, errorDescription);
-      toast({
-        title: "Authentication Error",
-        description: errorDescription || error,
-        variant: "destructive",
-      });
-    }
-  }, []);
 
   // Show loading while checking auth state
   if (authLoading) {
