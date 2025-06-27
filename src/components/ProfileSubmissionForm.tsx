@@ -65,10 +65,11 @@ const ProfileSubmissionForm = () => {
       if (!user) {
         console.error("ProfileSubmissionForm: No user found");
         toast({
-          title: "Error",
-          description: "You must be logged in to submit a profile.",
+          title: "Authentication Error",
+          description: "You must be logged in to submit a profile. Please log in and try again.",
           variant: "destructive",
         });
+        setIsSubmitting(false);
         return;
       }
 
@@ -91,20 +92,25 @@ const ProfileSubmissionForm = () => {
 
       if (error) {
         console.error("ProfileSubmissionForm: Database error:", error);
+        
         if (error.code === '23505') {
           toast({
-            title: "Submission already exists",
-            description: "You have already submitted a profile for review.",
+            title: "Submission Already Exists",
+            description: "You have already submitted a profile for review. Only one submission per user is allowed.",
             variant: "destructive",
           });
         } else {
-          throw error;
+          toast({
+            title: "Submission Failed",
+            description: `Failed to submit profile: ${error.message}. Please try again.`,
+            variant: "destructive",
+          });
         }
       } else {
         console.log("ProfileSubmissionForm: Submission successful");
         setHasSubmitted(true);
         toast({
-          title: "Profile submitted successfully!",
+          title: "Profile Submitted Successfully!",
           description: "Your profile has been submitted for admin review. You'll be notified once it's approved.",
         });
         form.reset();
@@ -113,8 +119,8 @@ const ProfileSubmissionForm = () => {
     } catch (error) {
       console.error("ProfileSubmissionForm: Unexpected error:", error);
       toast({
-        title: "Error",
-        description: "Failed to submit profile. Please try again.",
+        title: "Unexpected Error",
+        description: "An unexpected error occurred while submitting your profile. Please try again.",
         variant: "destructive",
       });
     } finally {
