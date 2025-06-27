@@ -19,7 +19,7 @@ const GoogleSignInButton = ({ loading, setLoading }: GoogleSignInButtonProps) =>
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/members`,
+          redirectTo: `${window.location.origin}/#/members`,
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',

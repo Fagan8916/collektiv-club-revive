@@ -26,6 +26,7 @@ const Members = () => {
   const { isAdmin, loading: roleLoading } = useUserRole();
 
   console.log('Members: Auth state - loading:', authLoading, 'authenticated:', isAuthenticated, 'user:', !!user);
+  console.log('Members: Role state - roleLoading:', roleLoading, 'isAdmin:', isAdmin);
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -162,7 +163,7 @@ const Members = () => {
             </p>
             {isAdmin && (
               <div className="bg-yellow-500 text-black px-4 py-2 rounded-full inline-block mb-4">
-                <span className="font-semibold">Admin Access</span>
+                <span className="font-semibold">Admin Access - {user?.email}</span>
               </div>
             )}
           </div>
@@ -227,9 +228,12 @@ const Members = () => {
             
             <Tabs defaultValue="view-directory" className="w-full">
               <div className="flex justify-center mb-6">
-                <TabsList className="bg-gray-100">
+                <TabsList className={`bg-gray-100 ${isAdmin ? 'grid-cols-3' : 'grid-cols-2'}`}>
                   <TabsTrigger value="view-directory">View Directory</TabsTrigger>
                   <TabsTrigger value="submit-profile">Submit Profile</TabsTrigger>
+                  {isAdmin && (
+                    <TabsTrigger value="profiles-to-review">Profiles to Review</TabsTrigger>
+                  )}
                 </TabsList>
               </div>
               
@@ -246,6 +250,18 @@ const Members = () => {
                 </div>
                 <ProfileSubmissionForm />
               </TabsContent>
+
+              {isAdmin && (
+                <TabsContent value="profiles-to-review">
+                  <div className="text-center mb-8">
+                    <h3 className="text-2xl font-bold text-collektiv-green mb-4">Member Profile Submissions</h3>
+                    <p className="text-gray-600 max-w-2xl mx-auto">
+                      Review and approve member profile submissions for the directory.
+                    </p>
+                  </div>
+                  <AdminSubmissionsManager />
+                </TabsContent>
+              )}
             </Tabs>
           </TabsContent>
 
@@ -265,7 +281,6 @@ const Members = () => {
                 <div className="flex justify-center mb-6">
                   <TabsList className="bg-gray-100">
                     <TabsTrigger value="invitations">Manage Invitations</TabsTrigger>
-                    <TabsTrigger value="submissions">Profile Submissions</TabsTrigger>
                     <TabsTrigger value="memberships">Membership Requests</TabsTrigger>
                   </TabsList>
                 </div>
@@ -278,10 +293,6 @@ const Members = () => {
                     </p>
                   </div>
                   <InvitationManager />
-                </TabsContent>
-                
-                <TabsContent value="submissions">
-                  <AdminSubmissionsManager />
                 </TabsContent>
                 
                 <TabsContent value="memberships">
