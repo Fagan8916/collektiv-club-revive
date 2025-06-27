@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -6,8 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { Mail, Lock, Chrome } from "lucide-react";
+import { Mail, Lock } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 
 const Login = () => {
@@ -69,42 +67,6 @@ const Login = () => {
     }
   };
 
-  const handleGoogleSignIn = async () => {
-    console.log("Login: Attempting Google sign in");
-    console.log("Login: Current origin:", window.location.origin);
-    
-    try {
-      // Try to sign in with Google using same-window redirect
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: `${window.location.origin}/members`,
-          queryParams: {
-            access_type: 'offline',
-            prompt: 'consent',
-          }
-        }
-      });
-      
-      if (error) {
-        console.error("Login: Google sign in error:", error);
-        toast({
-          title: "Google Sign In Error",
-          description: error.message || "Unable to sign in with Google. Please try again or use email/password login.",
-          variant: "destructive",
-        });
-      }
-      // If successful, the browser will redirect to Google
-    } catch (err) {
-      console.error("Login: Unexpected error during Google sign in:", err);
-      toast({
-        title: "Unexpected Error",
-        description: "An unexpected error occurred. Please try again.",
-        variant: "destructive",
-      });
-    }
-  };
-
   // Show loading while checking auth state
   if (authLoading) {
     return (
@@ -125,23 +87,6 @@ const Login = () => {
           <p className="text-gray-600 mt-2">Access your exclusive member area</p>
         </CardHeader>
         <CardContent className="space-y-6">
-          {/* Google SSO Button */}
-          <Button
-            onClick={handleGoogleSignIn}
-            variant="outline"
-            className="w-full h-11 border-gray-300 hover:bg-gray-50"
-          >
-            <Chrome className="mr-2 h-4 w-4 text-blue-500" />
-            Continue with Google
-          </Button>
-
-          <div className="relative">
-            <Separator />
-            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-3 text-sm text-gray-500">
-              or continue with email
-            </span>
-          </div>
-
           {/* Email/Password Form */}
           <form onSubmit={handleEmailLogin} className="space-y-4">
             <div className="relative">
