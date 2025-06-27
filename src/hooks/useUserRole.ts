@@ -27,63 +27,7 @@ export const useUserRole = () => {
 
         console.log("useUserRole: User found:", user.email, user.id);
 
-        // First, let's check if this user has ANY roles at all
-        const { data: allUserRoles, error: debugError } = await supabase
-          .from("user_roles")
-          .select("*")
-          .eq("user_id", user.id);
-        
-        console.log("useUserRole: ALL roles for user:", allUserRoles);
-        if (debugError) console.log("useUserRole: Debug query error:", debugError);
-
-        // If no roles found, let's create admin role for fagan8916@gmail.com
-        if ((!allUserRoles || allUserRoles.length === 0) && user.email === 'fagan8916@gmail.com') {
-          console.log("useUserRole: No roles found for fagan8916@gmail.com, creating admin role...");
-          
-          // Insert admin role
-          const { error: adminError } = await supabase
-            .from("user_roles")
-            .insert({
-              user_id: user.id,
-              role: 'admin',
-              status: 'approved',
-              approved_at: new Date().toISOString(),
-              requested_at: new Date().toISOString()
-            });
-          
-          if (adminError) {
-            console.error("useUserRole: Error creating admin role:", adminError);
-          } else {
-            console.log("useUserRole: Admin role created successfully");
-          }
-
-          // Insert member role
-          const { error: memberError } = await supabase
-            .from("user_roles")
-            .insert({
-              user_id: user.id,
-              role: 'member',
-              status: 'approved',
-              approved_at: new Date().toISOString(),
-              requested_at: new Date().toISOString()
-            });
-          
-          if (memberError) {
-            console.error("useUserRole: Error creating member role:", memberError);
-          } else {
-            console.log("useUserRole: Member role created successfully");
-          }
-
-          // Refetch roles after creating them
-          const { data: newUserRoles } = await supabase
-            .from("user_roles")
-            .select("*")
-            .eq("user_id", user.id);
-          
-          console.log("useUserRole: Roles after creation:", newUserRoles);
-        }
-
-        // Get user roles with better error handling
+        // Get user roles
         const { data: userRoles, error } = await supabase
           .from("user_roles")
           .select("role, status")
@@ -99,7 +43,7 @@ export const useUserRole = () => {
           return;
         }
 
-        console.log("useUserRole: Final user roles from database:", userRoles);
+        console.log("useUserRole: User roles from database:", userRoles);
 
         // Check for admin role specifically - only approved admin roles count
         const hasAdminRole = userRoles?.some(role => 
