@@ -3,13 +3,12 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Badge } from "@/components/ui/badge";
-import { X, Plus } from "lucide-react";
+import { Form } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
+import ProfileSubmissionSuccessScreen from "./ProfileSubmissionSuccessScreen";
+import ExpertiseManager from "./ExpertiseManager";
+import ProfileFormFields from "./ProfileFormFields";
 
 interface ProfileSubmissionData {
   full_name: string;
@@ -124,30 +123,7 @@ const ProfileSubmissionForm = () => {
   };
 
   if (hasSubmitted) {
-    return (
-      <Card className="max-w-2xl mx-auto">
-        <CardContent className="p-8 text-center">
-          <div className="mb-4">
-            <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-              <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <h3 className="text-2xl font-bold text-collektiv-green mb-2">Profile Submitted!</h3>
-            <p className="text-gray-600 mb-4">
-              Thank you for submitting your profile. An admin will review it and you'll be notified once it's approved and added to the member directory.
-            </p>
-            <Button 
-              onClick={() => setHasSubmitted(false)}
-              variant="outline"
-              className="mt-4"
-            >
-              Submit Another Profile
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-    );
+    return <ProfileSubmissionSuccessScreen onSubmitAnother={() => setHasSubmitted(false)} />;
   }
 
   return (
@@ -161,180 +137,15 @@ const ProfileSubmissionForm = () => {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <FormField
-              control={form.control}
-              name="full_name"
-              rules={{ required: "Full name is required" }}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Full Name *</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Your full name" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+            <ProfileFormFields form={form} />
+
+            <ExpertiseManager 
+              expertise={expertise}
+              newSkill={newSkill}
+              onNewSkillChange={setNewSkill}
+              onAddSkill={addSkill}
+              onRemoveSkill={removeSkill}
             />
-
-            <FormField
-              control={form.control}
-              name="bio"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Bio</FormLabel>
-                  <FormControl>
-                    <Textarea 
-                      placeholder="Tell us about yourself..."
-                      className="min-h-[100px]"
-                      {...field} 
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="company"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Company</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Your company" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="position"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Position</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Your job title" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <FormField
-              control={form.control}
-              name="location"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Location</FormLabel>
-                  <FormControl>
-                    <Input placeholder="City, Country" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="services_offered"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Services Offered to Other Members</FormLabel>
-                  <FormControl>
-                    <Textarea 
-                      placeholder="What services can you offer to fellow members? (e.g., consulting, mentorship, partnerships, etc.)"
-                      className="min-h-[80px]"
-                      {...field} 
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="linkedin_url"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>LinkedIn URL</FormLabel>
-                    <FormControl>
-                      <Input placeholder="https://linkedin.com/in/..." {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="website_url"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Website URL</FormLabel>
-                    <FormControl>
-                      <Input placeholder="https://yourwebsite.com" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <FormField
-              control={form.control}
-              name="profile_image_url"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Profile Image URL</FormLabel>
-                  <FormControl>
-                    <Input placeholder="https://example.com/your-photo.jpg" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <div>
-              <FormLabel>Areas of Expertise</FormLabel>
-              <div className="flex gap-2 mt-2 mb-3">
-                <Input
-                  placeholder="Add a skill..."
-                  value={newSkill}
-                  onChange={(e) => setNewSkill(e.target.value)}
-                  onKeyPress={(e) => {
-                    if (e.key === 'Enter') {
-                      e.preventDefault();
-                      addSkill();
-                    }
-                  }}
-                />
-                <Button type="button" onClick={addSkill} size="icon" variant="outline">
-                  <Plus className="h-4 w-4" />
-                </Button>
-              </div>
-              {expertise.length > 0 && (
-                <div className="flex flex-wrap gap-2">
-                  {expertise.map((skill, index) => (
-                    <Badge key={index} variant="secondary" className="text-xs">
-                      {skill}
-                      <button
-                        type="button"
-                        onClick={() => removeSkill(skill)}
-                        className="ml-2 hover:text-red-500"
-                      >
-                        <X className="h-3 w-3" />
-                      </button>
-                    </Badge>
-                  ))}
-                </div>
-              )}
-            </div>
 
             <Button 
               type="submit" 
