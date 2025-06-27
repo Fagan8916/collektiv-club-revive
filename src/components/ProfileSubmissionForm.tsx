@@ -27,6 +27,7 @@ const ProfileSubmissionForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [expertise, setExpertise] = useState<string[]>([]);
   const [newSkill, setNewSkill] = useState("");
+  const [hasSubmitted, setHasSubmitted] = useState(false);
   const { toast } = useToast();
 
   const form = useForm<ProfileSubmissionData>({
@@ -55,10 +56,15 @@ const ProfileSubmissionForm = () => {
   };
 
   const onSubmit = async (data: ProfileSubmissionData) => {
+    console.log("ProfileSubmissionForm: Starting submission with data:", data);
     setIsSubmitting(true);
+    
     try {
       const { data: { user } } = await supabase.auth.getUser();
+      console.log("ProfileSubmissionForm: Current user:", user?.id);
+      
       if (!user) {
+        console.error("ProfileSubmissionForm: No user found");
         toast({
           title: "Error",
           description: "You must be logged in to submit a profile.",
@@ -67,6 +73,7 @@ const ProfileSubmissionForm = () => {
         return;
       }
 
+      console.log("ProfileSubmissionForm: Submitting to database...");
       const { error } = await supabase
         .from("member_profile_submissions")
         .insert({
@@ -84,6 +91,7 @@ const ProfileSubmissionForm = () => {
         });
 
       if (error) {
+        console.error("ProfileSubmissionForm: Database error:", error);
         if (error.code === '23505') {
           toast({
             title: "Submission already exists",
@@ -94,15 +102,17 @@ const ProfileSubmissionForm = () => {
           throw error;
         }
       } else {
+        console.log("ProfileSubmissionForm: Submission successful");
+        setHasSubmitted(true);
         toast({
-          title: "Profile submitted!",
-          description: "Your profile has been submitted for admin review.",
+          title: "Profile submitted successfully!",
+          description: "Your profile has been submitted for admin review. You'll be notified once it's approved.",
         });
         form.reset();
         setExpertise([]);
       }
     } catch (error) {
-      console.error("Error submitting profile:", error);
+      console.error("ProfileSubmissionForm: Unexpected error:", error);
       toast({
         title: "Error",
         description: "Failed to submit profile. Please try again.",
@@ -112,6 +122,33 @@ const ProfileSubmissionForm = () => {
       setIsSubmitting(false);
     }
   };
+
+  if (hasSubmitted) {
+    return (
+      <Card className="max-w-2xl mx-auto">
+        <CardContent className="p-8 text-center">
+          <div className="mb-4">
+            <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+              <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h3 className="text-2xl font-bold text-collektiv-green mb-2">Profile Submitted!</h3>
+            <p className="text-gray-600 mb-4">
+              Thank you for submitting your profile. An admin will review it and you'll be notified once it's approved and added to the member directory.
+            </p>
+            <Button 
+              onClick={() => setHasSubmitted(false)}
+              variant="outline"
+              className="mt-4"
+            >
+              Submit Another Profile
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card className="max-w-2xl mx-auto">

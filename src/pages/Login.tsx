@@ -42,6 +42,24 @@ const Login = () => {
     }
   }, []);
 
+  // Handle OAuth callback and redirect
+  useEffect(() => {
+    const handleAuthCallback = async () => {
+      const hashParams = new URLSearchParams(window.location.hash.substring(1));
+      const accessToken = hashParams.get('access_token');
+      
+      if (accessToken) {
+        console.log("Login: OAuth callback detected, redirecting to members");
+        // Small delay to ensure auth state is set
+        setTimeout(() => {
+          navigate("/members", { replace: true });
+        }, 100);
+      }
+    };
+
+    handleAuthCallback();
+  }, [navigate]);
+
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
