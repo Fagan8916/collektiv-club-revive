@@ -23,35 +23,24 @@ const Login = () => {
     }
   }, [isAuthenticated, authLoading, navigate]);
 
-  // Handle OAuth callback with comprehensive parameter checking
+  // Handle OAuth callback
   useEffect(() => {
     const handleAuthCallback = async () => {
       console.log("Login: Checking for OAuth callback");
       console.log("Login: Current URL:", window.location.href);
-      console.log("Login: Hash:", window.location.hash);
-      console.log("Login: Search:", window.location.search);
+      console.log("Login: Search params:", window.location.search);
       
-      // Function to extract params from both hash and search
-      const getParamsFromUrl = () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const hashParams = new URLSearchParams(window.location.hash.substring(1));
-        
-        return {
-          access_token: urlParams.get('access_token') || hashParams.get('access_token'),
-          refresh_token: urlParams.get('refresh_token') || hashParams.get('refresh_token'),
-          error: urlParams.get('error') || hashParams.get('error'),
-          error_description: urlParams.get('error_description') || hashParams.get('error_description'),
-          type: urlParams.get('type') || hashParams.get('type')
-        };
-      };
-
-      const params = getParamsFromUrl();
+      const urlParams = new URLSearchParams(window.location.search);
+      const accessToken = urlParams.get('access_token');
+      const refreshToken = urlParams.get('refresh_token');
+      const error = urlParams.get('error');
+      const errorDescription = urlParams.get('error_description');
       
-      if (params.error) {
-        console.error("Login: OAuth error:", params.error, params.error_description);
+      if (error) {
+        console.error("Login: OAuth error:", error, errorDescription);
         toast({
           title: "Authentication Error",
-          description: params.error_description || params.error,
+          description: errorDescription || error,
           variant: "destructive",
         });
         // Clear the error from URL
@@ -59,14 +48,13 @@ const Login = () => {
         return;
       }
       
-      if (params.access_token) {
-        console.log("Login: OAuth callback detected with access token");
+      if (accessToken && refreshToken) {
+        console.log("Login: OAuth callback detected with tokens");
         
         try {
-          // Set the session from the tokens
           const { data, error: sessionError } = await supabase.auth.setSession({
-            access_token: params.access_token,
-            refresh_token: params.refresh_token || '',
+            access_token: accessToken,
+            refresh_token: refreshToken,
           });
           
           if (sessionError) {
@@ -83,11 +71,8 @@ const Login = () => {
             // Clean up the URL
             window.history.replaceState({}, document.title, window.location.pathname);
             
-            // Wait a bit for auth state to propagate, then redirect
-            setTimeout(() => {
-              console.log("Login: Redirecting to members page");
-              navigate("/members", { replace: true });
-            }, 500);
+            // Navigate to members page
+            navigate("/members", { replace: true });
           }
         } catch (err) {
           console.error("Login: Error processing OAuth callback:", err);
