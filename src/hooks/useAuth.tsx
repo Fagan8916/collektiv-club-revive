@@ -13,7 +13,7 @@ export const useAuth = () => {
     
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
+      async (event, session) => {
         console.log('useAuth: Auth state change:', event, !!session);
         console.log('useAuth: Session details:', session ? {
           access_token: !!session.access_token,
@@ -26,6 +26,11 @@ export const useAuth = () => {
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
+        
+        // If we get a sign in event, ensure we have the latest session
+        if (event === 'SIGNED_IN' && session) {
+          console.log('useAuth: User signed in, session established');
+        }
       }
     );
 
