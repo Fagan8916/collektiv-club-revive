@@ -45,6 +45,15 @@ export const useUserRole = () => {
 
         console.log("useUserRole: Raw user roles from database:", userRoles);
 
+        // Debug: Let's also check if the user exists in the user_roles table at all
+        const { data: allUserRoles, error: debugError } = await supabase
+          .from("user_roles")
+          .select("*")
+          .eq("user_id", user.id);
+        
+        console.log("useUserRole: ALL roles for user (debug):", allUserRoles);
+        if (debugError) console.log("useUserRole: Debug query error:", debugError);
+
         // Check for admin role specifically - only approved admin roles count
         const hasAdminRole = userRoles?.some(role => 
           role.role === 'admin' && role.status === 'approved'
