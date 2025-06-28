@@ -27,9 +27,10 @@ export const useUserRole = () => {
 
         console.log("useUserRole: User found:", user.email, user.id);
 
-        // Special case for fagan8916@gmail.com - grant admin access directly
-        if (user.email === 'fagan8916@gmail.com') {
-          console.log("useUserRole: Detected fagan8916@gmail.com - granting admin access");
+        // Special case for admin emails - grant admin access directly
+        const adminEmails = ['fagan8916@gmail.com', 'ryan@collektiv.club', 'manon@collektiv.club'];
+        if (adminEmails.includes(user.email || '')) {
+          console.log(`useUserRole: Detected admin email ${user.email} - granting admin access`);
           if (mounted) {
             setIsAdmin(true);
             setIsApprovedMember(true);

@@ -16,10 +16,14 @@ const GoogleSignInButton = ({ loading, setLoading }: GoogleSignInButtonProps) =>
     console.log("Login: Attempting Google sign in");
     
     try {
+      // Use the current origin for redirect, but ensure it goes to /members after auth
+      const redirectTo = `${window.location.origin}/members`;
+      console.log("Login: Redirect URL set to:", redirectTo);
+      
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/members`,
+          redirectTo: redirectTo,
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',
