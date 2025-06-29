@@ -23,7 +23,7 @@ const Login = () => {
     }
   }, [isAuthenticated, authLoading, navigate]);
 
-  // Handle OAuth callback - comprehensive token detection
+  // Handle OAuth callback - look for actual OAuth tokens
   useEffect(() => {
     const handleAuthCallback = async () => {
       console.log("Login: Checking for OAuth callback");
@@ -49,23 +49,26 @@ const Login = () => {
         shouldCleanupSearch = true;
       }
       
-      // If not found in search params, check hash fragment
+      // If not found in search params, check hash fragment - but ONLY if it contains actual OAuth tokens
       if (!accessToken && window.location.hash) {
         const hashString = window.location.hash.substring(1); // Remove the #
         console.log("Login: Checking hash fragment:", hashString);
         
-        if (hashString.includes('access_token') || hashString.includes('error')) {
-          console.log("Login: Found auth data in hash fragment");
+        // Only process if the hash contains OAuth-specific parameters (not route paths)
+        if (hashString.includes('access_token=') || hashString.includes('error=')) {
+          console.log("Login: Found OAuth data in hash fragment");
           const hashParams = new URLSearchParams(hashString);
           accessToken = hashParams.get('access_token');
           refreshToken = hashParams.get('refresh_token');
           error = hashParams.get('error');
           errorDescription = hashParams.get('error_description');
           shouldCleanupHash = true;
+        } else if (hashString.startsWith('login') || hashString.startsWith('/login')) {
+          console.log("Login: Hash contains route path, not OAuth tokens");
         }
       }
       
-      console.log("Login: OAuth data found:", { 
+      console.log("Login: OAuth token analysis:", { 
         hasAccessToken: !!accessToken, 
         hasRefreshToken: !!refreshToken,
         error,
@@ -84,16 +87,16 @@ const Login = () => {
         
         // Clean up the error from URL
         if (shouldCleanupHash) {
-          window.location.hash = '';
+          window.location.hash = '#/login';
         }
         if (shouldCleanupSearch) {
-          window.history.replaceState({}, document.title, window.location.pathname);
+          window.history.replaceState({}, document.title, window.location.pathname + '#/login');
         }
         return;
       }
       
       if (accessToken && refreshToken) {
-        console.log("Login: OAuth callback detected with tokens");
+        console.log("Login: Valid OAuth callback detected with tokens");
         
         try {
           const { data, error: sessionError } = await supabase.auth.setSession({
@@ -114,10 +117,10 @@ const Login = () => {
             
             // Clean up the URL
             if (shouldCleanupHash) {
-              window.location.hash = '';
+              window.location.hash = '#/members';
             }
             if (shouldCleanupSearch) {
-              window.history.replaceState({}, document.title, window.location.pathname);
+              window.history.replaceState({}, document.title, window.location.pathname + '#/members');
             }
             
             // Navigate to members page
@@ -131,6 +134,8 @@ const Login = () => {
             variant: "destructive",
           });
         }
+      } else {
+        console.log("Login: No OAuth tokens found in URL");
       }
     };
 
