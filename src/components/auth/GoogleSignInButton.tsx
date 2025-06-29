@@ -16,9 +16,9 @@ const GoogleSignInButton = ({ loading, setLoading }: GoogleSignInButtonProps) =>
     console.log("Login: Attempting Google sign in");
     
     try {
-      // Use the current origin for redirect, ensuring it works in both dev and production
+      // Use the current origin for redirect, but redirect to login page to handle the callback
       const currentOrigin = window.location.origin;
-      const redirectTo = `${currentOrigin}/members`;
+      const redirectTo = `${currentOrigin}/login`;
       console.log("Login: Redirect URL set to:", redirectTo);
       console.log("Login: Current origin:", currentOrigin);
       
