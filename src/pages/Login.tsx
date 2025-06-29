@@ -23,7 +23,7 @@ const Login = () => {
     }
   }, [isAuthenticated, authLoading, navigate]);
 
-  // Handle OAuth callback - improved for production
+  // Handle OAuth callback - comprehensive token detection
   useEffect(() => {
     const handleAuthCallback = async () => {
       console.log("Login: Checking for OAuth callback");
@@ -31,27 +31,47 @@ const Login = () => {
       console.log("Login: Hash:", window.location.hash);
       console.log("Login: Search params:", window.location.search);
       
-      // Check both URL search params and hash for OAuth callback
-      let urlParams = new URLSearchParams(window.location.search);
+      let accessToken = null;
+      let refreshToken = null;
+      let error = null;
+      let errorDescription = null;
+      let shouldCleanupHash = false;
+      let shouldCleanupSearch = false;
       
-      // If no params in search, check the hash (for HashRouter)
-      if (!urlParams.has('access_token') && window.location.hash) {
-        const hashParams = window.location.hash.substring(1);
-        if (hashParams.includes('access_token')) {
-          urlParams = new URLSearchParams(hashParams);
+      // Check URL search params first
+      const searchParams = new URLSearchParams(window.location.search);
+      if (searchParams.has('access_token')) {
+        console.log("Login: Found tokens in search params");
+        accessToken = searchParams.get('access_token');
+        refreshToken = searchParams.get('refresh_token');
+        error = searchParams.get('error');
+        errorDescription = searchParams.get('error_description');
+        shouldCleanupSearch = true;
+      }
+      
+      // If not found in search params, check hash fragment
+      if (!accessToken && window.location.hash) {
+        const hashString = window.location.hash.substring(1); // Remove the #
+        console.log("Login: Checking hash fragment:", hashString);
+        
+        if (hashString.includes('access_token') || hashString.includes('error')) {
+          console.log("Login: Found auth data in hash fragment");
+          const hashParams = new URLSearchParams(hashString);
+          accessToken = hashParams.get('access_token');
+          refreshToken = hashParams.get('refresh_token');
+          error = hashParams.get('error');
+          errorDescription = hashParams.get('error_description');
+          shouldCleanupHash = true;
         }
       }
       
-      const accessToken = urlParams.get('access_token');
-      const refreshToken = urlParams.get('refresh_token');
-      const error = urlParams.get('error');
-      const errorDescription = urlParams.get('error_description');
-      
-      console.log("Login: OAuth tokens found:", { 
+      console.log("Login: OAuth data found:", { 
         hasAccessToken: !!accessToken, 
         hasRefreshToken: !!refreshToken,
         error,
-        errorDescription 
+        errorDescription,
+        shouldCleanupHash,
+        shouldCleanupSearch
       });
       
       if (error) {
@@ -61,10 +81,12 @@ const Login = () => {
           description: errorDescription || error,
           variant: "destructive",
         });
-        // Clear the error from URL
-        if (window.location.hash.includes('error')) {
+        
+        // Clean up the error from URL
+        if (shouldCleanupHash) {
           window.location.hash = '';
-        } else {
+        }
+        if (shouldCleanupSearch) {
           window.history.replaceState({}, document.title, window.location.pathname);
         }
         return;
@@ -90,10 +112,11 @@ const Login = () => {
             console.log("Login: Session established successfully");
             console.log("Login: User:", data.session.user?.email);
             
-            // Clean up the URL - handle both hash and search params
-            if (window.location.hash.includes('access_token')) {
+            // Clean up the URL
+            if (shouldCleanupHash) {
               window.location.hash = '';
-            } else {
+            }
+            if (shouldCleanupSearch) {
               window.history.replaceState({}, document.title, window.location.pathname);
             }
             
