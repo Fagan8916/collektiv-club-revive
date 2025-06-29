@@ -23,18 +23,36 @@ const Login = () => {
     }
   }, [isAuthenticated, authLoading, navigate]);
 
-  // Handle OAuth callback
+  // Handle OAuth callback - improved for production
   useEffect(() => {
     const handleAuthCallback = async () => {
       console.log("Login: Checking for OAuth callback");
       console.log("Login: Current URL:", window.location.href);
+      console.log("Login: Hash:", window.location.hash);
       console.log("Login: Search params:", window.location.search);
       
-      const urlParams = new URLSearchParams(window.location.search);
+      // Check both URL search params and hash for OAuth callback
+      let urlParams = new URLSearchParams(window.location.search);
+      
+      // If no params in search, check the hash (for HashRouter)
+      if (!urlParams.has('access_token') && window.location.hash) {
+        const hashParams = window.location.hash.substring(1);
+        if (hashParams.includes('access_token')) {
+          urlParams = new URLSearchParams(hashParams);
+        }
+      }
+      
       const accessToken = urlParams.get('access_token');
       const refreshToken = urlParams.get('refresh_token');
       const error = urlParams.get('error');
       const errorDescription = urlParams.get('error_description');
+      
+      console.log("Login: OAuth tokens found:", { 
+        hasAccessToken: !!accessToken, 
+        hasRefreshToken: !!refreshToken,
+        error,
+        errorDescription 
+      });
       
       if (error) {
         console.error("Login: OAuth error:", error, errorDescription);
@@ -44,7 +62,11 @@ const Login = () => {
           variant: "destructive",
         });
         // Clear the error from URL
-        window.history.replaceState({}, document.title, window.location.pathname);
+        if (window.location.hash.includes('error')) {
+          window.location.hash = '';
+        } else {
+          window.history.replaceState({}, document.title, window.location.pathname);
+        }
         return;
       }
       
@@ -68,8 +90,12 @@ const Login = () => {
             console.log("Login: Session established successfully");
             console.log("Login: User:", data.session.user?.email);
             
-            // Clean up the URL
-            window.history.replaceState({}, document.title, window.location.pathname);
+            // Clean up the URL - handle both hash and search params
+            if (window.location.hash.includes('access_token')) {
+              window.location.hash = '';
+            } else {
+              window.history.replaceState({}, document.title, window.location.pathname);
+            }
             
             // Navigate to members page
             navigate("/members", { replace: true });
