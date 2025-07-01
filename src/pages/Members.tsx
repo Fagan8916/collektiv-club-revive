@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +17,6 @@ import { useAuth } from "@/hooks/useAuth";
 
 const Members = () => {
   console.log('Members: Component rendering, current URL:', window.location.href);
-  console.log('Members: Component rendering, current pathname:', window.location.pathname);
   
   const [userProfile, setUserProfile] = useState<any>(null);
   const navigate = useNavigate();
@@ -26,7 +24,44 @@ const Members = () => {
   const { isAdmin, loading: roleLoading } = useUserRole();
 
   console.log('Members: Auth state - loading:', authLoading, 'authenticated:', isAuthenticated, 'user:', !!user);
-  console.log('Members: Role state - roleLoading:', roleLoading, 'isAdmin:', isAdmin);
+
+  // Handle OAuth callback - this is where Google will redirect after authentication
+  useEffect(() => {
+    const handleOAuthCallback = async () => {
+      console.log("=== MEMBERS OAUTH CALLBACK DETECTION START ===");
+      console.log("Members: URL analysis:");
+      console.log("  - href:", window.location.href);
+      console.log("  - search:", window.location.search);
+      console.log("  - hash:", window.location.hash);
+      
+      // Check for OAuth parameters in URL
+      const searchParams = new URLSearchParams(window.location.search);
+      const hasAuthCode = searchParams.has('code');
+      const hasError = searchParams.has('error');
+      
+      if (hasAuthCode) {
+        console.log("Members: ✅ OAuth authorization code detected");
+        console.log("Members: Supabase should automatically handle this");
+        
+        // Clean up URL
+        window.history.replaceState({}, document.title, window.location.pathname + window.location.hash);
+      } else if (hasError) {
+        console.log("Members: ❌ OAuth error detected");
+        const error = searchParams.get('error');
+        const errorDescription = searchParams.get('error_description');
+        console.error("Members: OAuth error:", error, errorDescription);
+        
+        // Redirect to login with error
+        navigate("/login", { replace: true });
+      } else {
+        console.log("Members: No OAuth parameters found");
+      }
+      
+      console.log("=== MEMBERS OAUTH CALLBACK DETECTION END ===");
+    };
+
+    handleOAuthCallback();
+  }, [navigate]);
 
   // Redirect if not authenticated
   useEffect(() => {
