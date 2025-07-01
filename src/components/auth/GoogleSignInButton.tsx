@@ -29,7 +29,7 @@ const GoogleSignInButton = ({ loading, setLoading }: GoogleSignInButtonProps) =>
       
       // Log the exact OAuth configuration being sent
       const oauthConfig = {
-        provider: 'google',
+        provider: 'google' as const,
         options: {
           redirectTo: redirectTo,
           queryParams: {
