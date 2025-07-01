@@ -34,27 +34,45 @@ const Members = () => {
       console.log("  - search:", window.location.search);
       console.log("  - hash:", window.location.hash);
       
-      // Check for OAuth parameters in URL
+      // Check for OAuth parameters in URL (both search and hash)
       const searchParams = new URLSearchParams(window.location.search);
-      const hasAuthCode = searchParams.has('code');
-      const hasError = searchParams.has('error');
+      const hashParams = new URLSearchParams(window.location.hash.includes('?') ? window.location.hash.split('?')[1] : '');
       
-      if (hasAuthCode) {
-        console.log("Members: ✅ OAuth authorization code detected");
-        console.log("Members: Supabase should automatically handle this");
+      const hasAuthCode = searchParams.has('code') || hashParams.has('code');
+      const hasAccessToken = searchParams.has('access_token') || hashParams.has('access_token');
+      const hasError = searchParams.has('error') || hashParams.has('error');
+      
+      console.log("Members: OAuth detection - hasAuthCode:", hasAuthCode, "hasAccessToken:", hasAccessToken, "hasError:", hasError);
+      
+      if (hasAuthCode || hasAccessToken) {
+        console.log("Members: ✅ OAuth callback detected, waiting for Supabase to process...");
         
-        // Clean up URL
-        window.history.replaceState({}, document.title, window.location.pathname + window.location.hash);
+        // Give Supabase time to process the OAuth callback
+        setTimeout(async () => {
+          console.log("Members: Checking session after OAuth callback...");
+          const { data: { session }, error } = await supabase.auth.getSession();
+          if (error) {
+            console.error("Members: Error getting session after OAuth:", error);
+          } else if (session) {
+            console.log("Members: ✅ Session established after OAuth callback");
+          } else {
+            console.log("Members: ⚠️ No session found after OAuth callback");
+          }
+        }, 2000);
+        
+        // Clean up OAuth parameters from URL
+        const cleanHash = window.location.hash.split('?')[0];
+        window.history.replaceState({}, document.title, window.location.pathname + cleanHash);
       } else if (hasError) {
         console.log("Members: ❌ OAuth error detected");
-        const error = searchParams.get('error');
-        const errorDescription = searchParams.get('error_description');
+        const error = searchParams.get('error') || hashParams.get('error');
+        const errorDescription = searchParams.get('error_description') || hashParams.get('error_description');
         console.error("Members: OAuth error:", error, errorDescription);
         
         // Redirect to login with error
         navigate("/login", { replace: true });
       } else {
-        console.log("Members: No OAuth parameters found");
+        console.log("Members: No OAuth parameters found - normal page load");
       }
       
       console.log("=== MEMBERS OAUTH CALLBACK DETECTION END ===");

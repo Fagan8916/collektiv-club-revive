@@ -17,10 +17,10 @@ const GoogleSignInButton = ({ loading, setLoading }: GoogleSignInButtonProps) =>
     console.log("GoogleSignIn: Starting Google OAuth flow");
     
     try {
-      // CRITICAL FIX: Use /members as redirect URL to match Supabase configuration
-      const redirectTo = `${window.location.origin}/members`;
+      // CRITICAL FIX: Use full URL with hash routing to match your setup
+      const redirectTo = `${window.location.origin}/#/members`;
       console.log("GoogleSignIn: CRITICAL - RedirectTo URL:", redirectTo);
-      console.log("GoogleSignIn: This should match your Supabase redirect URL configuration");
+      console.log("GoogleSignIn: This URL should be added to your Supabase redirect URLs");
       
       const oauthConfig = {
         provider: 'google' as const,
