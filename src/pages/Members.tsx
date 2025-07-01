@@ -34,43 +34,88 @@ const Members = () => {
       console.log("  - search:", window.location.search);
       console.log("  - hash:", window.location.hash);
       
-      // Check for OAuth parameters in URL (both search and hash)
-      const searchParams = new URLSearchParams(window.location.search);
-      const hashParams = new URLSearchParams(window.location.hash.includes('?') ? window.location.hash.split('?')[1] : '');
+      // Check for OAuth parameters in URL hash - Google sends tokens after #
+      let accessToken = null;
+      let refreshToken = null;
+      let error = null;
+      let errorDescription = null;
       
-      const hasAuthCode = searchParams.has('code') || hashParams.has('code');
-      const hasAccessToken = searchParams.has('access_token') || hashParams.has('access_token');
-      const hasError = searchParams.has('error') || hashParams.has('error');
-      
-      console.log("Members: OAuth detection - hasAuthCode:", hasAuthCode, "hasAccessToken:", hasAccessToken, "hasError:", hasError);
-      
-      if (hasAuthCode || hasAccessToken) {
-        console.log("Members: ✅ OAuth callback detected, waiting for Supabase to process...");
+      // Parse hash fragment for OAuth tokens - handle format like #/members#access_token=...
+      if (window.location.hash && window.location.hash.includes('access_token=')) {
+        console.log("Members: ✅ OAuth tokens detected in hash fragment");
         
-        // Give Supabase time to process the OAuth callback
-        setTimeout(async () => {
-          console.log("Members: Checking session after OAuth callback...");
-          const { data: { session }, error } = await supabase.auth.getSession();
-          if (error) {
-            console.error("Members: Error getting session after OAuth:", error);
-          } else if (session) {
-            console.log("Members: ✅ Session established after OAuth callback");
-          } else {
-            console.log("Members: ⚠️ No session found after OAuth callback");
+        // Extract the token part after the second #
+        const hashParts = window.location.hash.split('#');
+        console.log("Members: Hash parts:", hashParts);
+        
+        // Find the part that contains OAuth tokens
+        let tokenPart = '';
+        for (const part of hashParts) {
+          if (part.includes('access_token=') || part.includes('error=')) {
+            tokenPart = part;
+            break;
           }
-        }, 2000);
+        }
         
-        // Clean up OAuth parameters from URL
-        const cleanHash = window.location.hash.split('?')[0];
-        window.history.replaceState({}, document.title, window.location.pathname + cleanHash);
-      } else if (hasError) {
+        console.log("Members: Token part:", tokenPart);
+        
+        if (tokenPart) {
+          const tokenParams = new URLSearchParams(tokenPart);
+          
+          accessToken = tokenParams.get('access_token');
+          refreshToken = tokenParams.get('refresh_token');
+          error = tokenParams.get('error');
+          errorDescription = tokenParams.get('error_description');
+          
+          console.log("Members: Extracted tokens - hasAccessToken:", !!accessToken, "hasRefreshToken:", !!refreshToken, "hasError:", !!error);
+        }
+      }
+      
+      // Also check search params as fallback
+      const searchParams = new URLSearchParams(window.location.search);
+      if (!accessToken && !error) {
+        const hasAuthCode = searchParams.has('code');
+        const hasError = searchParams.has('error');
+        
+        if (hasAuthCode) {
+          console.log("Members: ✅ OAuth authorization code detected in search params");
+          // Clean up URL
+          window.history.replaceState({}, document.title, window.location.pathname + '#/members');
+          return;
+        } else if (hasError) {
+          error = searchParams.get('error');
+          errorDescription = searchParams.get('error_description');
+        }
+      }
+      
+      console.log("Members: Final OAuth detection - hasAccessToken:", !!accessToken, "hasError:", !!error);
+      
+      if (error) {
         console.log("Members: ❌ OAuth error detected");
-        const error = searchParams.get('error') || hashParams.get('error');
-        const errorDescription = searchParams.get('error_description') || hashParams.get('error_description');
         console.error("Members: OAuth error:", error, errorDescription);
         
         // Redirect to login with error
         navigate("/login", { replace: true });
+      } else if (accessToken && refreshToken) {
+        console.log("Members: ✅ OAuth tokens detected, setting session...");
+        
+        try {
+          const { data, error: sessionError } = await supabase.auth.setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken,
+          });
+          
+          if (sessionError) {
+            console.error("Members: Error setting session:", sessionError);
+          } else if (data.session) {
+            console.log("Members: ✅ Session established successfully");
+            
+            // Clean up OAuth parameters from URL
+            window.history.replaceState({}, document.title, window.location.pathname + '#/members');
+          }
+        } catch (err) {
+          console.error("Members: Error processing OAuth tokens:", err);
+        }
       } else {
         console.log("Members: No OAuth parameters found - normal page load");
       }
