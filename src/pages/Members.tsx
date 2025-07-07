@@ -209,12 +209,6 @@ const Members = () => {
       title: "Total Deployed",
       value: "£100K+",
       description: "Capital invested to date"
-    },
-    {
-      icon: Award,
-      title: "Success Rate",
-      value: "85%",
-      description: "Positive returns"
     }
   ];
 
@@ -270,7 +264,7 @@ const Members = () => {
 
       {/* Stats Section */}
       <div className="container mx-auto px-4 -mt-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
           {stats.map((stat, index) => (
             <Card key={index} className="bg-white shadow-lg hover:shadow-xl transition-shadow">
               <CardContent className="p-6 text-center">
