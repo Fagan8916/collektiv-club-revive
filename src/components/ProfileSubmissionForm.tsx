@@ -12,7 +12,7 @@ import ProfileFormFields from "./ProfileFormFields";
 
 interface ProfileSubmissionData {
   full_name: string;
-  bio: string;
+  bio?: string;
   company?: string;
   position?: string;
   linkedin_url?: string;
@@ -20,6 +20,7 @@ interface ProfileSubmissionData {
   location?: string;
   profile_image_url?: string;
   services_offered?: string;
+  expertise?: string[];
 }
 
 const ProfileSubmissionForm = () => {

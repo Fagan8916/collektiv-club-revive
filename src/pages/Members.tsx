@@ -9,6 +9,7 @@ import InvestmentsSection from "@/components/InvestmentsSection";
 import MemberDirectory from "@/components/MemberDirectory";
 import MemberEvents from "@/components/MemberEvents";
 import ProfileSubmissionForm from "@/components/ProfileSubmissionForm";
+import ProfileEditForm from "@/components/ProfileEditForm";
 import AdminSubmissionsManager from "@/components/AdminSubmissionsManager";
 import MembershipManager from "@/components/MembershipManager";
 import InvitationManager from "@/components/InvitationManager";
@@ -320,8 +321,9 @@ const Members = () => {
             
             <Tabs defaultValue="view-directory" className="w-full">
               <div className="flex justify-center mb-6">
-                <TabsList className={`bg-gray-100 ${isAdmin ? 'grid-cols-3' : 'grid-cols-2'}`}>
+                <TabsList className={`bg-gray-100 ${isAdmin ? 'grid-cols-4' : 'grid-cols-3'}`}>
                   <TabsTrigger value="view-directory">View Directory</TabsTrigger>
+                  <TabsTrigger value="edit-profile">Edit Profile</TabsTrigger>
                   <TabsTrigger value="submit-profile">Submit Profile</TabsTrigger>
                   {isAdmin && (
                     <TabsTrigger value="profiles-to-review">Profiles to Review</TabsTrigger>
@@ -331,6 +333,17 @@ const Members = () => {
               
               <TabsContent value="view-directory">
                 <MemberDirectory />
+              </TabsContent>
+              
+              
+              <TabsContent value="edit-profile">
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl font-bold text-collektiv-green mb-4">Edit Your Profile</h3>
+                  <p className="text-gray-600 max-w-2xl mx-auto">
+                    Update your profile information in the member directory.
+                  </p>
+                </div>
+                <ProfileEditForm />
               </TabsContent>
               
               <TabsContent value="submit-profile">
