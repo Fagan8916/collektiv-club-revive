@@ -207,7 +207,7 @@ const Members = () => {
     {
       icon: TrendingUp,
       title: "Total Deployed",
-      value: "£500K+",
+      value: "£100K+",
       description: "Capital invested to date"
     },
     {
