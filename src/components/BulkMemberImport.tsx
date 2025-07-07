@@ -78,26 +78,31 @@ const BulkMemberImport = () => {
 
     for (const member of members) {
       try {
-        // Check if profile already exists
+        // Check if member already exists in pending_members or member_profiles
+        const { data: existingPending } = await supabase
+          .from('pending_members')
+          .select('full_name')
+          .eq('email', member.email)
+          .maybeSingle();
+
         const { data: existingProfile } = await supabase
           .from('member_profiles')
           .select('full_name')
           .eq('full_name', member.name)
           .maybeSingle();
 
-        if (existingProfile) {
+        if (existingPending || existingProfile) {
           results.push({ ...member, status: 'Already exists' });
           continue;
         }
 
-        // Create basic profile entry
+        // Create pending member entry
         const { error } = await supabase
-          .from('member_profiles')
+          .from('pending_members')
           .insert({
-            user_id: crypto.randomUUID(), // Temporary ID until they log in
             full_name: member.name,
-            bio: `Member of the Collektiv Club - Profile pending completion`,
-            is_visible: false, // Hide until they complete their profile
+            email: member.email,
+            created_by: user.id,
           });
 
         if (error) {

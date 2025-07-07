@@ -155,6 +155,33 @@ export type Database = {
         }
         Relationships: []
       }
+      pending_members: {
+        Row: {
+          created_at: string
+          created_by: string
+          email: string
+          full_name: string
+          id: string
+          notes: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          email: string
+          full_name: string
+          id?: string
+          notes?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          email?: string
+          full_name?: string
+          id?: string
+          notes?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           approved_at: string | null
