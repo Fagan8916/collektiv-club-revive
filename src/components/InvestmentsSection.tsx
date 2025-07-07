@@ -5,12 +5,6 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const investments = [
   {
-    name: "Loyative",
-    logo: "/lovable-uploads/75605de7-e0bf-4389-b95b-2ce3c4a3621c.png",
-    website: "https://www.Loytaive.com/",
-    slug: "loyative"
-  },
-  {
     name: "Propane",
     logo: "/lovable-uploads/8429af36-140a-4fc4-a401-e12fd22d19cc.png",
     website: "TBC",
