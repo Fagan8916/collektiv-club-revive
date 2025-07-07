@@ -195,7 +195,7 @@ const Members = () => {
     {
       icon: Building2,
       title: "Active Investments",
-      value: "4",
+      value: "3",
       description: "Current portfolio companies"
     },
     {
