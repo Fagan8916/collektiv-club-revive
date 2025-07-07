@@ -8,7 +8,7 @@ const MembershipSection = () => {
   const plans = [
     {
       name: "Trial",
-      price: "Free*",
+      price: "Free",
       period: "",
       features: [
         "12.5% Investment fee",
@@ -28,8 +28,7 @@ const MembershipSection = () => {
         "4% Investment fee",
         "0% Annual Investment fee",
         "0% Carry / Performance fee",
-        "Access to the Founder and Member Slack Community",
-        "£100 KYC cost included"
+        "Access to the Founder and Member Slack Community"
       ],
       button: "Join Premium",
       highlighted: false,
@@ -45,8 +44,7 @@ const MembershipSection = () => {
         "0% Carry / Performance fee",
         "Priority on EIS & SEIS Deals",
         "Access to the Founder and Member Slack Community",
-        "Gold Club Community Group Access and Discounts",
-        "£100 KYC cost included"
+        "Gold Club Community Group Access and Discounts"
       ],
       button: "Get Started",
       highlighted: true,
@@ -176,11 +174,6 @@ const MembershipSection = () => {
               <strong>Lower fees = more returns in your pocket</strong>
             </p>
           </div>
-        </div>
-        
-        {/* KYC Note for Free membership */}
-        <div className="mt-6 text-center text-gray-600 text-sm">
-          <p>*Free Members are required to pay a £100 one-off KYC (Know Your Customer) check directly to our SPV (Special Purpose Vehicle) provider when investing for the first time</p>
         </div>
       </div>
     </section>

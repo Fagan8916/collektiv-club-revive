@@ -37,10 +37,6 @@ const Membership = () => {
       a: "Our fees vary by membership tier: VIP members pay 0% Investment fee, Premium members pay 4%, and Trial members pay 12.5%. There are no Annual Investment fees or Carry/Performance fees across all tiers."
     },
     {
-      q: "What is KYC and why is it included?",
-      a: "KYC (Know Your Customer) is a verification process required for financial investments. We include the £100 KYC cost in our VIP and Premium memberships to make the investment process smoother for our members."
-    },
-    {
       q: "How do I access member-only content?",
       a: "After joining, you'll receive an invite to our community where you can access all digital resources, event information, and investment opportunities."
     },
