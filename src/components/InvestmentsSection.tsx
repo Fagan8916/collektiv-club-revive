@@ -42,7 +42,7 @@ const InvestmentsSection = () => {
                 </div>
                 <h3 className="font-bold text-lg mb-2 text-collektiv-green">{investment.name}</h3>
                 <p className="text-sm text-gray-600 mb-2">{investment.website}</p>
-                <p className="text-sm font-semibold text-green-600">Status: Active</p>
+                <p className="text-sm font-semibold text-collektiv-green">Status: Active</p>
               </CardContent>
             </Card>
           </Link>
