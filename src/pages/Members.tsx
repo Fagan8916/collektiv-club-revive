@@ -10,6 +10,7 @@ import MemberDirectory from "@/components/MemberDirectory";
 import MemberEvents from "@/components/MemberEvents";
 import ProfileSubmissionForm from "@/components/ProfileSubmissionForm";
 import ProfileEditForm from "@/components/ProfileEditForm";
+import BulkMemberImport from "@/components/BulkMemberImport";
 import AdminSubmissionsManager from "@/components/AdminSubmissionsManager";
 import MembershipManager from "@/components/MembershipManager";
 import InvitationManager from "@/components/InvitationManager";
@@ -387,6 +388,7 @@ const Members = () => {
                   <TabsList className="bg-gray-100">
                     <TabsTrigger value="invitations">Manage Invitations</TabsTrigger>
                     <TabsTrigger value="memberships">Membership Requests</TabsTrigger>
+                    <TabsTrigger value="bulk-import">Bulk Import Members</TabsTrigger>
                   </TabsList>
                 </div>
                 
@@ -400,8 +402,19 @@ const Members = () => {
                   <InvitationManager />
                 </TabsContent>
                 
+                
                 <TabsContent value="memberships">
                   <MembershipManager />
+                </TabsContent>
+                
+                <TabsContent value="bulk-import">
+                  <div className="text-center mb-8">
+                    <h3 className="text-2xl font-bold text-collektiv-green mb-4">Bulk Import Members</h3>
+                    <p className="text-gray-600 max-w-2xl mx-auto">
+                      Add multiple members at once with their names and emails. You can then contact them to complete their profiles.
+                    </p>
+                  </div>
+                  <BulkMemberImport />
                 </TabsContent>
               </Tabs>
             </TabsContent>
