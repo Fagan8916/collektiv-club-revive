@@ -7,7 +7,7 @@ const investments = [
   {
     name: "Propane",
     logo: "/lovable-uploads/8429af36-140a-4fc4-a401-e12fd22d19cc.png",
-    website: "TBC",
+    website: "http://www.usepropane.ai",
     slug: "propane"
   },
   {
@@ -28,16 +28,16 @@ const InvestmentsSection = () => {
   return (
     <div className="mb-12">
       <h2 className="text-2xl font-bold mb-8 text-collektiv-green text-center">Investments to Date</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
         {investments.map((investment) => (
           <Link key={investment.slug} to={`/members/investments/${investment.slug}`}>
             <Card className="hover:shadow-lg transition-shadow cursor-pointer">
               <CardContent className="p-6 text-center">
-                <div className="mb-4 flex justify-center">
+                <div className="mb-4 flex justify-center items-center h-16">
                   <img 
                     src={investment.logo} 
                     alt={investment.name}
-                    className="h-16 w-auto object-contain"
+                    className="max-h-16 w-auto object-contain"
                   />
                 </div>
                 <h3 className="font-bold text-lg mb-2 text-collektiv-green">{investment.name}</h3>
