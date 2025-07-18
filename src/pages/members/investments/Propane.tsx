@@ -26,7 +26,7 @@ const Propane = () => {
             <div className="mb-6 flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-collektiv-green hover:bg-collektiv-lightgreen text-lg px-8 py-4">
                 <a 
-                  href="https://drive.google.com/drive/folders/1xtMO9D3xoaptfFCOLq2FUYENtb_BVRlU?usp=drive_link" 
+                  href="https://docs.google.com/document/d/1uidfYKRvNOyF6hEqSl9s4HCEHD9ZdFuqw7hem4ZNZUw/edit?tab=t.0#heading=h.wtdvpsv78pyl" 
                   target="_blank" 
                   rel="noopener noreferrer"
                 >
@@ -35,7 +35,16 @@ const Propane = () => {
               </Button>
               <Button asChild size="lg" className="bg-collektiv-green hover:bg-collektiv-lightgreen text-lg px-8 py-4">
                 <a 
-                  href="https://drive.google.com/drive/folders/1kqKMVnhRJmGSEsE8uBd4lVGEUy6ifoyy" 
+                  href="https://drive.google.com/file/d/1mu_3dwymdPWXQidTYQy_n6bzyagUXr8F/view?usp=sharing" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  Pitch Recording
+                </a>
+              </Button>
+              <Button asChild size="lg" className="bg-collektiv-green hover:bg-collektiv-lightgreen text-lg px-8 py-4">
+                <a 
+                  href="https://drive.google.com/drive/u/1/folders/1jwwgxYAhDGDVfAW2OhoHylK4W-oOh40c" 
                   target="_blank" 
                   rel="noopener noreferrer"
                 >
