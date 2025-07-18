@@ -271,14 +271,14 @@ const Login = () => {
             <div className="text-sm">
               <span className="text-gray-600">Need an account? </span>
               <a href="/register" className="text-collektiv-green hover:text-collektiv-dark underline">
-                Register with invitation code
+                Join Collektiv Club
               </a>
             </div>
           </div>
 
           <div className="text-center text-xs text-gray-500 mt-6 p-4 bg-gray-50 rounded-lg">
-            <strong>Invitation-Only Registration</strong><br />
-            New members must be invited by an existing admin. Contact an admin for an invitation code to join the Collektiv Club.
+            <strong>Join Collektiv Club</strong><br />
+            Create your account and apply for membership. Your application will be reviewed by our admins.
           </div>
         </CardContent>
       </Card>

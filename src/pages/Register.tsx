@@ -1,13 +1,13 @@
 
 import React, { useState } from "react";
-import InvitationCodeInput from "@/components/InvitationCodeInput";
+import SimpleRegistrationForm from "@/components/auth/SimpleRegistrationForm";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle } from "lucide-react";
 
 const Register = () => {
   const [registrationComplete, setRegistrationComplete] = useState(false);
 
-  const handleValidCode = (invitationId: string) => {
+  const handleSuccess = () => {
     setRegistrationComplete(true);
   };
 
@@ -23,7 +23,7 @@ const Register = () => {
               Registration Complete!
             </h1>
             <p className="text-gray-600 mb-8">
-              Your account has been created successfully. Please check your email to verify your account before signing in.
+              Your account has been created successfully. Please check your email to verify your account. Your membership application will be reviewed by our admins.
             </p>
             <a
               href="/login"
@@ -39,7 +39,7 @@ const Register = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-collektiv-accent via-white to-green-50 flex items-center justify-center p-4">
-      <InvitationCodeInput onValidCode={handleValidCode} />
+      <SimpleRegistrationForm onSuccess={handleSuccess} />
     </div>
   );
 };
