@@ -36,7 +36,7 @@ const MemberEvents = () => {
       date: "end June 2025",
       time: "",
       location: "London",
-      attendees: "50 attendees max",
+      attendees: "",
       status: "completed",
       description: "Stakeholder update meeting for Loxa investment."
     }
@@ -73,10 +73,12 @@ const MemberEvents = () => {
             {event.location}
           </div>
           
-          <div className="flex items-center gap-1">
-            <Users className="h-4 w-4" />
-            {event.attendees}
-          </div>
+          {event.attendees && (
+            <div className="flex items-center gap-1">
+              <Users className="h-4 w-4" />
+              {event.attendees}
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>

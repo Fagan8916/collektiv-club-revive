@@ -37,23 +37,27 @@ const Pandektes = () => {
           <CardContent className="space-y-6">
             <div>
               <h3 className="text-xl font-semibold mb-3 text-collektiv-green">About Pandektes</h3>
+              <p className="text-gray-700 leading-relaxed mb-4">
+                Pandektes is a legal tech company based in Copenhagen that we invested in very early. 
+                The company has shown remarkable growth and success since our initial investment.
+              </p>
               <p className="text-gray-700 leading-relaxed">
-                Pandektes is a cutting-edge technology company that specializes in advanced data analytics 
-                and business intelligence solutions. They provide sophisticated tools and platforms that 
-                help organizations make data-driven decisions, optimize their operations, and gain valuable 
-                insights from their data. Their solutions are designed to handle complex data processing 
-                and deliver actionable intelligence to businesses across various industries.
+                They successfully raised €4M in a Series A funding round last year at a €12M valuation. 
+                The company has scaled to 30 employees and continues to demonstrate strong growth in the legal 
+                technology sector.
               </p>
             </div>
             
             <div>
-              <h3 className="text-xl font-semibold mb-3 text-collektiv-green">Key Features</h3>
+              <h3 className="text-xl font-semibold mb-3 text-collektiv-green">Investment Details</h3>
               <ul className="list-disc list-inside text-gray-700 space-y-2">
-                <li>Advanced data analytics platform</li>
-                <li>Business intelligence solutions</li>
-                <li>Real-time data processing</li>
-                <li>Custom dashboard creation</li>
-                <li>Enterprise-grade security</li>
+                <li><strong>Location:</strong> Copenhagen, Denmark</li>
+                <li><strong>Sector:</strong> Legal Technology</li>
+                <li><strong>Latest Funding:</strong> €4M Series A (last year)</li>
+                <li><strong>Valuation:</strong> €12M</li>
+                <li><strong>Team Size:</strong> 30 employees</li>
+                <li><strong>Status:</strong> Growing strong</li>
+                <li><strong>Our Position:</strong> Early investor</li>
               </ul>
             </div>
           </CardContent>
