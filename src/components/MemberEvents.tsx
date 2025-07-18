@@ -10,20 +10,20 @@ const MemberEvents = () => {
     {
       id: 1,
       title: "Startup Pitch Night",
-      date: "2024-02-15",
-      time: "18:00",
-      location: "London Tech Hub",
-      attendees: 25,
+      date: "Coming soon",
+      time: "Coming soon",
+      location: "London",
+      attendees: "50 attendees max",
       status: "upcoming",
       description: "Join us for an evening of innovative startup pitches and networking."
     },
     {
       id: 2,
       title: "Investment Strategy Workshop",
-      date: "2024-02-28",
-      time: "14:00",
-      location: "Virtual Event",
-      attendees: 18,
+      date: "Coming soon",
+      time: "Coming soon",
+      location: "London",
+      attendees: "50 attendees max",
       status: "upcoming",
       description: "Learn advanced investment strategies from industry experts."
     }
@@ -32,13 +32,13 @@ const MemberEvents = () => {
   const pastEvents = [
     {
       id: 3,
-      title: "Annual Member Meetup",
-      date: "2024-01-20",
-      time: "19:00",
-      location: "Manchester Business Centre",
-      attendees: 42,
+      title: "Loxa Stakeholders Update",
+      date: "end June 2025",
+      time: "",
+      location: "London",
+      attendees: "50 attendees max",
       status: "completed",
-      description: "Our biggest networking event of the year with guest speakers."
+      description: "Stakeholder update meeting for Loxa investment."
     }
   ];
 
@@ -58,17 +58,15 @@ const MemberEvents = () => {
         <div className="flex flex-wrap gap-4 text-sm text-gray-500">
           <div className="flex items-center gap-1">
             <Calendar className="h-4 w-4" />
-            {new Date(event.date).toLocaleDateString('en-GB', {
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric'
-            })}
+            {event.date}
           </div>
           
-          <div className="flex items-center gap-1">
-            <Clock className="h-4 w-4" />
-            {event.time}
-          </div>
+          {event.time && (
+            <div className="flex items-center gap-1">
+              <Clock className="h-4 w-4" />
+              {event.time}
+            </div>
+          )}
           
           <div className="flex items-center gap-1">
             <MapPin className="h-4 w-4" />
@@ -77,7 +75,7 @@ const MemberEvents = () => {
           
           <div className="flex items-center gap-1">
             <Users className="h-4 w-4" />
-            {event.attendees} attendees
+            {event.attendees}
           </div>
         </div>
       </CardContent>
