@@ -1,4 +1,4 @@
-import bareTrustsImage from "@/assets/bare-trusts-spv.jpg";
+import businessImage from "@/assets/business-documents-real.jpg";
 
 export const articles = [
   {
@@ -9,7 +9,7 @@ export const articles = [
     content: "Extended content about bare trusts would go here...",
     date: "January 24, 2025",
     author: "Collektiv Team",
-    image: bareTrustsImage,
+    image: businessImage,
     slug: "bare-trusts-spvs-angel-syndicates",
     route: "/insights/bare-trusts",
     category: "Legal & Structure",

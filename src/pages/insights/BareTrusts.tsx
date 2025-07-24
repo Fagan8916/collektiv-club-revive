@@ -1,6 +1,6 @@
 import React from "react";
 import ArticleLayout from "@/components/ArticleLayout";
-import bareTrustsImage from "@/assets/bare-trusts-spv.jpg";
+import businessImage from "@/assets/business-documents-real.jpg";
 
 const BareTrusts = () => {
   const content = (
@@ -117,7 +117,7 @@ const BareTrusts = () => {
       author="Collektiv Team"
       category="Legal & Structure"
       content={content}
-      image={bareTrustsImage}
+      image={businessImage}
     />
   );
 };
