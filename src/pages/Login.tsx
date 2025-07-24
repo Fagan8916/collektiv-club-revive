@@ -270,7 +270,7 @@ const Login = () => {
           <div className="text-center space-y-2">
             <div className="text-sm">
               <span className="text-gray-600">Need an account? </span>
-              <a href="/register" className="text-collektiv-green hover:text-collektiv-dark underline">
+              <a href="/membership" className="text-collektiv-green hover:text-collektiv-dark underline">
                 Join Collektiv Club
               </a>
             </div>
