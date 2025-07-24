@@ -182,6 +182,33 @@ export type Database = {
         }
         Relationships: []
       }
+      pre_approved_emails: {
+        Row: {
+          added_at: string
+          added_by: string
+          email: string
+          id: string
+          notes: string | null
+          used_at: string | null
+        }
+        Insert: {
+          added_at?: string
+          added_by: string
+          email: string
+          id?: string
+          notes?: string | null
+          used_at?: string | null
+        }
+        Update: {
+          added_at?: string
+          added_by?: string
+          email?: string
+          id?: string
+          notes?: string | null
+          used_at?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           approved_at: string | null
@@ -217,6 +244,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      add_pre_approved_emails: {
+        Args: { p_emails: string[]; p_notes?: string }
+        Returns: number
+      }
       approve_member_submission: {
         Args: { submission_id: string }
         Returns: undefined
