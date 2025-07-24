@@ -15,6 +15,7 @@ import Terms from './pages/Terms';
 import Propane from './pages/members/investments/Propane';
 import Loxa from './pages/members/investments/Loxa';
 import Pandektes from './pages/members/investments/Pandektes';
+import BareTrusts from './pages/insights/BareTrusts';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const queryClient = new QueryClient();
@@ -40,6 +41,7 @@ function App() {
             <Route path="/members/investments/propane" element={<Propane />} />
             <Route path="/members/investments/loxa" element={<Loxa />} />
             <Route path="/members/investments/pandektes" element={<Pandektes />} />
+            <Route path="/insights/bare-trusts" element={<BareTrusts />} />
             <Route path="/register" element={<Register />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />

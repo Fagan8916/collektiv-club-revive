@@ -1,6 +1,21 @@
+import bareTrustsImage from "@/assets/bare-trusts-spv.jpg";
+
 export const articles = [
   {
     id: 1,
+    title: "The Critical Role of Bare Trusts in SPVs and Angel Syndicates",
+    excerpt:
+      "Bare trusts provide a blend of tax transparency, legal simplicity, and agility that is highly valued by angel syndicates and in the creation of Special Purpose Vehicles (SPVs).",
+    content: "Extended content about bare trusts would go here...",
+    date: "January 24, 2025",
+    author: "Collektiv Team",
+    image: bareTrustsImage,
+    slug: "bare-trusts-spvs-angel-syndicates",
+    route: "/insights/bare-trusts",
+    category: "Legal & Structure",
+  },
+  {
+    id: 2,
     title: "0 to 1 Million: The SaaS Startup Journey from Zero to Traction",
     excerpt:
       "Every SaaS founder dreams of hitting their first million. The journey from zero to one million is rarely a straight line. Here's what it really takes to go from nothing to something remarkable.",
@@ -13,7 +28,7 @@ export const articles = [
     category: "Startup Growth",
   },
   {
-    id: 2,
+    id: 3,
     title: "What to Look for in Founders: A Guide for Investors",
     excerpt:
       "At Collektiv, we meet with dozens of founders every month. The quality of a founding team is the single biggest predictor of a startup's success. Here's what exceptional founders have in common.",
@@ -26,7 +41,7 @@ export const articles = [
     category: "Founder Evaluation",
   },
   {
-    id: 3,
+    id: 4,
     title: "Convertible Loan Notes: A Smart Financing Tool for Early-Stage SaaS Companies",
     excerpt:
       "Raising capital is a critical milestone for early-stage SaaS companies. One increasingly popular and effective method to secure funding without immediately diluting equity is through convertible loan notes (CLNs).",
@@ -39,7 +54,7 @@ export const articles = [
     category: "Funding",
   },
   {
-    id: 4,
+    id: 5,
     title: "Lessons from 483 Investments: Insights from Angel Investing Legend Charlie",
     excerpt:
       "Charlie O'Donnell, a seasoned angel investor with nearly 500 investments, shares his invaluable insights and principles that have guided his successful investment journey.",
@@ -52,7 +67,7 @@ export const articles = [
     category: "Angel Investing",
   },
   {
-    id: 5,
+    id: 6,
     title: "SaaS Funding Agreements: Ups and Downs",
     excerpt:
       "Understanding the complexities and trade-offs in SaaS funding agreements, including preferred share structures, participating preferred shares, and their implications for founders.",
@@ -65,7 +80,7 @@ export const articles = [
     category: "Funding",
   },
   {
-    id: 6,
+    id: 7,
     title: "Unlock Success: Key Tips for Beginner Angel Investors",
     excerpt:
       "Essential guidance for new angel investors on portfolio strategy, due diligence, and the importance of both financial returns and personal fulfillment in early-stage investing.",
@@ -78,7 +93,7 @@ export const articles = [
     category: "Angel Investing",
   },
   {
-    id: 7,
+    id: 8,
     title: "EIS & SEIS: Tax-Efficient Investment Schemes",
     excerpt:
       "A comprehensive guide to the Enterprise Investment Scheme (EIS) and Seed Enterprise Investment Scheme (SEIS), their tax benefits, eligibility requirements, and investment limits.",
@@ -91,7 +106,7 @@ export const articles = [
     category: "Tax Relief",
   },
   {
-    id: 8,
+    id: 9,
     title: "Understanding Multiples in SaaS Valuations",
     excerpt:
       "Exploring the concept of multiples in SaaS company valuations, how they're calculated, and their significance as a benchmark for comparing companies across different stages.",
@@ -104,7 +119,7 @@ export const articles = [
     category: "Valuation",
   },
   {
-    id: 9,
+    id: 10,
     title: "Top Metrics to Evaluate When Investing in SaaS Startups",
     excerpt:
       "Analysing the crucial metrics investors should consider when evaluating SaaS companies, from Annual Recurring Revenue (ARR) to Customer Acquisition Cost (CAC) and Churn Rate.",
@@ -117,7 +132,7 @@ export const articles = [
     category: "Metrics",
   },
   {
-    id: 10,
+    id: 11,
     title: "Valuations: The Art and Science of Startup Worth",
     excerpt:
       "An in-depth look at startup valuations, the methodologies used, and the factors that influence them, from revenue multiples to market conditions and investor sentiment.",
@@ -130,7 +145,7 @@ export const articles = [
     category: "Valuation",
   },
   {
-    id: 11,
+    id: 12,
     title: "Understanding Angel Syndicates for SaaS Startups",
     excerpt:
       "A guide to angel syndicates, their structure, benefits, and considerations for both founders seeking funding and investors looking to participate in syndicated deals.",
