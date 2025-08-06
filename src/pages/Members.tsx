@@ -14,6 +14,7 @@ import BulkMemberImport from "@/components/BulkMemberImport";
 import AdminSubmissionsManager from "@/components/AdminSubmissionsManager";
 import MembershipManager from "@/components/MembershipManager";
 import InvitationManager from "@/components/InvitationManager";
+import AdminProfileManager from "@/components/AdminProfileManager";
 import { useUserRole } from "@/hooks/useUserRole";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -388,6 +389,7 @@ const Members = () => {
                   <TabsList className="bg-gray-100">
                     <TabsTrigger value="invitations">Manage Invitations</TabsTrigger>
                     <TabsTrigger value="memberships">Membership Requests</TabsTrigger>
+                    <TabsTrigger value="profiles">Manage Profiles</TabsTrigger>
                     <TabsTrigger value="bulk-import">Bulk Import Members</TabsTrigger>
                   </TabsList>
                 </div>
@@ -405,6 +407,10 @@ const Members = () => {
                 
                 <TabsContent value="memberships">
                   <MembershipManager />
+                </TabsContent>
+                
+                <TabsContent value="profiles">
+                  <AdminProfileManager />
                 </TabsContent>
                 
                 <TabsContent value="bulk-import">
