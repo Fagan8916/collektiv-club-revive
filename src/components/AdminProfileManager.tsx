@@ -18,6 +18,7 @@ const AdminProfileManager = () => {
   const [loading, setLoading] = useState(true);
   const [editingProfile, setEditingProfile] = useState<MemberProfile | null>(null);
   const [editForm, setEditForm] = useState<Partial<MemberProfile>>({});
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   useEffect(() => {
     fetchProfiles();
@@ -43,6 +44,7 @@ const AdminProfileManager = () => {
   const handleEditClick = (profile: MemberProfile) => {
     setEditingProfile(profile);
     setEditForm(profile);
+    setDialogOpen(true);
   };
 
   const handleSaveProfile = async () => {
@@ -58,6 +60,7 @@ const AdminProfileManager = () => {
       
       toast.success("Profile updated successfully");
       setEditingProfile(null);
+      setDialogOpen(false);
       fetchProfiles();
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -149,7 +152,7 @@ const AdminProfileManager = () => {
                 >
                   {profile.is_visible ? "Hide" : "Show"}
                 </Button>
-                <Dialog>
+                <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                   <DialogTrigger asChild>
                     <Button 
                       variant="outline" 
@@ -257,7 +260,10 @@ const AdminProfileManager = () => {
                         />
                       </div>
                       <div className="flex justify-end space-x-2">
-                        <Button variant="outline" onClick={() => setEditingProfile(null)}>
+                        <Button variant="outline" onClick={() => {
+                          setEditingProfile(null);
+                          setDialogOpen(false);
+                        }}>
                           Cancel
                         </Button>
                         <Button onClick={handleSaveProfile}>
