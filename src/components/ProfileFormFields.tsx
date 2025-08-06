@@ -4,6 +4,7 @@ import { UseFormReturn } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import ProfileImageUpload from "@/components/ProfileImageUpload";
 
 interface ProfileSubmissionData {
   full_name: string;
@@ -150,16 +151,20 @@ const ProfileFormFields = ({ form }: ProfileFormFieldsProps) => {
         />
       </div>
 
+      <ProfileImageUpload
+        currentImageUrl={form.watch("profile_image_url") || ""}
+        onImageUpload={(url) => form.setValue("profile_image_url", url)}
+        userFullName={form.watch("full_name") || "User"}
+      />
+
       <FormField
         control={form.control}
         name="profile_image_url"
         render={({ field }) => (
-          <FormItem>
-            <FormLabel>Profile Image URL</FormLabel>
+          <FormItem className="hidden">
             <FormControl>
-              <Input placeholder="https://example.com/your-photo.jpg" {...field} />
+              <Input {...field} />
             </FormControl>
-            <FormMessage />
           </FormItem>
         )}
       />

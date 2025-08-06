@@ -10,6 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { Tables } from "@/integrations/supabase/types";
+import ProfileImageUpload from "@/components/ProfileImageUpload";
 
 type MemberProfile = Tables<"member_profiles">;
 
@@ -239,13 +240,10 @@ const AdminProfileManager = () => {
                         />
                       </div>
                       <div>
-                        <Label htmlFor="profile_image_url">Profile Image URL</Label>
-                        <Input
-                          id="profile_image_url"
-                          value={editForm.profile_image_url || ""}
-                          onChange={(e) =>
-                            setEditForm({ ...editForm, profile_image_url: e.target.value })
-                          }
+                        <ProfileImageUpload
+                          currentImageUrl={editForm.profile_image_url || ""}
+                          onImageUpload={(url) => setEditForm({ ...editForm, profile_image_url: url })}
+                          userFullName={editForm.full_name || "User"}
                         />
                       </div>
                       <div>
