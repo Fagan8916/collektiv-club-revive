@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Ryan</title>
+</head>
+<body>
+    <h1>Adding Ryan...</h1>
+    <div id="result"></div>
+    
+    <script>
+        async function addRyan() {
+            try {
+                const response = await fetch('https://lectuphndieqxoluyhkv.supabase.co/functions/v1/send-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: 'Fagan8916@gmail.com',
+                        name: 'Ryan Fagan',
+                        role: 'member'
+                    })
+                });
+                
+                const result = await response.json();
+                document.getElementById('result').innerHTML = '<pre>' + JSON.stringify(result, null, 2) + '</pre>';
+                
+                if (result.success) {
+                    console.log('✅ Ryan added successfully and magic link sent!');
+                } else {
+                    console.error('❌ Failed to add Ryan:', result.error);
+                }
+            } catch (error) {
+                console.error('❌ Error:', error);
+                document.getElementById('result').innerHTML = 'Error: ' + error.message;
+            }
+        }
+        
+        // Call the function when page loads
+        addRyan();
+    </script>
+</body>
+</html>
