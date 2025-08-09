@@ -26,10 +26,10 @@ export const MagicLinkEmail = ({
     <Body style={main}>
       <Container style={container}>
         <Heading as="h2" style={h2}>
-          Magic Link Login
+          Welcome to Collektiv Club
         </Heading>
         <Text style={text}>
-          Click the button below to securely log in to{site_url ? ` ${site_url}` : " your account"}:
+          You've been invited to join Collektiv Club! Click the button below to access your account and choose your preferred login method:
         </Text>
         <div style={{ margin: '26px 0' }}>
           <Link
@@ -38,11 +38,16 @@ export const MagicLinkEmail = ({
             target="_blank"
             rel="noopener noreferrer"
           >
-            Log in with Magic Link
+            Accept Invitation
           </Link>
         </div>
         <Text style={footer}>
-          If you did not request this email, you can safely ignore it.
+          After clicking the link above, you'll be able to choose between:
+          <br />• Continuing with Google Sign-In
+          <br />• Setting up a password for email login
+          <br />• Using magic links for future access
+          <br /><br />
+          If you did not expect this invitation, you can safely ignore it.
         </Text>
       </Container>
     </Body>

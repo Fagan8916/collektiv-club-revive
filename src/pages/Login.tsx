@@ -269,6 +269,33 @@ const Login = () => {
 
           <div className="text-center space-y-2">
             <div className="text-sm">
+              <button 
+                onClick={async () => {
+                  const email = prompt("Enter your email address to reset your password:");
+                  if (email) {
+                    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+                      redirectTo: `${window.location.origin}/#/reset-password`
+                    });
+                    if (error) {
+                      toast({
+                        title: "Error",
+                        description: error.message,
+                        variant: "destructive",
+                      });
+                    } else {
+                      toast({
+                        title: "Password reset sent",
+                        description: "Check your email for the reset link.",
+                      });
+                    }
+                  }
+                }}
+                className="text-collektiv-green hover:text-collektiv-dark underline"
+              >
+                Forgot password?
+              </button>
+            </div>
+            <div className="text-sm">
               <span className="text-gray-600">Need an account? </span>
               <a href="/membership" className="text-collektiv-green hover:text-collektiv-dark underline">
                 Join Collektiv Club

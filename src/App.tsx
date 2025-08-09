@@ -12,6 +12,8 @@ import Members from './pages/Members';
 import Register from './pages/Register';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
+import ResetPassword from './pages/ResetPassword';
+import SetupAccount from './pages/SetupAccount';
 import Propane from './pages/members/investments/Propane';
 import Loxa from './pages/members/investments/Loxa';
 import Pandektes from './pages/members/investments/Pandektes';
@@ -43,6 +45,8 @@ function App() {
             <Route path="/members/investments/pandektes" element={<Pandektes />} />
             <Route path="/insights/bare-trusts" element={<BareTrusts />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/setup-account" element={<SetupAccount />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
           </Routes>

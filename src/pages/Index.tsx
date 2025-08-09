@@ -27,11 +27,12 @@ const Index = () => {
     }
   }, [isAuthenticated, authLoading, navigate]);
 
-  // Handle auth errors in URL (like OTP expired)
+  // Handle auth callbacks and magic links
   useEffect(() => {
-    const handleAuthError = () => {
+    const handleAuthCallback = () => {
       const hash = window.location.hash;
       
+      // Handle auth errors
       if (hash.includes('error=')) {
         const hashParams = new URLSearchParams(hash.substring(1));
         const error = hashParams.get('error');
@@ -61,10 +62,18 @@ const Index = () => {
           // Clean up the URL
           window.history.replaceState({}, document.title, window.location.pathname);
         }
+        return;
+      }
+      
+      // Handle magic link invitations (access_token in hash)
+      if (hash.includes('access_token=')) {
+        console.log('Index: Magic link invitation detected, redirecting to setup account');
+        navigate('/setup-account', { replace: true });
+        return;
       }
     };
 
-    handleAuthError();
+    handleAuthCallback();
   }, [navigate]);
 
   return (
