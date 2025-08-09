@@ -21,29 +21,6 @@ import BareTrusts from './pages/insights/BareTrusts';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 
-// Global handler to process magic-link/invite hashes like '#access_token=...' before routing
-const MagicLinkHandler: React.FC = () => {
-  useEffect(() => {
-    const href = window.location.href;
-    const hasTokenInHash = /#access_token=/.test(href) || /[?#&]type=invite\b/.test(href);
-    if (!hasTokenInHash) return;
-
-    const access_token = href.match(/access_token=([^&]+)/)?.[1] || '';
-    const refresh_token = href.match(/refresh_token=([^&]+)/)?.[1] || '';
-
-    // Set session if token present, then force redirect to setup-account
-    const target = `${window.location.origin}/#/setup-account`;
-    if (access_token) {
-      supabase.auth.setSession({ access_token, refresh_token })
-        .catch((e) => console.error('MagicLinkHandler: setSession failed', e))
-        .finally(() => window.location.replace(target));
-    } else {
-      window.location.replace(target);
-    }
-  }, []);
-  return null;
-};
-
 const queryClient = new QueryClient();
 
 function App() {
@@ -51,11 +28,38 @@ function App() {
   console.log('App: Full URL:', window.location.href);
   console.log('App: Hash:', window.location.hash);
   
+  // CRITICAL: Handle magic link tokens BEFORE router processes anything
+  useEffect(() => {
+    const href = window.location.href;
+    const hasTokenInHash = /#access_token=/.test(href) || /[?#&]type=invite\b/.test(href);
+    
+    if (hasTokenInHash) {
+      console.log('App: Magic link detected, processing tokens...');
+      const access_token = href.match(/access_token=([^&]+)/)?.[1] || '';
+      const refresh_token = href.match(/refresh_token=([^&]+)/)?.[1] || '';
+      
+      if (access_token) {
+        console.log('App: Setting session and redirecting to setup-account');
+        supabase.auth.setSession({ access_token, refresh_token })
+          .then(() => {
+            window.location.replace(`${window.location.origin}/#/setup-account`);
+          })
+          .catch((e) => {
+            console.error('App: setSession failed', e);
+            window.location.replace(`${window.location.origin}/#/setup-account`);
+          });
+      } else {
+        console.log('App: No access token, redirecting to setup-account anyway');
+        window.location.replace(`${window.location.origin}/#/setup-account`);
+      }
+      return; // Don't render anything while processing
+    }
+  }, []);
+  
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
         <div className="App">
-          <MagicLinkHandler />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<About />} />
