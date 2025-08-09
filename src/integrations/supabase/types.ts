@@ -256,6 +256,10 @@ export type Database = {
         Args: { target_user_id: string }
         Returns: undefined
       }
+      assign_admin_role: {
+        Args: { target_user_id: string }
+        Returns: undefined
+      }
       create_invitation: {
         Args: { p_email: string }
         Returns: undefined
