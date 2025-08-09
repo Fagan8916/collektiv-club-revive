@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import Index from './pages/Index';
 import About from './pages/About';
@@ -19,6 +19,30 @@ import Loxa from './pages/members/investments/Loxa';
 import Pandektes from './pages/members/investments/Pandektes';
 import BareTrusts from './pages/insights/BareTrusts';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+
+// Global handler to process magic-link/invite hashes like '#access_token=...' before routing
+const MagicLinkHandler: React.FC = () => {
+  useEffect(() => {
+    const href = window.location.href;
+    const hasTokenInHash = /#access_token=/.test(href) || /[?#&]type=invite\b/.test(href);
+    if (!hasTokenInHash) return;
+
+    const access_token = href.match(/access_token=([^&]+)/)?.[1] || '';
+    const refresh_token = href.match(/refresh_token=([^&]+)/)?.[1] || '';
+
+    // Set session if token present, then force redirect to setup-account
+    const target = `${window.location.origin}/#/setup-account`;
+    if (access_token) {
+      supabase.auth.setSession({ access_token, refresh_token })
+        .catch((e) => console.error('MagicLinkHandler: setSession failed', e))
+        .finally(() => window.location.replace(target));
+    } else {
+      window.location.replace(target);
+    }
+  }, []);
+  return null;
+};
 
 const queryClient = new QueryClient();
 
@@ -31,6 +55,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Router>
         <div className="App">
+          <MagicLinkHandler />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<About />} />
