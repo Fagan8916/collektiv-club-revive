@@ -39,5 +39,6 @@ plugins: [
   // Define to prevent issues with external requests
   define: {
     global: 'globalThis',
+    __WS_TOKEN__: JSON.stringify(''),
   }
 }));
