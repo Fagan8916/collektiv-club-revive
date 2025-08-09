@@ -34,13 +34,13 @@ const Index = () => {
         if (errorCode === 'otp_expired' || error === 'access_denied') {
           toast({
             title: "Link Expired",
-            description: "The email link has expired. Please request a new invitation or sign up again.",
+            description: "The email link has expired. Please try signing in again or request a new invitation.",
             variant: "destructive",
           });
           
-          // Clean up the URL and redirect to register
+          // Clean up the URL and redirect to login
           window.history.replaceState({}, document.title, window.location.pathname);
-          navigate('/register', { replace: true });
+          navigate('/login', { replace: true });
         } else {
           toast({
             title: "Authentication Error",
