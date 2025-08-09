@@ -31,16 +31,17 @@ const SetupAccount: React.FC = () => {
       }
 
       const hash = window.location.hash;
-      const params = new URLSearchParams(hash.startsWith('#') ? hash.substring(1) : hash);
-      const access_token = params.get('access_token') || '';
-      const refresh_token = params.get('refresh_token') || '';
+      // Robust token extraction: works with '#access_token=...', '#/route?access_token=...', or '#/route#access_token=...'
+      const href = window.location.href;
+      const access_token = (href.match(/access_token=([^&]+)/)?.[1] || '');
+      const refresh_token = (href.match(/refresh_token=([^&]+)/)?.[1] || '');
 
       if (access_token) {
         try {
           await supabase.auth.setSession({ access_token, refresh_token });
           if (mounted) setCanSetPassword(true);
         } catch (e) {
-          console.error("SetupAccount: Failed to set session from hash", e);
+          console.error("SetupAccount: Failed to set session from tokens in URL", e);
         }
         return;
       }

@@ -113,8 +113,15 @@ const Members = () => {
           } else if (data.session) {
             console.log("Members: ✅ Session established successfully");
             
-            // Clean up OAuth parameters from URL
-            window.history.replaceState({}, document.title, window.location.pathname + '#/members');
+            const isInviteLink = window.location.href.includes('type=invite');
+            if (isInviteLink) {
+              // Clean up and go to setup account for first-time invite setup
+              window.history.replaceState({}, document.title, window.location.pathname + '#/setup-account');
+              navigate('/setup-account', { replace: true });
+            } else {
+              // Clean up OAuth parameters from URL and stay in members area
+              window.history.replaceState({}, document.title, window.location.pathname + '#/members');
+            }
           }
         } catch (err) {
           console.error("Members: Error processing OAuth tokens:", err);

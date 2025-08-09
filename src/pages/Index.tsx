@@ -78,9 +78,9 @@ const Index = () => {
       // Handle magic link invitations (access_token in hash)
       if (hash.includes('access_token=') || hash.includes('type=invite')) {
         console.log('Index: Magic link invitation detected, setting session then redirecting to setup account');
-        const params = new URLSearchParams(hash.substring(1));
-        const access_token = params.get('access_token') || '';
-        const refresh_token = params.get('refresh_token') || '';
+        const href = window.location.href;
+        const access_token = (href.match(/access_token=([^&]+)/)?.[1] || '');
+        const refresh_token = (href.match(/refresh_token=([^&]+)/)?.[1] || '');
         if (access_token) {
           try {
             await supabase.auth.setSession({ access_token, refresh_token });
