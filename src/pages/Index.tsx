@@ -14,6 +14,7 @@ import InvestmentStatsSection from "@/components/InvestmentStatsSection";
 import MissionSection from "@/components/MissionSection";
 import { toast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const Index = () => {
 
   // Handle auth callbacks and magic links
   useEffect(() => {
-    const handleAuthCallback = () => {
+    const handleAuthCallback = async () => {
       const hash = window.location.hash;
       
       // Handle auth errors
@@ -76,7 +77,20 @@ const Index = () => {
       
       // Handle magic link invitations (access_token in hash)
       if (hash.includes('access_token=') || hash.includes('type=invite')) {
-        console.log('Index: Magic link invitation detected, redirecting to setup account');
+        console.log('Index: Magic link invitation detected, setting session then redirecting to setup account');
+        const params = new URLSearchParams(hash.substring(1));
+        const access_token = params.get('access_token') || '';
+        const refresh_token = params.get('refresh_token') || '';
+        if (access_token) {
+          try {
+            await supabase.auth.setSession({ access_token, refresh_token });
+            console.log('Index: Session set from magic link');
+          } catch (e) {
+            console.error('Index: Failed to set session from magic link', e);
+          }
+        }
+        // Clean URL and go to setup-account without losing tokens (already set)
+        window.history.replaceState({}, document.title, window.location.pathname + '#/setup-account');
         navigate('/setup-account', { replace: true });
         return;
       }
