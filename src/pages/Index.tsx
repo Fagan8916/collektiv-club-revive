@@ -66,7 +66,7 @@ const Index = () => {
       }
       
       // Handle magic link invitations (access_token in hash)
-      if (hash.includes('access_token=')) {
+      if (hash.includes('access_token=') || hash.includes('type=invite')) {
         console.log('Index: Magic link invitation detected, redirecting to setup account');
         navigate('/setup-account', { replace: true });
         return;

@@ -170,7 +170,15 @@ const Login = () => {
               console.error("Login: Error getting session after auth code:", error);
             } else if (session) {
               console.log("Login: ✅ Session established after auth code processing");
-              navigate("/members", { replace: true });
+              // Check if this is an invitation link by looking at current URL
+              if (window.location.href.includes('type=invite') || 
+                  window.location.search.includes('type=invite') || 
+                  window.location.hash.includes('type=invite')) {
+                console.log("Login: Detected invitation link, redirecting to setup account");
+                navigate("/setup-account", { replace: true });
+              } else {
+                navigate("/members", { replace: true });
+              }
             } else {
               console.log("Login: ⚠️ No session yet, auth code might still be processing");
             }
@@ -208,15 +216,29 @@ const Login = () => {
           } else if (data.session) {
             console.log("Login: ✅ Session established with direct tokens");
             
-            // Clean up the URL
-            if (shouldCleanupHash) {
-              window.location.hash = '#/members';
+            // Check if this is an invitation link
+            if (window.location.href.includes('type=invite') || 
+                window.location.search.includes('type=invite') || 
+                window.location.hash.includes('type=invite')) {
+              console.log("Login: Detected invitation link, redirecting to setup account");
+              // Clean up the URL
+              if (shouldCleanupHash) {
+                window.location.hash = '#/setup-account';
+              }
+              if (shouldCleanupSearch) {
+                window.history.replaceState({}, document.title, window.location.pathname + '#/setup-account');
+              }
+              navigate("/setup-account", { replace: true });
+            } else {
+              // Clean up the URL
+              if (shouldCleanupHash) {
+                window.location.hash = '#/members';
+              }
+              if (shouldCleanupSearch) {
+                window.history.replaceState({}, document.title, window.location.pathname + '#/members');
+              }
+              navigate("/members", { replace: true });
             }
-            if (shouldCleanupSearch) {
-              window.history.replaceState({}, document.title, window.location.pathname + '#/members');
-            }
-            
-            navigate("/members", { replace: true });
           }
         } catch (err) {
           console.error("Login: ❌ Error processing direct OAuth tokens:", err);
