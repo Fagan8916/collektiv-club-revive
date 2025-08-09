@@ -36,7 +36,7 @@ plugins: [
       },
     },
   },
-  // Define to prevent issues with external requests
+  // Define global variables to prevent runtime errors
   define: {
     global: 'globalThis',
     __WS_TOKEN__: JSON.stringify(''),
