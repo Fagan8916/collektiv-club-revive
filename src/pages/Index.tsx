@@ -13,9 +13,19 @@ import Footer from "@/components/Footer";
 import InvestmentStatsSection from "@/components/InvestmentStatsSection";
 import MissionSection from "@/components/MissionSection";
 import { toast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
 
 const Index = () => {
   const navigate = useNavigate();
+  const { isAuthenticated, loading: authLoading } = useAuth();
+
+  // Redirect authenticated users to members area
+  useEffect(() => {
+    if (!authLoading && isAuthenticated) {
+      console.log('Index: User is authenticated, redirecting to members');
+      navigate('/members', { replace: true });
+    }
+  }, [isAuthenticated, authLoading, navigate]);
 
   // Handle auth errors in URL (like OTP expired)
   useEffect(() => {
