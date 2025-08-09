@@ -56,7 +56,7 @@ const handler = async (req: Request): Promise<Response> => {
     const { error: magicLinkError } = await supabase.auth.signInWithOtp({
       email: email,
       options: {
-        emailRedirectTo: 'https://collektiv.club/#/members'
+        emailRedirectTo: 'https://collektiv.club/#/setup-account'
       }
     });
 
