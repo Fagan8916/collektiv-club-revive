@@ -82,6 +82,43 @@ const InvitationManager = () => {
     }
   };
 
+  const sendInviteEmail = async () => {
+    if (!newEmail.trim()) {
+      toast({
+        title: "Email Required",
+        description: "Please enter an email address.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('send-email', {
+        body: { email: newEmail.trim(), role: 'member' }
+      });
+
+      if (error) throw error as any;
+
+      toast({
+        title: "Invite Sent",
+        description: `Magic link sent to ${newEmail}. They will choose Google SSO or password on first visit.`,
+      });
+
+      setNewEmail("");
+      fetchInvitations();
+    } catch (error: any) {
+      console.error('Error sending invite email:', error);
+      toast({
+        title: "Error",
+        description: error?.message || "Failed to send invite email.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const copyInvitationCode = (code: string) => {
     navigator.clipboard.writeText(code);
     toast({
@@ -138,7 +175,14 @@ const InvitationManager = () => {
               disabled={loading}
               className="bg-collektiv-green hover:bg-collektiv-dark"
             >
-              {loading ? "Creating..." : "Generate"}
+              {loading ? "Creating..." : "Generate Code"}
+            </Button>
+            <Button 
+              onClick={sendInviteEmail}
+              disabled={loading}
+              variant="outline"
+            >
+              {loading ? "Sending..." : "Send Email Invite"}
             </Button>
           </div>
         </CardContent>

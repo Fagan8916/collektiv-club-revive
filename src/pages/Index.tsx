@@ -19,11 +19,20 @@ const Index = () => {
   const navigate = useNavigate();
   const { isAuthenticated, loading: authLoading } = useAuth();
 
-  // Redirect authenticated users to members area
+  // Redirect authenticated users to members area unless handling invite/magic link
   useEffect(() => {
+    const hash = window.location.hash || '';
+    const isInviteFlow = hash.includes('access_token=') || hash.includes('type=invite');
+    const fromSupabaseAuth = typeof document !== 'undefined' && document.referrer?.includes('.supabase.co');
+
     if (!authLoading && isAuthenticated) {
-      console.log('Index: User is authenticated, redirecting to members');
-      navigate('/members', { replace: true });
+      if (isInviteFlow || fromSupabaseAuth) {
+        console.log('Index: Auth via email link/invite detected, redirecting to setup-account');
+        navigate('/setup-account', { replace: true });
+      } else {
+        console.log('Index: User is authenticated, redirecting to members');
+        navigate('/members', { replace: true });
+      }
     }
   }, [isAuthenticated, authLoading, navigate]);
 
