@@ -18,8 +18,10 @@ const Login = () => {
   // Redirect if already authenticated
   useEffect(() => {
     if (!authLoading && isAuthenticated) {
-      console.log("Login: User already authenticated, redirecting to members");
-      navigate("/members", { replace: true });
+      const href = window.location.href;
+      const goSetup = href.includes('type=invite') || href.includes('access_token=');
+      console.log(`Login: User already authenticated, redirecting to ${goSetup ? '/setup-account' : '/members'}`);
+      navigate(goSetup ? "/setup-account" : "/members", { replace: true });
     }
   }, [isAuthenticated, authLoading, navigate]);
 

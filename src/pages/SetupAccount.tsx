@@ -8,11 +8,12 @@ import { Separator } from "@/components/ui/separator";
 import { toast } from "@/hooks/use-toast";
 import GoogleSignInButton from "@/components/auth/GoogleSignInButton";
 import { useAuth } from "@/hooks/useAuth";
+import LoadingScreen from "@/components/auth/LoadingScreen";
 
 const SetupAccount: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, loading: authLoading } = useAuth();
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,25 +22,39 @@ const SetupAccount: React.FC = () => {
 
   // Check if user is authenticated and can set password
   useEffect(() => {
-    if (isAuthenticated && user) {
-      setCanSetPassword(true);
-    } else {
-      // Check for access token in URL
-      const hash = window.location.hash;
-      const match = hash.match(/access_token=([^&]+)/);
-      if (match && match[1]) {
-        setCanSetPassword(true);
-        // Set session with the token
-        supabase.auth
-          .setSession({
-            access_token: match[1],
-            refresh_token: hash.match(/refresh_token=([^&]+)/)?.[1] || "",
-          })
-          .then(() => {
-            // Session set successfully
-          });
+    let mounted = true;
+
+    const ensureSession = async () => {
+      if (isAuthenticated && user) {
+        if (mounted) setCanSetPassword(true);
+        return;
       }
-    }
+
+      const hash = window.location.hash;
+      const params = new URLSearchParams(hash.startsWith('#') ? hash.substring(1) : hash);
+      const access_token = params.get('access_token') || '';
+      const refresh_token = params.get('refresh_token') || '';
+
+      if (access_token) {
+        try {
+          await supabase.auth.setSession({ access_token, refresh_token });
+          if (mounted) setCanSetPassword(true);
+        } catch (e) {
+          console.error("SetupAccount: Failed to set session from hash", e);
+        }
+        return;
+      }
+
+      // Fallback: check existing session directly
+      const { data } = await supabase.auth.getSession();
+      if (mounted && data.session) {
+        setCanSetPassword(true);
+      }
+    };
+
+    ensureSession();
+
+    return () => { mounted = false; };
   }, [isAuthenticated, user]);
 
   const handleSetPassword = async (e: React.FormEvent) => {
@@ -85,6 +100,10 @@ const SetupAccount: React.FC = () => {
   const handleSkipToMembers = () => {
     navigate("/members");
   };
+
+  if (authLoading) {
+    return <LoadingScreen />;
+  }
 
   if (!canSetPassword) {
     return (
