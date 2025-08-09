@@ -33,7 +33,7 @@ export const MagicLinkEmail = ({
         </Text>
         <div style={{ margin: '26px 0' }}>
           <Link
-            href={confirmation_url}
+            href={`${confirmation_url}${confirmation_url.includes('redirect_to=') ? '' : '&redirect_to='}${!confirmation_url.includes('redirect_to=') ? encodeURIComponent(`${site_url || 'https://collektiv.club'}/#/setup-account`) : ''}`}
             style={button}
             target="_blank"
             rel="noopener noreferrer"
