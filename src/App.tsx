@@ -58,11 +58,13 @@ function App() {
       window.location.replace(dest);
     };
 
-    // Immediate handling: invitation or signup token hashes should land on setup-account
-    if (hasAccessToken && (typeInHref === 'invite' || typeInHref === 'signup')) {
-      console.log('App: Immediate invite/signup redirect to setup-account with tokens');
-      cleanAndRedirect('setup', { preserveTokens: true });
-      return;
+    // Immediate handling: any access_token hash should land on setup-account (normalize hash routing)
+    if (hasAccessToken) {
+      if (!isSetupRoute) {
+        console.log('App: Access token detected in hash, redirecting to setup-account with tokens');
+        cleanAndRedirect('setup', { preserveTokens: true });
+        return;
+      }
     }
 
     const processAccessToken = async () => {
