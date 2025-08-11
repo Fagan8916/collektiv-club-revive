@@ -13,6 +13,12 @@ export const useAuth = () => {
   useEffect(() => {
     console.log('useAuth: Initializing authentication');
     
+    // Safety fallback: ensure we never hang in loading state
+    const fallbackTimer = window.setTimeout(() => {
+      console.warn('useAuth: Fallback timeout - forcing loading complete');
+      setLoading(false);
+    }, 2500);
+    
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
@@ -28,6 +34,7 @@ export const useAuth = () => {
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
+        window.clearTimeout(fallbackTimer);
 
         // Soft guard: if signed in, check for profile completeness and prompt
         if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session?.user?.id) {
@@ -90,6 +97,7 @@ export const useAuth = () => {
         console.error('useAuth: Session fetch error:', error);
       } finally {
         setLoading(false);
+        window.clearTimeout(fallbackTimer);
       }
     };
 
@@ -97,6 +105,7 @@ export const useAuth = () => {
 
     return () => {
       subscription.unsubscribe();
+      window.clearTimeout(fallbackTimer);
     };
   }, [toast]);
 
