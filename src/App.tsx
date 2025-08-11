@@ -58,11 +58,22 @@ function App() {
       window.location.replace(dest);
     };
 
-    // Immediate handling: any access_token hash should land on setup-account (normalize hash routing)
+    // Immediate handling: normalize initial landing based on flow
     if (hasAccessToken) {
-      if (!isSetupRoute) {
-        console.log('App: Access token detected in hash, redirecting to setup-account with tokens');
+      const params = new URLSearchParams(href.split('?')[1] || href.split('#')[1] || '');
+      const typeParamEarly = params.get('type');
+      const hasProvider = params.has('provider_token') || params.has('provider_refresh_token');
+      const isBuildProfileRoute = window.location.hash.startsWith('#/members/build-profile');
+      if (!isSetupRoute && (typeParamEarly === 'invite' || typeParamEarly === 'recovery')) {
+        console.log('App: Invite/Recovery detected, sending to setup-account with tokens');
         cleanAndRedirect('setup', { preserveTokens: true });
+        return;
+      }
+      if (!isBuildProfileRoute && (hasProvider || typeParamEarly === 'magiclink' || typeParamEarly === 'signup' || !typeParamEarly)) {
+        const qp = href.split('?')[1] || href.split('#')[1] || '';
+        const dest = `${window.location.origin}/#/members/build-profile?${qp}`;
+        console.log('App: OAuth or generic login detected, sending to build-profile with tokens');
+        window.location.replace(dest);
         return;
       }
     }
@@ -71,25 +82,26 @@ function App() {
       console.log('App: Auth tokens detected, processing via setSession...');
       const access_token = access_token_in_hash;
       const refresh_token = refresh_token_in_hash;
-      const postAuth = href.match(/[?&]post_auth=([^&]+)/)?.[1] || null;
+      const params = new URLSearchParams(href.split('?')[1] || href.split('#')[1] || '');
+      const hasProvider = params.has('provider_token') || params.has('provider_refresh_token');
       const typeParam = typeInHref;
       if (!access_token) return false;
       try {
         await supabase.auth.setSession({ access_token, refresh_token });
         console.log('App: setSession success');
+        const origin = window.location.origin;
 
-        if (typeParam === 'invite' || typeParam === 'signup') {
-          cleanAndRedirect('setup', { preserveTokens: true });
+        if (typeParam === 'invite' || typeParam === 'recovery') {
+          window.history.replaceState({}, document.title, `${origin}/#/setup-account`);
           return true;
         }
 
-        if (postAuth === 'build-profile') {
-          window.location.replace(`${window.location.origin}/#/members/build-profile`);
+        if (hasProvider || window.location.hash.startsWith('#/members/build-profile')) {
+          window.history.replaceState({}, document.title, `${origin}/#/members/build-profile`);
           return true;
         }
 
-        // If user was sent to setup explicitly, stay there; otherwise, members
-        cleanAndRedirect(isSetupRoute ? 'setup' : 'members');
+        window.history.replaceState({}, document.title, `${origin}/#/members`);
         return true;
       } catch (e) {
         console.error('App: setSession failed', e);

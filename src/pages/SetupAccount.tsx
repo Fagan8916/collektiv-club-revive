@@ -71,6 +71,18 @@ const SetupAccount: React.FC = () => {
   }, [isAuthenticated, user]);
 
 
+  // If this is an OAuth flow (provider_token in URL) and user is authenticated, skip this page
+  useEffect(() => {
+    const href = window.location.href;
+    const hasProvider = /[?#].*provider_token=/.test(href) || /#.*[?&]provider_token=/.test(href);
+    if (hasProvider && isAuthenticated) {
+      try {
+        window.history.replaceState({}, document.title, `${window.location.origin}/#/members/build-profile`);
+      } catch {}
+      navigate('/members/build-profile', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
+
   const handleSetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log('SetupAccount: handleSetPassword start');
@@ -107,7 +119,7 @@ const SetupAccount: React.FC = () => {
       console.log('SetupAccount: calling supabase.auth.updateUser');
       const result: any = await Promise.race([
         supabase.auth.updateUser({ password: newPassword }),
-        timeout(10000), // 10s safety timeout
+        timeout(3000), // 3s safety timeout
       ]);
 
       if (result?.error) {
