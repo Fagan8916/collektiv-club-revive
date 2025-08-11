@@ -88,7 +88,26 @@ function App() {
         await processPkceCode();
         return;
       }
-      // No tokens/codes: do nothing, let router handle current location
+
+      // If coming from Supabase email flows without explicit tokens
+      const hasEmailFlowType = /[?&]type=(invite|signup|magiclink|recovery)/.test(href);
+      if (hasEmailFlowType) {
+        console.log('App: Detected email flow type without tokens, redirecting to setup');
+        cleanAndRedirect('setup');
+        return;
+      }
+
+      // Final fallback: if already authenticated but at bare root (no route), send to members
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session && (!window.location.hash || window.location.hash === '#' || window.location.hash === '#/')) {
+          console.log('App: Session present at root, redirecting to members');
+          cleanAndRedirect('members');
+        }
+      } catch (e) {
+        console.warn('App: Fallback session check failed', e);
+      }
+      // No tokens/codes: let router handle current location otherwise
     })();
   }, []);
   
