@@ -92,33 +92,52 @@ const SetupAccount: React.FC = () => {
     }
     setLoading(true);
     try {
-      const { error } = await supabase.auth.updateUser({ password: newPassword });
-      if (error) {
-        console.error('SetupAccount: updateUser error', error);
+      // Clean the URL to avoid re-processing auth tokens during navigation
+      try {
+        const clean = `${window.location.origin}/#/setup-account`;
+        if (window.location.href.includes('access_token')) {
+          window.history.replaceState({}, document.title, clean);
+          console.log('SetupAccount: cleaned auth params from URL');
+        }
+      } catch {}
+
+      // Add a safety timeout so we never hang here
+      const timeout = (ms: number) => new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), ms));
+
+      console.log('SetupAccount: calling supabase.auth.updateUser');
+      const result: any = await Promise.race([
+        supabase.auth.updateUser({ password: newPassword }),
+        timeout(10000), // 10s safety timeout
+      ]);
+
+      if (result?.error) {
+        console.error('SetupAccount: updateUser error', result.error);
         toast({
           title: 'Error setting password',
-          description: error.message,
+          description: result.error.message,
           variant: 'destructive',
         });
         return;
       }
-      console.log('SetupAccount: password updated successfully, navigating to build profile');
+
+      console.log('SetupAccount: password updated successfully');
       toast({
         title: 'Password set successfully',
         description: 'Continuing to build your profile...',
       });
-      setTimeout(() => {
-        const target = `${window.location.origin}/#/members/build-profile`;
-        console.log('SetupAccount: redirecting to', target);
-        window.location.replace(target);
-      }, 300);
+
+      // Navigate within the app router to prevent any homepage loop
+      console.log('SetupAccount: navigating to /members/build-profile via router');
+      navigate('/members/build-profile', { replace: true });
     } catch (err: any) {
       console.error('SetupAccount: unexpected error updating password', err);
+      // Even on timeout, allow user to continue and finish later
       toast({
-        title: 'Unexpected error',
-        description: err?.message || 'Please try again.',
-        variant: 'destructive',
+        title: err?.message === 'timeout' ? 'Taking longer than expected' : 'Unexpected error',
+        description: err?.message === 'timeout' ? 'We will finalize in the background. Proceeding to profile setup.' : (err?.message || 'Please try again.'),
+        variant: err?.message === 'timeout' ? undefined : 'destructive',
       });
+      navigate('/members/build-profile', { replace: true });
     } finally {
       setLoading(false);
     }
