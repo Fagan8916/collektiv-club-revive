@@ -28,40 +28,68 @@ function App() {
   console.log('App: Full URL:', window.location.href);
   console.log('App: Hash:', window.location.hash);
   
-  // CRITICAL: Handle auth tokens BEFORE router processes anything
+  // CRITICAL: Handle auth tokens and PKCE code BEFORE router processes anything
   useEffect(() => {
     const href = window.location.href;
+
     const hasAccessToken = /access_token=/.test(href) || /#access_token=/.test(href);
+    const hasPkceCode = /[?#].*code=/.test(href) || /#.*[?&]code=/.test(href);
+
+    // Helper: determine intended landing based on current hash route
     const isMembersRoute = window.location.hash.startsWith('#/members');
+    const isSetupRoute = window.location.hash.startsWith('#/setup-account');
 
-    if (!hasAccessToken) return;
+    const cleanAndRedirect = (target: 'members' | 'setup') => {
+      const dest = target === 'members' ? `${window.location.origin}/#/members` : `${window.location.origin}/#/setup-account`;
+      window.location.replace(dest);
+    };
 
-    console.log('App: Auth tokens detected, processing...');
-    const access_token = href.match(/access_token=([^&]+)/)?.[1] || '';
-    const refresh_token = href.match(/refresh_token=([^&]+)/)?.[1] || '';
-
-    if (access_token) {
-      supabase.auth.setSession({ access_token, refresh_token })
-        .then(() => {
-          if (isMembersRoute) {
-            console.log('App: OAuth return detected, stay in members and clean URL');
-            window.location.replace(`${window.location.origin}/#/members`);
-          } else {
-            console.log('App: Magic/invite flow detected, redirect to setup-account');
-            window.location.replace(`${window.location.origin}/#/setup-account`);
-          }
-        })
-        .catch((e) => {
-          console.error('App: setSession failed', e);
-          const fallback = isMembersRoute ? `${window.location.origin}/#/members` : `${window.location.origin}/#/setup-account`;
-          window.location.replace(fallback);
-        });
-    } else {
-      console.log('App: No access token present');
-      if (!isMembersRoute) {
-        window.location.replace(`${window.location.origin}/#/setup-account`);
+    const processAccessToken = async () => {
+      console.log('App: Auth tokens detected, processing via setSession...');
+      const access_token = href.match(/access_token=([^&]+)/)?.[1] || '';
+      const refresh_token = href.match(/refresh_token=([^&]+)/)?.[1] || '';
+      if (!access_token) return false;
+      try {
+        await supabase.auth.setSession({ access_token, refresh_token });
+        console.log('App: setSession success');
+        // If user was sent to setup explicitly, stay there; otherwise, members
+        cleanAndRedirect(isSetupRoute ? 'setup' : 'members');
+        return true;
+      } catch (e) {
+        console.error('App: setSession failed', e);
+        cleanAndRedirect(isSetupRoute ? 'setup' : (isMembersRoute ? 'members' : 'setup'));
+        return false;
       }
-    }
+    };
+
+    const processPkceCode = async () => {
+      console.log('App: PKCE code detected, exchanging for session...');
+      try {
+        const { data, error } = await supabase.auth.exchangeCodeForSession(href);
+        if (error) throw error;
+        console.log('App: exchangeCodeForSession success');
+        // Respect current route intent: if setup page, remain there; else members
+        cleanAndRedirect(isSetupRoute ? 'setup' : 'members');
+        return true;
+      } catch (e) {
+        console.error('App: exchangeCodeForSession failed', e);
+        // Fall back to setup if not coming from members route
+        cleanAndRedirect(isMembersRoute ? 'members' : 'setup');
+        return false;
+      }
+    };
+
+    (async () => {
+      if (hasAccessToken) {
+        await processAccessToken();
+        return;
+      }
+      if (hasPkceCode) {
+        await processPkceCode();
+        return;
+      }
+      // No tokens/codes: do nothing, let router handle current location
+    })();
   }, []);
   
   return (

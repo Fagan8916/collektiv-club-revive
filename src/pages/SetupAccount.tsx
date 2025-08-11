@@ -30,9 +30,8 @@ const SetupAccount: React.FC = () => {
         return;
       }
 
-      const hash = window.location.hash;
-      // Robust token extraction: works with '#access_token=...', '#/route?access_token=...', or '#/route#access_token=...'
       const href = window.location.href;
+      // Try access_token first (implicit flow)
       const access_token = (href.match(/access_token=([^&]+)/)?.[1] || '');
       const refresh_token = (href.match(/refresh_token=([^&]+)/)?.[1] || '');
 
@@ -40,10 +39,23 @@ const SetupAccount: React.FC = () => {
         try {
           await supabase.auth.setSession({ access_token, refresh_token });
           if (mounted) setCanSetPassword(true);
+          return;
         } catch (e) {
-          console.error("SetupAccount: Failed to set session from tokens in URL", e);
+          console.error("SetupAccount: Failed to set session from access token", e);
         }
-        return;
+      }
+
+      // Next: handle PKCE code flow (email magic link / invite)
+      const hasPkceCode = /[?#].*code=/.test(href) || /#.*[?&]code=/.test(href);
+      if (hasPkceCode) {
+        try {
+          const { data, error } = await supabase.auth.exchangeCodeForSession(href);
+          if (error) throw error;
+          if (mounted) setCanSetPassword(true);
+          return;
+        } catch (e) {
+          console.error("SetupAccount: exchangeCodeForSession failed", e);
+        }
       }
 
       // Fallback: check existing session directly
