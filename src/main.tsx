@@ -31,6 +31,7 @@ console.log("Origin:", window.location.origin);
         const sep = routePart.includes('?') ? '&' : '?';
         const dest = `${window.location.origin}/#/${routePart.replace(/^\//, '')}${sep}${tokenFragment}`;
         console.log('main.tsx: Normalizing double-hash auth fragment →', dest);
+        try { sessionStorage.setItem('auth_in_progress', '1'); } catch {}
         window.location.replace(dest);
         return; // Stop further processing
       }
@@ -55,6 +56,7 @@ console.log("Origin:", window.location.origin);
       dest = `${origin}/#/members?${raw}`;
     }
     console.log('main.tsx: Normalizing auth hash →', dest);
+    try { sessionStorage.setItem('auth_in_progress', '1'); } catch {}
     window.location.replace(dest);
   }
 })();

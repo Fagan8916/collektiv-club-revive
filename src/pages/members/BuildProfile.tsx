@@ -41,7 +41,7 @@ const BuildProfile: React.FC = () => {
   }, [loading, isAuthenticated, navigate]);
 
   if (loading) return <LoadingScreen />;
-  if (!isAuthenticated) return null; // Redirecting
+  if (!isAuthenticated) return <LoadingScreen />;
 
   return (
     <div className="min-h-screen">
