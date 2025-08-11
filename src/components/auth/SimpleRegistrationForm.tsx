@@ -29,7 +29,7 @@ const SimpleRegistrationForm = ({ onSuccess }: SimpleRegistrationFormProps) => {
         email: formData.email,
         password: formData.password,
         options: {
-          emailRedirectTo: `${window.location.origin}/`,
+          emailRedirectTo: `${window.location.origin}/#/setup-account`,
           data: {
             full_name: formData.fullName,
           },
