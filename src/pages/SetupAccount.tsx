@@ -58,12 +58,6 @@ const SetupAccount: React.FC = () => {
     return () => { mounted = false; };
   }, [isAuthenticated, user]);
 
-  // If user is already authenticated (e.g., returned from Google SSO), skip this page
-  useEffect(() => {
-    if (!authLoading && isAuthenticated) {
-      navigate('/members', { replace: true });
-    }
-  }, [authLoading, isAuthenticated, navigate]);
 
   const handleSetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
