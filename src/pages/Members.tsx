@@ -34,8 +34,9 @@ const Members = () => {
     if (!authLoading && !isAuthenticated) {
       const href = window.location.href;
       const hasAuthIndicators = /[?#&](access_token|refresh_token|code|provider_token|provider_refresh_token)=/.test(href) || href.includes('#access_token=');
-      if (hasAuthIndicators) {
-        console.log('Members: Auth indicators in URL detected, delaying redirect');
+      const inProgress = (() => { try { return sessionStorage.getItem('auth_in_progress') === '1'; } catch { return false; } })();
+      if (hasAuthIndicators || inProgress) {
+        console.log('Members: Auth indicators or in-progress flag detected, delaying redirect');
         return; // Wait for auth processing
       }
       console.log("Members: User not authenticated, redirecting to login");

@@ -16,7 +16,8 @@ export const useAuth = () => {
     // Safety fallback: ensure we never hang in loading state
     const href = window.location.href;
     const hasAuthIndicators = /[?#&](access_token|refresh_token|code|provider_token|provider_refresh_token|type)=/.test(href) || href.includes('#access_token=');
-    const fallbackDelay = hasAuthIndicators ? 8000 : 2500;
+    const inProgress = (() => { try { return sessionStorage.getItem('auth_in_progress') === '1'; } catch { return false; } })();
+    const fallbackDelay = (hasAuthIndicators || inProgress) ? 10000 : 2500;
     const fallbackTimer = window.setTimeout(() => {
       console.warn('useAuth: Fallback timeout - forcing loading complete (delay ms):', fallbackDelay);
       setLoading(false);
@@ -38,6 +39,7 @@ export const useAuth = () => {
         setUser(session?.user ?? null);
         setLoading(false);
         window.clearTimeout(fallbackTimer);
+        try { sessionStorage.removeItem('auth_in_progress'); } catch {}
 
         // Soft guard: if signed in, check for profile completeness and prompt
         if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session?.user?.id) {
@@ -95,6 +97,7 @@ export const useAuth = () => {
           }
           setSession(session);
           setUser(session?.user ?? null);
+          try { if (session) sessionStorage.removeItem('auth_in_progress'); } catch {}
         }
       } catch (error) {
         console.error('useAuth: Session fetch error:', error);

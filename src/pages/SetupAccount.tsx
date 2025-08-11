@@ -140,6 +140,7 @@ const SetupAccount: React.FC = () => {
 
       // Navigate within the app router immediately to prevent any homepage loop or waiting
       console.log('SetupAccount: navigating to /members/build-profile via router (no await)');
+      try { sessionStorage.setItem('auth_in_progress', '1'); } catch {}
       navigate('/members/build-profile', { replace: true });
     } catch (err: any) {
       console.error('SetupAccount: unexpected error updating password', err);
