@@ -27,48 +27,20 @@ const SetupAccount: React.FC = () => {
   useEffect(() => {
     let mounted = true;
 
-    const ensureSession = async () => {
+    const check = async () => {
       if (isAuthenticated && user) {
         if (mounted) setCanSetPassword(true);
         return;
       }
-
-      const href = window.location.href;
-      // Try access_token first (implicit flow)
-      const access_token = (href.match(/access_token=([^&]+)/)?.[1] || '');
-      const refresh_token = (href.match(/refresh_token=([^&]+)/)?.[1] || '');
-
-      if (access_token) {
-        try {
-          await supabase.auth.setSession({ access_token, refresh_token });
-          if (mounted) setCanSetPassword(true);
-          return;
-        } catch (e) {
-          console.error("SetupAccount: Failed to set session from access token", e);
-        }
-      }
-
-      // Next: handle PKCE code flow (email magic link / invite)
-      const hasPkceCode = /[?#].*code=/.test(href) || /#.*[?&]code=/.test(href);
-      if (hasPkceCode) {
-        try {
-          const { data, error } = await supabase.auth.exchangeCodeForSession(href);
-          if (error) throw error;
-          if (mounted) setCanSetPassword(true);
-          return;
-        } catch (e) {
-          console.error("SetupAccount: exchangeCodeForSession failed", e);
-        }
-      }
-
-      // Fallback: check existing session directly
-      const { data } = await supabase.auth.getSession();
-      if (mounted && data.session) {
-        setCanSetPassword(true);
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (mounted && session) setCanSetPassword(true);
+      } catch (e) {
+        console.warn("SetupAccount: getSession failed", e);
       }
     };
 
-    ensureSession();
+    check();
 
     return () => { mounted = false; };
   }, [isAuthenticated, user]);

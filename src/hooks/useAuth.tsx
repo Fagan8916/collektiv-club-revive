@@ -17,7 +17,7 @@ export const useAuth = () => {
     const href = window.location.href;
     const hasAuthIndicators = /[?#&](access_token|refresh_token|code|provider_token|provider_refresh_token|type)=/.test(href) || href.includes('#access_token=');
     const inProgress = (() => { try { return sessionStorage.getItem('auth_in_progress') === '1'; } catch { return false; } })();
-    const fallbackDelay = (hasAuthIndicators || inProgress) ? 10000 : 2500;
+    const fallbackDelay = (hasAuthIndicators || inProgress) ? 4000 : 2500;
     const fallbackTimer = window.setTimeout(() => {
       console.warn('useAuth: Fallback timeout - forcing loading complete (delay ms):', fallbackDelay);
       setLoading(false);
@@ -41,12 +41,12 @@ export const useAuth = () => {
         window.clearTimeout(fallbackTimer);
         try { sessionStorage.removeItem('auth_in_progress'); } catch {}
 
-        // Soft guard: if signed in, check for profile completeness and prompt
+        // Soft guard deferred to avoid blocking auth callback
         if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session?.user?.id) {
           const uid = session.user.id;
-          const guardKey = `profile_guard_shown_${uid}`;
-          // Avoid spamming the toast repeatedly
-          if (!localStorage.getItem(guardKey)) {
+          setTimeout(async () => {
+            const guardKey = `profile_guard_shown_${uid}`;
+            if (localStorage.getItem(guardKey)) return;
             try {
               const { data: profile, error } = await supabase
                 .from('member_profiles')
@@ -56,23 +56,23 @@ export const useAuth = () => {
 
               if (error) {
                 console.warn('useAuth: Guard profile fetch error', error);
-              } else {
-                const missing =
-                  !profile ||
-                  ((!profile.first_name || profile.first_name.trim() === '') &&
-                   (!profile.full_name || profile.full_name.trim() === ''));
-                if (missing) {
-                  toast({
-                    title: "Complete your profile",
-                    description: "Add your name and details to appear in the member directory.",
-                  });
-                  localStorage.setItem(guardKey, '1');
-                }
+                return;
+              }
+              const missing =
+                !profile ||
+                ((!profile.first_name || profile.first_name.trim() === '') &&
+                 (!profile.full_name || profile.full_name.trim() === ''));
+              if (missing) {
+                toast({
+                  title: "Complete your profile",
+                  description: "Add your name and details to appear in the member directory.",
+                });
+                localStorage.setItem(guardKey, '1');
               }
             } catch (e) {
               console.warn('useAuth: Guard check failed', e);
             }
-          }
+          }, 0);
         }
       }
     );
