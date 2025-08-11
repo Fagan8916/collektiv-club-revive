@@ -28,31 +28,39 @@ function App() {
   console.log('App: Full URL:', window.location.href);
   console.log('App: Hash:', window.location.hash);
   
-  // CRITICAL: Handle magic link tokens BEFORE router processes anything
+  // CRITICAL: Handle auth tokens BEFORE router processes anything
   useEffect(() => {
     const href = window.location.href;
-    const hasTokenInHash = /#access_token=/.test(href) || /[?#&]type=invite\b/.test(href);
-    
-    if (hasTokenInHash) {
-      console.log('App: Magic link detected, processing tokens...');
-      const access_token = href.match(/access_token=([^&]+)/)?.[1] || '';
-      const refresh_token = href.match(/refresh_token=([^&]+)/)?.[1] || '';
-      
-      if (access_token) {
-        console.log('App: Setting session and redirecting to setup-account');
-        supabase.auth.setSession({ access_token, refresh_token })
-          .then(() => {
+    const hasAccessToken = /access_token=/.test(href) || /#access_token=/.test(href);
+    const isMembersRoute = window.location.hash.startsWith('#/members');
+
+    if (!hasAccessToken) return;
+
+    console.log('App: Auth tokens detected, processing...');
+    const access_token = href.match(/access_token=([^&]+)/)?.[1] || '';
+    const refresh_token = href.match(/refresh_token=([^&]+)/)?.[1] || '';
+
+    if (access_token) {
+      supabase.auth.setSession({ access_token, refresh_token })
+        .then(() => {
+          if (isMembersRoute) {
+            console.log('App: OAuth return detected, stay in members and clean URL');
+            window.location.replace(`${window.location.origin}/#/members`);
+          } else {
+            console.log('App: Magic/invite flow detected, redirect to setup-account');
             window.location.replace(`${window.location.origin}/#/setup-account`);
-          })
-          .catch((e) => {
-            console.error('App: setSession failed', e);
-            window.location.replace(`${window.location.origin}/#/setup-account`);
-          });
-      } else {
-        console.log('App: No access token, redirecting to setup-account anyway');
+          }
+        })
+        .catch((e) => {
+          console.error('App: setSession failed', e);
+          const fallback = isMembersRoute ? `${window.location.origin}/#/members` : `${window.location.origin}/#/setup-account`;
+          window.location.replace(fallback);
+        });
+    } else {
+      console.log('App: No access token present');
+      if (!isMembersRoute) {
         window.location.replace(`${window.location.origin}/#/setup-account`);
       }
-      return; // Don't render anything while processing
     }
   }, []);
   
