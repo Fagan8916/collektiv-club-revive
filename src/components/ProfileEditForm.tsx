@@ -10,8 +10,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
+import { Switch } from "@/components/ui/switch";
 
 const profileSchema = z.object({
+  first_name: z.string().optional(),
   full_name: z.string().min(2, "Full name must be at least 2 characters"),
   bio: z.string().optional(),
   profile_image_url: z.string().url().optional().or(z.literal("")),
@@ -21,6 +23,7 @@ const profileSchema = z.object({
   website_url: z.string().url().optional().or(z.literal("")),
   location: z.string().optional(),
   services_offered: z.string().optional(),
+  is_anonymous: z.boolean().optional(),
 });
 
 type ProfileFormData = z.infer<typeof profileSchema>;
@@ -34,6 +37,7 @@ const ProfileEditForm = () => {
   const form = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
+      first_name: "",
       full_name: "",
       bio: "",
       profile_image_url: "",
@@ -43,6 +47,7 @@ const ProfileEditForm = () => {
       website_url: "",
       location: "",
       services_offered: "",
+      is_anonymous: false,
     },
   });
 
@@ -65,6 +70,7 @@ const ProfileEditForm = () => {
         if (profile) {
           setProfileExists(true);
           form.reset({
+            first_name: profile.first_name || "",
             full_name: profile.full_name || "",
             bio: profile.bio || "",
             profile_image_url: profile.profile_image_url || "",
@@ -74,6 +80,7 @@ const ProfileEditForm = () => {
             website_url: profile.website_url || "",
             location: profile.location || "",
             services_offered: profile.services_offered || "",
+            is_anonymous: !!profile.is_anonymous,
           });
         }
       } catch (error) {
@@ -99,6 +106,7 @@ const ProfileEditForm = () => {
     try {
       const profileData = {
         user_id: user.id,
+        first_name: data.first_name || null,
         full_name: data.full_name,
         bio: data.bio || null,
         profile_image_url: data.profile_image_url || null,
@@ -108,6 +116,7 @@ const ProfileEditForm = () => {
         website_url: data.website_url || null,
         location: data.location || null,
         services_offered: data.services_offered || null,
+        is_anonymous: !!data.is_anonymous,
         is_visible: true,
       };
 
@@ -160,15 +169,53 @@ const ProfileEditForm = () => {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="first_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>First Name (for anonymity)</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Shown if you choose anonymity" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="full_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Full Name *</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Your full name" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
             <FormField
               control={form.control}
-              name="full_name"
+              name="is_anonymous"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Full Name *</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Your full name" {...field} />
-                  </FormControl>
+                <FormItem className="flex flex-col gap-2 rounded border p-4">
+                  <div className="flex items-center justify-between">
+                    <FormLabel>Show me anonymously in the directory</FormLabel>
+                    <FormControl>
+                      <Switch
+                        checked={!!field.value}
+                        onCheckedChange={field.onChange}
+                        aria-label="Toggle anonymity"
+                      />
+                    </FormControl>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    When enabled, only your first name will be shown publicly in the directory. Admins can still see your full details.
+                  </p>
                   <FormMessage />
                 </FormItem>
               )}

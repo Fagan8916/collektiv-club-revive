@@ -47,8 +47,10 @@ export type Database = {
           bio: string | null
           company: string | null
           expertise: string[] | null
+          first_name: string | null
           full_name: string
           id: string
+          is_anonymous: boolean
           linkedin_url: string | null
           location: string | null
           position: string | null
@@ -66,8 +68,10 @@ export type Database = {
           bio?: string | null
           company?: string | null
           expertise?: string[] | null
+          first_name?: string | null
           full_name: string
           id?: string
+          is_anonymous?: boolean
           linkedin_url?: string | null
           location?: string | null
           position?: string | null
@@ -85,8 +89,10 @@ export type Database = {
           bio?: string | null
           company?: string | null
           expertise?: string[] | null
+          first_name?: string | null
           full_name?: string
           id?: string
+          is_anonymous?: boolean
           linkedin_url?: string | null
           location?: string | null
           position?: string | null
@@ -107,8 +113,10 @@ export type Database = {
           company: string | null
           created_at: string
           expertise: string[] | null
+          first_name: string | null
           full_name: string
           id: string
+          is_anonymous: boolean
           is_visible: boolean | null
           linkedin_url: string | null
           location: string | null
@@ -124,8 +132,10 @@ export type Database = {
           company?: string | null
           created_at?: string
           expertise?: string[] | null
+          first_name?: string | null
           full_name: string
           id?: string
+          is_anonymous?: boolean
           is_visible?: boolean | null
           linkedin_url?: string | null
           location?: string | null
@@ -141,8 +151,10 @@ export type Database = {
           company?: string | null
           created_at?: string
           expertise?: string[] | null
+          first_name?: string | null
           full_name?: string
           id?: string
+          is_anonymous?: boolean
           is_visible?: boolean | null
           linkedin_url?: string | null
           location?: string | null
@@ -274,6 +286,10 @@ export type Database = {
       is_approved_member: {
         Args: { _user_id: string }
         Returns: boolean
+      }
+      reassign_member_profile_user: {
+        Args: { p_profile_id: string; p_new_user_id: string }
+        Returns: undefined
       }
     }
     Enums: {

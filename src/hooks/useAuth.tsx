@@ -2,11 +2,13 @@
 import { useState, useEffect } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 export const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
 
   useEffect(() => {
     console.log('useAuth: Initializing authentication');
@@ -26,10 +28,39 @@ export const useAuth = () => {
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
-        
-        // If we get a sign in event, ensure we have the latest session
-        if (event === 'SIGNED_IN' && session) {
-          console.log('useAuth: User signed in, session established');
+
+        // Soft guard: if signed in, check for profile completeness and prompt
+        if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session?.user?.id) {
+          const uid = session.user.id;
+          const guardKey = `profile_guard_shown_${uid}`;
+          // Avoid spamming the toast repeatedly
+          if (!localStorage.getItem(guardKey)) {
+            try {
+              const { data: profile, error } = await supabase
+                .from('member_profiles')
+                .select('id, first_name, full_name')
+                .eq('user_id', uid)
+                .maybeSingle();
+
+              if (error) {
+                console.warn('useAuth: Guard profile fetch error', error);
+              } else {
+                const missing =
+                  !profile ||
+                  ((!profile.first_name || profile.first_name.trim() === '') &&
+                   (!profile.full_name || profile.full_name.trim() === ''));
+                if (missing) {
+                  toast({
+                    title: "Complete your profile",
+                    description: "Add your name and details to appear in the member directory.",
+                  });
+                  localStorage.setItem(guardKey, '1');
+                }
+              }
+            } catch (e) {
+              console.warn('useAuth: Guard check failed', e);
+            }
+          }
         }
       }
     );
@@ -67,7 +98,7 @@ export const useAuth = () => {
     return () => {
       subscription.unsubscribe();
     };
-  }, []);
+  }, [toast]);
 
   const signOut = async () => {
     console.log('useAuth: Signing out');

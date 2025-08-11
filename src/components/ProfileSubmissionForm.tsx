@@ -4,13 +4,16 @@ import { useForm } from "react-hook-form";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import ProfileSubmissionSuccessScreen from "./ProfileSubmissionSuccessScreen";
 import ExpertiseManager from "./ExpertiseManager";
 import ProfileFormFields from "./ProfileFormFields";
+import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
 
 interface ProfileSubmissionData {
+  first_name?: string;
   full_name: string;
   bio?: string;
   company?: string;
@@ -21,6 +24,7 @@ interface ProfileSubmissionData {
   profile_image_url?: string;
   services_offered?: string;
   expertise?: string[];
+  is_anonymous?: boolean;
 }
 
 const ProfileSubmissionForm = () => {
@@ -33,6 +37,7 @@ const ProfileSubmissionForm = () => {
 
   const form = useForm<ProfileSubmissionData>({
     defaultValues: {
+      first_name: "",
       full_name: "",
       bio: "",
       company: "",
@@ -42,6 +47,7 @@ const ProfileSubmissionForm = () => {
       location: "",
       profile_image_url: "",
       services_offered: "",
+      is_anonymous: false,
     },
   });
 
@@ -111,8 +117,9 @@ const ProfileSubmissionForm = () => {
         .from("member_profile_submissions")
         .insert({
           user_id: user.id,
+          first_name: data.first_name || null,
           full_name: data.full_name,
-          bio: data.bio,
+          bio: data.bio || null,
           company: data.company || null,
           position: data.position || null,
           linkedin_url: data.linkedin_url || null,
@@ -121,6 +128,7 @@ const ProfileSubmissionForm = () => {
           profile_image_url: data.profile_image_url || null,
           services_offered: data.services_offered || null,
           expertise: expertise.length > 0 ? expertise : null,
+          is_anonymous: !!data.is_anonymous,
         });
 
       if (error) {
@@ -198,7 +206,47 @@ const ProfileSubmissionForm = () => {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <ProfileFormFields form={form} />
+            {/* Anonymity controls first */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="first_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>First Name (for anonymity)</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Shown if you choose anonymity" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="is_anonymous"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col gap-2 rounded border p-4">
+                    <div className="flex items-center justify-between">
+                      <FormLabel>Show me anonymously in the directory</FormLabel>
+                      <FormControl>
+                        <Switch
+                          checked={!!field.value}
+                          onCheckedChange={field.onChange}
+                          aria-label="Toggle anonymity"
+                        />
+                      </FormControl>
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      When enabled, only your first name will be shown publicly in the directory. Admins can still see your full details.
+                    </p>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            {/* The rest of the profile fields */}
+            <ProfileFormFields form={form as any} />
 
             <ExpertiseManager 
               expertise={expertise}
