@@ -90,10 +90,15 @@ function App() {
       }
 
       // If coming from Supabase email flows without explicit tokens
-      const hasEmailFlowType = /[?&]type=(invite|signup|magiclink|recovery)/.test(href);
-      if (hasEmailFlowType) {
-        console.log('App: Detected email flow type without tokens, redirecting to setup');
-        cleanAndRedirect('setup');
+      const typeMatch = href.match(/[?&]type=(invite|signup|magiclink|recovery)/);
+      if (typeMatch) {
+        const emailFlowType = typeMatch[1];
+        console.log(`App: Detected email flow type without tokens: ${emailFlowType}`);
+        if (emailFlowType === 'recovery') {
+          window.location.replace(`${window.location.origin}/#/reset-password`);
+        } else {
+          cleanAndRedirect('setup');
+        }
         return;
       }
 
