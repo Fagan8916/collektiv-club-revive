@@ -67,7 +67,7 @@ const GoogleSignInButton = ({ loading, setLoading }: GoogleSignInButtonProps) =>
     <Button
       onClick={handleGoogleSignIn}
       variant="outline"
-      className="w-full h-11 border-gray-300 hover:bg-gray-50"
+      className="w-full h-11"
       disabled={loading}
     >
       <Chrome className="mr-2 h-4 w-4 text-blue-500" />

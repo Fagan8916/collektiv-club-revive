@@ -73,41 +73,54 @@ const SetupAccount: React.FC = () => {
 
   const handleSetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('SetupAccount: handleSetPassword start');
     if (newPassword.length < 8) {
       toast({
-        title: "Password too short",
-        description: "Password must be at least 8 characters.",
-        variant: "destructive",
+        title: 'Password too short',
+        description: 'Password must be at least 8 characters.',
+        variant: 'destructive',
       });
       return;
     }
     if (newPassword !== confirmPassword) {
       toast({
         title: "Passwords don't match",
-        description: "Please make sure the passwords match.",
-        variant: "destructive",
+        description: 'Please make sure the passwords match.',
+        variant: 'destructive',
       });
       return;
     }
-    
     setLoading(true);
-    const { error } = await supabase.auth.updateUser({ password: newPassword });
-    setLoading(false);
-    
-    if (error) {
+    try {
+      const { error } = await supabase.auth.updateUser({ password: newPassword });
+      if (error) {
+        console.error('SetupAccount: updateUser error', error);
+        toast({
+          title: 'Error setting password',
+          description: error.message,
+          variant: 'destructive',
+        });
+        return;
+      }
+      console.log('SetupAccount: password updated successfully, navigating to build profile');
       toast({
-        title: "Error setting password",
-        description: error.message,
-        variant: "destructive",
-      });
-    } else {
-      toast({
-        title: "Password set successfully",
-        description: "You can now log in with your new password.",
+        title: 'Password set successfully',
+        description: 'Continuing to build your profile...',
       });
       setTimeout(() => {
-        navigate("/members/build-profile");
-      }, 1200);
+        const target = `${window.location.origin}/#/members/build-profile`;
+        console.log('SetupAccount: redirecting to', target);
+        window.location.replace(target);
+      }, 300);
+    } catch (err: any) {
+      console.error('SetupAccount: unexpected error updating password', err);
+      toast({
+        title: 'Unexpected error',
+        description: err?.message || 'Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -173,6 +186,7 @@ const SetupAccount: React.FC = () => {
                 disabled={loading}
                 minLength={8}
                 required
+                autoComplete="new-password"
               />
               <Input
                 type="password"
@@ -182,6 +196,7 @@ const SetupAccount: React.FC = () => {
                 disabled={loading}
                 minLength={8}
                 required
+                autoComplete="new-password"
               />
               <Button type="submit" className="w-full" disabled={loading}>
                 {loading ? "Setting up..." : "Set Password & Continue"}
@@ -205,21 +220,6 @@ const SetupAccount: React.FC = () => {
             </p>
           </div>
 
-          <div className="relative mt-2">
-            <Separator />
-            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-3 text-sm text-gray-500">
-              or
-            </span>
-          </div>
-
-          <div className="text-center">
-            <Button onClick={() => navigate("/members/build-profile")} className="w-full">
-              Build Your Profile Now
-            </Button>
-            <p className="text-xs text-gray-500 mt-2">
-              Go straight to the profile submission form
-            </p>
-          </div>
         </CardContent>
       </Card>
     </div>
