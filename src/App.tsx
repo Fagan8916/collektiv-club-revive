@@ -17,6 +17,7 @@ import SetupAccount from './pages/SetupAccount';
 import Propane from './pages/members/investments/Propane';
 import Loxa from './pages/members/investments/Loxa';
 import Pandektes from './pages/members/investments/Pandektes';
+import BuildProfile from './pages/members/BuildProfile';
 import BareTrusts from './pages/insights/BareTrusts';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -129,6 +130,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
             <Route path="/members" element={<Members />} />
+            <Route path="/members/build-profile" element={<BuildProfile />} />
             <Route path="/members/investments/propane" element={<Propane />} />
             <Route path="/members/investments/loxa" element={<Loxa />} />
             <Route path="/members/investments/pandektes" element={<Pandektes />} />

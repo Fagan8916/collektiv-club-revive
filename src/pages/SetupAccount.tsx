@@ -204,6 +204,22 @@ const SetupAccount: React.FC = () => {
               You can set up a password later in your account settings
             </p>
           </div>
+
+          <div className="relative mt-2">
+            <Separator />
+            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-3 text-sm text-gray-500">
+              or
+            </span>
+          </div>
+
+          <div className="text-center">
+            <Button onClick={() => navigate("/members/build-profile")} className="w-full">
+              Build Your Profile Now
+            </Button>
+            <p className="text-xs text-gray-500 mt-2">
+              Go straight to the profile submission form
+            </p>
+          </div>
         </CardContent>
       </Card>
     </div>
