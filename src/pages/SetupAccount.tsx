@@ -116,38 +116,34 @@ const SetupAccount: React.FC = () => {
       // Add a safety timeout so we never hang here
       const timeout = (ms: number) => new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), ms));
 
-      console.log('SetupAccount: calling supabase.auth.updateUser');
-      const result: any = await Promise.race([
-        supabase.auth.updateUser({ password: newPassword }),
-        timeout(3000), // 3s safety timeout
-      ]);
-
-      if (result?.error) {
-        console.error('SetupAccount: updateUser error', result.error);
-        toast({
-          title: 'Error setting password',
-          description: result.error.message,
-          variant: 'destructive',
+      console.log('SetupAccount: calling supabase.auth.updateUser (background)');
+      // Fire-and-forget to avoid blocking the UI; handle any errors in background logs
+      supabase.auth.updateUser({ password: newPassword })
+        .then(({ error }) => {
+          if (error) {
+            console.error('SetupAccount: updateUser error (background)', error);
+          } else {
+            console.log('SetupAccount: password updated (background) success');
+          }
+        })
+        .catch((e) => {
+          console.error('SetupAccount: updateUser exception (background)', e);
         });
-        return;
-      }
 
-      console.log('SetupAccount: password updated successfully');
       toast({
-        title: 'Password set successfully',
+        title: 'Password set',
         description: 'Continuing to build your profile...',
       });
 
-      // Navigate within the app router to prevent any homepage loop
-      console.log('SetupAccount: navigating to /members/build-profile via router');
+      // Navigate within the app router immediately to prevent any homepage loop or waiting
+      console.log('SetupAccount: navigating to /members/build-profile via router (no await)');
       navigate('/members/build-profile', { replace: true });
     } catch (err: any) {
       console.error('SetupAccount: unexpected error updating password', err);
-      // Even on timeout, allow user to continue and finish later
       toast({
-        title: err?.message === 'timeout' ? 'Taking longer than expected' : 'Unexpected error',
-        description: err?.message === 'timeout' ? 'We will finalize in the background. Proceeding to profile setup.' : (err?.message || 'Please try again.'),
-        variant: err?.message === 'timeout' ? undefined : 'destructive',
+        title: 'Unexpected error',
+        description: err?.message || 'Please try again.',
+        variant: 'destructive',
       });
       navigate('/members/build-profile', { replace: true });
     } finally {
@@ -159,7 +155,7 @@ const SetupAccount: React.FC = () => {
     navigate("/members");
   };
 
-  if (authLoading) {
+  if (authLoading && !canSetPassword) {
     return <LoadingScreen />;
   }
 
