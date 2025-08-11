@@ -94,15 +94,15 @@ const InvitationManager = () => {
 
     setLoading(true);
     try {
-      const { data, error } = await supabase.functions.invoke('send-email', {
-        body: { email: newEmail.trim(), role: 'member' }
+      const { data, error } = await supabase.functions.invoke('admin-invite', {
+        body: { email: newEmail.trim(), redirectTo: 'https://collektiv.club/#/setup-account' }
       });
 
       if (error) throw error as any;
 
       toast({
         title: "Invite Sent",
-        description: `Magic link sent to ${newEmail}. They will choose Google SSO or password on first visit.`,
+        description: `Admin invite sent to ${newEmail}. The link routes to setup-account.`,
       });
 
       setNewEmail("");
