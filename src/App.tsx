@@ -49,10 +49,23 @@ function App() {
       console.log('App: Auth tokens detected, processing via setSession...');
       const access_token = href.match(/access_token=([^&]+)/)?.[1] || '';
       const refresh_token = href.match(/refresh_token=([^&]+)/)?.[1] || '';
+      const postAuth = href.match(/[?&]post_auth=([^&]+)/)?.[1] || null;
+      const typeParam = href.match(/(?:[?#]|#).*type=(invite|signup|magiclink|recovery)/)?.[1] || null;
       if (!access_token) return false;
       try {
         await supabase.auth.setSession({ access_token, refresh_token });
         console.log('App: setSession success');
+
+        if (typeParam === 'invite' || typeParam === 'signup') {
+          cleanAndRedirect('setup');
+          return true;
+        }
+
+        if (postAuth === 'build-profile') {
+          window.location.replace(`${window.location.origin}/#/members/build-profile`);
+          return true;
+        }
+
         // If user was sent to setup explicitly, stay there; otherwise, members
         cleanAndRedirect(isSetupRoute ? 'setup' : 'members');
         return true;
@@ -65,10 +78,23 @@ function App() {
 
     const processPkceCode = async () => {
       console.log('App: PKCE code detected, exchanging for session...');
+      const postAuth = href.match(/[?&]post_auth=([^&]+)/)?.[1] || null;
+      const typeParam = href.match(/(?:[?#]|#).*type=(invite|signup|magiclink|recovery)/)?.[1] || null;
       try {
         const { data, error } = await supabase.auth.exchangeCodeForSession(href);
         if (error) throw error;
         console.log('App: exchangeCodeForSession success');
+
+        if (typeParam === 'invite' || typeParam === 'signup') {
+          cleanAndRedirect('setup');
+          return true;
+        }
+
+        if (postAuth === 'build-profile') {
+          window.location.replace(`${window.location.origin}/#/members/build-profile`);
+          return true;
+        }
+
         // Respect current route intent: if setup page, remain there; else members
         cleanAndRedirect(isSetupRoute ? 'setup' : 'members');
         return true;

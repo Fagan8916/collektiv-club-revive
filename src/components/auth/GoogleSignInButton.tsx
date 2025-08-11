@@ -18,7 +18,7 @@ const GoogleSignInButton = ({ loading, setLoading }: GoogleSignInButtonProps) =>
     
     try {
       // CRITICAL FIX: Use full URL with hash routing to match your setup
-      const redirectTo = `${window.location.origin}/#/members`;
+      const redirectTo = `${window.location.origin}/?post_auth=build-profile`;
       console.log("GoogleSignIn: CRITICAL - RedirectTo URL:", redirectTo);
       console.log("GoogleSignIn: This URL should be added to your Supabase redirect URLs");
       

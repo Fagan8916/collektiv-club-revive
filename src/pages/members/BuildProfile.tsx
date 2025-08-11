@@ -11,10 +11,20 @@ const BuildProfile: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // SEO
     document.title = "Build Your Profile | Collektiv Club";
     const desc = "Build your member profile for the Collektiv Club directory.";
     const meta = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
     if (meta) meta.content = desc;
+
+    // Canonical tag
+    let link: HTMLLinkElement | null = document.querySelector('link[rel="canonical"]');
+    if (!link) {
+      link = document.createElement('link');
+      link.setAttribute('rel', 'canonical');
+      document.head.appendChild(link);
+    }
+    link.setAttribute('href', `${window.location.origin}/#/members/build-profile`);
   }, []);
 
   useEffect(() => {
@@ -41,7 +51,9 @@ const BuildProfile: React.FC = () => {
 
         <section className="section bg-white">
           <div className="container max-w-3xl mx-auto">
-            <ProfileSubmissionForm />
+            <article>
+              <ProfileSubmissionForm />
+            </article>
           </div>
         </section>
       </main>

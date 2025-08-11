@@ -106,7 +106,7 @@ const SetupAccount: React.FC = () => {
         description: "You can now log in with your new password.",
       });
       setTimeout(() => {
-        navigate("/members");
+        navigate("/members/build-profile");
       }, 1200);
     }
   };
