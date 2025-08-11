@@ -14,10 +14,13 @@ export const useAuth = () => {
     console.log('useAuth: Initializing authentication');
     
     // Safety fallback: ensure we never hang in loading state
+    const href = window.location.href;
+    const hasAuthIndicators = /[?#&](access_token|refresh_token|code|provider_token|provider_refresh_token|type)=/.test(href) || href.includes('#access_token=');
+    const fallbackDelay = hasAuthIndicators ? 8000 : 2500;
     const fallbackTimer = window.setTimeout(() => {
-      console.warn('useAuth: Fallback timeout - forcing loading complete');
+      console.warn('useAuth: Fallback timeout - forcing loading complete (delay ms):', fallbackDelay);
       setLoading(false);
-    }, 2500);
+    }, fallbackDelay);
     
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(

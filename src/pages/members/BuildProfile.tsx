@@ -29,6 +29,12 @@ const BuildProfile: React.FC = () => {
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
+      const href = window.location.href;
+      const hasAuthIndicators = /[?#&](access_token|refresh_token|code|provider_token|provider_refresh_token)=/.test(href) || href.includes('#access_token=');
+      if (hasAuthIndicators) {
+        // If auth tokens are present in URL, wait for processing
+        return;
+      }
       navigate("/login");
     }
   }, [loading, isAuthenticated, navigate]);

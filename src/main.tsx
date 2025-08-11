@@ -14,13 +14,33 @@ console.log("Hash:", window.location.hash);
 console.log("Search:", window.location.search);
 console.log("Origin:", window.location.origin);
 
-// Pre-mount auth hash normalization: redirect token hash to setup-account as query
+// Pre-mount auth hash normalization: redirect token hash to proper query position
 (() => {
   const hash = window.location.hash;
-  // If hash is like '#access_token=...' (no route), normalize to appropriate route
+
+  // 1) Handle double-hash cases like
+  //    #/members/build-profile?post_auth=build-profile#access_token=...
+  if (hash.startsWith('#/')) {
+    const secondIdx = hash.indexOf('#', 1);
+    if (secondIdx !== -1) {
+      const tokenFragment = hash.slice(secondIdx + 1);
+      const isAuthTokens = /^(access_token|refresh_token|code|type|expires_at|expires_in|token_type|provider_token|provider_refresh_token|error|error_description)=/.test(tokenFragment)
+        || /(^|&)(access_token|refresh_token|code)=/.test(tokenFragment);
+      if (isAuthTokens) {
+        const routePart = hash.slice(1, secondIdx); // e.g. "/members/build-profile?post_auth=build-profile"
+        const sep = routePart.includes('?') ? '&' : '?';
+        const dest = `${window.location.origin}/#/${routePart.replace(/^\//, '')}${sep}${tokenFragment}`;
+        console.log('main.tsx: Normalizing double-hash auth fragment →', dest);
+        window.location.replace(dest);
+        return; // Stop further processing
+      }
+    }
+  }
+
+  // 2) Handle pure token fragments like '#access_token=...'
   const hasRoute = hash.startsWith('#/');
   const raw = hasRoute ? '' : hash.replace(/^#/, '');
-  const isAuthFragment = raw.length > 0 && (/^(access_token|refresh_token|type|expires_at|expires_in|token_type|provider_token|provider_refresh_token|error|error_description)=/.test(raw) || /(^|&)access_token=/.test(raw));
+  const isAuthFragment = raw.length > 0 && (/^(access_token|refresh_token|type|expires_at|expires_in|token_type|provider_token|provider_refresh_token|error|error_description|code)=/.test(raw) || /(^|&)(access_token|refresh_token|code)=/.test(raw));
   if (isAuthFragment) {
     const params = new URLSearchParams(raw);
     const type = params.get('type');

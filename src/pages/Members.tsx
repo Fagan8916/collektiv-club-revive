@@ -28,12 +28,16 @@ const Members = () => {
 
   console.log('Members: Auth state - loading:', authLoading, 'authenticated:', isAuthenticated, 'user:', !!user);
 
-  // Auth logic is now handled globally in App.tsx - no need for OAuth processing here
-
   // Redirect if not authenticated
   useEffect(() => {
     console.log('Members: Auth effect - authLoading:', authLoading, 'isAuthenticated:', isAuthenticated);
     if (!authLoading && !isAuthenticated) {
+      const href = window.location.href;
+      const hasAuthIndicators = /[?#&](access_token|refresh_token|code|provider_token|provider_refresh_token)=/.test(href) || href.includes('#access_token=');
+      if (hasAuthIndicators) {
+        console.log('Members: Auth indicators in URL detected, delaying redirect');
+        return; // Wait for auth processing
+      }
       console.log("Members: User not authenticated, redirecting to login");
       navigate("/login", { replace: true });
     }
