@@ -186,18 +186,18 @@ const Members = () => {
       <div className="container mx-auto px-4 pb-16">
         <Tabs defaultValue="investments" className="w-full">
           <div className="flex justify-center mb-8">
-            <TabsList className={`grid w-full sm:max-w-3xl gap-2 p-1 rounded-md bg-white shadow-lg ${isAdmin ? 'grid-cols-2 md:grid-cols-4' : 'grid-cols-2 md:grid-cols-3'}`}>
-              <TabsTrigger value="investments" className="w-full whitespace-normal leading-snug text-xs sm:text-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">
+            <TabsList className={`grid h-auto w-full sm:max-w-3xl gap-2 p-1 rounded-md bg-transparent ${isAdmin ? 'grid-cols-2 md:grid-cols-4' : 'grid-cols-2 md:grid-cols-3'}`}>
+              <TabsTrigger value="investments" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">
                 Investments
               </TabsTrigger>
-              <TabsTrigger value="directory" className="w-full whitespace-normal leading-snug text-xs sm:text-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">
+              <TabsTrigger value="directory" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">
                 Member Directory
               </TabsTrigger>
-              <TabsTrigger value="events" className="w-full whitespace-normal leading-snug text-xs sm:text-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">
+              <TabsTrigger value="events" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">
                 Member Events
               </TabsTrigger>
               {isAdmin && (
-                <TabsTrigger value="admin" className="w-full whitespace-normal leading-snug text-xs sm:text-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">
+                <TabsTrigger value="admin" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">
                   Admin
                 </TabsTrigger>
               )}
@@ -224,12 +224,12 @@ const Members = () => {
             
             <Tabs defaultValue="view-directory" className="w-full">
               <div className="flex justify-center mb-6">
-                <TabsList className={`grid w-full sm:max-w-3xl gap-2 p-1 rounded-md bg-muted ${isAdmin ? 'grid-cols-2 md:grid-cols-4' : 'grid-cols-2 md:grid-cols-3'}`}>
-                  <TabsTrigger value="view-directory" className="w-full whitespace-normal leading-snug text-xs sm:text-sm">View Directory</TabsTrigger>
-                  <TabsTrigger value="edit-profile" className="w-full whitespace-normal leading-snug text-xs sm:text-sm">Edit Profile</TabsTrigger>
-                  <TabsTrigger value="submit-profile" className="w-full whitespace-normal leading-snug text-xs sm:text-sm">Submit Profile</TabsTrigger>
+                <TabsList className={`grid h-auto w-full sm:max-w-3xl gap-2 p-1 rounded-md bg-transparent ${isAdmin ? 'grid-cols-2 md:grid-cols-4' : 'grid-cols-2 md:grid-cols-3'}`}>
+                  <TabsTrigger value="view-directory" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">View Directory</TabsTrigger>
+                  <TabsTrigger value="edit-profile" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">Edit Profile</TabsTrigger>
+                  <TabsTrigger value="submit-profile" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">Submit Profile</TabsTrigger>
                   {isAdmin && (
-                    <TabsTrigger value="profiles-to-review" className="w-full whitespace-normal leading-snug text-xs sm:text-sm">Profiles to Review</TabsTrigger>
+                    <TabsTrigger value="profiles-to-review" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">Profiles to Review</TabsTrigger>
                   )}
                 </TabsList>
               </div>
@@ -287,11 +287,11 @@ const Members = () => {
             <TabsContent value="admin" className="space-y-8">
               <Tabs defaultValue="invitations" className="w-full">
                 <div className="flex justify-center mb-6">
-                  <TabsList className="grid w-full sm:max-w-3xl grid-cols-2 md:grid-cols-4 gap-2 p-1 rounded-md bg-muted">
-                    <TabsTrigger value="invitations" className="w-full whitespace-normal leading-snug text-xs sm:text-sm">Manage Invitations</TabsTrigger>
-                    <TabsTrigger value="memberships" className="w-full whitespace-normal leading-snug text-xs sm:text-sm">Membership Requests</TabsTrigger>
-                    <TabsTrigger value="profiles" className="w-full whitespace-normal leading-snug text-xs sm:text-sm">Manage Profiles</TabsTrigger>
-                    <TabsTrigger value="bulk-import" className="w-full whitespace-normal leading-snug text-xs sm:text-sm">Bulk Import Members</TabsTrigger>
+                  <TabsList className="grid h-auto w-full sm:max-w-3xl grid-cols-2 md:grid-cols-4 gap-2 p-1 rounded-md bg-transparent">
+                    <TabsTrigger value="invitations" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">Manage Invitations</TabsTrigger>
+                    <TabsTrigger value="memberships" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">Membership Requests</TabsTrigger>
+                    <TabsTrigger value="profiles" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">Manage Profiles</TabsTrigger>
+                    <TabsTrigger value="bulk-import" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">Bulk Import Members</TabsTrigger>
                   </TabsList>
                 </div>
                 
