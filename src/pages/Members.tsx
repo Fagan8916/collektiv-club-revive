@@ -186,18 +186,18 @@ const Members = () => {
       <div className="container mx-auto px-4 pb-16">
         <Tabs defaultValue="investments" className="w-full">
           <div className="flex justify-center mb-8">
-            <TabsList className={`grid w-full max-w-fit ${isAdmin ? 'grid-cols-4' : 'grid-cols-3'} bg-white shadow-lg`}>
-              <TabsTrigger value="investments" className="data-[state=active]:bg-collektiv-green data-[state=active]:text-white">
+            <TabsList className={`grid w-full sm:max-w-3xl gap-2 p-1 rounded-md bg-white shadow-lg ${isAdmin ? 'grid-cols-2 md:grid-cols-4' : 'grid-cols-2 md:grid-cols-3'}`}>
+              <TabsTrigger value="investments" className="w-full whitespace-normal leading-snug text-xs sm:text-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">
                 Investments
               </TabsTrigger>
-              <TabsTrigger value="directory" className="data-[state=active]:bg-collektiv-green data-[state=active]:text-white">
+              <TabsTrigger value="directory" className="w-full whitespace-normal leading-snug text-xs sm:text-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">
                 Member Directory
               </TabsTrigger>
-              <TabsTrigger value="events" className="data-[state=active]:bg-collektiv-green data-[state=active]:text-white">
+              <TabsTrigger value="events" className="w-full whitespace-normal leading-snug text-xs sm:text-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">
                 Member Events
               </TabsTrigger>
               {isAdmin && (
-                <TabsTrigger value="admin" className="data-[state=active]:bg-collektiv-green data-[state=active]:text-white">
+                <TabsTrigger value="admin" className="w-full whitespace-normal leading-snug text-xs sm:text-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">
                   Admin
                 </TabsTrigger>
               )}
@@ -224,12 +224,12 @@ const Members = () => {
             
             <Tabs defaultValue="view-directory" className="w-full">
               <div className="flex justify-center mb-6">
-                <TabsList className={`bg-gray-100 ${isAdmin ? 'grid-cols-4' : 'grid-cols-3'}`}>
-                  <TabsTrigger value="view-directory">View Directory</TabsTrigger>
-                  <TabsTrigger value="edit-profile">Edit Profile</TabsTrigger>
-                  <TabsTrigger value="submit-profile">Submit Profile</TabsTrigger>
+                <TabsList className={`grid w-full sm:max-w-3xl gap-2 p-1 rounded-md bg-muted ${isAdmin ? 'grid-cols-2 md:grid-cols-4' : 'grid-cols-2 md:grid-cols-3'}`}>
+                  <TabsTrigger value="view-directory" className="w-full whitespace-normal leading-snug text-xs sm:text-sm">View Directory</TabsTrigger>
+                  <TabsTrigger value="edit-profile" className="w-full whitespace-normal leading-snug text-xs sm:text-sm">Edit Profile</TabsTrigger>
+                  <TabsTrigger value="submit-profile" className="w-full whitespace-normal leading-snug text-xs sm:text-sm">Submit Profile</TabsTrigger>
                   {isAdmin && (
-                    <TabsTrigger value="profiles-to-review">Profiles to Review</TabsTrigger>
+                    <TabsTrigger value="profiles-to-review" className="w-full whitespace-normal leading-snug text-xs sm:text-sm">Profiles to Review</TabsTrigger>
                   )}
                 </TabsList>
               </div>
@@ -287,11 +287,11 @@ const Members = () => {
             <TabsContent value="admin" className="space-y-8">
               <Tabs defaultValue="invitations" className="w-full">
                 <div className="flex justify-center mb-6">
-                  <TabsList className="bg-gray-100">
-                    <TabsTrigger value="invitations">Manage Invitations</TabsTrigger>
-                    <TabsTrigger value="memberships">Membership Requests</TabsTrigger>
-                    <TabsTrigger value="profiles">Manage Profiles</TabsTrigger>
-                    <TabsTrigger value="bulk-import">Bulk Import Members</TabsTrigger>
+                  <TabsList className="grid w-full sm:max-w-3xl grid-cols-2 md:grid-cols-4 gap-2 p-1 rounded-md bg-muted">
+                    <TabsTrigger value="invitations" className="w-full whitespace-normal leading-snug text-xs sm:text-sm">Manage Invitations</TabsTrigger>
+                    <TabsTrigger value="memberships" className="w-full whitespace-normal leading-snug text-xs sm:text-sm">Membership Requests</TabsTrigger>
+                    <TabsTrigger value="profiles" className="w-full whitespace-normal leading-snug text-xs sm:text-sm">Manage Profiles</TabsTrigger>
+                    <TabsTrigger value="bulk-import" className="w-full whitespace-normal leading-snug text-xs sm:text-sm">Bulk Import Members</TabsTrigger>
                   </TabsList>
                 </div>
                 
