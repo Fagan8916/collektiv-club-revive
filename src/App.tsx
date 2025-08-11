@@ -36,28 +36,48 @@ function App() {
     const hasAccessToken = /access_token=/.test(href) || /#access_token=/.test(href);
     const hasPkceCode = /[?#].*code=/.test(href) || /#.*[?&]code=/.test(href);
 
+    // Extract auth params early
+    const typeInHref = href.match(/(?:[?#]|#).*type=(invite|signup|magiclink|recovery)/)?.[1] || null;
+    const access_token_in_hash = href.match(/access_token=([^&]+)/)?.[1] || '';
+    const refresh_token_in_hash = href.match(/refresh_token=([^&]+)/)?.[1] || '';
+
     // Helper: determine intended landing based on current hash route
     const isMembersRoute = window.location.hash.startsWith('#/members');
     const isSetupRoute = window.location.hash.startsWith('#/setup-account');
 
-    const cleanAndRedirect = (target: 'members' | 'setup') => {
-      const dest = target === 'members' ? `${window.location.origin}/#/members` : `${window.location.origin}/#/setup-account`;
+    const cleanAndRedirect = (target: 'members' | 'setup', opts?: { preserveTokens?: boolean }) => {
+      const origin = window.location.origin;
+      let dest = target === 'members' ? `${origin}/#/members` : `${origin}/#/setup-account`;
+      if (opts?.preserveTokens && access_token_in_hash) {
+        const qp = new URLSearchParams();
+        qp.set('access_token', access_token_in_hash);
+        if (refresh_token_in_hash) qp.set('refresh_token', refresh_token_in_hash);
+        if (typeInHref) qp.set('type', typeInHref);
+        dest += `?${qp.toString()}`;
+      }
       window.location.replace(dest);
     };
 
+    // Immediate handling: invitation or signup token hashes should land on setup-account
+    if (hasAccessToken && (typeInHref === 'invite' || typeInHref === 'signup')) {
+      console.log('App: Immediate invite/signup redirect to setup-account with tokens');
+      cleanAndRedirect('setup', { preserveTokens: true });
+      return;
+    }
+
     const processAccessToken = async () => {
       console.log('App: Auth tokens detected, processing via setSession...');
-      const access_token = href.match(/access_token=([^&]+)/)?.[1] || '';
-      const refresh_token = href.match(/refresh_token=([^&]+)/)?.[1] || '';
+      const access_token = access_token_in_hash;
+      const refresh_token = refresh_token_in_hash;
       const postAuth = href.match(/[?&]post_auth=([^&]+)/)?.[1] || null;
-      const typeParam = href.match(/(?:[?#]|#).*type=(invite|signup|magiclink|recovery)/)?.[1] || null;
+      const typeParam = typeInHref;
       if (!access_token) return false;
       try {
         await supabase.auth.setSession({ access_token, refresh_token });
         console.log('App: setSession success');
 
         if (typeParam === 'invite' || typeParam === 'signup') {
-          cleanAndRedirect('setup');
+          cleanAndRedirect('setup', { preserveTokens: true });
           return true;
         }
 
@@ -71,7 +91,7 @@ function App() {
         return true;
       } catch (e) {
         console.error('App: setSession failed', e);
-        cleanAndRedirect(isSetupRoute ? 'setup' : (isMembersRoute ? 'members' : 'setup'));
+        cleanAndRedirect(isSetupRoute ? 'setup' : (isMembersRoute ? 'members' : 'setup'), { preserveTokens: true });
         return false;
       }
     };
