@@ -2,3 +2,6 @@ project_id = "lectuphndieqxoluyhkv"
 
 [functions.send-email]
 verify_jwt = false
+
+[functions.resend-magic-link]
+verify_jwt = false

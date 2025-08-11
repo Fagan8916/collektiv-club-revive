@@ -119,6 +119,23 @@ const InvitationManager = () => {
     }
   };
 
+  const resendMagicLink = async (email: string) => {
+    setLoading(true);
+    try {
+      const redirectTo = 'https://collektiv.club/#/setup-account';
+      const { error } = await supabase.functions.invoke('resend-magic-link', {
+        body: { email, redirectTo }
+      });
+      if (error) throw error as any;
+      toast({ title: 'Link Sent', description: `Magic link resent to ${email}.` });
+    } catch (error: any) {
+      console.error('Error resending magic link:', error);
+      toast({ title: 'Error', description: error?.message || 'Failed to resend link.', variant: 'destructive' });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const copyInvitationCode = (code: string) => {
     navigator.clipboard.writeText(code);
     toast({
@@ -235,13 +252,23 @@ const InvitationManager = () => {
                       <Copy className="h-4 w-4" />
                     </Button>
                     {!invitation.used_at && (
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        onClick={() => deleteInvitation(invitation.id)}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+                      <>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => resendMagicLink(invitation.email)}
+                          title="Resend magic link"
+                        >
+                          <Mail className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => deleteInvitation(invitation.id)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </>
                     )}
                   </div>
                 </div>

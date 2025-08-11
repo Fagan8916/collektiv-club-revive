@@ -19,6 +19,9 @@ const SetupAccount: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [canSetPassword, setCanSetPassword] = useState(false);
+  const [resendEmail, setResendEmail] = useState("");
+  const [resending, setResending] = useState(false);
+  const [resetting, setResetting] = useState(false);
 
   // Check if user is authenticated and can set password
   useEffect(() => {
@@ -155,6 +158,44 @@ const SetupAccount: React.FC = () => {
     navigate("/members");
   };
 
+  const handleResendMagicLink = async () => {
+    if (!resendEmail.trim()) {
+      toast({ title: 'Email required', description: 'Enter your email to receive a new link.', variant: 'destructive' });
+      return;
+    }
+    setResending(true);
+    try {
+      const redirectTo = `${window.location.origin}/#/setup-account`;
+      const { error } = await supabase.functions.invoke('resend-magic-link', {
+        body: { email: resendEmail.trim(), redirectTo }
+      });
+      if (error) throw error as any;
+      toast({ title: 'New link sent', description: `We emailed a new magic link to ${resendEmail}.` });
+    } catch (e: any) {
+      toast({ title: 'Failed to send link', description: e?.message || 'Please try again.', variant: 'destructive' });
+    } finally {
+      setResending(false);
+    }
+  };
+
+  const handleSendReset = async () => {
+    if (!resendEmail.trim()) {
+      toast({ title: 'Email required', description: 'Enter your email to receive a reset link.', variant: 'destructive' });
+      return;
+    }
+    setResetting(true);
+    try {
+      const redirectTo = `${window.location.origin}/#/reset-password`;
+      const { error } = await supabase.auth.resetPasswordForEmail(resendEmail.trim(), { redirectTo });
+      if (error) throw error;
+      toast({ title: 'Password reset sent', description: `Check ${resendEmail} for a reset link.` });
+    } catch (e: any) {
+      toast({ title: 'Failed to send reset', description: e?.message || 'Please try again.', variant: 'destructive' });
+    } finally {
+      setResetting(false);
+    }
+  };
+
   if (authLoading && !canSetPassword) {
     return <LoadingScreen />;
   }
@@ -164,15 +205,29 @@ const SetupAccount: React.FC = () => {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-collektiv-accent via-white to-green-50 p-4">
         <Card className="w-full max-w-md shadow-xl border-0">
           <CardHeader className="text-center pb-6">
-            <CardTitle className="text-xl font-bold text-collektiv-green">Invalid Link</CardTitle>
+            <CardTitle className="text-xl font-bold text-collektiv-green">Invalid or Expired Link</CardTitle>
           </CardHeader>
           <CardContent className="text-center space-y-4">
             <p className="text-gray-700">
-              Your invitation link is invalid or has expired.
+              Your invitation link is invalid or has expired. Enter your email to get a new link or a password reset.
             </p>
-            <Button variant="outline" onClick={() => navigate("/login")}>
-              Go to Login
-            </Button>
+            <Input
+              type="email"
+              placeholder="you@example.com"
+              value={resendEmail}
+              onChange={(e) => setResendEmail(e.target.value)}
+            />
+            <div className="space-y-2">
+              <Button className="w-full" onClick={handleResendMagicLink} disabled={resending || !resendEmail}>
+                {resending ? 'Sending…' : 'Send me a new magic link'}
+              </Button>
+              <Button variant="outline" className="w-full" onClick={handleSendReset} disabled={resetting || !resendEmail}>
+                {resetting ? 'Sending…' : 'Email a password reset instead'}
+              </Button>
+              <Button variant="ghost" onClick={() => navigate("/login")} className="w-full">
+                Go to Login
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
