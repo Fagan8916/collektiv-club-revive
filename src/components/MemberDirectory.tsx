@@ -5,12 +5,25 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Building2, Linkedin, Globe, User, Briefcase } from "lucide-react";
-import { Tables } from "@/integrations/supabase/types";
 
-type MemberProfile = Tables<"member_profiles">;
+// Use the public view to avoid exposing sensitive fields
+interface MemberPublicProfile {
+  id: string | null;
+  display_name: string | null;
+  bio: string | null;
+  profile_image_url: string | null;
+  company: string | null;
+  position: string | null;
+  linkedin_url: string | null;
+  website_url: string | null;
+  location: string | null;
+  expertise: string[] | null;
+  services_offered: string | null;
+  is_anonymous: boolean | null;
+}
 
 const MemberDirectory = () => {
-  const [members, setMembers] = useState<MemberProfile[]>([]);
+  const [members, setMembers] = useState<MemberPublicProfile[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -20,13 +33,12 @@ const MemberDirectory = () => {
   const fetchMembers = async () => {
     try {
       const { data, error } = await supabase
-        .from("member_profiles")
+        .from("public_member_profiles")
         .select("*")
-        .eq("is_visible", true)
         .order("created_at", { ascending: false });
 
       if (error) throw error;
-      setMembers(data || []);
+      setMembers((data as unknown as MemberPublicProfile[]) || []);
     } catch (error) {
       console.error("Error fetching members:", error);
     } finally {
@@ -84,14 +96,14 @@ const MemberDirectory = () => {
               <CardContent className="p-6">
                 <div className="flex items-start space-x-4 mb-4">
                   <Avatar className="h-16 w-16">
-                    <AvatarImage src={member.profile_image_url || ""} alt={member.full_name} />
+                    <AvatarImage src={member.profile_image_url || ""} alt={member.display_name || 'Member'} />
                     <AvatarFallback className="bg-collektiv-green text-white text-lg">
-                      {getInitials(member.full_name)}
+                      {getInitials((member.display_name || 'Member'))}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex-1 min-w-0">
                     <h3 className="font-bold text-lg text-collektiv-dark truncate">
-                      {member.full_name}
+                      {member.display_name || 'Member'}
                     </h3>
                     {member.position && member.company && (
                       <p className="text-sm text-gray-600 mb-2">

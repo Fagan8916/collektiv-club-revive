@@ -253,7 +253,60 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      public_member_profiles: {
+        Row: {
+          bio: string | null
+          company: string | null
+          created_at: string | null
+          display_name: string | null
+          expertise: string[] | null
+          id: string | null
+          is_anonymous: boolean | null
+          is_visible: boolean | null
+          linkedin_url: string | null
+          location: string | null
+          position: string | null
+          profile_image_url: string | null
+          services_offered: string | null
+          updated_at: string | null
+          website_url: string | null
+        }
+        Insert: {
+          bio?: never
+          company?: never
+          created_at?: string | null
+          display_name?: never
+          expertise?: never
+          id?: string | null
+          is_anonymous?: boolean | null
+          is_visible?: boolean | null
+          linkedin_url?: never
+          location?: never
+          position?: never
+          profile_image_url?: never
+          services_offered?: never
+          updated_at?: string | null
+          website_url?: never
+        }
+        Update: {
+          bio?: never
+          company?: never
+          created_at?: string | null
+          display_name?: never
+          expertise?: never
+          id?: string | null
+          is_anonymous?: boolean | null
+          is_visible?: boolean | null
+          linkedin_url?: never
+          location?: never
+          position?: never
+          profile_image_url?: never
+          services_offered?: never
+          updated_at?: string | null
+          website_url?: never
+        }
+        Relationships: []
+      }
     }
     Functions: {
       add_pre_approved_emails: {
@@ -271,6 +324,10 @@ export type Database = {
       assign_admin_role: {
         Args: { target_user_id: string }
         Returns: undefined
+      }
+      can_see_full_profile: {
+        Args: { profile_user_id: string }
+        Returns: boolean
       }
       create_invitation: {
         Args: { p_email: string }
