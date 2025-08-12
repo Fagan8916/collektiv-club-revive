@@ -21,6 +21,7 @@ import BuildProfile from './pages/members/BuildProfile';
 import BareTrusts from './pages/insights/BareTrusts';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { Toaster } from '@/components/ui/toaster';
 
 const queryClient = new QueryClient();
 
