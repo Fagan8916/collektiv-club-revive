@@ -110,7 +110,7 @@ const MemberDirectory = () => {
                         {member.position} at {member.company}
                       </p>
                     )}
-                    {member.location && (
+                    {!member.is_anonymous && member.location && (
                       <div className="flex items-center text-sm text-gray-500">
                         <MapPin className="h-3 w-3 mr-1" />
                         {member.location}
