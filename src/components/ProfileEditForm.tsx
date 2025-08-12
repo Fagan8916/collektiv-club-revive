@@ -129,8 +129,7 @@ const ProfileEditForm = () => {
       }
 
       toast({
-        title: "Success!",
-        description: "Your profile has been updated successfully.",
+        title: "Updated",
       });
 
       setProfileExists(true);

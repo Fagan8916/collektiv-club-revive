@@ -6,10 +6,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Building2, Linkedin, Globe, User, Briefcase } from "lucide-react";
 
-// Use the public view to avoid exposing sensitive fields
+// Use member_profiles to control visibility and names precisely
 interface MemberPublicProfile {
   id: string | null;
-  display_name: string | null;
+  full_name: string | null;
+  first_name: string | null;
   bio: string | null;
   profile_image_url: string | null;
   company: string | null;
@@ -20,6 +21,8 @@ interface MemberPublicProfile {
   expertise: string[] | null;
   services_offered: string | null;
   is_anonymous: boolean | null;
+  is_visible: boolean | null;
+  created_at?: string | null;
 }
 
 const MemberDirectory = () => {
@@ -33,8 +36,9 @@ const MemberDirectory = () => {
   const fetchMembers = async () => {
     try {
       const { data, error } = await supabase
-        .from("public_member_profiles")
-        .select("*")
+        .from("member_profiles")
+        .select("id, full_name, first_name, bio, profile_image_url, company, position, linkedin_url, website_url, location, expertise, services_offered, is_anonymous, is_visible, created_at")
+        .eq("is_visible", true)
         .order("created_at", { ascending: false });
 
       if (error) throw error;
@@ -96,14 +100,14 @@ const MemberDirectory = () => {
               <CardContent className="p-6">
                 <div className="flex items-start space-x-4 mb-4">
                   <Avatar className="h-16 w-16">
-                    <AvatarImage src={(member.is_anonymous ? "" : (member.profile_image_url || ""))} alt={member.display_name || 'Member'} />
+                    <AvatarImage src={(member.is_anonymous ? "" : (member.profile_image_url || ""))} alt={(member.is_anonymous ? (member.first_name || 'Member') : (member.full_name || 'Member'))} />
                     <AvatarFallback className="bg-collektiv-green text-white text-lg">
-                      {getInitials((member.display_name || 'Member'))}
+                      {getInitials((member.is_anonymous ? (member.first_name || 'Member') : (member.full_name || 'Member')))}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex-1 min-w-0">
                     <h3 className="font-bold text-lg text-collektiv-dark truncate">
-                      {member.display_name || 'Member'}
+                      {(member.is_anonymous ? (member.first_name || 'Member') : (member.full_name || 'Member'))}
                     </h3>
                     {!member.is_anonymous && member.position && member.company && (
                       <p className="text-sm text-gray-600 mb-2">

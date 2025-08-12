@@ -201,6 +201,7 @@ function App() {
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
           </Routes>
+          <Toaster />
         </div>
       </Router>
     </QueryClientProvider>

@@ -10,10 +10,7 @@ import MemberDirectory from "@/components/MemberDirectory";
 import MemberEvents from "@/components/MemberEvents";
 import ProfileSubmissionForm from "@/components/ProfileSubmissionForm";
 import ProfileEditForm from "@/components/ProfileEditForm";
-import BulkMemberImport from "@/components/BulkMemberImport";
 import AdminSubmissionsManager from "@/components/AdminSubmissionsManager";
-import MembershipManager from "@/components/MembershipManager";
-import InvitationManager from "@/components/InvitationManager";
 import AdminProfileManager from "@/components/AdminProfileManager";
 import { useUserRole } from "@/hooks/useUserRole";
 import { useAuth } from "@/hooks/useAuth";
@@ -250,11 +247,8 @@ const Members = () => {
                   <TabsTrigger value="view-directory" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">View Directory</TabsTrigger>
                   <TabsTrigger value="edit-profile" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">Edit Profile</TabsTrigger>
                   <TabsTrigger value="submit-profile" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">Submit Profile</TabsTrigger>
-                  {isAdmin && (
-                    <TabsTrigger value="profiles-to-review" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">Profiles to Review</TabsTrigger>
-                  )}
                 </TabsList>
-              </div>
+               </div>
               
               <TabsContent value="view-directory">
                 <MemberDirectory />
@@ -281,17 +275,6 @@ const Members = () => {
                 <ProfileSubmissionForm />
               </TabsContent>
 
-              {isAdmin && (
-                <TabsContent value="profiles-to-review">
-                  <div className="text-center mb-8">
-                    <h3 className="text-2xl font-bold text-collektiv-green mb-4">Member Profile Submissions</h3>
-                    <p className="text-gray-600 max-w-2xl mx-auto">
-                      Review and approve member profile submissions for the directory.
-                    </p>
-                  </div>
-                  <AdminSubmissionsManager />
-                </TabsContent>
-              )}
             </Tabs>
           </TabsContent>
 
@@ -307,43 +290,26 @@ const Members = () => {
 
           {isAdmin && (
             <TabsContent value="admin" className="space-y-8">
-              <Tabs defaultValue="invitations" className="w-full">
+              <Tabs defaultValue="profiles-to-review" className="w-full">
                 <div className="flex justify-center mb-6">
-                  <TabsList className="grid h-auto w-full sm:max-w-3xl grid-cols-2 md:grid-cols-4 gap-2 p-1 rounded-md bg-transparent">
-                    <TabsTrigger value="invitations" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">Manage Invitations</TabsTrigger>
-                    <TabsTrigger value="memberships" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">Membership Requests</TabsTrigger>
+                  <TabsList className="grid h-auto w-full sm:max-w-3xl grid-cols-2 gap-2 p-1 rounded-md bg-transparent">
+                    <TabsTrigger value="profiles-to-review" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">Profiles to Review</TabsTrigger>
                     <TabsTrigger value="profiles" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">Manage Profiles</TabsTrigger>
-                    <TabsTrigger value="bulk-import" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">Bulk Import Members</TabsTrigger>
                   </TabsList>
                 </div>
                 
-                <TabsContent value="invitations">
+                <TabsContent value="profiles-to-review">
                   <div className="text-center mb-8">
-                    <h3 className="text-2xl font-bold text-collektiv-green mb-4">Invitation Management</h3>
+                    <h3 className="text-2xl font-bold text-collektiv-green mb-4">Member Profile Submissions</h3>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                      Create and manage invitation codes for new members to join the Collektiv Club.
+                      Review and approve member profile submissions for the directory.
                     </p>
                   </div>
-                  <InvitationManager />
-                </TabsContent>
-                
-                
-                <TabsContent value="memberships">
-                  <MembershipManager />
+                  <AdminSubmissionsManager />
                 </TabsContent>
                 
                 <TabsContent value="profiles">
                   <AdminProfileManager />
-                </TabsContent>
-                
-                <TabsContent value="bulk-import">
-                  <div className="text-center mb-8">
-                    <h3 className="text-2xl font-bold text-collektiv-green mb-4">Bulk Import Members</h3>
-                    <p className="text-gray-600 max-w-2xl mx-auto">
-                      Add multiple members at once with their names and emails. You can then contact them to complete their profiles.
-                    </p>
-                  </div>
-                  <BulkMemberImport />
                 </TabsContent>
               </Tabs>
             </TabsContent>
