@@ -50,7 +50,9 @@ const ProfileSubmissionForm = () => {
       is_anonymous: false,
     },
   });
-
+  
+  const isAnonymous = form.watch("is_anonymous");
+  
   // Check if user already has a submission
   useEffect(() => {
     const checkExistingSubmission = async () => {
@@ -113,23 +115,50 @@ const ProfileSubmissionForm = () => {
       }
 
       console.log("ProfileSubmissionForm: Submitting to database...");
+      const anon = !!data.is_anonymous;
+      // Validate required fields based on anonymity
+      if (anon) {
+        const first = (data.first_name || '').trim();
+        if (!first) {
+          toast({
+            title: "First name required",
+            description: "When anonymous, only your first name is required.",
+            variant: "destructive",
+          });
+          setIsSubmitting(false);
+          return;
+        }
+      }
+      const fullNameToStore = anon ? (data.first_name || '').trim() : (data.full_name || '').trim();
+      if (!fullNameToStore) {
+        toast({
+          title: "Name required",
+          description: "Please provide your name.",
+          variant: "destructive",
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
+      const payload = {
+        user_id: user.id,
+        first_name: (data.first_name || null),
+        full_name: fullNameToStore,
+        bio: anon ? null : (data.bio || null),
+        company: anon ? null : (data.company || null),
+        position: anon ? null : (data.position || null),
+        linkedin_url: anon ? null : (data.linkedin_url || null),
+        website_url: anon ? null : (data.website_url || null),
+        location: anon ? null : (data.location || null),
+        profile_image_url: anon ? null : (data.profile_image_url || null),
+        services_offered: anon ? null : (data.services_offered || null),
+        expertise: anon ? null : (expertise.length > 0 ? expertise : null),
+        is_anonymous: anon,
+      } as const;
+
       const { error } = await supabase
         .from("member_profile_submissions")
-        .insert({
-          user_id: user.id,
-          first_name: data.first_name || null,
-          full_name: data.full_name,
-          bio: data.bio || null,
-          company: data.company || null,
-          position: data.position || null,
-          linkedin_url: data.linkedin_url || null,
-          website_url: data.website_url || null,
-          location: data.location || null,
-          profile_image_url: data.profile_image_url || null,
-          services_offered: data.services_offered || null,
-          expertise: expertise.length > 0 ? expertise : null,
-          is_anonymous: !!data.is_anonymous,
-        });
+        .insert(payload);
 
       if (error) {
         console.error("ProfileSubmissionForm: Database error:", error);
@@ -171,7 +200,7 @@ const ProfileSubmissionForm = () => {
   };
 
   if (hasSubmitted) {
-    return <ProfileSubmissionSuccessScreen onSubmitAnother={() => setHasSubmitted(false)} />;
+    return <ProfileSubmissionSuccessScreen />;
   }
 
   if (hasExistingSubmission) {
@@ -245,16 +274,20 @@ const ProfileSubmissionForm = () => {
               />
             </div>
 
-            {/* The rest of the profile fields */}
-            <ProfileFormFields form={form as any} />
+            {/* The rest of the profile fields (hidden when anonymous) */}
+            {!isAnonymous && (
+              <>
+                <ProfileFormFields form={form as any} isAnonymous={isAnonymous} />
 
-            <ExpertiseManager 
-              expertise={expertise}
-              newSkill={newSkill}
-              onNewSkillChange={setNewSkill}
-              onAddSkill={addSkill}
-              onRemoveSkill={removeSkill}
-            />
+                <ExpertiseManager 
+                  expertise={expertise}
+                  newSkill={newSkill}
+                  onNewSkillChange={setNewSkill}
+                  onAddSkill={addSkill}
+                  onRemoveSkill={removeSkill}
+                />
+              </>
+            )}
 
             <Button 
               type="submit" 

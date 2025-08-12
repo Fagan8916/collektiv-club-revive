@@ -96,7 +96,7 @@ const MemberDirectory = () => {
               <CardContent className="p-6">
                 <div className="flex items-start space-x-4 mb-4">
                   <Avatar className="h-16 w-16">
-                    <AvatarImage src={member.profile_image_url || ""} alt={member.display_name || 'Member'} />
+                    <AvatarImage src={(member.is_anonymous ? "" : (member.profile_image_url || ""))} alt={member.display_name || 'Member'} />
                     <AvatarFallback className="bg-collektiv-green text-white text-lg">
                       {getInitials((member.display_name || 'Member'))}
                     </AvatarFallback>
@@ -105,7 +105,7 @@ const MemberDirectory = () => {
                     <h3 className="font-bold text-lg text-collektiv-dark truncate">
                       {member.display_name || 'Member'}
                     </h3>
-                    {member.position && member.company && (
+                    {!member.is_anonymous && member.position && member.company && (
                       <p className="text-sm text-gray-600 mb-2">
                         {member.position} at {member.company}
                       </p>

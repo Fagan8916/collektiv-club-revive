@@ -1,13 +1,8 @@
 
 import React from "react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
-interface ProfileSubmissionSuccessScreenProps {
-  onSubmitAnother: () => void;
-}
-
-const ProfileSubmissionSuccessScreen = ({ onSubmitAnother }: ProfileSubmissionSuccessScreenProps) => {
+const ProfileSubmissionSuccessScreen = () => {
   return (
     <Card className="max-w-2xl mx-auto">
       <CardContent className="p-8 text-center">
@@ -21,13 +16,6 @@ const ProfileSubmissionSuccessScreen = ({ onSubmitAnother }: ProfileSubmissionSu
           <p className="text-gray-600 mb-4">
             Thank you for submitting your profile. An admin will review it and you'll be notified once it's approved and added to the member directory.
           </p>
-          <Button 
-            onClick={onSubmitAnother}
-            variant="outline"
-            className="mt-4"
-          >
-            Submit Another Profile
-          </Button>
         </div>
       </CardContent>
     </Card>

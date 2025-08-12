@@ -21,9 +21,13 @@ interface ProfileSubmissionData {
 
 interface ProfileFormFieldsProps {
   form: UseFormReturn<ProfileSubmissionData>;
+  isAnonymous?: boolean;
 }
 
-const ProfileFormFields = ({ form }: ProfileFormFieldsProps) => {
+const ProfileFormFields = ({ form, isAnonymous }: ProfileFormFieldsProps) => {
+  if (isAnonymous) {
+    return null;
+  }
   return (
     <>
       <FormField
