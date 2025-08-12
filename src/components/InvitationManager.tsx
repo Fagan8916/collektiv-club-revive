@@ -82,42 +82,6 @@ const InvitationManager = () => {
     }
   };
 
-  const sendInviteEmail = async () => {
-    if (!newEmail.trim()) {
-      toast({
-        title: "Email Required",
-        description: "Please enter an email address.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const { data, error } = await supabase.functions.invoke('admin-invite', {
-        body: { email: newEmail.trim(), redirectTo: 'https://collektiv.club/#/setup-account' }
-      });
-
-      if (error) throw error as any;
-
-      toast({
-        title: "Invite Sent",
-        description: `Admin invite sent to ${newEmail}. The link routes to setup-account.`,
-      });
-
-      setNewEmail("");
-      fetchInvitations();
-    } catch (error: any) {
-      console.error('Error sending invite email:', error);
-      toast({
-        title: "Error",
-        description: error?.message || "Failed to send invite email.",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const copyInvitationCode = (code: string) => {
     navigator.clipboard.writeText(code);
@@ -176,13 +140,6 @@ const InvitationManager = () => {
               className="bg-collektiv-green hover:bg-collektiv-dark"
             >
               {loading ? "Creating..." : "Generate Code"}
-            </Button>
-            <Button 
-              onClick={sendInviteEmail}
-              disabled={loading}
-              variant="outline"
-            >
-              {loading ? "Sending..." : "Send Email Invite"}
             </Button>
           </div>
         </CardContent>
