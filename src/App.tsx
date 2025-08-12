@@ -92,17 +92,17 @@ function App() {
         const origin = window.location.origin;
 
         if (typeParam === 'invite' || typeParam === 'recovery') {
-          window.history.replaceState({}, document.title, `${origin}/#/setup-account`);
+          window.location.replace(`${origin}/#/setup-account`);
           return true;
         }
 
         if (hasProvider || window.location.hash.startsWith('#/members/build-profile')) {
-          window.history.replaceState({}, document.title, `${origin}/#/members/build-profile`);
+          window.location.replace(`${origin}/#/members/build-profile`);
           return true;
         }
 
-        window.history.replaceState({}, document.title, `${origin}/#/members`);
-        return true;
+          window.location.replace(`${origin}/#/members`);
+          return true;
       } catch (e) {
         console.error('App: setSession failed', e);
         cleanAndRedirect(isSetupRoute ? 'setup' : (isMembersRoute ? 'members' : 'setup'), { preserveTokens: true });

@@ -49,17 +49,34 @@ const Members = () => {
     const fetchUserProfile = async () => {
       if (user?.id) {
         try {
-          const { data: profile, error } = await supabase
+          let displayProfile: any = null;
+          const { data: profile, error: profileError } = await supabase
             .from('member_profiles')
             .select('full_name')
             .eq('user_id', user.id)
             .maybeSingle();
           
-          if (error) {
-            console.log("Error fetching profile:", error);
+          if (profileError) {
+            console.log("Error fetching profile:", profileError);
           } else {
-            setUserProfile(profile);
+            displayProfile = profile;
           }
+
+          if (!displayProfile?.full_name) {
+            const { data: submission, error: submissionError } = await supabase
+              .from('member_profile_submissions')
+              .select('full_name, submitted_at')
+              .eq('user_id', user.id)
+              .order('submitted_at', { ascending: false })
+              .maybeSingle();
+            if (submissionError) {
+              console.log("Error fetching latest submission:", submissionError);
+            } else if (submission?.full_name) {
+              displayProfile = { full_name: submission.full_name };
+            }
+          }
+
+          setUserProfile(displayProfile);
         } catch (error) {
           console.log("Profile fetch failed:", error);
           setUserProfile(null);

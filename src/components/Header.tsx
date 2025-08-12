@@ -111,7 +111,7 @@ const Header = () => {
             isAuthenticated ? (
               <>
                 <Link to="/members" className="ml-4 flex items-center text-collektiv-green hover:text-collektiv-dark transition-colors">
-                  <User className="mr-1" size={18} /> Members
+                  <User className="mr-1" size={18} /> Member Zone
                 </Link>
                 <Button variant="ghost" className="ml-2" onClick={handleLogout}>Log out</Button>
               </>
@@ -175,7 +175,7 @@ const Header = () => {
                   className="text-collektiv-green text-lg mt-4 flex items-center hover:text-collektiv-dark transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <User className="mr-1" size={20} /> Members
+                  <User className="mr-1" size={20} /> Member Zone
                 </Link>
                 <Button variant="ghost" className="mt-2" onClick={() => { setMobileMenuOpen(false); handleLogout(); }}>Log out</Button>
               </>
