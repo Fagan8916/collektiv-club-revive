@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { Tables } from "@/integrations/supabase/types";
 import ProfileImageUpload from "@/components/ProfileImageUpload";
@@ -177,6 +178,17 @@ const AdminProfileManager = () => {
                             setEditForm({ ...editForm, full_name: e.target.value })
                           }
                         />
+                      </div>
+                      
+                      <div className="flex items-center space-x-2">
+                        <Switch
+                          id="is_anonymous"
+                          checked={editForm.is_anonymous || false}
+                          onCheckedChange={(checked) => 
+                            setEditForm({ ...editForm, is_anonymous: checked })
+                          }
+                        />
+                        <Label htmlFor="is_anonymous">Anonymous Profile</Label>
                       </div>
                       <div>
                         <Label htmlFor="bio">Bio</Label>
