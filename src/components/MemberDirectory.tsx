@@ -4,7 +4,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Building2, Linkedin, Globe, User, Briefcase } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { MapPin, Building2, Linkedin, Globe, User, Briefcase, ChevronDown, ChevronUp } from "lucide-react";
 
 // Use member_profiles to control visibility and names precisely
 interface MemberPublicProfile {
@@ -28,6 +29,7 @@ interface MemberPublicProfile {
 const MemberDirectory = () => {
   const [members, setMembers] = useState<MemberPublicProfile[]>([]);
   const [loading, setLoading] = useState(true);
+  const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     fetchMembers();
@@ -42,12 +44,59 @@ const MemberDirectory = () => {
         .order("created_at", { ascending: false });
 
       if (error) throw error;
-      setMembers((data as unknown as MemberPublicProfile[]) || []);
+      
+      // Sort members with priority: Ryan & Manon first, then those with bios, then non-anonymous, then by creation date
+      const sortedMembers = (data || []).sort((a, b) => {
+        const aPriority = getPriority(a);
+        const bPriority = getPriority(b);
+        
+        if (aPriority !== bPriority) {
+          return aPriority - bPriority;
+        }
+        
+        // For same priority, sort by creation date (newest first)
+        return new Date(b.created_at || '').getTime() - new Date(a.created_at || '').getTime();
+      });
+
+      setMembers(sortedMembers as unknown as MemberPublicProfile[]);
     } catch (error) {
       console.error("Error fetching members:", error);
     } finally {
       setLoading(false);
     }
+  };
+
+  // Priority function: lower number = higher priority
+  const getPriority = (member: any): number => {
+    const displayName = getDisplayName(member).toLowerCase();
+    
+    // Ryan & Manon always at top
+    if (displayName.includes('ryan') || displayName.includes('manon')) {
+      return 0;
+    }
+    
+    // Members with bios next
+    if (member.bio && member.bio.trim().length > 0) {
+      return 1;
+    }
+    
+    // Non-anonymous members
+    if (!member.is_anonymous) {
+      return 2;
+    }
+    
+    // Anonymous members last
+    return 3;
+  };
+
+  const toggleExpanded = (memberId: string) => {
+    const newExpanded = new Set(expandedCards);
+    if (newExpanded.has(memberId)) {
+      newExpanded.delete(memberId);
+    } else {
+      newExpanded.add(memberId);
+    }
+    setExpandedCards(newExpanded);
   };
 
   const getDisplayName = (member: MemberPublicProfile) => {
@@ -116,6 +165,11 @@ const MemberDirectory = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {members.map((member) => {
             const displayName = getDisplayName(member);
+            const isExpanded = expandedCards.has(member.id || '');
+            const hasBio = member.bio && member.bio.trim().length > 0;
+            const bioPreview = hasBio ? member.bio.substring(0, 150) : '';
+            const shouldShowToggle = hasBio && member.bio.length > 150;
+            
             return (
               <Card key={member.id} className="hover:shadow-lg transition-shadow bg-white">
                 <CardContent className="p-6">
@@ -147,10 +201,30 @@ const MemberDirectory = () => {
                     </div>
                   </div>
 
-                  {member.bio && (
-                    <p className="text-sm text-gray-600 mb-4 line-clamp-3">
-                      {member.bio}
-                    </p>
+                  {hasBio && (
+                    <div className="mb-4">
+                      <p className="text-sm text-gray-600 leading-relaxed">
+                        {isExpanded ? member.bio : (shouldShowToggle ? `${bioPreview}...` : member.bio)}
+                      </p>
+                      {shouldShowToggle && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => toggleExpanded(member.id || '')}
+                          className="mt-2 h-auto p-0 text-collektiv-green hover:text-collektiv-lightgreen"
+                        >
+                          {isExpanded ? (
+                            <>
+                              Show less <ChevronUp className="ml-1 h-4 w-4" />
+                            </>
+                          ) : (
+                            <>
+                              Read more <ChevronDown className="ml-1 h-4 w-4" />
+                            </>
+                          )}
+                        </Button>
+                      )}
+                    </div>
                   )}
 
                   {member.services_offered && (

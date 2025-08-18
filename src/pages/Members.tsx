@@ -188,16 +188,37 @@ const Members = () => {
       {/* Stats Section */}
       <div className="container mx-auto px-4 -mt-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
-          {stats.map((stat, index) => (
-            <Card key={index} className="bg-white shadow-lg hover:shadow-xl transition-shadow">
-              <CardContent className="p-6 text-center">
-                <stat.icon className="mx-auto mb-4 h-8 w-8 text-collektiv-green" />
-                <h3 className="text-2xl font-bold text-collektiv-dark mb-2">{stat.value}</h3>
-                <p className="font-semibold text-gray-700 mb-1">{stat.title}</p>
-                <p className="text-sm text-gray-500">{stat.description}</p>
-              </CardContent>
-            </Card>
-          ))}
+          {stats.map((stat, index) => {
+            const isClickable = stat.title === "Club Members";
+            const CardComponent = isClickable ? "button" : "div";
+            return (
+              <Card key={index} className="bg-white shadow-lg hover:shadow-xl transition-shadow">
+                <CardContent className="p-6 text-center">
+                  <CardComponent
+                    className={`w-full ${isClickable ? 'cursor-pointer hover:opacity-80 transition-opacity' : ''}`}
+                    onClick={isClickable ? () => {
+                      // Switch to directory tab and scroll to it
+                      const directoryTab = document.querySelector('[value="directory"]') as HTMLElement;
+                      if (directoryTab) {
+                        directoryTab.click();
+                        setTimeout(() => {
+                          const directorySection = document.querySelector('[data-state="active"][role="tabpanel"]');
+                          if (directorySection) {
+                            directorySection.scrollIntoView({ behavior: 'smooth' });
+                          }
+                        }, 100);
+                      }
+                    } : undefined}
+                  >
+                    <stat.icon className="mx-auto mb-4 h-8 w-8 text-collektiv-green" />
+                    <h3 className="text-2xl font-bold text-collektiv-dark mb-2">{stat.value}</h3>
+                    <p className="font-semibold text-gray-700 mb-1">{stat.title}</p>
+                    <p className="text-sm text-gray-500">{stat.description}</p>
+                  </CardComponent>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       </div>
 
