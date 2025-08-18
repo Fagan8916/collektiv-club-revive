@@ -111,6 +111,7 @@ export type Database = {
         Row: {
           bio: string | null
           company: string | null
+          contact_email: string | null
           created_at: string
           expertise: string[] | null
           first_name: string | null
@@ -130,6 +131,7 @@ export type Database = {
         Insert: {
           bio?: string | null
           company?: string | null
+          contact_email?: string | null
           created_at?: string
           expertise?: string[] | null
           first_name?: string | null
@@ -149,6 +151,7 @@ export type Database = {
         Update: {
           bio?: string | null
           company?: string | null
+          contact_email?: string | null
           created_at?: string
           expertise?: string[] | null
           first_name?: string | null
@@ -328,6 +331,10 @@ export type Database = {
       can_see_full_profile: {
         Args: { profile_user_id: string }
         Returns: boolean
+      }
+      claim_member_profile: {
+        Args: Record<PropertyKey, never>
+        Returns: string
       }
       create_invitation: {
         Args: { p_email: string }

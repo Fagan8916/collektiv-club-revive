@@ -48,6 +48,21 @@ export const useAuth = () => {
             const guardKey = `profile_guard_shown_${uid}`;
             if (localStorage.getItem(guardKey)) return;
             try {
+              // First try to claim an existing profile by email
+              console.log('useAuth: Attempting to claim profile for user:', uid);
+              const { data: claimedProfileId, error: claimError } = await supabase.rpc('claim_member_profile');
+              
+              if (!claimError && claimedProfileId) {
+                console.log('useAuth: Successfully claimed profile:', claimedProfileId);
+                toast({
+                  title: "Profile claimed",
+                  description: "We found your existing profile and linked it to your account. You can now edit it.",
+                });
+                localStorage.setItem(guardKey, '1');
+                return;
+              }
+
+              // If no profile was claimed, check if user has an existing profile
               const { data: profile, error } = await supabase
                 .from('member_profiles')
                 .select('id, first_name, full_name')
