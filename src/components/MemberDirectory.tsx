@@ -54,6 +54,12 @@ const MemberDirectory = () => {
     if (member.is_anonymous && member.first_name) {
       return member.first_name;
     }
+    
+    // If we have both first_name and full_name, but full_name appears to be just a surname
+    if (member.first_name && member.full_name && !member.full_name.includes(' ')) {
+      return `${member.first_name} ${member.full_name}`;
+    }
+    
     if (member.full_name) {
       return member.full_name;
     }
