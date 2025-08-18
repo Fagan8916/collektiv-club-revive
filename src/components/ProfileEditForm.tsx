@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Switch } from "@/components/ui/switch";
+import ProfileImageUpload from "@/components/ProfileImageUpload";
 
 const profileSchema = z.object({
   first_name: z.string().optional(),
@@ -220,6 +222,24 @@ const ProfileEditForm = () => {
               )}
             />
 
+            <ProfileImageUpload
+              currentImageUrl={form.watch("profile_image_url") || ""}
+              onImageUpload={(url) => form.setValue("profile_image_url", url)}
+              userFullName={form.watch("full_name") || "User"}
+            />
+
+            <FormField
+              control={form.control}
+              name="profile_image_url"
+              render={({ field }) => (
+                <FormItem className="hidden">
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="bio"
@@ -329,20 +349,6 @@ const ProfileEditForm = () => {
                 )}
               />
             </div>
-
-            <FormField
-              control={form.control}
-              name="profile_image_url"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Profile Image URL</FormLabel>
-                  <FormControl>
-                    <Input placeholder="https://example.com/your-photo.jpg" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
             
             <Button 
               type="submit" 

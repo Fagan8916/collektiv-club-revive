@@ -50,6 +50,19 @@ const MemberDirectory = () => {
     }
   };
 
+  const getDisplayName = (member: MemberPublicProfile) => {
+    if (member.is_anonymous && member.first_name) {
+      return member.first_name;
+    }
+    if (member.full_name) {
+      return member.full_name;
+    }
+    if (member.first_name) {
+      return member.first_name;
+    }
+    return 'Member';
+  };
+
   const getInitials = (name: string) => {
     return name
       .split(" ")
@@ -95,99 +108,105 @@ const MemberDirectory = () => {
         </Card>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {members.map((member) => (
-            <Card key={member.id} className="hover:shadow-lg transition-shadow bg-white">
-              <CardContent className="p-6">
-                <div className="flex items-start space-x-4 mb-4">
-                  <Avatar className="h-16 w-16">
-                    <AvatarImage src={(member.is_anonymous ? "" : (member.profile_image_url || ""))} alt={(member.is_anonymous ? (member.first_name || 'Member') : (member.full_name || 'Member'))} />
-                    <AvatarFallback className="bg-collektiv-green text-white text-lg">
-                      {getInitials((member.is_anonymous ? (member.first_name || 'Member') : (member.full_name || 'Member')))}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-bold text-lg text-collektiv-dark truncate">
-                      {(member.is_anonymous ? (member.first_name || 'Member') : (member.full_name || 'Member'))}
-                    </h3>
-                    {!member.is_anonymous && member.position && member.company && (
-                      <p className="text-sm text-gray-600 mb-2">
-                        {member.position} at {member.company}
-                      </p>
-                    )}
-                    {!member.is_anonymous && member.location && (
-                      <div className="flex items-center text-sm text-gray-500">
-                        <MapPin className="h-3 w-3 mr-1" />
-                        {member.location}
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {member.bio && (
-                  <p className="text-sm text-gray-600 mb-4 line-clamp-3">
-                    {member.bio}
-                  </p>
-                )}
-
-                {member.services_offered && (
-                  <div className="mb-4">
-                    <div className="flex items-center text-sm font-medium text-collektiv-green mb-2">
-                      <Briefcase className="h-4 w-4 mr-1" />
-                      Services Offered
-                    </div>
-                    <p className="text-sm text-gray-600 line-clamp-2">
-                      {member.services_offered}
-                    </p>
-                  </div>
-                )}
-
-                {member.expertise && member.expertise.length > 0 && (
-                  <div className="mb-4">
-                    <div className="flex flex-wrap gap-1">
-                      {member.expertise.slice(0, 3).map((skill, index) => (
-                        <Badge key={index} variant="secondary" className="text-xs">
-                          {skill}
-                        </Badge>
-                      ))}
-                      {member.expertise.length > 3 && (
-                        <Badge variant="outline" className="text-xs">
-                          +{member.expertise.length - 3} more
-                        </Badge>
+          {members.map((member) => {
+            const displayName = getDisplayName(member);
+            return (
+              <Card key={member.id} className="hover:shadow-lg transition-shadow bg-white">
+                <CardContent className="p-6">
+                  <div className="flex items-start space-x-4 mb-4">
+                    <Avatar className="h-16 w-16">
+                      <AvatarImage 
+                        src={member.is_anonymous ? "" : (member.profile_image_url || "")} 
+                        alt={displayName} 
+                      />
+                      <AvatarFallback className="bg-collektiv-green text-white text-lg">
+                        {getInitials(displayName)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-bold text-lg text-collektiv-dark truncate">
+                        {displayName}
+                      </h3>
+                      {!member.is_anonymous && member.position && member.company && (
+                        <p className="text-sm text-gray-600 mb-2">
+                          {member.position} at {member.company}
+                        </p>
+                      )}
+                      {!member.is_anonymous && member.location && (
+                        <div className="flex items-center text-sm text-gray-500">
+                          <MapPin className="h-3 w-3 mr-1" />
+                          {member.location}
+                        </div>
                       )}
                     </div>
                   </div>
-                )}
 
-                <div className="flex items-center space-x-3 pt-4 border-t">
-                  {member.linkedin_url && (
-                    <a
-                      href={member.linkedin_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:text-blue-800 transition-colors"
-                    >
-                      <Linkedin className="h-4 w-4" />
-                    </a>
+                  {member.bio && (
+                    <p className="text-sm text-gray-600 mb-4 line-clamp-3">
+                      {member.bio}
+                    </p>
                   )}
-                  {member.website_url && (
-                    <a
-                      href={member.website_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-600 hover:text-gray-800 transition-colors"
-                    >
-                      <Globe className="h-4 w-4" />
-                    </a>
-                  )}
-                  {member.company && (
-                    <div className="flex items-center text-gray-500">
-                      <Building2 className="h-4 w-4" />
+
+                  {member.services_offered && (
+                    <div className="mb-4">
+                      <div className="flex items-center text-sm font-medium text-collektiv-green mb-2">
+                        <Briefcase className="h-4 w-4 mr-1" />
+                        Services Offered
+                      </div>
+                      <p className="text-sm text-gray-600 line-clamp-2">
+                        {member.services_offered}
+                      </p>
                     </div>
                   )}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+
+                  {member.expertise && member.expertise.length > 0 && (
+                    <div className="mb-4">
+                      <div className="flex flex-wrap gap-1">
+                        {member.expertise.slice(0, 3).map((skill, index) => (
+                          <Badge key={index} variant="secondary" className="text-xs">
+                            {skill}
+                          </Badge>
+                        ))}
+                        {member.expertise.length > 3 && (
+                          <Badge variant="outline" className="text-xs">
+                            +{member.expertise.length - 3} more
+                          </Badge>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex items-center space-x-3 pt-4 border-t">
+                    {member.linkedin_url && (
+                      <a
+                        href={member.linkedin_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:text-blue-800 transition-colors"
+                      >
+                        <Linkedin className="h-4 w-4" />
+                      </a>
+                    )}
+                    {member.website_url && (
+                      <a
+                        href={member.website_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-600 hover:text-gray-800 transition-colors"
+                      >
+                        <Globe className="h-4 w-4" />
+                      </a>
+                    )}
+                    {member.company && (
+                      <div className="flex items-center text-gray-500">
+                        <Building2 className="h-4 w-4" />
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       )}
     </div>
