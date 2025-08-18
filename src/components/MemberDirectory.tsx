@@ -185,7 +185,7 @@ const MemberDirectory = () => {
                   <div className="flex items-center space-x-3 pt-4 border-t">
                     {member.linkedin_url && (
                       <a
-                        href={member.linkedin_url}
+                        href={member.linkedin_url.startsWith('http') ? member.linkedin_url : `https://${member.linkedin_url}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-600 hover:text-blue-800 transition-colors"
@@ -195,7 +195,7 @@ const MemberDirectory = () => {
                     )}
                     {member.website_url && (
                       <a
-                        href={member.website_url}
+                        href={member.website_url.startsWith('http') ? member.website_url : `https://${member.website_url}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-gray-600 hover:text-gray-800 transition-colors"

@@ -13,6 +13,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Switch } from "@/components/ui/switch";
 import ProfileImageUpload from "@/components/ProfileImageUpload";
+import { normalizeUrl, isValidUrl } from "@/utils/urlUtils";
 
 const profileSchema = z.object({
   first_name: z.string().optional(),
@@ -21,8 +22,12 @@ const profileSchema = z.object({
   profile_image_url: z.string().url().optional().or(z.literal("")),
   company: z.string().optional(),
   position: z.string().optional(),
-  linkedin_url: z.string().url().optional().or(z.literal("")),
-  website_url: z.string().url().optional().or(z.literal("")),
+  linkedin_url: z.string().optional().refine((val) => !val || isValidUrl(val), {
+    message: "Please enter a valid LinkedIn URL"
+  }),
+  website_url: z.string().optional().refine((val) => !val || isValidUrl(val), {
+    message: "Please enter a valid website URL"
+  }),
   location: z.string().optional(),
   services_offered: z.string().optional(),
   is_anonymous: z.boolean().optional(),
@@ -114,8 +119,8 @@ const ProfileEditForm = () => {
         profile_image_url: data.profile_image_url || null,
         company: data.company || null,
         position: data.position || null,
-        linkedin_url: data.linkedin_url || null,
-        website_url: data.website_url || null,
+        linkedin_url: normalizeUrl(data.linkedin_url || "") || null,
+        website_url: normalizeUrl(data.website_url || "") || null,
         location: data.location || null,
         services_offered: data.services_offered || null,
         is_anonymous: !!data.is_anonymous,
@@ -328,7 +333,7 @@ const ProfileEditForm = () => {
                   <FormItem>
                     <FormLabel>LinkedIn URL</FormLabel>
                     <FormControl>
-                      <Input placeholder="https://linkedin.com/in/..." {...field} />
+                      <Input placeholder="linkedin.com/in/your-profile or www.linkedin.com/in/..." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -342,7 +347,7 @@ const ProfileEditForm = () => {
                   <FormItem>
                     <FormLabel>Website URL</FormLabel>
                     <FormControl>
-                      <Input placeholder="https://yourwebsite.com" {...field} />
+                      <Input placeholder="www.yourwebsite.com or yourwebsite.com" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

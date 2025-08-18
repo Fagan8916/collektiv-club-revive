@@ -12,6 +12,7 @@ import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { Tables } from "@/integrations/supabase/types";
 import ProfileImageUpload from "@/components/ProfileImageUpload";
+import { normalizeUrl } from "@/utils/urlUtils";
 
 type MemberProfile = Tables<"member_profiles">;
 
@@ -53,9 +54,16 @@ const AdminProfileManager = () => {
     if (!editingProfile) return;
 
     try {
+      // Normalize URLs before saving
+      const normalizedForm = {
+        ...editForm,
+        linkedin_url: normalizeUrl(editForm.linkedin_url || "") || null,
+        website_url: normalizeUrl(editForm.website_url || "") || null,
+      };
+
       const { error } = await supabase
         .from("member_profiles")
-        .update(editForm)
+        .update(normalizedForm)
         .eq("id", editingProfile.id);
 
       if (error) throw error;

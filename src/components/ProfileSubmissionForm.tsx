@@ -11,6 +11,7 @@ import ExpertiseManager from "./ExpertiseManager";
 import ProfileFormFields from "./ProfileFormFields";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
+import { normalizeUrl } from "@/utils/urlUtils";
 
 interface ProfileSubmissionData {
   first_name?: string;
@@ -147,8 +148,8 @@ const ProfileSubmissionForm = () => {
         bio: anon ? null : (data.bio || null),
         company: anon ? null : (data.company || null),
         position: anon ? null : (data.position || null),
-        linkedin_url: anon ? null : (data.linkedin_url || null),
-        website_url: anon ? null : (data.website_url || null),
+        linkedin_url: anon ? null : (normalizeUrl(data.linkedin_url || "") || null),
+        website_url: anon ? null : (normalizeUrl(data.website_url || "") || null),
         location: anon ? null : (data.location || null),
         profile_image_url: anon ? null : (data.profile_image_url || null),
         services_offered: anon ? null : (data.services_offered || null),
