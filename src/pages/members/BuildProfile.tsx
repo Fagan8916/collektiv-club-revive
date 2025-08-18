@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ProfileSubmissionForm from "@/components/ProfileSubmissionForm";
 import LoadingScreen from "@/components/auth/LoadingScreen";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 const BuildProfile: React.FC = () => {
-  const { isAuthenticated, loading } = useAuth();
+  const { isAuthenticated, loading, user } = useAuth();
   const navigate = useNavigate();
+  const [checkingProfile, setCheckingProfile] = useState(true);
 
   useEffect(() => {
     // SEO
@@ -40,7 +42,45 @@ const BuildProfile: React.FC = () => {
     }
   }, [loading, isAuthenticated, navigate]);
 
-  if (loading) return <LoadingScreen />;
+  // Check if user already has a profile or submission
+  useEffect(() => {
+    const checkExistingProfile = async () => {
+      if (!loading && isAuthenticated && user?.id) {
+        try {
+          // Check for existing profile
+          const { data: profile } = await supabase
+            .from('member_profiles')
+            .select('id')
+            .eq('user_id', user.id)
+            .maybeSingle();
+          
+          if (profile) {
+            navigate("/members");
+            return;
+          }
+          
+          // Check for existing submission
+          const { data: submission } = await supabase
+            .from('member_profile_submissions')
+            .select('id')
+            .eq('user_id', user.id)
+            .maybeSingle();
+          
+          if (submission) {
+            navigate("/members");
+            return;
+          }
+        } catch (error) {
+          console.warn('Error checking profile/submission status:', error);
+        }
+        setCheckingProfile(false);
+      }
+    };
+
+    checkExistingProfile();
+  }, [loading, isAuthenticated, user, navigate]);
+
+  if (loading || checkingProfile) return <LoadingScreen />;
   if (!isAuthenticated) return <LoadingScreen />;
 
   return (

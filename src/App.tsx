@@ -97,10 +97,44 @@ function App() {
           return true;
         }
 
-        if (hasProvider || window.location.hash.startsWith('#/members/build-profile')) {
-          window.location.replace(`${origin}/#/members/build-profile`);
-          return true;
+      if (hasProvider || window.location.hash.startsWith('#/members/build-profile')) {
+        // Check if user already has a profile or submission before redirecting to build-profile
+        try {
+          const { data: { session } } = await supabase.auth.getSession();
+          if (session?.user?.id) {
+            const userId = session.user.id;
+            
+            // Check for existing profile
+            const { data: profile } = await supabase
+              .from('member_profiles')
+              .select('id')
+              .eq('user_id', userId)
+              .maybeSingle();
+            
+            if (profile) {
+              window.location.replace(`${origin}/#/members`);
+              return true;
+            }
+            
+            // Check for existing submission
+            const { data: submission } = await supabase
+              .from('member_profile_submissions')
+              .select('id')
+              .eq('user_id', userId)
+              .maybeSingle();
+            
+            if (submission) {
+              window.location.replace(`${origin}/#/members`);
+              return true;
+            }
+          }
+        } catch (e) {
+          console.warn('App: Error checking profile/submission status', e);
         }
+        
+        window.location.replace(`${origin}/#/members/build-profile`);
+        return true;
+      }
 
           window.location.replace(`${origin}/#/members`);
           return true;
