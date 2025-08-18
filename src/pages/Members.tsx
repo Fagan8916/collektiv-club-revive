@@ -19,6 +19,7 @@ const Members = () => {
   console.log('Members: Component rendering, current URL:', window.location.href);
   
   const [userProfile, setUserProfile] = useState<any>(null);
+  const [activeTab, setActiveTab] = useState("investments");
   const navigate = useNavigate();
   const { user, isAuthenticated, loading: authLoading, signOut } = useAuth();
   const { isAdmin, loading: roleLoading } = useUserRole();
@@ -197,17 +198,13 @@ const Members = () => {
                   <CardComponent
                     className={`w-full ${isClickable ? 'cursor-pointer hover:opacity-80 transition-opacity' : ''}`}
                     onClick={isClickable ? () => {
-                      // Switch to directory tab and scroll to it
-                      const directoryTab = document.querySelector('[value="directory"]') as HTMLElement;
-                      if (directoryTab) {
-                        directoryTab.click();
-                        setTimeout(() => {
-                          const directorySection = document.querySelector('[data-state="active"][role="tabpanel"]');
-                          if (directorySection) {
-                            directorySection.scrollIntoView({ behavior: 'smooth' });
-                          }
-                        }, 100);
-                      }
+                      setActiveTab('directory');
+                      setTimeout(() => {
+                        const directorySection = document.querySelector('[data-state="active"][role="tabpanel"]');
+                        if (directorySection) {
+                          directorySection.scrollIntoView({ behavior: 'smooth' });
+                        }
+                      }, 100);
                     } : undefined}
                   >
                     <stat.icon className="mx-auto mb-4 h-8 w-8 text-collektiv-green" />
@@ -224,7 +221,7 @@ const Members = () => {
 
       {/* Main Content */}
       <div className="container mx-auto px-4 pb-16">
-        <Tabs defaultValue="investments" className="w-full">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <div className="flex justify-center mb-8">
             <TabsList className={`grid h-auto w-full sm:max-w-3xl gap-2 p-1 rounded-md bg-transparent ${isAdmin ? 'grid-cols-2 md:grid-cols-4' : 'grid-cols-2 md:grid-cols-3'}`}>
               <TabsTrigger value="investments" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">

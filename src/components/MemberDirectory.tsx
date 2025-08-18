@@ -171,7 +171,11 @@ const MemberDirectory = () => {
             const shouldShowToggle = hasBio && member.bio.length > 150;
             
             return (
-              <Card key={member.id} className="hover:shadow-lg transition-shadow bg-white">
+              <Card 
+                key={member.id} 
+                className="hover:shadow-lg transition-shadow bg-white cursor-pointer" 
+                onClick={() => hasBio && toggleExpanded(member.id || '')}
+              >
                 <CardContent className="p-6">
                   <div className="flex items-start space-x-4 mb-4">
                     <Avatar className="h-16 w-16">
@@ -203,14 +207,17 @@ const MemberDirectory = () => {
 
                   {hasBio && (
                     <div className="mb-4">
-                      <p className="text-sm text-gray-600 leading-relaxed">
+                      <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-wrap break-words">
                         {isExpanded ? member.bio : (shouldShowToggle ? `${bioPreview}...` : member.bio)}
                       </p>
                       {shouldShowToggle && (
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => toggleExpanded(member.id || '')}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleExpanded(member.id || '');
+                          }}
                           className="mt-2 h-auto p-0 text-collektiv-green hover:text-collektiv-lightgreen"
                         >
                           {isExpanded ? (
@@ -263,6 +270,7 @@ const MemberDirectory = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-600 hover:text-blue-800 transition-colors"
+                        onClick={(e) => e.stopPropagation()}
                       >
                         <Linkedin className="h-4 w-4" />
                       </a>
@@ -273,6 +281,7 @@ const MemberDirectory = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-gray-600 hover:text-gray-800 transition-colors"
+                        onClick={(e) => e.stopPropagation()}
                       >
                         <Globe className="h-4 w-4" />
                       </a>
