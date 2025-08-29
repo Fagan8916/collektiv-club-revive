@@ -98,13 +98,23 @@ function App() {
         }
 
       if (hasProvider || window.location.hash.startsWith('#/members/build-profile')) {
-        // Check if user already has a profile or submission before redirecting to build-profile
+        // Check for profile claiming, existing profile, and submissions before redirecting
         try {
           const { data: { session } } = await supabase.auth.getSession();
           if (session?.user?.id) {
             const userId = session.user.id;
             
-            // Check for existing profile
+            // First, try to claim an existing profile based on email
+            console.log('App: Attempting to claim profile for user:', session.user.email);
+            const { data: claimedProfileId, error: claimError } = await supabase.rpc('claim_member_profile');
+            
+            if (claimedProfileId && !claimError) {
+              console.log('App: Profile claimed successfully, redirecting to members');
+              window.location.replace(`${origin}/#/members`);
+              return true;
+            }
+            
+            // Check for existing profile assigned to this user
             const { data: profile } = await supabase
               .from('member_profiles')
               .select('id')
@@ -112,6 +122,7 @@ function App() {
               .maybeSingle();
             
             if (profile) {
+              console.log('App: User has existing profile, redirecting to members');
               window.location.replace(`${origin}/#/members`);
               return true;
             }
@@ -124,14 +135,16 @@ function App() {
               .maybeSingle();
             
             if (submission) {
+              console.log('App: User has existing submission, redirecting to members');
               window.location.replace(`${origin}/#/members`);
               return true;
             }
           }
         } catch (e) {
-          console.warn('App: Error checking profile/submission status', e);
+          console.warn('App: Error checking profile/claim/submission status', e);
         }
         
+        console.log('App: No existing profile or submission found, redirecting to build-profile');
         window.location.replace(`${origin}/#/members/build-profile`);
         return true;
       }
