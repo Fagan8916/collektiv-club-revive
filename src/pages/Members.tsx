@@ -12,6 +12,7 @@ import ProfileSubmissionForm from "@/components/ProfileSubmissionForm";
 import ProfileEditForm from "@/components/ProfileEditForm";
 import AdminSubmissionsManager from "@/components/AdminSubmissionsManager";
 import AdminProfileManager from "@/components/AdminProfileManager";
+import MembershipManager from "@/components/MembershipManager";
 import { useUserRole } from "@/hooks/useUserRole";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -22,7 +23,7 @@ const Members = () => {
   const [activeTab, setActiveTab] = useState("investments");
   const navigate = useNavigate();
   const { user, isAuthenticated, loading: authLoading, signOut } = useAuth();
-  const { isAdmin, loading: roleLoading } = useUserRole();
+  const { isAdmin, isApprovedMember, loading: roleLoading } = useUserRole();
 
   console.log('Members: Auth state - loading:', authLoading, 'authenticated:', isAuthenticated, 'user:', !!user);
 
@@ -41,6 +42,17 @@ const Members = () => {
       navigate("/login", { replace: true });
     }
   }, [isAuthenticated, authLoading, navigate]);
+
+  // Redirect unapproved members to pending approval page (except for profile building)
+  useEffect(() => {
+    const currentPath = window.location.pathname;
+    const isProfileBuildPath = currentPath.includes('/build-profile');
+    
+    if (!authLoading && !roleLoading && isAuthenticated && !isAdmin && !isApprovedMember && !isProfileBuildPath) {
+      console.log('Members: User not approved, redirecting to pending approval');
+      navigate('/pending-approval', { replace: true });
+    }
+  }, [isAuthenticated, authLoading, roleLoading, isAdmin, isApprovedMember, navigate]);
 
   // Fetch user profile when user is available
   useEffect(() => {
@@ -308,13 +320,24 @@ const Members = () => {
 
           {isAdmin && (
             <TabsContent value="admin" className="space-y-8">
-              <Tabs defaultValue="profiles-to-review" className="w-full">
+              <Tabs defaultValue="membership" className="w-full">
                 <div className="flex justify-center mb-6">
-                  <TabsList className="grid h-auto w-full sm:max-w-3xl grid-cols-2 gap-2 p-1 rounded-md bg-transparent">
-                    <TabsTrigger value="profiles-to-review" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">Profiles to Review</TabsTrigger>
+                  <TabsList className="grid h-auto w-full sm:max-w-4xl grid-cols-3 gap-2 p-1 rounded-md bg-transparent">
+                    <TabsTrigger value="membership" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">Membership</TabsTrigger>
+                    <TabsTrigger value="profiles-to-review" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">Profile Submissions</TabsTrigger>
                     <TabsTrigger value="profiles" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">Manage Profiles</TabsTrigger>
                   </TabsList>
                 </div>
+                
+                <TabsContent value="membership">
+                  <div className="text-center mb-8">
+                    <h3 className="text-2xl font-bold text-collektiv-green mb-4">Membership Requests</h3>
+                    <p className="text-gray-600 max-w-2xl mx-auto">
+                      Review and approve pending membership applications.
+                    </p>
+                  </div>
+                  <MembershipManager />
+                </TabsContent>
                 
                 <TabsContent value="profiles-to-review">
                   <div className="text-center mb-8">
