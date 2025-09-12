@@ -43,14 +43,14 @@ const Members = () => {
     }
   }, [isAuthenticated, authLoading, navigate]);
 
-  // Redirect unapproved members to pending approval page (except for profile building)
+  // Redirect unapproved members to external membership signup (except for profile building)
   useEffect(() => {
     const currentPath = window.location.pathname;
     const isProfileBuildPath = currentPath.includes('/build-profile');
     
     if (!authLoading && !roleLoading && isAuthenticated && !isAdmin && !isApprovedMember && !isProfileBuildPath) {
-      console.log('Members: User not approved, redirecting to pending approval');
-      navigate('/pending-approval', { replace: true });
+      console.log('Members: User not approved, redirecting to external membership signup');
+      window.location.href = 'https://collektiv.club/#/membership';
     }
   }, [isAuthenticated, authLoading, roleLoading, isAdmin, isApprovedMember, navigate]);
 

@@ -22,6 +22,14 @@ const PendingApproval = () => {
     return () => { listener?.subscription?.unsubscribe(); };
   }, [navigate]);
 
+  // Redirect unauthorized users to external membership signup
+  useEffect(() => {
+    if (user) {
+      console.log('PendingApproval: Redirecting to external membership signup');
+      window.location.href = 'https://collektiv.club/#/membership';
+    }
+  }, [user]);
+
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setUser(null);
