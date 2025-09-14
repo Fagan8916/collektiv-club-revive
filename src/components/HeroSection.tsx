@@ -23,7 +23,7 @@ const HeroSection = () => {
             />
           </div>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-collektiv-green">Invest in Start-ups</h2>
-          <h3 className="text-xl md:text-2xl font-bold mb-6 text-collektiv-gray">100% of Your Returns Stay Yours</h3>
+          
           
           <div className="mb-8">
             <h4 className="text-lg md:text-xl font-semibold mb-3 text-collektiv-green">Our Mission</h4>

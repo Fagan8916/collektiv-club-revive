@@ -34,7 +34,7 @@ const Membership = () => {
     },
     {
       q: "What are the investment fees?",
-      a: "Our fees vary by membership tier: VIP members pay 0% Investment fee, Premium members pay 4%, and Trial members pay 12.5%. There are no Annual Investment fees or Carry/Performance fees across all tiers."
+      a: "Our fees vary by membership tier: Free Tier members pay 4.5% upfront fee + 20% carry, Premium members pay 1% upfront fee + 12% carry + £395 annual, and VIP members pay 0% upfront fee + 0% carry + £985 annual."
     },
     {
       q: "How do I access member-only content?",
@@ -50,7 +50,7 @@ const Membership = () => {
     },
     {
       q: "How do these fees compare to other similar groups?",
-      a: "Collektiv offers highly competitive fees compared to traditional angel syndicates. While traditional syndicates typically charge 2-15% investment fees, we charge only 0-12.5% depending on your membership tier. For performance/carry fees, syndicates typically charge 20%, while we charge 0%. Annual investment fees for syndicates range from 0-10%, while ours are always 0%. Regarding membership costs, our fees cap at £985 per annum, while syndicate memberships can run up to £10,000 per annum. <a href=\"https://www.perplexity.ai/search/give-me-a-breakdown-of-the-ave-NluXPHO.Tmm2zFG_DM8jaw#0\" target=\"_blank\" rel=\"noopener noreferrer\" className=\"text-collektiv-blue hover:underline\">Don't take our word for it, ask Perplexity about typical fees</a>."
+      a: "Collektiv offers competitive fees compared to traditional angel syndicates. Our Free Tier charges 4.5% upfront + 20% carry, Premium charges 1% upfront + 12% carry + £395 annual, and VIP charges no fees except £985 annual membership. Traditional syndicates typically charge 2-15% upfront fees plus 20% carry, with annual investment fees of 0-10% and membership costs up to £10,000 per annum. <a href=\"https://www.perplexity.ai/search/give-me-a-breakdown-of-the-ave-NluXPHO.Tmm2zFG_DM8jaw#0\" target=\"_blank\" rel=\"noopener noreferrer\" className=\"text-collektiv-blue hover:underline\">Don't take our word for it, ask Perplexity about typical fees</a>."
     },
     {
       q: "How many investment opportunities will I see?",

@@ -16,10 +16,9 @@ const InvestmentStatsSection = () => {
                     fill="none" stroke="#003B73" strokeWidth="2"/>
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-collektiv-green mb-4">Carry/Performance Fee</h3>
+              <h3 className="text-xl font-semibold text-collektiv-green mb-4">Joining Fee's</h3>
               <p className="text-gray-700">
-                No carry or performance fees, and no ongoing annual fees. Minimal fees apply to 
-                cover reviews and SPV (Special Purpose Vehicle) costs.
+                No charge to join the community, engage with our members and evaluate deal flow
               </p>
             </div>
           </div>

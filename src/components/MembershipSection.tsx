@@ -7,13 +7,13 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 const MembershipSection = () => {
   const plans = [
     {
-      name: "Trial",
+      name: "🟢 Free Tier",
       price: "Free",
       period: "",
       features: [
-        "12.5% Investment fee",
-        "0% Annual Investment fee",
-        "0% Carry / Performance fee",
+        "Now: 4.5% upfront fee + 20% carry + £0 annual",
+        "Before: 12.5% upfront fee + 0% carry + £0 annual", 
+        "✅ Key change: Lower upfront cost, but added performance carry for long-term alignment",
         "Access to the Online Academy"
       ],
       button: "Start Trial",
@@ -21,13 +21,13 @@ const MembershipSection = () => {
       link: "https://airtable.com/appWGyTHcjHMgZrUz/pagHdPVxVwljspHTq/form"
     },
     {
-      name: "Premium",
+      name: "🟡 Premium Tier",
       price: "£395",
-      period: "per Annum",
+      period: "per year",
       features: [
-        "4% Investment fee",
-        "0% Annual Investment fee",
-        "0% Carry / Performance fee",
+        "Now: 1% upfront fee + 12% carry + £395 annual",
+        "Before: 4% upfront fee + 0% carry + £395 annual",
+        "✅ Key change: Reduced upfront cost, modest carry added to align incentives",
         "Access to the Founder and Member Slack Community"
       ],
       button: "Join Premium",
@@ -35,13 +35,13 @@ const MembershipSection = () => {
       link: "https://airtable.com/appWGyTHcjHMgZrUz/pagXGRxiL7ToHR8Tb/form"
     },
     {
-      name: "VIP",
+      name: "🟣 VIP Tier",
       price: "£985",
-      period: "per Annum",
+      period: "per year",
       features: [
-        "0% Investment fee",
-        "0% Annual Investment fee",
-        "0% Carry / Performance fee",
+        "Now: 0% upfront fee + 0% carry + £985 annual",
+        "Before: Same as current",
+        "✅ No change — VIP members continue to receive full upside with no fees",
         "Priority on EIS & SEIS Deals",
         "Access to the Founder and Member Slack Community",
         "Gold Club Community Group Access and Discounts"
@@ -112,69 +112,6 @@ const MembershipSection = () => {
           ))}
         </div>
 
-        {/* Cost Comparison Table - Moved below pricing */}
-        <div className="mb-16">
-          <h3 className="text-2xl font-bold text-center mb-8 text-collektiv-green">How We Compare to Traditional Syndicates</h3>
-          <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-collektiv-green text-white">
-                  <TableHead className="text-white font-bold text-left">Fee Type</TableHead>
-                  <TableHead className="text-white font-bold text-center">Collektiv</TableHead>
-                  <TableHead className="text-white font-bold text-center">Traditional Syndicates</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {Object.entries(feeDetails).map(([feeType, description], index) => {
-                  const isEven = index % 2 === 0;
-                  const feeData = {
-                    "Investment Fee": { collektiv: "0-12.5%", traditional: "2-15%" },
-                    "Performance/Carry Fee": { collektiv: "0%", traditional: "20%" },
-                    "Annual Investment Fee": { collektiv: "0%", traditional: "0-10%" },
-                    "Annual Membership": { collektiv: "Up to £985", traditional: "Up to £10,000" }
-                  };
-
-                  return (
-                    <Collapsible key={feeType} asChild>
-                      <>
-                        <CollapsibleTrigger asChild>
-                          <TableRow className={`cursor-pointer hover:bg-gray-100 ${isEven ? "bg-gray-50" : ""}`}>
-                            <TableCell className="font-medium">
-                              <div className="flex items-center justify-between">
-                                <span>{feeType}</span>
-                                <ChevronDown className="h-4 w-4 text-gray-500 transition-transform data-[state=open]:rotate-180" />
-                              </div>
-                            </TableCell>
-                            <TableCell className="text-center font-bold text-collektiv-green">
-                              {feeData[feeType]?.collektiv}
-                            </TableCell>
-                            <TableCell className="text-center font-bold">
-                              {feeData[feeType]?.traditional}
-                            </TableCell>
-                          </TableRow>
-                        </CollapsibleTrigger>
-                        <CollapsibleContent asChild>
-                          <TableRow className={isEven ? "bg-gray-50" : ""}>
-                            <TableCell colSpan={3} className="px-6 py-4 border-t">
-                              <div className="text-sm text-gray-600 bg-blue-50 p-3 rounded-md">
-                                <strong>What this means:</strong> {description}
-                              </div>
-                            </TableCell>
-                          </TableRow>
-                        </CollapsibleContent>
-                      </>
-                    </Collapsible>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </div>
-          <div className="text-center mt-4">
-            <p className="text-sm text-gray-600">
-              <strong>Lower fees = more returns in your pocket</strong>
-            </p>
-          </div>
-        </div>
       </div>
     </section>
   );
