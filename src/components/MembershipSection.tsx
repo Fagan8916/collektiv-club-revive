@@ -11,8 +11,9 @@ const MembershipSection = () => {
       price: "Free",
       period: "",
       features: [
-        "4.5% upfront fee",
-        "20% carry",
+        "4.5% Investment fee",
+        "0% Annual Investment fee",
+        "20% Carry / Performance fee",
         "Access to the Online Academy"
       ],
       button: "Start Trial",
@@ -24,8 +25,9 @@ const MembershipSection = () => {
       price: "£395",
       period: "per year",
       features: [
-        "1% upfront fee",
-        "12% carry",
+        "1% Investment fee",
+        "0% Annual Investment fee",
+        "12% Carry / Performance fee",
         "Access to the Founder and Member Slack Community"
       ],
       button: "Join Premium",
@@ -37,8 +39,9 @@ const MembershipSection = () => {
       price: "£985",
       period: "per year",
       features: [
-        "0% upfront fee",
-        "0% carry",
+        "0% Investment fee",
+        "0% Annual Investment fee",
+        "0% Carry / Performance fee",
         "Priority on EIS & SEIS Deals",
         "Access to the Founder and Member Slack Community",
         "Gold Club Community Group Access and Discounts"
