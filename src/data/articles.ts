@@ -1,6 +1,20 @@
 import businessHandshakeImage from "@/assets/business-handshake-real.jpg";
+import carryPerformanceFeesImage from "@/assets/carry-performance-fees.jpg";
 
 export const articles = [
+  {
+    id: 13,
+    title: "What Are Carry and Performance Fees?",
+    excerpt:
+      "Understanding carry and performance fees in angel syndicates - how these performance-based incentives align interests between syndicate leads and investors while ensuring transparent, results-driven partnerships.",
+    content: "Extended content about carry and performance fees would go here...",
+    date: "January 25, 2025",
+    author: "Investment Team",
+    image: carryPerformanceFeesImage,
+    slug: "carry-and-performance-fees",
+    route: "/insights/carry-and-performance-fees",
+    category: "Angel Investing",
+  },
   {
     id: 1,
     title: "The Critical Role of Bare Trusts in SPVs and Angel Syndicates",

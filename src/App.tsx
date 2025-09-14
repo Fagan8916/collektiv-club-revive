@@ -19,6 +19,7 @@ import Loxa from './pages/members/investments/Loxa';
 import Pandektes from './pages/members/investments/Pandektes';
 import BuildProfile from './pages/members/BuildProfile';
 import BareTrusts from './pages/insights/BareTrusts';
+import CarryAndPerformanceFees from './pages/insights/CarryAndPerformanceFees';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Toaster } from '@/components/ui/toaster';
@@ -243,6 +244,7 @@ function App() {
             <Route path="/members/investments/loxa" element={<Loxa />} />
             <Route path="/members/investments/pandektes" element={<Pandektes />} />
             <Route path="/insights/bare-trusts" element={<BareTrusts />} />
+            <Route path="/insights/carry-and-performance-fees" element={<CarryAndPerformanceFees />} />
             <Route path="/register" element={<Register />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/setup-account" element={<SetupAccount />} />
