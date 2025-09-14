@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -23,6 +24,7 @@ const AdminProfileManager = () => {
   const [editForm, setEditForm] = useState<Partial<MemberProfile>>({});
   const [dialogOpen, setDialogOpen] = useState(false);
   const [saving, setSaving] = useState(false);
+  const { user, session, loading: authLoading } = useAuth();
 
   useEffect(() => {
     fetchProfiles();
@@ -58,10 +60,33 @@ const AdminProfileManager = () => {
       return;
     }
 
+    // Check authentication state first
+    if (!user || !session) {
+      console.error("User not authenticated - user:", !!user, "session:", !!session);
+      toast.error("Authentication required. Please refresh the page and try again.");
+      return;
+    }
+
     setSaving(true);
     
     try {
-      console.log("Saving profile:", editingProfile.id, editForm);
+      console.log("=== Admin Profile Save Debug ===");
+      console.log("Current user:", user?.id);
+      console.log("Session valid:", !!session?.access_token);
+      console.log("Editing profile:", editingProfile.id);
+      console.log("Form data:", editForm);
+      
+      // Force session refresh to ensure we have valid tokens
+      console.log("Refreshing session before save...");
+      const { data: refreshData, error: refreshError } = await supabase.auth.refreshSession();
+      
+      if (refreshError) {
+        console.error("Session refresh failed:", refreshError);
+        toast.error("Session expired. Please refresh the page and try again.");
+        return;
+      }
+      
+      console.log("Session refreshed successfully");
       
       // Normalize URLs before saving
       const normalizedForm = {
@@ -70,6 +95,8 @@ const AdminProfileManager = () => {
         website_url: normalizeUrl(editForm.website_url || "") || null,
       };
 
+      console.log("Attempting to update profile with normalized data:", normalizedForm);
+      
       const { data, error } = await supabase
         .from("member_profiles")
         .update(normalizedForm)
@@ -77,7 +104,20 @@ const AdminProfileManager = () => {
         .select();
 
       if (error) {
-        console.error("Supabase error:", error);
+        console.error("=== Supabase Update Error ===");
+        console.error("Error code:", error.code);
+        console.error("Error message:", error.message);
+        console.error("Error details:", error.details);
+        console.error("Error hint:", error.hint);
+        
+        // Provide specific error handling
+        if (error.code === '42501' || error.message?.includes('permission denied')) {
+          toast.error("Permission denied. Your admin session may have expired. Please refresh the page and try again.");
+        } else if (error.code === 'PGRST116' || error.message?.includes('JWT')) {
+          toast.error("Authentication token invalid. Please refresh the page and try again.");
+        } else {
+          toast.error(`Database error: ${error.message}`);
+        }
         throw error;
       }
       
@@ -92,27 +132,55 @@ const AdminProfileManager = () => {
       // Refresh the profiles list
       await fetchProfiles();
     } catch (error) {
+      console.error("=== Complete Error Context ===");
       console.error("Error updating profile:", error);
-      toast.error(`Failed to update profile: ${error.message || 'Unknown error'}`);
+      console.error("User authenticated:", !!user);
+      console.error("Session present:", !!session);
+      console.error("Profile ID:", editingProfile?.id);
+      
+      // Only show generic error if we haven't already shown a specific one
+      if (!error.code) {
+        toast.error(`Failed to update profile: ${error.message || 'Unknown error'}`);
+      }
     } finally {
       setSaving(false);
     }
   };
 
   const toggleVisibility = async (profile: MemberProfile) => {
+    // Check authentication state first
+    if (!user || !session) {
+      console.error("User not authenticated for visibility toggle");
+      toast.error("Authentication required. Please refresh the page and try again.");
+      return;
+    }
+
     try {
+      console.log("=== Toggle Visibility Debug ===");
+      console.log("Current user:", user?.id);
+      console.log("Profile ID:", profile.id);
+      console.log("Current visibility:", profile.is_visible);
+      
       const { error } = await supabase
         .from("member_profiles")
         .update({ is_visible: !profile.is_visible })
         .eq("id", profile.id);
 
-      if (error) throw error;
+      if (error) {
+        console.error("Visibility toggle error:", error);
+        if (error.code === '42501' || error.message?.includes('permission denied')) {
+          toast.error("Permission denied. Your admin session may have expired. Please refresh the page and try again.");
+        } else {
+          toast.error(`Failed to update visibility: ${error.message}`);
+        }
+        throw error;
+      }
       
       toast.success(`Profile ${!profile.is_visible ? 'made visible' : 'hidden'}`);
       fetchProfiles();
     } catch (error) {
       console.error("Error updating visibility:", error);
-      toast.error("Failed to update profile visibility");
+      // Error already handled above
     }
   };
 
