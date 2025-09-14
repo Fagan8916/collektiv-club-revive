@@ -298,6 +298,10 @@ export type Database = {
         Args: { _user_id: string }
         Returns: boolean
       }
+      is_current_user_admin: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
       reassign_member_profile_user: {
         Args: { p_new_user_id: string; p_profile_id: string }
         Returns: undefined
