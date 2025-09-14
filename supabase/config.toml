@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.resend-magic-link]
 verify_jwt = false
+
+[functions.crm-automation]
+verify_jwt = false
