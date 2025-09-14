@@ -12,6 +12,7 @@ import ProfileFormFields from "./ProfileFormFields";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { normalizeUrl } from "@/utils/urlUtils";
+import { useUserRole } from "@/hooks/useUserRole";
 
 interface ProfileSubmissionData {
   first_name?: string;
@@ -34,7 +35,9 @@ const ProfileSubmissionForm = () => {
   const [newSkill, setNewSkill] = useState("");
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [hasExistingSubmission, setHasExistingSubmission] = useState(false);
+  const [isAutoApproved, setIsAutoApproved] = useState(false);
   const { toast } = useToast();
+  const { isApprovedMember, loading: roleLoading } = useUserRole();
 
   const form = useForm<ProfileSubmissionData>({
     defaultValues: {
@@ -115,8 +118,9 @@ const ProfileSubmissionForm = () => {
         return;
       }
 
-      console.log("ProfileSubmissionForm: Submitting to database...");
+      console.log("ProfileSubmissionForm: Checking user approval status...");
       const anon = !!data.is_anonymous;
+      
       // Validate required fields based on anonymity
       if (anon) {
         const first = (data.first_name || '').trim();
@@ -157,36 +161,79 @@ const ProfileSubmissionForm = () => {
         is_anonymous: anon,
       } as const;
 
-      const { error } = await supabase
-        .from("member_profile_submissions")
-        .insert(payload);
-
-      if (error) {
-        console.error("ProfileSubmissionForm: Database error:", error);
+      // Check if user is pre-approved and create profile directly
+      if (isApprovedMember) {
+        console.log("ProfileSubmissionForm: User is pre-approved, creating profile directly");
         
-        if (error.code === '23505') {
-          setHasExistingSubmission(true);
-          toast({
-            title: "Submission Already Exists",
-            description: "You have already submitted a profile for review. Only one submission per user is allowed.",
-            variant: "destructive",
+        const { error } = await supabase
+          .from("member_profiles")
+          .insert({
+            ...payload,
+            is_visible: true,
           });
+
+        if (error) {
+          console.error("ProfileSubmissionForm: Direct profile creation error:", error);
+          
+          if (error.code === '23505') {
+            toast({
+              title: "Profile Already Exists",
+              description: "You already have a profile in our directory.",
+              variant: "destructive",
+            });
+          } else {
+            toast({
+              title: "Profile Creation Failed",
+              description: `Failed to create profile: ${error.message}. Please try again.`,
+              variant: "destructive",
+            });
+          }
         } else {
+          console.log("ProfileSubmissionForm: Direct profile creation successful");
+          setIsAutoApproved(true);
+          setHasSubmitted(true);
           toast({
-            title: "Submission Failed",
-            description: `Failed to submit profile: ${error.message}. Please try again.`,
-            variant: "destructive",
+            title: "Profile Created Successfully!",
+            description: "Welcome to the member directory! Your profile is now live.",
           });
+          form.reset();
+          setExpertise([]);
         }
       } else {
-        console.log("ProfileSubmissionForm: Submission successful");
-        setHasSubmitted(true);
-        toast({
-          title: "Profile Submitted Successfully!",
-          description: "Your profile has been submitted for admin review. You'll be notified once it's approved.",
-        });
-        form.reset();
-        setExpertise([]);
+        console.log("ProfileSubmissionForm: User not pre-approved, submitting for admin review");
+        
+        const { error } = await supabase
+          .from("member_profile_submissions")
+          .insert(payload);
+
+        if (error) {
+          console.error("ProfileSubmissionForm: Submission error:", error);
+          
+          if (error.code === '23505') {
+            setHasExistingSubmission(true);
+            toast({
+              title: "Submission Already Exists",
+              description: "You have already submitted a profile for review. Only one submission per user is allowed.",
+              variant: "destructive",
+            });
+          } else {
+            toast({
+              title: "Submission Failed",
+              description: `Failed to submit profile: ${error.message}. Please try again.`,
+              variant: "destructive",
+            });
+          }
+        } else {
+          console.log("ProfileSubmissionForm: Submission successful");
+          setIsAutoApproved(false);
+          setHasSubmitted(true);
+          toast({
+            title: "Profile Submitted Successfully!",
+            description: "Your profile has been submitted for admin review. You'll be notified once it's approved.",
+          });
+          form.reset();
+          setExpertise([]);
+        }
       }
     } catch (error) {
       console.error("ProfileSubmissionForm: Unexpected error:", error);
@@ -201,7 +248,7 @@ const ProfileSubmissionForm = () => {
   };
 
   if (hasSubmitted) {
-    return <ProfileSubmissionSuccessScreen />;
+    return <ProfileSubmissionSuccessScreen isAutoApproved={isAutoApproved} />;
   }
 
   if (hasExistingSubmission) {
@@ -292,10 +339,10 @@ const ProfileSubmissionForm = () => {
 
             <Button 
               type="submit" 
-              disabled={isSubmitting || hasExistingSubmission}
+              disabled={isSubmitting || hasExistingSubmission || roleLoading}
               className="w-full bg-collektiv-green hover:bg-collektiv-dark"
             >
-              {isSubmitting ? "Submitting..." : "Submit Profile"}
+              {isSubmitting ? "Submitting..." : roleLoading ? "Loading..." : "Submit Profile"}
             </Button>
           </form>
         </Form>
