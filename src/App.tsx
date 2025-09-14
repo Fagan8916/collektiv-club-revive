@@ -9,7 +9,7 @@ import Founders from './pages/Founders';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Members from './pages/Members';
-import Register from './pages/Register';
+
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import ResetPassword from './pages/ResetPassword';
@@ -245,7 +245,7 @@ function App() {
             <Route path="/members/investments/pandektes" element={<Pandektes />} />
             <Route path="/insights/bare-trusts" element={<BareTrusts />} />
             <Route path="/insights/carry-and-performance-fees" element={<CarryAndPerformanceFees />} />
-            <Route path="/register" element={<Register />} />
+            
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/setup-account" element={<SetupAccount />} />
             <Route path="/privacy" element={<Privacy />} />
