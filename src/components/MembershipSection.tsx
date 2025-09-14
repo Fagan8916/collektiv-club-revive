@@ -11,9 +11,7 @@ const MembershipSection = () => {
       price: "Free",
       period: "",
       features: [
-        "Now: 4.5% upfront fee + 20% carry + £0 annual",
-        "Before: 12.5% upfront fee + 0% carry + £0 annual", 
-        "✅ Key change: Lower upfront cost, but added performance carry for long-term alignment",
+        "4.5% upfront fee + 20% carry + £0 annual",
         "Access to the Online Academy"
       ],
       button: "Start Trial",
@@ -25,9 +23,7 @@ const MembershipSection = () => {
       price: "£395",
       period: "per year",
       features: [
-        "Now: 1% upfront fee + 12% carry + £395 annual",
-        "Before: 4% upfront fee + 0% carry + £395 annual",
-        "✅ Key change: Reduced upfront cost, modest carry added to align incentives",
+        "1% upfront fee + 12% carry + £395 annual",
         "Access to the Founder and Member Slack Community"
       ],
       button: "Join Premium",
@@ -39,9 +35,7 @@ const MembershipSection = () => {
       price: "£985",
       period: "per year",
       features: [
-        "Now: 0% upfront fee + 0% carry + £985 annual",
-        "Before: Same as current",
-        "✅ No change — VIP members continue to receive full upside with no fees",
+        "0% upfront fee + 0% carry + £985 annual",
         "Priority on EIS & SEIS Deals",
         "Access to the Founder and Member Slack Community",
         "Gold Club Community Group Access and Discounts"

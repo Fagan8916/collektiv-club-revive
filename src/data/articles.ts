@@ -1,5 +1,5 @@
 import businessHandshakeImage from "@/assets/business-handshake-real.jpg";
-import carryPerformanceFeesImage from "@/assets/carry-performance-fees.jpg";
+import carryPerformanceFeesImage from "@/assets/carry-performance-fees-new.jpg";
 
 export const articles = [
   {
