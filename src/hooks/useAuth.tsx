@@ -1,8 +1,9 @@
 
 import { useState, useEffect } from 'react';
-import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
+import { User, Session } from '@supabase/supabase-js';
 import { useToast } from '@/hooks/use-toast';
+import { isProfileIncomplete } from '@/utils/profileUtils';
 
 export const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -73,11 +74,7 @@ export const useAuth = () => {
                 console.warn('useAuth: Guard profile fetch error', error);
                 return;
               }
-              const missing =
-                !profile ||
-                ((!profile.first_name || profile.first_name.trim() === '') &&
-                 (!profile.full_name || profile.full_name.trim() === ''));
-              if (missing) {
+              if (isProfileIncomplete(profile)) {
                 toast({
                   title: "Complete your profile",
                   description: "Add your name and details to appear in the member directory.",

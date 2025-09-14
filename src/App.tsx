@@ -1,6 +1,10 @@
 
-import React, { useEffect } from 'react';
-import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { Toaster } from '@/components/ui/sonner';
+import { isProfileComplete } from '@/utils/profileUtils';
 import Index from './pages/Index';
 import About from './pages/About';
 import Membership from './pages/Membership';
@@ -20,9 +24,6 @@ import Pandektes from './pages/members/investments/Pandektes';
 import BuildProfile from './pages/members/BuildProfile';
 import BareTrusts from './pages/insights/BareTrusts';
 import CarryAndPerformanceFees from './pages/insights/CarryAndPerformanceFees';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
-import { Toaster } from '@/components/ui/toaster';
 
 const queryClient = new QueryClient();
 
@@ -118,12 +119,12 @@ function App() {
             // Check for existing profile assigned to this user
             const { data: profile } = await supabase
               .from('member_profiles')
-              .select('id')
+              .select('id, first_name, full_name')
               .eq('user_id', userId)
               .maybeSingle();
             
-            if (profile) {
-              console.log('App: User has existing profile, redirecting to members');
+            if (profile && isProfileComplete(profile)) {
+              console.log('App: User has complete profile, redirecting to members');
               window.location.replace(`${origin}/#/members`);
               return true;
             }
