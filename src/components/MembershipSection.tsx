@@ -7,11 +7,12 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 const MembershipSection = () => {
   const plans = [
     {
-      name: "🟢 Free Tier",
+      name: "Trial",
       price: "Free",
       period: "",
       features: [
-        "4.5% upfront fee + 20% carry + £0 annual",
+        "4.5% upfront fee",
+        "20% carry",
         "Access to the Online Academy"
       ],
       button: "Start Trial",
@@ -19,11 +20,12 @@ const MembershipSection = () => {
       link: "https://airtable.com/appWGyTHcjHMgZrUz/pagHdPVxVwljspHTq/form"
     },
     {
-      name: "🟡 Premium Tier",
+      name: "Premium",
       price: "£395",
       period: "per year",
       features: [
-        "1% upfront fee + 12% carry + £395 annual",
+        "1% upfront fee",
+        "12% carry",
         "Access to the Founder and Member Slack Community"
       ],
       button: "Join Premium",
@@ -31,11 +33,12 @@ const MembershipSection = () => {
       link: "https://airtable.com/appWGyTHcjHMgZrUz/pagXGRxiL7ToHR8Tb/form"
     },
     {
-      name: "🟣 VIP Tier",
+      name: "VIP",
       price: "£985",
       period: "per year",
       features: [
-        "0% upfront fee + 0% carry + £985 annual",
+        "0% upfront fee",
+        "0% carry",
         "Priority on EIS & SEIS Deals",
         "Access to the Founder and Member Slack Community",
         "Gold Club Community Group Access and Discounts"
