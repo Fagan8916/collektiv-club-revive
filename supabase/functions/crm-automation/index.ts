@@ -3,7 +3,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.54.0';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-api-key',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-api-key, X-API-Key',
 };
 
 interface CRMInviteRequest {
@@ -37,8 +37,22 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Verify API key
-    const providedApiKey = req.headers.get('x-api-key');
+    // Verify API key (case-insensitive)
+    const providedApiKey = req.headers.get('x-api-key') || req.headers.get('X-API-Key');
+    console.log('Provided API key exists:', !!providedApiKey);
+    console.log('Expected API key exists:', !!crmApiKey);
+    
+    if (!providedApiKey) {
+      console.error('No API key provided in headers');
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized - No API key provided' }),
+        { 
+          status: 401, 
+          headers: { 'Content-Type': 'application/json', ...corsHeaders } 
+        }
+      );
+    }
+    
     if (providedApiKey !== crmApiKey) {
       console.error('Invalid API key provided');
       return new Response(
