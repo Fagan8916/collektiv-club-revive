@@ -8,7 +8,7 @@ const CarryAndPerformanceFees = () => {
       date="January 25, 2025"
       author="Investment Team"
       category="Angel Investing"
-      image="/lovable-uploads/5c840e3a-42ff-4205-b966-186132b2d060.png"
+      image="/lovable-uploads/4bb54cc9-8e72-485d-bed3-4367f59aa461.png"
       content={
         <div className="prose prose-lg max-w-none">
           <p className="lead text-xl text-gray-700 mb-8">
