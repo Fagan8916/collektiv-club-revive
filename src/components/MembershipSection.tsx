@@ -112,6 +112,15 @@ const MembershipSection = () => {
           ))}
         </div>
 
+        <div className="text-center">
+          <a 
+            href="#/insights/carry-and-performance-fees" 
+            className="text-collektiv-green hover:text-collektiv-lightgreen font-medium underline"
+          >
+            What are Carry / Performance fees?
+          </a>
+        </div>
+
       </div>
     </section>
   );

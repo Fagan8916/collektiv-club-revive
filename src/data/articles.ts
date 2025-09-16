@@ -1,5 +1,4 @@
 import businessHandshakeImage from "@/assets/business-handshake-real.jpg";
-import carryPerformanceFeesImage from "@/assets/carry-performance-fees-new.jpg";
 
 export const articles = [
   {
@@ -10,7 +9,7 @@ export const articles = [
     content: "Extended content about carry and performance fees would go here...",
     date: "January 25, 2025",
     author: "Investment Team",
-    image: carryPerformanceFeesImage,
+    image: "/lovable-uploads/5c840e3a-42ff-4205-b966-186132b2d060.png",
     slug: "carry-and-performance-fees",
     route: "/insights/carry-and-performance-fees",
     category: "Angel Investing",
