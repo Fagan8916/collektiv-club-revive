@@ -9,7 +9,7 @@ export const articles = [
     content: "Extended content about carry and performance fees would go here...",
     date: "January 25, 2025",
     author: "Investment Team",
-    image: "/lovable-uploads/d7216f53-dbaf-46e5-a9ae-e407297c311d.png",
+    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
     slug: "carry-and-performance-fees",
     route: "/insights/carry-and-performance-fees",
     category: "Angel Investing",
