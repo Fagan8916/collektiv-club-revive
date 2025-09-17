@@ -7,6 +7,7 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/comp
 import ProfileImageUpload from "@/components/ProfileImageUpload";
 
 interface ProfileSubmissionData {
+  first_name?: string;
   full_name: string;
   bio?: string;
   company?: string;
@@ -158,7 +159,7 @@ const ProfileFormFields = ({ form, isAnonymous }: ProfileFormFieldsProps) => {
       <ProfileImageUpload
         currentImageUrl={form.watch("profile_image_url") || ""}
         onImageUpload={(url) => form.setValue("profile_image_url", url)}
-        userFullName={form.watch("full_name") || "User"}
+        userFullName={`${form.watch("first_name") || ""} ${form.watch("full_name") || "User"}`.trim()}
       />
 
       <FormField

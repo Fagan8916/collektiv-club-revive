@@ -178,11 +178,13 @@ const AdminProfileManager = () => {
                 <Avatar>
                   <AvatarImage src={profile.profile_image_url || ""} />
                   <AvatarFallback>
-                    {getInitials(profile.full_name)}
+                    {getInitials(`${profile.first_name || ""} ${profile.full_name}`.trim())}
                   </AvatarFallback>
                 </Avatar>
                 <div>
-                  <h3 className="font-semibold">{profile.full_name}</h3>
+                  <h3 className="font-semibold">
+                    {profile.first_name ? `${profile.first_name} ${profile.full_name}` : profile.full_name}
+                  </h3>
                   <p className="text-sm text-muted-foreground">
                     {profile.position && profile.company
                       ? `${profile.position} at ${profile.company}`
@@ -331,7 +333,7 @@ const AdminProfileManager = () => {
                 <ProfileImageUpload
                   currentImageUrl={editForm.profile_image_url || ""}
                   onImageUpload={(url) => setEditForm({ ...editForm, profile_image_url: url })}
-                  userFullName={editForm.full_name || "User"}
+                  userFullName={`${editForm.first_name || ""} ${editForm.full_name || "User"}`.trim()}
                 />
               </div>
               

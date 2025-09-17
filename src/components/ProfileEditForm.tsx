@@ -132,6 +132,12 @@ const ProfileEditForm = () => {
         .upsert(profileData, { onConflict: 'user_id' });
 
       if (error) {
+        console.error("Profile update error details:", {
+          message: error.message,
+          details: error.details,
+          hint: error.hint,
+          code: error.code
+        });
         throw error;
       }
 
@@ -140,11 +146,22 @@ const ProfileEditForm = () => {
       });
 
       setProfileExists(true);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error updating profile:", error);
+      
+      // Log detailed error information
+      const errorDetails = {
+        message: error?.message || "Unknown error",
+        code: error?.code,
+        details: error?.details,
+        hint: error?.hint,
+        formData: data
+      };
+      console.error("Detailed error info:", errorDetails);
+      
       toast({
         title: "Error",
-        description: "Failed to update profile. Please try again.",
+        description: error?.message || "Failed to update profile. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -230,7 +247,7 @@ const ProfileEditForm = () => {
             <ProfileImageUpload
               currentImageUrl={form.watch("profile_image_url") || ""}
               onImageUpload={(url) => form.setValue("profile_image_url", url)}
-              userFullName={form.watch("full_name") || "User"}
+              userFullName={`${form.watch("first_name") || ""} ${form.watch("full_name") || "User"}`.trim()}
             />
 
             <FormField
