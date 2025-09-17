@@ -202,22 +202,35 @@ const Members = () => {
       <div className="container mx-auto px-4 -mt-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
           {stats.map((stat, index) => {
-            const isClickable = stat.title === "Club Members";
+            const isClickable = stat.title === "Club Members" || stat.title === "Active Investments" || stat.title === "Total Deployed";
             const CardComponent = isClickable ? "button" : "div";
+            
+            const handleClick = () => {
+              if (stat.title === "Club Members") {
+                setActiveTab('directory');
+                setTimeout(() => {
+                  const directorySection = document.querySelector('[data-state="active"][role="tabpanel"]');
+                  if (directorySection) {
+                    directorySection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }, 100);
+              } else if (stat.title === "Active Investments" || stat.title === "Total Deployed") {
+                setActiveTab('investments');
+                setTimeout(() => {
+                  const investmentsSection = document.querySelector('[data-state="active"][role="tabpanel"]');
+                  if (investmentsSection) {
+                    investmentsSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }, 100);
+              }
+            };
+            
             return (
               <Card key={index} className="bg-white shadow-lg hover:shadow-xl transition-shadow">
                 <CardContent className="p-6 text-center">
                   <CardComponent
                     className={`w-full ${isClickable ? 'cursor-pointer hover:opacity-80 transition-opacity' : ''}`}
-                    onClick={isClickable ? () => {
-                      setActiveTab('directory');
-                      setTimeout(() => {
-                        const directorySection = document.querySelector('[data-state="active"][role="tabpanel"]');
-                        if (directorySection) {
-                          directorySection.scrollIntoView({ behavior: 'smooth' });
-                        }
-                      }, 100);
-                    } : undefined}
+                    onClick={isClickable ? handleClick : undefined}
                   >
                     <stat.icon className="mx-auto mb-4 h-8 w-8 text-collektiv-green" />
                     <h3 className="text-2xl font-bold text-collektiv-dark mb-2">{stat.value}</h3>
