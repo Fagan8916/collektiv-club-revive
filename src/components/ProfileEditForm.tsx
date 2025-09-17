@@ -17,7 +17,7 @@ import { normalizeUrl, isValidUrl } from "@/utils/urlUtils";
 
 const profileSchema = z.object({
   first_name: z.string().optional(),
-  full_name: z.string().min(2, "Full name must be at least 2 characters"),
+  full_name: z.string().min(2, "Last name must be at least 2 characters"),
   bio: z.string().optional(),
   profile_image_url: z.string().url().optional().or(z.literal("")),
   company: z.string().optional(),
@@ -194,9 +194,9 @@ const ProfileEditForm = () => {
                 name="full_name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Full Name *</FormLabel>
+                    <FormLabel>Last Name *</FormLabel>
                     <FormControl>
-                      <Input placeholder="Your full name" {...field} />
+                      <Input placeholder="Your last name" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

@@ -33,12 +33,12 @@ const ProfileFormFields = ({ form, isAnonymous }: ProfileFormFieldsProps) => {
       <FormField
         control={form.control}
         name="full_name"
-        rules={{ required: "Full name is required" }}
+        rules={{ required: "Last name is required" }}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Full Name *</FormLabel>
+            <FormLabel>Last Name *</FormLabel>
             <FormControl>
-              <Input placeholder="Your full name" {...field} />
+              <Input placeholder="Your last name" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>

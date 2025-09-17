@@ -239,7 +239,7 @@ const AdminProfileManager = () => {
           {editingProfile && (
             <div className="space-y-4">
               <div>
-                <Label htmlFor="full_name">Full Name</Label>
+                <Label htmlFor="full_name">Last Name</Label>
                 <Input
                   id="full_name"
                   value={editForm.full_name || ""}

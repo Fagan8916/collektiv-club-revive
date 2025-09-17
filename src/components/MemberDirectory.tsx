@@ -66,6 +66,18 @@ const MemberDirectory = () => {
     }
   };
 
+  const isGenericBio = (bio: string | null): boolean => {
+    if (!bio || bio.trim() === '') return true;
+    const genericBios = [
+      'Member of the Collektiv Club',
+      'Collektiv Club member',
+      'Member'
+    ];
+    return genericBios.some(genericBio => 
+      bio.trim().toLowerCase() === genericBio.toLowerCase()
+    );
+  };
+
   // Priority function: lower number = higher priority
   const getPriority = (member: any): number => {
     const displayName = getDisplayName(member).toLowerCase();
@@ -75,23 +87,25 @@ const MemberDirectory = () => {
       return 0;
     }
     
-    // Members with bios next
-    if (member.bio && member.bio.trim().length > 0) {
-      return 1;
+    // Check if has meaningful name and bio
+    const hasRealName = member.full_name && 
+      member.full_name.trim() !== '' && 
+      member.full_name.trim() !== 'Member';
+    const hasMeaningfulBio = member.bio && !isGenericBio(member.bio);
+    
+    if (hasRealName && hasMeaningfulBio) {
+      return 1; // Best profiles: real names + meaningful bios
     }
     
-    // Non-anonymous members with meaningful names
-    if (!member.is_anonymous && displayName !== 'member') {
-      return 2;
+    if (hasRealName && !hasMeaningfulBio) {
+      return 2; // Real names but generic/no bios
     }
     
-    // Anonymous members with meaningful names
-    if (member.is_anonymous && displayName !== 'member') {
-      return 3;
+    if (!hasRealName && hasMeaningfulBio) {
+      return 3; // Generic names but meaningful bios
     }
     
-    // Members with no meaningful name (just "Member") at bottom
-    return 4;
+    return 4; // Generic "Member" profiles with generic bios at bottom
   };
 
   const toggleExpanded = (memberId: string) => {

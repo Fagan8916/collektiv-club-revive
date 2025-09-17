@@ -86,7 +86,7 @@ const SimpleRegistrationForm = ({ onSuccess }: SimpleRegistrationFormProps) => {
 
           <div className="space-y-4">
             <div>
-              <Label htmlFor="fullName">Full Name</Label>
+              <Label htmlFor="fullName">Last Name</Label>
               <Input
                 id="fullName"
                 name="fullName"
@@ -94,7 +94,7 @@ const SimpleRegistrationForm = ({ onSuccess }: SimpleRegistrationFormProps) => {
                 value={formData.fullName}
                 onChange={handleChange}
                 required
-                placeholder="Enter your full name"
+                placeholder="Enter your last name"
               />
             </div>
 
