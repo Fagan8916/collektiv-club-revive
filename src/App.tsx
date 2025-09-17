@@ -24,6 +24,17 @@ import Pandektes from './pages/members/investments/Pandektes';
 import BuildProfile from './pages/members/BuildProfile';
 import BareTrusts from './pages/insights/BareTrusts';
 import CarryAndPerformanceFees from './pages/insights/CarryAndPerformanceFees';
+import AngelSyndicates from './pages/insights/AngelSyndicates';
+import BeginnerAngelInvestors from './pages/insights/BeginnerAngelInvestors';
+import ConvertibleLoanNotes from './pages/insights/ConvertibleLoanNotes';
+import EISSEIS from './pages/insights/EISSEIS';
+import LessonsFromInvestments from './pages/insights/LessonsFromInvestments';
+import MultiplesInValuations from './pages/insights/MultiplesInValuations';
+import SaasFundingAgreements from './pages/insights/SaasFundingAgreements';
+import SaasMetrics from './pages/insights/SaasMetrics';
+import Valuations from './pages/insights/Valuations';
+import WhatToLookForInFounders from './pages/insights/WhatToLookForInFounders';
+import ZeroToOneMillion from './pages/insights/ZeroToOneMillion';
 
 const queryClient = new QueryClient();
 
@@ -246,6 +257,17 @@ function App() {
             <Route path="/members/investments/pandektes" element={<Pandektes />} />
             <Route path="/insights/bare-trusts" element={<BareTrusts />} />
             <Route path="/insights/carry-and-performance-fees" element={<CarryAndPerformanceFees />} />
+            <Route path="/insights/angel-syndicates" element={<AngelSyndicates />} />
+            <Route path="/insights/beginner-angel-investors" element={<BeginnerAngelInvestors />} />
+            <Route path="/insights/convertible-loan-notes" element={<ConvertibleLoanNotes />} />
+            <Route path="/insights/eis-seis-tax-schemes" element={<EISSEIS />} />
+            <Route path="/insights/lessons-from-483-investments" element={<LessonsFromInvestments />} />
+            <Route path="/insights/understanding-multiples" element={<MultiplesInValuations />} />
+            <Route path="/insights/saas-funding-agreements" element={<SaasFundingAgreements />} />
+            <Route path="/insights/saas-metrics-evaluation" element={<SaasMetrics />} />
+            <Route path="/insights/startup-valuations" element={<Valuations />} />
+            <Route path="/insights/what-to-look-for-in-founders" element={<WhatToLookForInFounders />} />
+            <Route path="/insights/zero-to-one-million-saas-journey" element={<ZeroToOneMillion />} />
             
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/setup-account" element={<SetupAccount />} />
