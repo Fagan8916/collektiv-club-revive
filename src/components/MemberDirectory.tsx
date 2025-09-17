@@ -80,13 +80,18 @@ const MemberDirectory = () => {
       return 1;
     }
     
-    // Non-anonymous members
-    if (!member.is_anonymous) {
+    // Non-anonymous members with meaningful names
+    if (!member.is_anonymous && displayName !== 'member') {
       return 2;
     }
     
-    // Anonymous members last
-    return 3;
+    // Anonymous members with meaningful names
+    if (member.is_anonymous && displayName !== 'member') {
+      return 3;
+    }
+    
+    // Members with no meaningful name (just "Member") at bottom
+    return 4;
   };
 
   const toggleExpanded = (memberId: string) => {

@@ -121,29 +121,33 @@ const ProfileSubmissionForm = () => {
       console.log("ProfileSubmissionForm: Checking user approval status...");
       const anon = !!data.is_anonymous;
       
-      // Validate required fields based on anonymity
+      // Validate required fields based on anonymity - be more lenient
       if (anon) {
         const first = (data.first_name || '').trim();
-        if (!first) {
+        if (!first || first.length < 2) {
           toast({
             title: "First name required",
-            description: "When anonymous, only your first name is required.",
+            description: "When anonymous, please provide at least your first name (minimum 2 characters).",
+            variant: "destructive",
+          });
+          setIsSubmitting(false);
+          return;
+        }
+      } else {
+        // For non-anonymous users, allow shorter names and be more flexible
+        const fullNameToStore = (data.full_name || '').trim();
+        if (!fullNameToStore || fullNameToStore.length < 2) {
+          toast({
+            title: "Name required",
+            description: "Please provide your name (minimum 2 characters).",
             variant: "destructive",
           });
           setIsSubmitting(false);
           return;
         }
       }
+      
       const fullNameToStore = anon ? (data.first_name || '').trim() : (data.full_name || '').trim();
-      if (!fullNameToStore) {
-        toast({
-          title: "Name required",
-          description: "Please provide your name.",
-          variant: "destructive",
-        });
-        setIsSubmitting(false);
-        return;
-      }
 
       const payload = {
         user_id: user.id,

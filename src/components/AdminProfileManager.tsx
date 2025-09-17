@@ -3,6 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
 import { useAdminOperations } from "@/hooks/useAdminOperations";
+import { useProfileMerge } from "@/hooks/useProfileMerge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -26,6 +27,7 @@ const AdminProfileManager = () => {
   const [saving, setSaving] = useState(false);
   const { user, session, loading: authLoading } = useAuth();
   const adminOperations = useAdminOperations();
+  const { mergeProfiles } = useProfileMerge();
 
   useEffect(() => {
     fetchProfiles();
@@ -95,6 +97,46 @@ const AdminProfileManager = () => {
     }
   };
 
+  const handlePerryMerge = async (profile: MemberProfile) => {
+    if (profile.full_name !== "Perry" || profile.first_name !== "Perry") {
+      toast.error("This action is only for Perry's profile fix.");
+      return;
+    }
+
+    const confirmed = window.confirm(
+      "This will merge Perry's old profile data with his current account. Are you sure?"
+    );
+    
+    if (!confirmed) return;
+
+    try {
+      setLoading(true);
+      
+      // Merge the old Perry profile (1c0a5817-4bbb-452a-936c-8387fd19891e) 
+      // with the new account profile (c617f7bb-114c-49e0-894e-272242d21a8e)
+      const result = await mergeProfiles(
+        '1c0a5817-4bbb-452a-936c-8387fd19891e', // source (old Perry with data)
+        'c617f7bb-114c-49e0-894e-272242d21a8e', // target (new "Member" profile to delete)
+        '84f91dbe-b8e3-4f87-9940-2e4740b428f5', // new user ID (Perry's current account)
+        {
+          bio: 'Experienced technology and finance professional with expertise in angel investing and startup ecosystem development. Active member of the Collektiv Club investment community.',
+          location: 'London, UK',
+          contact_email: 'perryhake89@aol.co.uk'
+        }
+      );
+
+      if (result) {
+        await fetchProfiles(); // Refresh the list
+        toast.success("Perry's profile has been successfully merged and fixed!");
+      }
+    } catch (error) {
+      console.error('Error merging Perry\'s profile:', error);
+      toast.error("Failed to merge Perry's profile. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const getInitials = (name: string) => {
     return name
       .split(" ")
@@ -155,6 +197,17 @@ const AdminProfileManager = () => {
                 <Badge variant={profile.is_visible ? "default" : "secondary"}>
                   {profile.is_visible ? "Visible" : "Hidden"}
                 </Badge>
+                {/* Perry-specific profile merge (temporary fix) */}
+                {profile.full_name === "Perry" && profile.first_name === "Perry" && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handlePerryMerge(profile)}
+                    className="bg-orange-50 hover:bg-orange-100 text-orange-700 border-orange-200"
+                  >
+                    Fix Perry's Profile
+                  </Button>
+                )}
                 <Button
                   variant="outline"
                   size="sm"
