@@ -143,7 +143,19 @@ export const useAuth = () => {
         console.error('useAuth: Session refresh error:', error);
         return false;
       }
-      console.log('useAuth: Session refreshed successfully');
+      
+      // Update frontend state with the refreshed session
+      if (data.session) {
+        console.log('useAuth: Updating frontend state with refreshed session');
+        setSession(data.session);
+        setUser(data.session.user);
+        console.log('useAuth: Session refreshed successfully with new state:', {
+          userId: data.session.user?.id,
+          email: data.session.user?.email,
+          expiresAt: data.session.expires_at
+        });
+      }
+      
       return true;
     } catch (error) {
       console.error('useAuth: Session refresh failed:', error);
