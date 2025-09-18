@@ -169,31 +169,6 @@ const ProfileEditForm = () => {
           code: error.code
         });
         
-        // If it's an RLS/permission error, try refreshing session once
-        if (error.code === '42501' || error?.message?.includes('policy') || error?.message?.includes('permission')) {
-          console.log("RLS error detected, attempting session refresh...");
-          const refreshed = await refreshSession();
-          if (refreshed) {
-            // Retry the operation once
-            console.log("Session refreshed, retrying profile update...");
-            const { error: retryError } = await supabase
-              .from('member_profiles')
-              .upsert(profileData, { onConflict: 'user_id' });
-            
-            if (!retryError) {
-              toast({
-                title: "Updated",
-                description: "Profile updated successfully after session refresh.",
-              });
-              setProfileExists(true);
-              setLoading(false);
-              return;
-            } else {
-              console.error("Retry failed:", retryError);
-            }
-          }
-        }
-        
         throw error;
       }
 

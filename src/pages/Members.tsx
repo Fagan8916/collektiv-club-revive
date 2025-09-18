@@ -27,7 +27,7 @@ const Members = () => {
 
   console.log('Members: Auth state - loading:', authLoading, 'authenticated:', isAuthenticated, 'user:', !!user);
 
-  // Redirect if not authenticated
+  // Redirect if not authenticated (with stability delay)
   useEffect(() => {
     console.log('Members: Auth effect - authLoading:', authLoading, 'isAuthenticated:', isAuthenticated);
     if (!authLoading && !isAuthenticated) {
@@ -38,8 +38,14 @@ const Members = () => {
         console.log('Members: Auth indicators or in-progress flag detected, delaying redirect');
         return; // Wait for auth processing
       }
-      console.log("Members: User not authenticated, redirecting to login");
-      navigate("/login", { replace: true });
+      
+      // Add stability delay to prevent redirect during brief auth state changes
+      const redirectTimer = setTimeout(() => {
+        console.log("Members: User not authenticated after stability delay, redirecting to login");
+        navigate("/login", { replace: true });
+      }, 100);
+      
+      return () => clearTimeout(redirectTimer);
     }
   }, [isAuthenticated, authLoading, navigate]);
 
