@@ -159,9 +159,24 @@ const ProfileEditForm = () => {
       };
       console.error("Detailed error info:", errorDetails);
       
+      // Enhanced error handling for common issues
+      let errorMessage = error?.message || "Failed to update profile. Please try again.";
+      
+      if (error?.code === '42501' || error?.message?.includes('policy') || error?.message?.includes('permission')) {
+        errorMessage = "Permission denied. This may be due to a profile claiming issue. Please try logging out and back in, or contact support if the problem persists.";
+      } else if (error?.code === '23505') {
+        errorMessage = "A profile with this information already exists. Please contact support if you believe this is an error.";
+      } else if (error?.code === '23503') {
+        errorMessage = "Authentication error. Please log out and log back in to resolve this issue.";
+      } else if (error?.message?.includes('user_id')) {
+        errorMessage = "Profile ownership error. Please try refreshing the page or contact support.";
+      } else if (error?.message?.includes('contact_email')) {
+        errorMessage = "Email verification issue. Please ensure your profile is properly linked to your account.";
+      }
+      
       toast({
         title: "Error",
-        description: error?.message || "Failed to update profile. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
