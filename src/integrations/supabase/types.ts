@@ -299,6 +299,14 @@ export type Database = {
         Args: { p_email: string }
         Returns: undefined
       }
+      debug_auth_context: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          current_user_id: string
+          is_admin: boolean
+          session_exists: boolean
+        }[]
+      }
       fix_pre_approved_users_missing_roles: {
         Args: Record<PropertyKey, never>
         Returns: {

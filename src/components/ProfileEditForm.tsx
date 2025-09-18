@@ -113,6 +113,44 @@ const ProfileEditForm = () => {
     try {
       console.log("Starting profile update for user:", user.id);
       
+      // Check and refresh authentication context before database operation
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      
+      if (sessionError || !session || !session.user) {
+        console.error("No valid session found, attempting refresh...");
+        
+        // Attempt to refresh session
+        const { data: refreshData, error: refreshError } = await supabase.auth.refreshSession();
+        
+        if (refreshError || !refreshData.session) {
+          console.error("Session refresh failed:", refreshError);
+          toast({
+            title: "Authentication Required",
+            description: "Please log out and log back in to continue.",
+            variant: "destructive",
+          });
+          setLoading(false);
+          return;
+        }
+        
+        console.log("Session refreshed successfully");
+      }
+      
+      // Debug authentication context
+      const { data: authDebug } = await supabase.rpc('debug_auth_context');
+      console.log("Auth context debug:", authDebug?.[0]);
+      
+      if (!authDebug?.[0]?.session_exists) {
+        console.error("auth.uid() is null - authentication context lost");
+        toast({
+          title: "Authentication Error", 
+          description: "Session context lost. Please refresh the page and try again.",
+          variant: "destructive",
+        });
+        setLoading(false);
+        return;
+      }
+      
       const profileData = {
         user_id: user.id,
         first_name: data.first_name || null,
