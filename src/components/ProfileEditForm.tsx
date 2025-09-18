@@ -111,36 +111,8 @@ const ProfileEditForm = () => {
     setLoading(true);
 
     try {
-      // Validate session before attempting update
-      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      console.log("Starting profile update for user:", user.id);
       
-      if (sessionError || !session || !session.user) {
-        console.error("Session validation failed:", sessionError);
-        toast({
-          title: "Session Expired",
-          description: "Your session has expired. Please log out and log back in.",
-          variant: "destructive",
-        });
-        setLoading(false);
-        return;
-      }
-
-      if (session.user.id !== user.id) {
-        console.error("User ID mismatch:", { sessionUserId: session.user.id, frontendUserId: user.id });
-        toast({
-          title: "Authentication Error",
-          description: "Session mismatch detected. Please log out and log back in.",
-          variant: "destructive",
-        });
-        setLoading(false);
-        return;
-      }
-
-      console.log("Session validated successfully:", {
-        userId: session.user.id,
-        email: session.user.email,
-        expiresAt: session.expires_at
-      });
       const profileData = {
         user_id: user.id,
         first_name: data.first_name || null,
@@ -162,51 +134,41 @@ const ProfileEditForm = () => {
         .upsert(profileData, { onConflict: 'user_id' });
 
       if (error) {
-        console.error("Profile update error details:", {
+        console.error("Profile update error:", {
           message: error.message,
           details: error.details,
           hint: error.hint,
-          code: error.code
+          code: error.code,
+          userId: user.id,
+          profileData
         });
         
         throw error;
       }
 
+      console.log("Profile updated successfully for user:", user.id);
       toast({
-        title: "Updated",
+        title: "Profile Updated",
+        description: "Your profile has been updated successfully.",
       });
 
       setProfileExists(true);
     } catch (error: any) {
-      console.error("Error updating profile:", error);
+      console.error("Profile update failed:", error);
       
-      // Log detailed error information
-      const errorDetails = {
-        message: error?.message || "Unknown error",
-        code: error?.code,
-        details: error?.details,
-        hint: error?.hint,
-        formData: data
-      };
-      console.error("Detailed error info:", errorDetails);
+      // Enhanced error messages based on common RLS/database issues
+      let errorMessage = "Failed to update profile. Please try again.";
       
-      // Enhanced error handling for common issues
-      let errorMessage = error?.message || "Failed to update profile. Please try again.";
-      
-      if (error?.code === '42501' || error?.message?.includes('policy') || error?.message?.includes('permission')) {
-        errorMessage = "Permission denied. This may be due to a profile claiming issue. Please try logging out and back in, or contact support if the problem persists.";
-      } else if (error?.code === '23505') {
-        errorMessage = "A profile with this information already exists. Please contact support if you believe this is an error.";
+      if (error?.code === '42501' || error?.message?.includes('policy')) {
+        errorMessage = "Permission denied. Please try refreshing the page. If the issue persists, try logging out and back in.";
       } else if (error?.code === '23503') {
-        errorMessage = "Authentication error. Please log out and log back in to resolve this issue.";
-      } else if (error?.message?.includes('user_id')) {
-        errorMessage = "Profile ownership error. Please try refreshing the page or contact support.";
-      } else if (error?.message?.includes('contact_email')) {
-        errorMessage = "Email verification issue. Please ensure your profile is properly linked to your account.";
+        errorMessage = "Authentication issue detected. Please refresh the page or log out and back in.";
+      } else if (error?.message?.includes('JWT')) {
+        errorMessage = "Session issue detected. Please refresh the page to continue.";
       }
       
       toast({
-        title: "Error",
+        title: "Update Failed",
         description: errorMessage,
         variant: "destructive",
       });
