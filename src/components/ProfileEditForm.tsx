@@ -36,7 +36,7 @@ const profileSchema = z.object({
 type ProfileFormData = z.infer<typeof profileSchema>;
 
 const ProfileEditForm = () => {
-  const { user } = useAuth();
+  const { user, refreshSession } = useAuth();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [profileExists, setProfileExists] = useState(false);
@@ -111,6 +111,36 @@ const ProfileEditForm = () => {
     setLoading(true);
 
     try {
+      // Validate session before attempting update
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      
+      if (sessionError || !session || !session.user) {
+        console.error("Session validation failed:", sessionError);
+        toast({
+          title: "Session Expired",
+          description: "Your session has expired. Please log out and log back in.",
+          variant: "destructive",
+        });
+        setLoading(false);
+        return;
+      }
+
+      if (session.user.id !== user.id) {
+        console.error("User ID mismatch:", { sessionUserId: session.user.id, frontendUserId: user.id });
+        toast({
+          title: "Authentication Error",
+          description: "Session mismatch detected. Please log out and log back in.",
+          variant: "destructive",
+        });
+        setLoading(false);
+        return;
+      }
+
+      console.log("Session validated successfully:", {
+        userId: session.user.id,
+        email: session.user.email,
+        expiresAt: session.expires_at
+      });
       const profileData = {
         user_id: user.id,
         first_name: data.first_name || null,
@@ -138,6 +168,32 @@ const ProfileEditForm = () => {
           hint: error.hint,
           code: error.code
         });
+        
+        // If it's an RLS/permission error, try refreshing session once
+        if (error.code === '42501' || error?.message?.includes('policy') || error?.message?.includes('permission')) {
+          console.log("RLS error detected, attempting session refresh...");
+          const refreshed = await refreshSession();
+          if (refreshed) {
+            // Retry the operation once
+            console.log("Session refreshed, retrying profile update...");
+            const { error: retryError } = await supabase
+              .from('member_profiles')
+              .upsert(profileData, { onConflict: 'user_id' });
+            
+            if (!retryError) {
+              toast({
+                title: "Updated",
+                description: "Profile updated successfully after session refresh.",
+              });
+              setProfileExists(true);
+              setLoading(false);
+              return;
+            } else {
+              console.error("Retry failed:", retryError);
+            }
+          }
+        }
+        
         throw error;
       }
 

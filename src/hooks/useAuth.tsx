@@ -135,6 +135,22 @@ export const useAuth = () => {
     }
   };
 
+  const refreshSession = async () => {
+    console.log('useAuth: Refreshing session');
+    try {
+      const { data, error } = await supabase.auth.refreshSession();
+      if (error) {
+        console.error('useAuth: Session refresh error:', error);
+        return false;
+      }
+      console.log('useAuth: Session refreshed successfully');
+      return true;
+    } catch (error) {
+      console.error('useAuth: Session refresh failed:', error);
+      return false;
+    }
+  };
+
   const isAuthenticated = !!(session && user);
 
   return {
@@ -142,6 +158,7 @@ export const useAuth = () => {
     session,
     loading,
     isAuthenticated,
-    signOut
+    signOut,
+    refreshSession
   };
 };
