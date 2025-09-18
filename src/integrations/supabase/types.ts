@@ -279,6 +279,18 @@ export type Database = {
         Args: { profile_user_id: string }
         Returns: boolean
       }
+      check_pre_approved_user_status: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          email: string
+          has_auth_account: boolean
+          has_roles: boolean
+          issue_description: string
+          pre_approved_used: boolean
+          role_status: string
+          user_id: string
+        }[]
+      }
       claim_member_profile: {
         Args: Record<PropertyKey, never>
         Returns: string
@@ -286,6 +298,14 @@ export type Database = {
       create_invitation: {
         Args: { p_email: string }
         Returns: undefined
+      }
+      fix_pre_approved_users_missing_roles: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          action_taken: string
+          user_email: string
+          user_id: string
+        }[]
       }
       has_role: {
         Args: {
