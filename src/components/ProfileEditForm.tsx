@@ -12,8 +12,10 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Switch } from "@/components/ui/switch";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import ProfileImageUpload from "@/components/ProfileImageUpload";
 import { normalizeUrl, isValidUrl } from "@/utils/urlUtils";
+import { Loader2, CheckCircle } from "lucide-react";
 
 const profileSchema = z.object({
   first_name: z.string().optional(),
@@ -40,6 +42,7 @@ const ProfileEditForm = () => {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [profileExists, setProfileExists] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const form = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
@@ -159,6 +162,11 @@ const ProfileEditForm = () => {
       }
 
       console.log("Profile updated successfully for user:", user.id);
+      
+      // Show success banner
+      setShowSuccess(true);
+      setTimeout(() => setShowSuccess(false), 4000);
+      
       toast({
         title: "Profile Updated",
         description: "Your profile has been updated successfully.",
@@ -210,6 +218,15 @@ const ProfileEditForm = () => {
         <CardTitle className="text-collektiv-green">Edit Your Profile</CardTitle>
       </CardHeader>
       <CardContent>
+        {showSuccess && (
+          <Alert className="mb-6 border-green-200 bg-green-50 text-green-800 animate-fade-in">
+            <CheckCircle className="h-4 w-4" />
+            <AlertDescription className="font-medium">
+              Profile updated successfully! Your changes have been saved.
+            </AlertDescription>
+          </Alert>
+        )}
+        
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -395,9 +412,16 @@ const ProfileEditForm = () => {
             <Button 
               type="submit" 
               disabled={loading}
-              className="w-full bg-collektiv-green hover:bg-collektiv-dark text-white"
+              className="w-full bg-collektiv-green hover:bg-collektiv-dark text-white transition-all duration-200"
             >
-              {loading ? "Updating..." : "Update Profile"}
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Updating...
+                </>
+              ) : (
+                "Update Profile"
+              )}
             </Button>
           </form>
         </Form>
