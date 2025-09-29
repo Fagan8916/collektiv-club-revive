@@ -5,10 +5,20 @@ import { Calendar, Clock, MapPin, Users } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 const MemberEvents = () => {
-  // Placeholder events data - will be replaced with real data later
+  // Upcoming events data
   const upcomingEvents = [
     {
       id: 1,
+      title: "Collektiv Member and Founder meet up",
+      date: "9th October 2024",
+      time: "6:00 PM onwards",
+      location: "The Woodins Shades, 212 Bishopsgate, London EC2M 4PT",
+      attendees: "",
+      status: "upcoming",
+      description: "Join from 6pm, beers on us! A great opportunity to network with fellow members and founders."
+    },
+    {
+      id: 2,
       title: "Startup Pitch Night",
       date: "Coming soon",
       time: "Coming soon",
@@ -18,7 +28,7 @@ const MemberEvents = () => {
       description: "Join us for an evening of innovative startup pitches and networking."
     },
     {
-      id: 2,
+      id: 3,
       title: "Investment Strategy Workshop",
       date: "Coming soon",
       time: "Coming soon",
