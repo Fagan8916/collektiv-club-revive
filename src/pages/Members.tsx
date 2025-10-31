@@ -397,7 +397,7 @@ const Members = () => {
                     </p>
                     <Button asChild className="bg-collektiv-green hover:bg-collektiv-lightgreen">
                       <a 
-                        href="https://docs.google.com/presentation/d/1Rmcrh5OLgvoPnlvwtNRMqaJ2Ki-qZ1_7yZFnMueMKmM/edit?usp=drive_link" 
+                        href="/lovable-uploads/founder-benefits.pdf" 
                         target="_blank" 
                         rel="noopener noreferrer"
                       >
@@ -416,7 +416,7 @@ const Members = () => {
                     </p>
                     <Button asChild className="bg-collektiv-green hover:bg-collektiv-lightgreen">
                       <a 
-                        href="https://docs.google.com/presentation/d/1RULEVW99f6qadf6gGnJVeqL-vikx_yoRAJkf7gF-9WM/edit?usp=drive_link" 
+                        href="/lovable-uploads/investor-benefits.pdf" 
                         target="_blank" 
                         rel="noopener noreferrer"
                       >
