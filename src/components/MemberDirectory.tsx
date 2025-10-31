@@ -87,25 +87,35 @@ const MemberDirectory = () => {
       return 0;
     }
     
-    // Check if has meaningful name and bio
+    // Check profile completeness
+    const hasPicture = member.profile_image_url && member.profile_image_url.trim() !== '';
     const hasRealName = member.full_name && 
       member.full_name.trim() !== '' && 
       member.full_name.trim() !== 'Member';
     const hasMeaningfulBio = member.bio && !isGenericBio(member.bio);
     
+    // Prioritize profiles with pictures first
+    if (hasPicture && hasRealName && hasMeaningfulBio) {
+      return 1; // Best: picture + real name + bio
+    }
+    
+    if (hasPicture && hasRealName) {
+      return 2; // Good: picture + real name
+    }
+    
+    if (hasPicture) {
+      return 3; // Has picture
+    }
+    
     if (hasRealName && hasMeaningfulBio) {
-      return 1; // Best profiles: real names + meaningful bios
+      return 4; // No picture but real name + bio
     }
     
-    if (hasRealName && !hasMeaningfulBio) {
-      return 2; // Real names but generic/no bios
+    if (hasRealName) {
+      return 5; // No picture but real name
     }
     
-    if (!hasRealName && hasMeaningfulBio) {
-      return 3; // Generic names but meaningful bios
-    }
-    
-    return 4; // Generic "Member" profiles with generic bios at bottom
+    return 6; // Generic "Member" profiles at bottom
   };
 
   const toggleExpanded = (memberId: string) => {
@@ -186,8 +196,8 @@ const MemberDirectory = () => {
             const displayName = getDisplayName(member);
             const isExpanded = expandedCards.has(member.id || '');
             const hasBio = member.bio && member.bio.trim().length > 0;
-            const bioPreview = hasBio ? member.bio.substring(0, 150) : '';
-            const shouldShowToggle = hasBio && member.bio.length > 150;
+            const bioPreview = hasBio ? member.bio.substring(0, 120) : '';
+            const shouldShowToggle = hasBio && member.bio.length > 120;
             
             return (
               <Card 
