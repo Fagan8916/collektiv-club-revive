@@ -22,6 +22,7 @@ import Propane from './pages/members/investments/Propane';
 import Loxa from './pages/members/investments/Loxa';
 import Pandektes from './pages/members/investments/Pandektes';
 import BuildProfile from './pages/members/BuildProfile';
+import EditProfile from './pages/members/EditProfile';
 import BareTrusts from './pages/insights/BareTrusts';
 import CarryAndPerformanceFees from './pages/insights/CarryAndPerformanceFees';
 import AngelSyndicates from './pages/insights/AngelSyndicates';
@@ -252,6 +253,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/members" element={<Members />} />
             <Route path="/members/build-profile" element={<BuildProfile />} />
+            <Route path="/members/edit-profile" element={<EditProfile />} />
             <Route path="/members/investments/propane" element={<Propane />} />
             <Route path="/members/investments/loxa" element={<Loxa />} />
             <Route path="/members/investments/pandektes" element={<Pandektes />} />

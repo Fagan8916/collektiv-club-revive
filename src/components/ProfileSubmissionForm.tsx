@@ -283,10 +283,23 @@ const ProfileSubmissionForm = () => {
               </svg>
             </div>
             <h3 className="text-2xl font-bold text-collektiv-green mb-2">Profile Already Created</h3>
-            <p className="text-gray-600 mb-4">
-              Your profile has already been created and is live in the member directory. 
-              You can view and edit your profile from the Members page.
+            <p className="text-gray-600 mb-6">
+              Your profile has already been created and is live in the member directory.
             </p>
+            <div className="flex gap-4 justify-center">
+              <Button
+                onClick={() => window.location.href = "/#/members/edit-profile"}
+                className="bg-collektiv-green hover:bg-collektiv-dark"
+              >
+                Edit Profile
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => window.location.href = "/#/members"}
+              >
+                View Directory
+              </Button>
+            </div>
           </div>
         </CardContent>
       </Card>
