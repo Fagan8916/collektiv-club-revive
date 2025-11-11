@@ -55,41 +55,26 @@ const TiranaExpo2024 = () => {
         <div className="max-w-4xl mx-auto space-y-8">
           
           {/* Event Images */}
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid md:grid-cols-2 gap-4">
             <img 
               src="/lovable-uploads/tirana-expo-featured.jpg" 
-              alt="Kevin Chavanne speaking on panel at Tirana Expo" 
-              className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
-            />
-            <img 
-              src="/lovable-uploads/tirana-expo-speaker.jpg" 
               alt="Panel discussion at Tirana Expo" 
-              className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
-            />
-            <img 
-              src="/lovable-uploads/tirana-expo-attendees.jpg" 
-              alt="Collektiv members at Tirana Expo" 
-              className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
-            />
-            <img 
-              src="/lovable-uploads/tirana-expo-panel.jpg" 
-              alt="Expert panel discussions" 
-              className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
-            />
-            <img 
-              src="/lovable-uploads/tirana-expo-networking.jpg" 
-              alt="Networking at the expo" 
-              className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
-            />
-            <img 
-              src="/lovable-uploads/tirana-expo-venue.jpg" 
-              alt="The iconic Pyramid of Tirana venue" 
-              className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
+              className="w-full h-64 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
             />
             <img 
               src="/lovable-uploads/tirana-expo-pitches.jpg" 
-              alt="Startup pitches" 
-              className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
+              alt="Startup panel discussion" 
+              className="w-full h-64 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
+            />
+            <img 
+              src="/lovable-uploads/tirana-expo-speaker.jpg" 
+              alt="Speaker presenting at Tirana Expo" 
+              className="w-full h-64 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
+            />
+            <img 
+              src="/lovable-uploads/tirana-expo-panel.jpg" 
+              alt="Expert presenting to audience" 
+              className="w-full h-64 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
             />
           </div>
 
