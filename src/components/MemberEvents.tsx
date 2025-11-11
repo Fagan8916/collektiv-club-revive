@@ -41,7 +41,7 @@ const MemberEvents = () => {
       status: "completed",
       description: "An evening of networking, insights sharing, and beers on us! Members and founders came together for great conversation.",
       slug: "collektiv-meetup-oct-2024",
-      image: "/lovable-uploads/collektiv-meetup-group1.jpg"
+      image: "/lovable-uploads/collektiv-meetup-featured.jpg"
     },
     {
       id: 4,
