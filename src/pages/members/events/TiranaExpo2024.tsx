@@ -57,18 +57,18 @@ const TiranaExpo2024 = () => {
           {/* Event Images */}
           <div className="grid md:grid-cols-3 gap-4">
             <img 
-              src="/lovable-uploads/tirana-expo-venue.jpg" 
-              alt="Pyramid of Tirana venue" 
+              src="/lovable-uploads/tirana-expo-panel.jpg" 
+              alt="Panel discussion at Tirana Expo" 
               className="w-full h-48 object-cover rounded-lg shadow-md"
             />
             <img 
-              src="/lovable-uploads/tirana-expo-networking.jpg" 
-              alt="Networking at Tirana Expo" 
+              src="/lovable-uploads/tirana-expo-speaker.jpg" 
+              alt="Kevin Chavanne speaking at panel" 
               className="w-full h-48 object-cover rounded-lg shadow-md"
             />
             <img 
-              src="/lovable-uploads/tirana-expo-pitches.jpg" 
-              alt="Startup pitches at Tirana Expo" 
+              src="/lovable-uploads/tirana-expo-attendees.jpg" 
+              alt="Collektiv members at Tirana Expo" 
               className="w-full h-48 object-cover rounded-lg shadow-md"
             />
           </div>
