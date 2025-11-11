@@ -54,22 +54,72 @@ const CollektivMeetupOct2024 = () => {
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto space-y-8">
           
-          {/* Event Images */}
+          {/* Event Images Gallery */}
           <div className="grid md:grid-cols-3 gap-4">
             <img 
               src="/lovable-uploads/collektiv-meetup-group1.jpg" 
               alt="Collektiv members networking" 
-              className="w-full h-48 object-cover rounded-lg shadow-md"
+              className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
             />
             <img 
               src="/lovable-uploads/collektiv-meetup-group2.jpg" 
               alt="Members enjoying the evening" 
-              className="w-full h-48 object-cover rounded-lg shadow-md"
+              className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
             />
             <img 
               src="/lovable-uploads/collektiv-meetup-group3.jpg" 
               alt="Members and founders connecting" 
-              className="w-full h-48 object-cover rounded-lg shadow-md"
+              className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
+            />
+            <img 
+              src="/lovable-uploads/collektiv-meetup-networking1.jpg" 
+              alt="Networking at the venue" 
+              className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
+            />
+            <img 
+              src="/lovable-uploads/collektiv-meetup-members1.jpg" 
+              alt="Members enjoying drinks" 
+              className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
+            />
+            <img 
+              src="/lovable-uploads/collektiv-meetup-networking2.jpg" 
+              alt="Engaging conversations" 
+              className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
+            />
+            <img 
+              src="/lovable-uploads/collektiv-meetup-bar.jpg" 
+              alt="At the bar" 
+              className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
+            />
+            <img 
+              src="/lovable-uploads/collektiv-meetup-members2.jpg" 
+              alt="Group photo" 
+              className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
+            />
+            <img 
+              src="/lovable-uploads/collektiv-meetup-conversation.jpg" 
+              alt="Deep in conversation" 
+              className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
+            />
+            <img 
+              src="/lovable-uploads/collektiv-meetup-venue.jpg" 
+              alt="The venue atmosphere" 
+              className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
+            />
+            <img 
+              src="/lovable-uploads/collektiv-meetup-members3.jpg" 
+              alt="Members mingling" 
+              className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
+            />
+            <img 
+              src="/lovable-uploads/collektiv-meetup-networking3.jpg" 
+              alt="More networking moments" 
+              className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
+            />
+            <img 
+              src="/lovable-uploads/collektiv-meetup-table.jpg" 
+              alt="Casual discussions at the table" 
+              className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
             />
           </div>
 
