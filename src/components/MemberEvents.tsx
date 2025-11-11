@@ -9,16 +9,6 @@ const MemberEvents = () => {
   // Upcoming events data
   const upcomingEvents = [
     {
-      id: 1,
-      title: "Collektiv Member and Founder meet up",
-      date: "9th October 2024",
-      time: "6:00 PM onwards",
-      location: "The Woodins Shades, 212 Bishopsgate, London EC2M 4PT",
-      attendees: "",
-      status: "upcoming",
-      description: "Join from 6pm, beers on us! A great opportunity to network with fellow members and founders."
-    },
-    {
       id: 2,
       title: "Startup Pitch Night",
       date: "Coming soon",
@@ -41,6 +31,17 @@ const MemberEvents = () => {
   ];
 
   const pastEvents = [
+    {
+      id: 1,
+      title: "Collektiv Member and Founder Meet Up",
+      date: "9th October 2024",
+      time: "6:00 PM onwards",
+      location: "The Woodins Shades, 212 Bishopsgate, London",
+      attendees: "20+ members and founders",
+      status: "completed",
+      description: "An evening of networking, insights sharing, and beers on us! Members and founders came together for great conversation.",
+      slug: "collektiv-meetup-oct-2024"
+    },
     {
       id: 4,
       title: "Plug and Play Tirana Expo 2024",
