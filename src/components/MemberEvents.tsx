@@ -1,5 +1,6 @@
 
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar, Clock, MapPin, Users } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -41,6 +42,17 @@ const MemberEvents = () => {
 
   const pastEvents = [
     {
+      id: 4,
+      title: "Plug and Play Tirana Expo 2024",
+      date: "October 16-17, 2024",
+      time: "",
+      location: "Pyramid of Tirana, Albania",
+      attendees: "80+ international attendees",
+      status: "completed",
+      description: "The grand finale of the Plug and Play Tirana Accelerator Program - celebrating Albania's emerging startup ecosystem.",
+      slug: "tirana-expo-2024"
+    },
+    {
       id: 3,
       title: "Loxa Stakeholders Update",
       date: "end June 2025",
@@ -52,47 +64,62 @@ const MemberEvents = () => {
     }
   ];
 
-  const EventCard = ({ event, isPast = false }) => (
-    <Card className={`hover:shadow-lg transition-shadow ${isPast ? 'opacity-75' : ''}`}>
-      <CardHeader>
-        <div className="flex justify-between items-start">
-          <CardTitle className="text-lg text-collektiv-green">{event.title}</CardTitle>
-          <Badge variant={isPast ? "secondary" : "default"}>
-            {isPast ? "Completed" : "Upcoming"}
-          </Badge>
-        </div>
-      </CardHeader>
-      <CardContent className="space-y-3">
-        <p className="text-gray-600 text-sm">{event.description}</p>
-        
-        <div className="flex flex-wrap gap-4 text-sm text-gray-500">
-          <div className="flex items-center gap-1">
-            <Calendar className="h-4 w-4" />
-            {event.date}
+  const navigate = useNavigate();
+
+  const EventCard = ({ event, isPast = false }) => {
+    const isClickable = isPast && event.slug;
+    
+    const handleClick = () => {
+      if (isClickable) {
+        navigate(`/members/events/${event.slug}`);
+      }
+    };
+
+    return (
+      <Card 
+        className={`hover:shadow-lg transition-shadow ${isPast ? 'opacity-75' : ''} ${isClickable ? 'cursor-pointer hover:scale-[1.02] transition-transform' : ''}`}
+        onClick={handleClick}
+      >
+        <CardHeader>
+          <div className="flex justify-between items-start">
+            <CardTitle className="text-lg text-collektiv-green">{event.title}</CardTitle>
+            <Badge variant={isPast ? "secondary" : "default"}>
+              {isPast ? "Completed" : "Upcoming"}
+            </Badge>
           </div>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <p className="text-gray-600 text-sm">{event.description}</p>
           
-          {event.time && (
+          <div className="flex flex-wrap gap-4 text-sm text-gray-500">
             <div className="flex items-center gap-1">
-              <Clock className="h-4 w-4" />
-              {event.time}
+              <Calendar className="h-4 w-4" />
+              {event.date}
             </div>
-          )}
-          
-          <div className="flex items-center gap-1">
-            <MapPin className="h-4 w-4" />
-            {event.location}
+            
+            {event.time && (
+              <div className="flex items-center gap-1">
+                <Clock className="h-4 w-4" />
+                {event.time}
+              </div>
+            )}
+            
+            <div className="flex items-center gap-1">
+              <MapPin className="h-4 w-4" />
+              {event.location}
+            </div>
+            
+            {event.attendees && (
+              <div className="flex items-center gap-1">
+                <Users className="h-4 w-4" />
+                {event.attendees}
+              </div>
+            )}
           </div>
-          
-          {event.attendees && (
-            <div className="flex items-center gap-1">
-              <Users className="h-4 w-4" />
-              {event.attendees}
-            </div>
-          )}
-        </div>
-      </CardContent>
-    </Card>
-  );
+        </CardContent>
+      </Card>
+    );
+  };
 
   return (
     <div className="space-y-8">

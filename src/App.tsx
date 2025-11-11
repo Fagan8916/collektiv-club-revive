@@ -22,6 +22,7 @@ import Propane from './pages/members/investments/Propane';
 import Loxa from './pages/members/investments/Loxa';
 import Pandektes from './pages/members/investments/Pandektes';
 import BeImpact from './pages/members/investments/BeImpact';
+import TiranaExpo2024 from './pages/members/events/TiranaExpo2024';
 import BuildProfile from './pages/members/BuildProfile';
 import EditProfile from './pages/members/EditProfile';
 import BareTrusts from './pages/insights/BareTrusts';
@@ -258,7 +259,8 @@ function App() {
             <Route path="/members/investments/propane" element={<Propane />} />
             <Route path="/members/investments/loxa" element={<Loxa />} />
             <Route path="/members/investments/pandektes" element={<Pandektes />} />
-            <Route path="/members/investments/beimpact" element={<BeImpact />} />
+          <Route path="/members/investments/beimpact" element={<BeImpact />} />
+          <Route path="/members/events/tirana-expo-2024" element={<TiranaExpo2024 />} />
             <Route path="/insights/bare-trusts" element={<BareTrusts />} />
             <Route path="/insights/carry-and-performance-fees" element={<CarryAndPerformanceFees />} />
             <Route path="/insights/angel-syndicates" element={<AngelSyndicates />} />
