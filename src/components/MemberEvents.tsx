@@ -53,7 +53,7 @@ const MemberEvents = () => {
       status: "completed",
       description: "The grand finale of the Plug and Play Tirana Accelerator Program - celebrating Albania's emerging startup ecosystem.",
       slug: "tirana-expo-2024",
-      image: "/lovable-uploads/tirana-expo-attendees.jpg"
+      image: "/lovable-uploads/tirana-expo-featured.jpg"
     },
     {
       id: 3,
