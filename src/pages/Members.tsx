@@ -13,6 +13,7 @@ import ProfileEditForm from "@/components/ProfileEditForm";
 import AdminSubmissionsManager from "@/components/AdminSubmissionsManager";
 import AdminProfileManager from "@/components/AdminProfileManager";
 import MembershipManager from "@/components/MembershipManager";
+import { AdminInviteManager } from "@/components/AdminInviteManager";
 import { useUserRole } from "@/hooks/useUserRole";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -341,8 +342,9 @@ const Members = () => {
             <TabsContent value="admin" className="space-y-8">
               <Tabs defaultValue="membership" className="w-full">
                 <div className="flex justify-center mb-6">
-                  <TabsList className="grid h-auto w-full sm:max-w-4xl grid-cols-3 gap-2 p-1 rounded-md bg-transparent">
+                  <TabsList className="grid h-auto w-full sm:max-w-4xl grid-cols-2 md:grid-cols-4 gap-2 p-1 rounded-md bg-transparent">
                     <TabsTrigger value="membership" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">Membership</TabsTrigger>
+                    <TabsTrigger value="invite" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">Invite Members</TabsTrigger>
                     <TabsTrigger value="profiles-to-review" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">Profile Submissions</TabsTrigger>
                     <TabsTrigger value="profiles" className="w-full whitespace-normal leading-snug text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white data-[state=active]:border-collektiv-green">Manage Profiles</TabsTrigger>
                   </TabsList>
@@ -356,6 +358,18 @@ const Members = () => {
                     </p>
                   </div>
                   <MembershipManager />
+                </TabsContent>
+                
+                <TabsContent value="invite">
+                  <div className="text-center mb-8">
+                    <h3 className="text-2xl font-bold text-collektiv-green mb-4">Invite New Members</h3>
+                    <p className="text-gray-600 max-w-2xl mx-auto">
+                      Send pre-approved invitations to new members.
+                    </p>
+                  </div>
+                  <div className="max-w-2xl mx-auto">
+                    <AdminInviteManager />
+                  </div>
                 </TabsContent>
                 
                 <TabsContent value="profiles-to-review">
