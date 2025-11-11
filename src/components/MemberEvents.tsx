@@ -56,6 +56,18 @@ const MemberEvents = () => {
       image: "/lovable-uploads/tirana-expo-featured.jpg"
     },
     {
+      id: 5,
+      title: "Catalyst: Dinner @ London",
+      date: "October 14, 2024",
+      time: "6:30 PM - 9:30 PM",
+      location: "Dishoom King's Cross, London",
+      attendees: "15 attendees",
+      status: "completed",
+      description: "A roaming event series for founders, operators, and builders shaping what it means to build AI companies today. Gathering top minds across product, technology, go-to-market, and investment — powered by Propane.",
+      slug: "propane-catalyst-2024",
+      image: "/lovable-uploads/propane-catalyst-featured.jpg"
+    },
+    {
       id: 3,
       title: "Loxa Stakeholders Update",
       date: "end June 2025",
