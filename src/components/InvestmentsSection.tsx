@@ -21,6 +21,12 @@ const investments = [
     logo: "/lovable-uploads/2801fd4b-1d50-485c-a999-0695274f5f05.png",
     website: "https://pandektes.com/",
     slug: "pandektes"
+  },
+  {
+    name: "be/impact",
+    logo: "/lovable-uploads/beimpact-logo.jpg",
+    website: "https://beimpact.co.uk/",
+    slug: "beimpact"
   }
 ];
 

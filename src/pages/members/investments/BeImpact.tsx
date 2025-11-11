@@ -5,7 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-const Propane = () => {
+const BeImpact = () => {
   return (
     <div className="min-h-screen py-10 bg-gradient-to-r from-collektiv-accent to-white">
       <div className="container mx-auto px-4 max-w-4xl">
@@ -18,15 +18,15 @@ const Propane = () => {
           <CardHeader className="text-center">
             <div className="flex justify-center mb-4">
               <img 
-                src="/lovable-uploads/8429af36-140a-4fc4-a401-e12fd22d19cc.png" 
-                alt="Propane"
+                src="/lovable-uploads/beimpact-logo.jpg" 
+                alt="be/impact"
                 className="h-20 w-auto object-contain"
               />
             </div>
             <div className="mb-6 flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-collektiv-green hover:bg-collektiv-lightgreen text-lg px-8 py-4">
                 <a 
-                  href="https://docs.google.com/document/d/1p7Y12ckCM3YSURWGNRuSRl3cYnSj_mvB-EgXzDH1wGI/edit?usp=sharing" 
+                  href="https://docs.google.com/document/d/1nLiXnIDZsOCtyoGCl0lYxopWOy29vgl53_lYBKZkACI/edit?usp=drive_link" 
                   target="_blank" 
                   rel="noopener noreferrer"
                 >
@@ -35,7 +35,7 @@ const Propane = () => {
               </Button>
               <Button asChild size="lg" className="bg-collektiv-green hover:bg-collektiv-lightgreen text-lg px-8 py-4">
                 <a 
-                  href="https://drive.google.com/file/d/1mu_3dwymdPWXQidTYQy_n6bzyagUXr8F/view?usp=sharing" 
+                  href="https://drive.google.com/file/d/1UfzaGTH-X7TrHAf4oCfR164o00qzRfti/view?usp=drive_link" 
                   target="_blank" 
                   rel="noopener noreferrer"
                 >
@@ -44,7 +44,7 @@ const Propane = () => {
               </Button>
               <Button asChild size="lg" className="bg-collektiv-green hover:bg-collektiv-lightgreen text-lg px-8 py-4">
                 <a 
-                  href="https://drive.google.com/drive/u/1/folders/1jwwgxYAhDGDVfAW2OhoHylK4W-oOh40c" 
+                  href="https://beimpact.trumpet.app/pods/68e90725957cc19cdc5a6b01/live" 
                   target="_blank" 
                   rel="noopener noreferrer"
                 >
@@ -52,39 +52,46 @@ const Propane = () => {
                 </a>
               </Button>
             </div>
-            <CardTitle className="text-3xl text-collektiv-green">Propane AI</CardTitle>
+            <CardTitle className="text-3xl text-collektiv-green">be/impact</CardTitle>
             <a 
-              href="https://usepropane.ai/" 
+              href="https://beimpact.co.uk/" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-blue-600 hover:underline inline-flex items-center"
             >
-              usepropane.ai
+              beimpact.co.uk
             </a>
           </CardHeader>
           <CardContent className="space-y-6">
             <div>
-              <h3 className="text-xl font-semibold mb-3 text-collektiv-green">About Propane AI</h3>
+              <h3 className="text-xl font-semibold mb-3 text-collektiv-green">About be/impact</h3>
               <p className="text-gray-700 leading-relaxed mb-4">
-                Propane AI is an innovative Copenhagen-based startup that has successfully raised €1.1M in 
-                pre-seed funding. The round included a significant investment from the founder of Lovable.dev, 
-                demonstrating strong industry confidence in their vision and technology.
+                be/impact is an innovative B2B SaaS platform operating in the Learning & Development and ESG/CSR investment space. 
+                The company is revolutionizing corporate training by enabling a "teach-to-learn" model that delivers exceptional knowledge retention 
+                and measurable social impact.
+              </p>
+              <p className="text-gray-700 leading-relaxed mb-4">
+                The platform amplifies corporate training ROI through skill transfer between employees and nonprofits, creating 
+                300% better learning outcomes and 40x higher social value compared to traditional CSR activities. This dual-impact approach 
+                makes learning more effective while generating meaningful social change.
               </p>
               <p className="text-gray-700 leading-relaxed">
-                Propane is building the first always-on customer intelligence platform for product and go-to-market teams. 
-                Designed to replace static surveys and slow research cycles, Propane uses AI to run contextual, async interviews 
-                triggered at critical moments like onboarding, churn, or win/loss.
+                With an expected valuation of £4m, be/impact is raising its Seed round with £30k SEIS available to Collektiv Club members, 
+                offering an attractive opportunity to invest in the future of corporate learning and social responsibility.
               </p>
             </div>
             
             <div>
               <h3 className="text-xl font-semibold mb-3 text-collektiv-green">Investment Details</h3>
               <ul className="list-disc list-inside text-gray-700 space-y-2">
-                <li><strong>Location:</strong> Copenhagen, Denmark</li>
-                <li><strong>Funding Stage:</strong> Pre-seed</li>
-                <li><strong>Amount Raised:</strong> €1.1M</li>
-                <li><strong>Notable Investor:</strong> Founder of Lovable.dev</li>
-                <li><strong>Status:</strong> Active and growing</li>
+                <li><strong>Industry:</strong> B2B SaaS – Learning & Development, ESG/CSR Investment</li>
+                <li><strong>Funding Stage:</strong> Seed</li>
+                <li><strong>Investment Amount:</strong> £30k SEIS available to Collektiv Club</li>
+                <li><strong>Expected Valuation:</strong> £4m</li>
+                <li><strong>Team:</strong> CEO Julian Buschmaas (ex-BCG, UN, LSE; extensive L&D/impact background), Co-founder Fabien Laplace (product and operations; ex-teacher; proven L&D expertise)</li>
+                <li><strong>Model:</strong> Platform enabling "teach-to-learn" knowledge retention and social impact reporting</li>
+                <li><strong>Key Metrics:</strong> 300% better learning outcomes, 40x higher social value than traditional CSR</li>
+                <li><strong>Status:</strong> Active and raising</li>
               </ul>
             </div>
           </CardContent>
@@ -94,4 +101,4 @@ const Propane = () => {
   );
 };
 
-export default Propane;
+export default BeImpact;
