@@ -2,7 +2,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Calendar, Clock, MapPin, Users } from "lucide-react";
+import { Calendar, Clock, MapPin, Users, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 const MemberEvents = () => {
@@ -40,7 +40,8 @@ const MemberEvents = () => {
       attendees: "20+ members and founders",
       status: "completed",
       description: "An evening of networking, insights sharing, and beers on us! Members and founders came together for great conversation.",
-      slug: "collektiv-meetup-oct-2024"
+      slug: "collektiv-meetup-oct-2024",
+      image: "/lovable-uploads/collektiv-meetup-group1.jpg"
     },
     {
       id: 4,
@@ -51,7 +52,8 @@ const MemberEvents = () => {
       attendees: "80+ international attendees",
       status: "completed",
       description: "The grand finale of the Plug and Play Tirana Accelerator Program - celebrating Albania's emerging startup ecosystem.",
-      slug: "tirana-expo-2024"
+      slug: "tirana-expo-2024",
+      image: "/lovable-uploads/tirana-expo-attendees.jpg"
     },
     {
       id: 3,
@@ -66,6 +68,68 @@ const MemberEvents = () => {
   ];
 
   const navigate = useNavigate();
+
+  const FeaturedEventCard = ({ event }) => {
+    const handleClick = () => {
+      navigate(`/members/events/${event.slug}`);
+    };
+
+    return (
+      <Card 
+        className="cursor-pointer hover:shadow-2xl hover:scale-[1.03] transition-all duration-300 overflow-hidden group"
+        onClick={handleClick}
+      >
+        <div className="relative h-56 overflow-hidden">
+          <img 
+            src={event.image} 
+            alt={event.title}
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+          <Badge className="absolute top-4 right-4 bg-collektiv-green text-white">
+            Completed
+          </Badge>
+        </div>
+        <CardHeader>
+          <CardTitle className="text-xl text-collektiv-green">{event.title}</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <p className="text-muted-foreground text-sm">{event.description}</p>
+          
+          <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
+            <div className="flex items-center gap-1">
+              <Calendar className="h-4 w-4" />
+              {event.date}
+            </div>
+            
+            {event.time && (
+              <div className="flex items-center gap-1">
+                <Clock className="h-4 w-4" />
+                {event.time}
+              </div>
+            )}
+            
+            <div className="flex items-center gap-1">
+              <MapPin className="h-4 w-4" />
+              {event.location}
+            </div>
+            
+            {event.attendees && (
+              <div className="flex items-center gap-1">
+                <Users className="h-4 w-4" />
+                {event.attendees}
+              </div>
+            )}
+          </div>
+
+          <div className="flex items-center gap-2 text-collektiv-green font-semibold text-sm group-hover:gap-3 transition-all">
+            <span>View Event Details</span>
+            <ArrowRight className="h-4 w-4" />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  };
 
   const EventCard = ({ event, isPast = false }) => {
     const isClickable = isPast && event.slug;
@@ -90,9 +154,9 @@ const MemberEvents = () => {
           </div>
         </CardHeader>
         <CardContent className="space-y-3">
-          <p className="text-gray-600 text-sm">{event.description}</p>
+          <p className="text-muted-foreground text-sm">{event.description}</p>
           
-          <div className="flex flex-wrap gap-4 text-sm text-gray-500">
+          <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
             <div className="flex items-center gap-1">
               <Calendar className="h-4 w-4" />
               {event.date}
@@ -123,20 +187,33 @@ const MemberEvents = () => {
   };
 
   return (
-    <div className="space-y-8">
-      {/* No events state */}
-      {upcomingEvents.length === 0 && pastEvents.length === 0 && (
-        <Card className="text-center py-12">
-          <CardContent>
-            <Calendar className="mx-auto h-16 w-16 text-gray-400 mb-4" />
-            <h3 className="text-xl font-semibold text-gray-600 mb-2">Events Coming Soon</h3>
-            <p className="text-gray-500 max-w-md mx-auto">
-              We're planning exciting events for our members. Stay tuned for updates on networking sessions, 
-              investment workshops, and exclusive member gatherings.
-            </p>
-            <Badge variant="outline" className="mt-4">TBC - To Be Confirmed</Badge>
-          </CardContent>
-        </Card>
+    <div className="space-y-12">
+      {/* Past Events - Featured at Top */}
+      {pastEvents.length > 0 && (
+        <div>
+          <div className="mb-6">
+            <h3 className="text-3xl font-bold text-collektiv-green mb-2">Past Events</h3>
+            <p className="text-muted-foreground">Click to explore photos, details and highlights from our community gatherings</p>
+          </div>
+          
+          {/* Featured Events with Images */}
+          <div className="grid md:grid-cols-2 gap-6 mb-6">
+            {pastEvents
+              .filter(event => event.image && event.slug)
+              .map((event) => (
+                <FeaturedEventCard key={event.id} event={event} />
+              ))}
+          </div>
+          
+          {/* Other Past Events without Images */}
+          <div className="grid gap-6">
+            {pastEvents
+              .filter(event => !event.image || !event.slug)
+              .map((event) => (
+                <EventCard key={event.id} event={event} isPast={true} />
+              ))}
+          </div>
+        </div>
       )}
 
       {/* Upcoming Events */}
@@ -151,16 +228,19 @@ const MemberEvents = () => {
         </div>
       )}
 
-      {/* Past Events */}
-      {pastEvents.length > 0 && (
-        <div>
-          <h3 className="text-2xl font-bold text-collektiv-green mb-6">Past Events</h3>
-          <div className="grid gap-6">
-            {pastEvents.map((event) => (
-              <EventCard key={event.id} event={event} isPast={true} />
-            ))}
-          </div>
-        </div>
+      {/* No events state */}
+      {upcomingEvents.length === 0 && pastEvents.length === 0 && (
+        <Card className="text-center py-12">
+          <CardContent>
+            <Calendar className="mx-auto h-16 w-16 text-muted-foreground mb-4" />
+            <h3 className="text-xl font-semibold mb-2">Events Coming Soon</h3>
+            <p className="text-muted-foreground max-w-md mx-auto">
+              We're planning exciting events for our members. Stay tuned for updates on networking sessions, 
+              investment workshops, and exclusive member gatherings.
+            </p>
+            <Badge variant="outline" className="mt-4">TBC - To Be Confirmed</Badge>
+          </CardContent>
+        </Card>
       )}
     </div>
   );
