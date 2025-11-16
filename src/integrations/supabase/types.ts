@@ -280,7 +280,7 @@ export type Database = {
         Returns: boolean
       }
       check_pre_approved_user_status: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           email: string
           has_auth_account: boolean
@@ -291,16 +291,10 @@ export type Database = {
           user_id: string
         }[]
       }
-      claim_member_profile: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      create_invitation: {
-        Args: { p_email: string }
-        Returns: undefined
-      }
+      claim_member_profile: { Args: never; Returns: string }
+      create_invitation: { Args: { p_email: string }; Returns: undefined }
       debug_auth_context: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           current_user_id: string
           is_admin: boolean
@@ -308,7 +302,7 @@ export type Database = {
         }[]
       }
       fix_pre_approved_users_missing_roles: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           action_taken: string
           user_email: string
@@ -322,14 +316,8 @@ export type Database = {
         }
         Returns: boolean
       }
-      is_approved_member: {
-        Args: { _user_id: string }
-        Returns: boolean
-      }
-      is_current_user_admin: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
+      is_approved_member: { Args: { _user_id: string }; Returns: boolean }
+      is_current_user_admin: { Args: never; Returns: boolean }
       reassign_member_profile_user: {
         Args: { p_new_user_id: string; p_profile_id: string }
         Returns: undefined
