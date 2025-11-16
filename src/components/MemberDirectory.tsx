@@ -31,6 +31,14 @@ const MemberDirectory = () => {
   const [loading, setLoading] = useState(true);
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
 
+  // Helper function to truncate text at word boundary
+  const truncateAtWord = (text: string, maxLength: number): string => {
+    if (text.length <= maxLength) return text;
+    const truncated = text.substring(0, maxLength);
+    const lastSpace = truncated.lastIndexOf(' ');
+    return lastSpace > 0 ? truncated.substring(0, lastSpace) : truncated;
+  };
+
   useEffect(() => {
     fetchMembers();
   }, []);
@@ -195,9 +203,10 @@ const MemberDirectory = () => {
           {members.map((member) => {
             const displayName = getDisplayName(member);
             const isExpanded = expandedCards.has(member.id || '');
-            const hasBio = member.bio && member.bio.trim().length > 0;
-            const bioPreview = hasBio ? member.bio.substring(0, 120) : '';
-            const shouldShowToggle = hasBio && member.bio.length > 120;
+            const trimmedBio = member.bio?.trim() || '';
+            const hasBio = trimmedBio.length > 0;
+            const bioPreview = hasBio ? truncateAtWord(trimmedBio, 150) : '';
+            const shouldShowToggle = hasBio && trimmedBio.length > 150;
             
             return (
               <Card 
@@ -237,7 +246,7 @@ const MemberDirectory = () => {
                   {hasBio && (
                     <div className="mb-4">
                       <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-wrap break-words">
-                        {isExpanded ? member.bio : (shouldShowToggle ? `${bioPreview}...` : member.bio)}
+                        {isExpanded ? trimmedBio : (shouldShowToggle ? `${bioPreview}...` : trimmedBio)}
                       </p>
                       {shouldShowToggle && (
                         <Button
