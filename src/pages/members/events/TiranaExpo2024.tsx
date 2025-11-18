@@ -72,6 +72,11 @@ const TiranaExpo2024 = () => {
               className="w-full h-64 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
             />
             <img 
+              src="/lovable-uploads/tirana-expo-speaker2.jpg" 
+              alt="Expert speaker presenting at Tirana Expo" 
+              className="w-full h-64 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
+            />
+            <img 
               src="/lovable-uploads/tirana-expo-panel.jpg" 
               alt="Expert presenting to audience" 
               className="w-full h-64 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
