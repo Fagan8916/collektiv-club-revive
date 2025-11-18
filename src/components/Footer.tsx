@@ -60,6 +60,11 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/events" onClick={scrollToTop} className="text-green-100 hover:text-white transition-colors">
+                  Events
+                </Link>
+              </li>
+              <li>
                 <Link to="/insights" onClick={scrollToTop} className="text-green-100 hover:text-white transition-colors">
                   Insights
                 </Link>
