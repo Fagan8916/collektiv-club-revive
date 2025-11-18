@@ -11,6 +11,7 @@ import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 import InvestmentStatsSection from "@/components/InvestmentStatsSection";
 import MissionSection from "@/components/MissionSection";
+import EventsSection from "@/components/EventsSection";
 
 const Index = () => {
 
@@ -25,6 +26,7 @@ const Index = () => {
         <MissionSection />
         <HowItWorksSection />
         <AboutSection />
+        <EventsSection />
         <MembershipSection />
         <NewsSection />
         <ContactSection />

@@ -8,6 +8,7 @@ import { isProfileComplete } from '@/utils/profileUtils';
 import Index from './pages/Index';
 import About from './pages/About';
 import Membership from './pages/Membership';
+import Events from './pages/Events';
 import News from './pages/News';
 import Founders from './pages/Founders';
 import Contact from './pages/Contact';
@@ -251,6 +252,10 @@ function App() {
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<About />} />
             <Route path="/membership" element={<Membership />} />
+            <Route path="/events" element={<Events />} />
+            <Route path="/events/tirana-expo-2024" element={<TiranaExpo2024 />} />
+            <Route path="/events/collektiv-meetup-oct-2024" element={<CollektivMeetupOct2024 />} />
+            <Route path="/events/propane-catalyst-2024" element={<PropaneCatalyst2024 />} />
             <Route path="/insights" element={<News />} />
             <Route path="/founders" element={<Founders />} />
             <Route path="/contact" element={<Contact />} />
