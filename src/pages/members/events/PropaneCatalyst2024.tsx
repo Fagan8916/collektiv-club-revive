@@ -25,11 +25,11 @@ const PropaneCatalyst2024 = () => {
         <div className="absolute top-8 left-8">
           <Button 
             variant="ghost" 
-            onClick={() => navigate('/members')}
+            onClick={() => navigate(-1)}
             className="text-white hover:bg-white/20"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Events
+            Back
           </Button>
         </div>
 

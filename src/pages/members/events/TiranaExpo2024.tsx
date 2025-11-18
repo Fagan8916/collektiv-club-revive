@@ -14,11 +14,11 @@ const TiranaExpo2024 = () => {
         <div className="container mx-auto px-4 py-4">
           <Button
             variant="ghost"
-            onClick={() => navigate("/members")}
+            onClick={() => navigate(-1)}
             className="flex items-center gap-2"
           >
             <ArrowLeft className="h-4 w-4" />
-            Back to Members Zone
+            Back
           </Button>
         </div>
       </div>
