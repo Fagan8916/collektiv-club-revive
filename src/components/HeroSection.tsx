@@ -22,7 +22,7 @@ const HeroSection = () => {
               className="h-24 md:h-32 animate-fade-in" 
             />
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-collektiv-green">Invest in Start-ups</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-collektiv-green">Invest In Start-ups alongside VC's and Institutional Investors</h2>
           
           
           <div className="mb-8">
