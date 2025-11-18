@@ -9,7 +9,7 @@ const EventsSection = () => {
     {
       id: 1,
       title: "Collektiv Member and Founder Meet Up",
-      date: "9th October 2024",
+      date: "9th October 2025",
       location: "The Woodins Shades, 212 Bishopsgate, London",
       description: "An evening of networking, insights sharing, and beers on us! Members and founders came together for great conversation.",
       image: "/lovable-uploads/collektiv-meetup-featured.jpg",
@@ -17,8 +17,8 @@ const EventsSection = () => {
     },
     {
       id: 2,
-      title: "Plug and Play Tirana Expo 2024",
-      date: "October 16-17, 2024",
+      title: "Plug and Play Tirana Expo 2025",
+      date: "October 16-17, 2025",
       location: "Pyramid of Tirana, Albania",
       description: "The grand finale of the Plug and Play Tirana Accelerator Program - celebrating Albania's emerging startup ecosystem.",
       image: "/lovable-uploads/tirana-expo-featured.jpg",
@@ -27,7 +27,7 @@ const EventsSection = () => {
     {
       id: 3,
       title: "Catalyst: Dinner @ London",
-      date: "October 14, 2024",
+      date: "October 14, 2025",
       location: "Dishoom King's Cross, London",
       description: "A roaming event series for founders, operators, and builders shaping what it means to build AI companies today.",
       image: "/lovable-uploads/propane-catalyst-featured.jpg",

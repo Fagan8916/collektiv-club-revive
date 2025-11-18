@@ -55,7 +55,7 @@ const PropaneCatalyst2024 = () => {
                 <Calendar className="h-5 w-5 text-collektiv-green mt-1" />
                 <div>
                   <p className="font-semibold text-lg">Date</p>
-                  <p className="text-muted-foreground">Tuesday, October 14, 2024</p>
+                  <p className="text-muted-foreground">Tuesday, October 14, 2025</p>
                 </div>
               </div>
 
