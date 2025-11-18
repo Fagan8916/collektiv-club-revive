@@ -13,7 +13,7 @@ const Events = () => {
     {
       id: 1,
       title: "Collektiv Member and Founder Meet Up",
-      date: "9th October 2024",
+      date: "9th October 2025",
       time: "6:00 PM onwards",
       location: "The Woodins Shades, 212 Bishopsgate, London",
       attendees: "20+ members and founders",
@@ -23,8 +23,8 @@ const Events = () => {
     },
     {
       id: 2,
-      title: "Plug and Play Tirana Expo 2024",
-      date: "October 16-17, 2024",
+      title: "Plug and Play Tirana Expo 2025",
+      date: "October 16-17, 2025",
       location: "Pyramid of Tirana, Albania",
       attendees: "80+ international attendees",
       description: "The grand finale of the Plug and Play Tirana Accelerator Program - celebrating Albania's emerging startup ecosystem.",
@@ -34,7 +34,7 @@ const Events = () => {
     {
       id: 3,
       title: "Catalyst: Dinner @ London",
-      date: "October 14, 2024",
+      date: "October 14, 2025",
       time: "6:30 PM - 9:30 PM",
       location: "Dishoom King's Cross, London",
       attendees: "15 attendees",

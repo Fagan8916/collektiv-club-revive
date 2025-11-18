@@ -26,7 +26,7 @@ const CollektivMeetupOct2024 = () => {
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-collektiv-green to-collektiv-green/80 text-white py-16">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">
             Collektiv Member and Founder Meet Up
           </h1>
           <p className="text-xl mb-8 text-white/90">
@@ -36,7 +36,7 @@ const CollektivMeetupOct2024 = () => {
           <div className="flex flex-wrap gap-6 text-sm">
             <div className="flex items-center gap-2">
               <Calendar className="h-5 w-5" />
-              <span>9th October 2024</span>
+              <span>9th October 2025</span>
             </div>
             <div className="flex items-center gap-2">
               <MapPin className="h-5 w-5" />

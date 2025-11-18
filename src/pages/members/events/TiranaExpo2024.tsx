@@ -27,7 +27,7 @@ const TiranaExpo2024 = () => {
       <div className="bg-gradient-to-br from-collektiv-green to-collektiv-green/80 text-white py-16">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Plug and Play Tirana Expo 2024
+            Plug and Play Tirana Expo 2025
           </h1>
           <p className="text-xl mb-8 text-white/90">
             Celebrating Albania's Emerging Startup Ecosystem
@@ -36,7 +36,7 @@ const TiranaExpo2024 = () => {
           <div className="flex flex-wrap gap-6 text-sm">
             <div className="flex items-center gap-2">
               <Calendar className="h-5 w-5" />
-              <span>October 16-17, 2024</span>
+              <span>October 16-17, 2025</span>
             </div>
             <div className="flex items-center gap-2">
               <MapPin className="h-5 w-5" />
@@ -91,7 +91,7 @@ const TiranaExpo2024 = () => {
               </h2>
               <div className="space-y-4 text-gray-700">
                 <p>
-                  The Plug and Play Tirana Expo 2024 marked a historic milestone for Albania's startup ecosystem. 
+                  The Plug and Play Tirana Expo 2025 marked a historic milestone for Albania's startup ecosystem. 
                   Held at the iconic Pyramid of Tirana, this two-day event brought together over 80 international 
                   investors, corporates, and innovation leaders to celebrate the culmination of the Plug and Play 
                   Tirana Accelerator Program.
@@ -126,7 +126,7 @@ const TiranaExpo2024 = () => {
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900">Dates & Venue</h3>
-                      <p className="text-sm text-gray-600">October 16-17, 2024</p>
+                      <p className="text-sm text-gray-600">October 16-17, 2025</p>
                       <p className="text-sm text-gray-600">Pyramid of Tirana - Iconic architectural landmark</p>
                     </div>
                   </div>
