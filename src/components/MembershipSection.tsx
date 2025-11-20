@@ -8,7 +8,7 @@ const MembershipSection = () => {
   const plans = [
     {
       name: "Trial",
-      price: "Free",
+      price: "Join Us",
       period: "",
       features: [
         "4.5% Investment fee",
