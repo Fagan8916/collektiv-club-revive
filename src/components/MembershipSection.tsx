@@ -7,13 +7,13 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 const MembershipSection = () => {
   const plans = [
     {
-      name: "Trial",
+      name: "",
       price: "Join Us",
       period: "",
       features: [
-        "4.5% Investment fee",
-        "0% Annual Investment fee",
-        "20% Carry / Performance fee",
+        "Access direct to founder",
+        "SEIS priority",
+        "Build your network",
         "Access to the Online Academy"
       ],
       button: "Get Started",
