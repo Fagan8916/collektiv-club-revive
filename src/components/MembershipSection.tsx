@@ -16,39 +16,9 @@ const MembershipSection = () => {
         "20% Carry / Performance fee",
         "Access to the Online Academy"
       ],
-      button: "Start Trial",
+      button: "Get Started",
       highlighted: false,
       link: "https://airtable.com/appWGyTHcjHMgZrUz/pagHdPVxVwljspHTq/form"
-    },
-    {
-      name: "Premium",
-      price: "£395",
-      period: "per year",
-      features: [
-        "1% Investment fee",
-        "0% Annual Investment fee",
-        "12% Carry / Performance fee",
-        "Access to the Founder and Member Slack Community"
-      ],
-      button: "Join Premium",
-      highlighted: false,
-      link: "https://airtable.com/appWGyTHcjHMgZrUz/pagXGRxiL7ToHR8Tb/form"
-    },
-    {
-      name: "VIP",
-      price: "£985",
-      period: "per year",
-      features: [
-        "0% Investment fee",
-        "0% Annual Investment fee",
-        "0% Carry / Performance fee",
-        "Priority on EIS & SEIS Deals",
-        "Access to the Founder and Member Slack Community",
-        "Gold Club Community Group Access and Discounts"
-      ],
-      button: "Get Started",
-      highlighted: true,
-      link: "https://airtable.com/appWGyTHcjHMgZrUz/pagcb1x8NOL2MCKy8/form"
     },
   ];
 
@@ -69,7 +39,7 @@ const MembershipSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div className="flex justify-center mb-16">
           {plans.map((plan, index) => (
             <div 
               key={index}
