@@ -21,7 +21,7 @@ const MembershipSection = () => {
   return <section className="section bg-gray-50" id="membership">
       <div className="container">
         <div className="text-center mb-16">
-          <h2 className="section-title">Become a Member            </h2>
+          <h2 className="section-title text-center">Become a Member            </h2>
           <p className="section-subtitle">
             Choose the plan that's right for you and start your journey with our community.
           </p>
