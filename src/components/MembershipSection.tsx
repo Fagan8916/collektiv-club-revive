@@ -20,9 +20,9 @@ const MembershipSection = () => {
   };
   return <section className="section bg-gray-50" id="membership">
       <div className="container">
-        <div className="text-center mb-16">
-          <h2 className="section-title text-center">Become a Member            </h2>
-          <p className="section-subtitle">
+        <div className="text-center mb-16 mx-auto max-w-4xl">
+          <h2 className="section-title text-center">Become a Member</h2>
+          <p className="section-subtitle text-center">
             Start your investment journey with our community
           </p>
         </div>
