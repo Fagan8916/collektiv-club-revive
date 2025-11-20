@@ -23,7 +23,7 @@ const MembershipSection = () => {
         <div className="text-center mb-16">
           <h2 className="section-title text-center">Become a Member            </h2>
           <p className="section-subtitle">
-            Choose the plan that's right for you and start your journey with our community.
+            Start your investment journey with our community
           </p>
         </div>
 
