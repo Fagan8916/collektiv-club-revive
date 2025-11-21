@@ -12,10 +12,10 @@ const ProfileSubmissionSuccessScreen = ({ isAutoApproved = false }: ProfileSubmi
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Auto-redirect approved users to members area after 3 seconds
+    // Auto-redirect approved users to member directory after 3 seconds
     if (isAutoApproved) {
       const timer = setTimeout(() => {
-        navigate('/members');
+        navigate('/members?tab=directory&profile=created');
       }, 3000);
       return () => clearTimeout(timer);
     }
@@ -36,13 +36,13 @@ const ProfileSubmissionSuccessScreen = ({ isAutoApproved = false }: ProfileSubmi
               Your profile has been created and is now live in the member directory. You can access all member features and connect with other members.
             </p>
             <Button 
-              onClick={() => navigate('/members')}
+              onClick={() => navigate('/members?tab=directory&profile=created')}
               className="bg-collektiv-green hover:bg-collektiv-dark"
             >
-              Visit Member Directory
+              Go to Member Directory
             </Button>
             <p className="text-sm text-gray-500 mt-4">
-              You'll be redirected automatically in a few seconds...
+              Redirecting to Member Directory in a few seconds...
             </p>
           </div>
         </CardContent>

@@ -16,6 +16,7 @@ import MembershipManager from "@/components/MembershipManager";
 import { AdminInviteManager } from "@/components/AdminInviteManager";
 import { useUserRole } from "@/hooks/useUserRole";
 import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
 
 const Members = () => {
   console.log('Members: Component rendering, current URL:', window.location.href);
@@ -25,6 +26,7 @@ const Members = () => {
   const navigate = useNavigate();
   const { user, isAuthenticated, loading: authLoading, signOut } = useAuth();
   const { isAdmin, isApprovedMember, loading: roleLoading } = useUserRole();
+  const { toast } = useToast();
 
   console.log('Members: Auth state - loading:', authLoading, 'authenticated:', isAuthenticated, 'user:', !!user);
 
@@ -49,6 +51,20 @@ const Members = () => {
       return () => clearTimeout(redirectTimer);
     }
   }, [isAuthenticated, authLoading, navigate]);
+
+  // Handle profile creation success - auto-navigate to directory tab
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('profile') === 'created') {
+      setActiveTab('directory');
+      toast({
+        title: "🎉 Your profile is now live!",
+        description: "Welcome to the member directory. Connect with other members below.",
+      });
+      // Clean up URL
+      window.history.replaceState({}, '', '/#/members');
+    }
+  }, [toast]);
 
   // Redirect unapproved members to external membership signup (except for profile building)
   useEffect(() => {
