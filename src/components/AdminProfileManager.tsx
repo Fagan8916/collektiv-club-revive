@@ -241,6 +241,18 @@ const AdminProfileManager = () => {
           {editingProfile && (
             <div className="space-y-4">
               <div>
+                <Label htmlFor="first_name">First Name</Label>
+                <Input
+                  id="first_name"
+                  value={editForm.first_name || ""}
+                  onChange={(e) =>
+                    setEditForm({ ...editForm, first_name: e.target.value })
+                  }
+                  placeholder="e.g., Elliot"
+                />
+              </div>
+              
+              <div>
                 <Label htmlFor="full_name">Last Name</Label>
                 <Input
                   id="full_name"
@@ -248,7 +260,11 @@ const AdminProfileManager = () => {
                   onChange={(e) =>
                     setEditForm({ ...editForm, full_name: e.target.value })
                   }
+                  placeholder="e.g., henry"
                 />
+                <p className="text-xs text-muted-foreground mt-1">
+                  Note: When First Name is set, this field should contain ONLY the last name
+                </p>
               </div>
               
               <div className="flex items-center space-x-2">
