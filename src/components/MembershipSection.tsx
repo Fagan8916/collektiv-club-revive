@@ -1,60 +1,97 @@
 import React from "react";
-import { Check, ChevronDown } from "lucide-react";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Check, Sparkles, Users, TrendingUp, BookOpen } from "lucide-react";
+
 const MembershipSection = () => {
-  const plans = [{
-    name: "",
-    price: "Join Us",
-    period: "",
-    features: ["Access direct to founder", "SEIS priority", "Build your network", "Access to the Online Academy"],
-    button: "Get Started",
-    highlighted: false,
-    link: "https://airtable.com/appWGyTHcjHMgZrUz/pagHdPVxVwljspHTq/form"
-  }];
-  const feeDetails = {
-    "Investment Fee": "A percentage-based carry fee applied on the amount invested, used to cover legal and transaction costs",
-    "Performance/Carry Fee": "A percentage-based carry fee is applied to the realised gains after a business exits. For example, with a 20% Carry fee, if an initial investment of £2,000 that grows to £20,000, the carry fee will be 20% of the £18,000 profit = £3,600 fee",
-    "Annual Investment Fee": "An annual recurring investment fee is a percentage-based charge on your total investment assets, covering ongoing services like asset management and administration",
-    "Annual Membership": "A membership fee typically involves a recurring charge, often annual, which grants access to exclusive investment opportunities, networking, and educational resources"
-  };
-  return <section className="section bg-gray-50" id="membership">
-      <div className="container">
-        <div className="text-center mb-16 mx-auto max-w-4xl">
-          <h2 className="section-title text-center">Become a Member</h2>
-          <p className="section-subtitle text-center">
-            Start your investment journey with our community
+  const features = [
+    {
+      icon: Users,
+      text: "Access direct to founder"
+    },
+    {
+      icon: TrendingUp,
+      text: "SEIS priority"
+    },
+    {
+      icon: Sparkles,
+      text: "Build your network"
+    },
+    {
+      icon: BookOpen,
+      text: "Access to the Online Academy"
+    }
+  ];
+
+  return (
+    <section className="relative py-24 md:py-32 overflow-hidden bg-gradient-to-br from-collektiv-green via-collektiv-green to-collektiv-lightgreen" id="membership">
+      {/* Decorative background patterns */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-10 left-10 w-72 h-72 bg-white rounded-full blur-3xl"></div>
+        <div className="absolute bottom-10 right-10 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full">
+          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <circle cx="20" cy="20" r="1" fill="white" opacity="0.3"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)" />
+          </svg>
+        </div>
+      </div>
+
+      <div className="container relative z-10">
+        <div className="max-w-5xl mx-auto text-center">
+          {/* Main Headline */}
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+            Become a Member
+          </h2>
+          
+          {/* Subheadline */}
+          <p className="text-xl md:text-2xl text-green-50 mb-12 max-w-3xl mx-auto leading-relaxed">
+            Start your investment journey with our community. Get direct access to founders, priority on SEIS opportunities, and exclusive networking.
+          </p>
+
+          {/* Features Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12 max-w-3xl mx-auto">
+            {features.map((feature, idx) => {
+              const Icon = feature.icon;
+              return (
+                <div 
+                  key={idx} 
+                  className="flex items-center justify-center md:justify-start space-x-4 bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/20 transition-all duration-300"
+                >
+                  <div className="flex-shrink-0 w-12 h-12 bg-white rounded-full flex items-center justify-center">
+                    <Icon className="h-6 w-6 text-collektiv-green" />
+                  </div>
+                  <span className="text-lg md:text-xl text-white font-medium text-left">
+                    {feature.text}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* CTA Button */}
+          <div className="flex justify-center">
+            <a 
+              href="https://airtable.com/appWGyTHcjHMgZrUz/pagHdPVxVwljspHTq/form" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-3 bg-white text-collektiv-green text-xl font-bold py-5 px-10 rounded-full hover:bg-green-50 hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-3xl"
+            >
+              <span>Get Started</span>
+              <Sparkles className="h-6 w-6" />
+            </a>
+          </div>
+
+          {/* Optional: Small tagline under button */}
+          <p className="text-green-100 mt-6 text-sm md:text-base">
+            Join a community of ambitious investors and entrepreneurs
           </p>
         </div>
-
-        <div className="flex justify-center mb-16">
-          {plans.map((plan, index) => <div key={index} className={`rounded-xl overflow-hidden transition-all hover:shadow-xl ${plan.highlighted ? "bg-white border-2 border-collektiv-green shadow-lg transform hover:-translate-y-1" : "bg-white shadow-md"}`}>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                <div className="mb-4">
-                  <span className="text-4xl font-bold text-collektiv-green">{plan.price}</span>
-                  <span className="text-gray-500 ml-1">{plan.period}</span>
-                </div>
-                
-                <div className="space-y-3 mb-8">
-                  {plan.features.map((feature, idx) => <div key={idx} className="flex items-start">
-                      <Check className="h-5 w-5 text-collektiv-green mr-2 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-700">{feature}</span>
-                    </div>)}
-                </div>
-                
-                <a href={plan.link} target="_blank" rel="noopener noreferrer" className={`w-full text-center block py-3 px-4 rounded-md font-medium transition-colors ${plan.highlighted ? "bg-collektiv-green text-white hover:bg-collektiv-lightgreen" : "bg-gray-100 text-gray-800 hover:bg-gray-200"}`}>
-                  {plan.button}
-                </a>
-              </div>
-            </div>)}
-        </div>
-
-        <div className="text-center">
-          
-        </div>
-
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default MembershipSection;
