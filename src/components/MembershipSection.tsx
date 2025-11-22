@@ -9,7 +9,7 @@ const MembershipSection = () => {
     },
     {
       icon: TrendingUp,
-      text: "SEIS priority"
+      text: "SEIS & EIS opportunities"
     },
     {
       icon: Sparkles,
