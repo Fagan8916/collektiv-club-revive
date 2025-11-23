@@ -25,13 +25,9 @@ const BeImpact = () => {
             </div>
             <div className="mb-6 flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-collektiv-green hover:bg-collektiv-lightgreen text-lg px-8 py-4">
-                <a 
-                  href="https://docs.google.com/document/d/1nLiXnIDZsOCtyoGCl0lYxopWOy29vgl53_lYBKZkACI/edit?usp=drive_link" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                >
+                <Link to="/members/investments/beimpact/memo">
                   Investment Memo
-                </a>
+                </Link>
               </Button>
               <Button asChild size="lg" className="bg-collektiv-green hover:bg-collektiv-lightgreen text-lg px-8 py-4">
                 <a 

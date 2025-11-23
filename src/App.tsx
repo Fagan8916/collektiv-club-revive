@@ -23,6 +23,7 @@ import Propane from './pages/members/investments/Propane';
 import Loxa from './pages/members/investments/Loxa';
 import Pandektes from './pages/members/investments/Pandektes';
 import BeImpact from './pages/members/investments/BeImpact';
+import BeImpactMemo from './pages/members/investments/BeImpactMemo';
 import TiranaExpo2024 from './pages/members/events/TiranaExpo2024';
 import CollektivMeetupOct2024 from './pages/members/events/CollektivMeetupOct2024';
 import PropaneCatalyst2024 from './pages/members/events/PropaneCatalyst2024';
@@ -267,6 +268,7 @@ function App() {
             <Route path="/members/investments/loxa" element={<Loxa />} />
             <Route path="/members/investments/pandektes" element={<Pandektes />} />
           <Route path="/members/investments/beimpact" element={<BeImpact />} />
+          <Route path="/members/investments/beimpact/memo" element={<BeImpactMemo />} />
           <Route path="/members/events/tirana-expo-2024" element={<TiranaExpo2024 />} />
           <Route path="/members/events/collektiv-meetup-oct-2024" element={<CollektivMeetupOct2024 />} />
           <Route path="/members/events/propane-catalyst-2024" element={<PropaneCatalyst2024 />} />
