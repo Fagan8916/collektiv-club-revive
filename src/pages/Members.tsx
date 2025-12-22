@@ -154,7 +154,7 @@ const Members = () => {
     {
       icon: Building2,
       title: "Active Investments",
-      value: "4",
+      value: "5",
       description: "Current portfolio companies"
     },
     {
@@ -166,7 +166,7 @@ const Members = () => {
     {
       icon: TrendingUp,
       title: "Total Deployed",
-      value: "£200K+",
+      value: "£450K+",
       description: "Capital invested to date"
     }
   ];

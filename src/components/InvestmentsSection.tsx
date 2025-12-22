@@ -27,6 +27,12 @@ const investments = [
     logo: "/lovable-uploads/beimpact-logo.jpg",
     website: "https://beimpact.co.uk/",
     slug: "beimpact"
+  },
+  {
+    name: "Webel",
+    logo: "/lovable-uploads/webel-logo.png",
+    website: "https://webel.app/",
+    slug: "webel"
   }
 ];
 
