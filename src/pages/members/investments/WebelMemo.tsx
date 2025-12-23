@@ -77,6 +77,14 @@ const WebelMemo = () => {
             and a ~4 month customer payback period, Webel has demonstrated strong unit economics that support sustainable 
             growth.
           </p>
+          <div className="my-6">
+            <img 
+              src="/lovable-uploads/webel-services-breakdown.png" 
+              alt="Webel Services Breakdown - Small Renovations 23%, Plumbing 22%, Painting 21%, Appliance Repair 16%, Electrician 14%"
+              className="w-full max-w-md mx-auto rounded-lg shadow-md"
+            />
+            <p className="text-center text-sm text-gray-500 mt-2">Service Category Breakdown</p>
+          </div>
         </section>
 
         {/* Traction & KPIs */}
@@ -142,6 +150,14 @@ const WebelMemo = () => {
               </tbody>
             </table>
           </div>
+          <div className="my-6">
+            <img 
+              src="/lovable-uploads/webel-retention-chart.png" 
+              alt="Customer Retention by Monthly Cohort - Webel shows 2x retention vs competitors"
+              className="w-full rounded-lg shadow-md"
+            />
+            <p className="text-center text-sm text-gray-500 mt-2">Average Customer Retention by Monthly Cohort</p>
+          </div>
         </section>
 
         {/* Business Model */}
@@ -157,6 +173,14 @@ const WebelMemo = () => {
             <li><strong>~4 month payback:</strong> Rapid recovery of customer acquisition investment</li>
             <li><strong>85% repeat GMV:</strong> Exceptional customer retention driving recurring revenue</li>
           </ul>
+          <div className="my-6">
+            <img 
+              src="/lovable-uploads/webel-fees-chart.png" 
+              alt="Fees & Average Net Take Rate showing growth from €60k to €127k monthly"
+              className="w-full rounded-lg shadow-md"
+            />
+            <p className="text-center text-sm text-gray-500 mt-2">Fees & Average Net Take Rate</p>
+          </div>
         </section>
 
         {/* Market & Competition */}
@@ -339,13 +363,10 @@ const WebelMemo = () => {
         {/* Final Thoughts */}
         <section className="mb-12">
           <h2 className="text-2xl font-bold text-collektiv-green mb-4">Investment Decision</h2>
-          <p className="text-gray-700 mb-4">
+          <p className="text-gray-700">
             Webel represents an opportunity to invest in a category leader with proven unit economics, strong customer 
             retention, and a clear path to significant scale. The combination of an experienced team, blue-chip investor 
             backing, and attractive entry valuation makes this a compelling addition to our portfolio.
-          </p>
-          <p className="text-gray-700">
-            The minimum investment is €2,500 with a close deadline of 28 December 2025.
           </p>
         </section>
 
