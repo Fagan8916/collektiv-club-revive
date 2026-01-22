@@ -34,7 +34,7 @@ const Membership = () => {
     },
     {
       q: "What are the investment fees?",
-      a: "Our fees vary by membership tier: Free Tier members pay 4.5% upfront fee + 20% carry, Premium members pay 1% upfront fee + 12% carry + £395 annual, and VIP members pay 0% upfront fee + 0% carry + £985 annual."
+      a: "Our standard fees are 4.5% upfront fee + 20% carry. Reduced fee structures are available for committed investors—get in touch to discuss options that suit your investment style."
     },
     {
       q: "How do I access member-only content?",
