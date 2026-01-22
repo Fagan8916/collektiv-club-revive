@@ -34,7 +34,7 @@ const Membership = () => {
     },
     {
       q: "What are the investment fees?",
-      a: "Our standard fees are 4.5% upfront fee + 20% carry. Reduced fee structures are available for committed investors—get in touch to discuss options that suit your investment style."
+      a: "Our standard fees are 5% upfront fee + 20% carry. Reduced fee structures are available for committed investors—get in touch to discuss options that suit your investment style."
     },
     {
       q: "How do I access member-only content?",
@@ -50,7 +50,7 @@ const Membership = () => {
     },
     {
       q: "How do these fees compare to other similar groups?",
-      a: "Collektiv offers competitive fees compared to traditional angel syndicates. Our Free Tier charges 4.5% upfront + 20% carry, Premium charges 1% upfront + 12% carry + £395 annual, and VIP charges no fees except £985 annual membership. Traditional syndicates typically charge 2-15% upfront fees plus 20% carry, with annual investment fees of 0-10% and membership costs up to £10,000 per annum. <a href=\"https://www.perplexity.ai/search/give-me-a-breakdown-of-the-ave-NluXPHO.Tmm2zFG_DM8jaw#0\" target=\"_blank\" rel=\"noopener noreferrer\" className=\"text-collektiv-blue hover:underline\">Don't take our word for it, ask Perplexity about typical fees</a>."
+      a: "Collektiv offers competitive fees compared to traditional angel syndicates. We charge 5% upfront + 20% carry, with reduced structures available for committed investors. Traditional syndicates typically charge 2-15% upfront fees plus 20% carry, with annual investment fees of 0-10% and membership costs up to £10,000 per annum. <a href=\"https://www.perplexity.ai/search/give-me-a-breakdown-of-the-ave-NluXPHO.Tmm2zFG_DM8jaw#0\" target=\"_blank\" rel=\"noopener noreferrer\" className=\"text-collektiv-blue hover:underline\">Don't take our word for it, ask Perplexity about typical fees</a>."
     },
     {
       q: "How many investment opportunities will I see?",
