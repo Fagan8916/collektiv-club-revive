@@ -72,7 +72,7 @@ const About = () => {
               </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
               <div className="bg-white p-6 rounded-lg shadow-md text-center">
                 <div className="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full">
                   <img 
@@ -112,6 +112,27 @@ const About = () => {
                 </p>
                 <p className="text-gray-600 mt-3">
                   With a deep understanding of what drives growth and success in the SaaS sector, Ryan brings a unique perspective to our angel syndicate, helping identify and support promising startups on their path to achieving scalable and sustainable growth.
+                </p>
+              </div>
+
+              <div className="bg-white p-6 rounded-lg shadow-md text-center">
+                <div className="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full">
+                  <img 
+                    src="/lovable-uploads/kevin-chavanne.jpg"
+                    alt="Kevin Chavanne" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <h3 className="text-xl font-bold mb-1 text-collektiv-green">Kevin Chavanne</h3>
+                <p className="text-collektiv-lightblue mb-3">Co-Founder</p>
+                <p className="text-gray-600">
+                  With over a decade of experience in European venture capital ecosystems, Kevin has a strong track record in identifying, evaluating, and supporting high-potential early-stage companies across Europe. He has held senior investment and leadership roles in the VC space in France, Spain, Denmark, and the Baltics, with a consistent focus on pre-seed, seed, and Series A investments.
+                </p>
+                <p className="text-gray-600 mt-3">
+                  Kevin brings deep expertise in early-stage investing, market expansion, and ecosystem building, having worked extensively across the Nordics, Southern Europe, and wider European markets. His background combines hands-on founder support, strategic partnerships, and investment execution, with a particular focus on fintech and technology-enabled business models.
+                </p>
+                <p className="text-gray-600 mt-3">
+                  Currently, Kevin is a Venture Partner at Tenity VC, the venture capital arm spun out from the Swiss Stock Exchange Group ecosystem. In parallel, he works alongside the founding team of Collektiv Club as a VC and is building a VC analysis platform designed to help startups better understand investor expectations and the broader venture capital landscape.
                 </p>
               </div>
             </div>
