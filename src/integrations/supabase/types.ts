@@ -202,6 +202,7 @@ export type Database = {
           added_at: string
           added_by: string
           email: string
+          full_name: string | null
           id: string
           notes: string | null
           used_at: string | null
@@ -210,6 +211,7 @@ export type Database = {
           added_at?: string
           added_by: string
           email: string
+          full_name?: string | null
           id?: string
           notes?: string | null
           used_at?: string | null
@@ -218,6 +220,7 @@ export type Database = {
           added_at?: string
           added_by?: string
           email?: string
+          full_name?: string | null
           id?: string
           notes?: string | null
           used_at?: string | null

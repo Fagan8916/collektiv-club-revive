@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -16,8 +16,9 @@ interface MembershipRequest {
   requested_at: string;
   approved_at?: string;
   approved_by?: string;
-  user_email?: string;
-  user_metadata?: any;
+  display_name?: string;
+  display_email?: string;
+  avatar_url?: string;
 }
 
 const MembershipManager = () => {
@@ -31,7 +32,7 @@ const MembershipManager = () => {
 
   const fetchMembershipRequests = async () => {
     try {
-      // First get the user roles data
+      // Get user roles
       const { data: userRoles, error: rolesError } = await supabase
         .from("user_roles")
         .select("*")
@@ -40,26 +41,54 @@ const MembershipManager = () => {
 
       if (rolesError) throw rolesError;
 
-      // Then get user details for each request
-      const requestsWithUserData = await Promise.all(
-        (userRoles || []).map(async (role) => {
-          try {
-            const { data: { user }, error: userError } = await supabase.auth.admin.getUserById(role.user_id);
-            return {
-              ...role,
-              user_email: user?.email,
-              user_metadata: user?.user_metadata,
-            };
-          } catch (error) {
-            console.error("Error fetching user data:", error);
-            return {
-              ...role,
-              user_email: "Unknown",
-              user_metadata: {},
-            };
-          }
-        })
+      // Get pre_approved_emails for name lookup
+      const { data: preApprovedEmails } = await supabase
+        .from("pre_approved_emails")
+        .select("email, full_name");
+
+      // Get member_profiles for additional name/avatar lookup
+      const { data: memberProfiles } = await supabase
+        .from("member_profiles")
+        .select("user_id, full_name, first_name, profile_image_url, contact_email");
+
+      // Create lookup maps
+      const preApprovedMap = new Map(
+        (preApprovedEmails || []).map(p => [p.email?.toLowerCase(), p.full_name])
       );
+      const profileMap = new Map(
+        (memberProfiles || []).map(p => [p.user_id, p])
+      );
+
+      // Enrich user roles with display info
+      const requestsWithUserData = (userRoles || []).map((role) => {
+        const profile = profileMap.get(role.user_id);
+        
+        // Try to get name from member_profiles first, then pre_approved_emails
+        let displayName = "Unknown User";
+        let displayEmail = "";
+        let avatarUrl = "";
+
+        if (profile) {
+          displayName = profile.full_name || profile.first_name || "Unknown User";
+          displayEmail = profile.contact_email || "";
+          avatarUrl = profile.profile_image_url || "";
+        }
+
+        // If no profile, try to find email in pre_approved_emails
+        if (!profile && displayEmail) {
+          const preApprovedName = preApprovedMap.get(displayEmail.toLowerCase());
+          if (preApprovedName) {
+            displayName = preApprovedName;
+          }
+        }
+
+        return {
+          ...role,
+          display_name: displayName,
+          display_email: displayEmail,
+          avatar_url: avatarUrl,
+        };
+      });
 
       setRequests(requestsWithUserData);
     } catch (error) {
@@ -128,9 +157,9 @@ const MembershipManager = () => {
     }
   };
 
-  const getInitials = (email: string, metadata: any) => {
-    if (metadata?.full_name) {
-      return metadata.full_name
+  const getInitials = (name: string, email: string) => {
+    if (name && name !== "Unknown User") {
+      return name
         .split(" ")
         .map((word: string) => word[0])
         .join("")
@@ -138,12 +167,6 @@ const MembershipManager = () => {
         .slice(0, 2);
     }
     return email?.slice(0, 2).toUpperCase() || "?";
-  };
-
-  const getDisplayName = (email: string, metadata: any) => {
-    if (metadata?.full_name) return metadata.full_name;
-    if (metadata?.name) return metadata.name;
-    return email?.split("@")[0] || "Unknown User";
   };
 
   const getStatusColor = (status: string) => {
@@ -195,19 +218,21 @@ const MembershipManager = () => {
                 <div className="flex items-start justify-between">
                   <div className="flex items-center space-x-4">
                     <Avatar className="h-12 w-12">
-                      <AvatarImage src={request.user_metadata?.avatar_url} />
+                      <AvatarImage src={request.avatar_url} />
                       <AvatarFallback className="bg-collektiv-green text-white">
-                        {getInitials(request.user_email || "", request.user_metadata || {})}
+                        {getInitials(request.display_name || "", request.display_email || "")}
                       </AvatarFallback>
                     </Avatar>
                     <div>
                       <h4 className="font-semibold text-lg">
-                        {getDisplayName(request.user_email || "", request.user_metadata || {})}
+                        {request.display_name || "Unknown User"}
                       </h4>
-                      <div className="flex items-center text-sm text-gray-600 mt-1">
-                        <Mail className="h-3 w-3 mr-1" />
-                        {request.user_email}
-                      </div>
+                      {request.display_email && (
+                        <div className="flex items-center text-sm text-gray-600 mt-1">
+                          <Mail className="h-3 w-3 mr-1" />
+                          {request.display_email}
+                        </div>
+                      )}
                       <div className="flex items-center text-xs text-gray-500 mt-1">
                         <Calendar className="h-3 w-3 mr-1" />
                         Requested {new Date(request.requested_at).toLocaleDateString()}
@@ -255,16 +280,18 @@ const MembershipManager = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
                     <Avatar className="h-10 w-10">
-                      <AvatarImage src={request.user_metadata?.avatar_url} />
+                      <AvatarImage src={request.avatar_url} />
                       <AvatarFallback className="bg-gray-500 text-white text-sm">
-                        {getInitials(request.user_email || "", request.user_metadata || {})}
+                        {getInitials(request.display_name || "", request.display_email || "")}
                       </AvatarFallback>
                     </Avatar>
                     <div>
                       <p className="font-medium">
-                        {getDisplayName(request.user_email || "", request.user_metadata || {})}
+                        {request.display_name || "Unknown User"}
                       </p>
-                      <p className="text-sm text-gray-600">{request.user_email}</p>
+                      {request.display_email && (
+                        <p className="text-sm text-gray-600">{request.display_email}</p>
+                      )}
                     </div>
                   </div>
                   <div className="text-right">
