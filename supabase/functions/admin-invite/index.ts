@@ -80,10 +80,11 @@ serve(async (req: Request): Promise<Response> => {
       });
     }
 
-    // Pre-approve email (idempotent)
+    // Pre-approve email (idempotent) and store name for display
     const normalizedEmail = email.trim().toLowerCase();
     const preapprovePayload = {
       email: normalizedEmail,
+      full_name: name?.trim() || null,
       notes: "Added via admin-invite edge function",
       added_by: callerId,
     } as Record<string, unknown>;
