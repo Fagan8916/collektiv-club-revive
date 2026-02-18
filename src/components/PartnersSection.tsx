@@ -7,7 +7,7 @@ const partners = [
   {
     name: "SwissEP",
     href: "https://swissep.org/",
-    logo: "lovable-uploads/swissep-logo.jpg",
+    logo: "lovable-uploads/swissep-logo-new.png",
     description:
       "Swiss Entrepreneurship Program strengthens startup ecosystems globally by sharing knowledge and connections through their network of experienced founders, investors, and experts.",
   },
