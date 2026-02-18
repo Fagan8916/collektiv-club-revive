@@ -52,7 +52,7 @@ const MembershipSection = () => {
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-3 bg-collektiv-green text-white text-lg font-bold py-4 px-10 rounded-full hover:bg-collektiv-lightgreen hover:scale-105 transition-all duration-300 shadow-lg shadow-collektiv-green/25"
             >
-              <span>Get Started</span>
+              <span>Become a Member</span>
               <Sparkles className="h-5 w-5" />
             </a>
           </div>
