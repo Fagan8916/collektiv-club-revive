@@ -79,7 +79,7 @@ const Header = () => {
               className={cn(
                 "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200",
                 isActive(item.href)
-                  ? "bg-collektiv-dark text-white"
+                  ? "bg-collektiv-green text-white"
                   : "text-collektiv-gray hover:text-collektiv-dark hover:bg-gray-100"
               )}
             >
@@ -143,7 +143,7 @@ const Header = () => {
               className={cn(
                 "text-lg font-medium transition-colors px-4 py-2 rounded-lg",
                 isActive(item.href)
-                  ? "bg-collektiv-dark text-white"
+                  ? "bg-collektiv-green text-white"
                   : "text-collektiv-gray hover:text-collektiv-dark hover:bg-gray-50"
               )}
               onClick={() => { setMobileMenuOpen(false); scrollToTop(); }}
