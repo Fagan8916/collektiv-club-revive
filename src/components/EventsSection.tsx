@@ -36,12 +36,12 @@ const EventsSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-20 bg-collektiv-dark">
       <div className="container">
         <div className="text-center mb-12">
           <p className="text-collektiv-green text-sm font-medium uppercase tracking-widest mb-3">Community</p>
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-collektiv-dark mb-4">Recent Events</h2>
-          <p className="text-collektiv-gray text-lg max-w-2xl mx-auto">
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">Recent Events</h2>
+          <p className="text-white/60 text-lg max-w-2xl mx-auto">
             Discover our latest gatherings bringing together investors, founders, and innovators
           </p>
         </div>
@@ -53,7 +53,7 @@ const EventsSection = () => {
               to={`/events/${event.slug}`}
               className="group"
             >
-              <Card className="cursor-pointer hover:shadow-xl hover:scale-[1.02] transition-all duration-300 overflow-hidden h-full rounded-2xl border-0 shadow-sm">
+              <Card className="cursor-pointer hover:shadow-xl hover:scale-[1.02] transition-all duration-300 overflow-hidden h-full rounded-2xl border-white/10 bg-white/5 shadow-sm">
                 <div className="relative h-56 overflow-hidden">
                   <img 
                     src={event.image} 
@@ -66,18 +66,18 @@ const EventsSection = () => {
                   </Badge>
                 </div>
                 <CardHeader>
-                  <CardTitle className="text-lg text-collektiv-dark group-hover:text-collektiv-green transition-colors font-bold">
+                  <CardTitle className="text-lg text-white group-hover:text-collektiv-green transition-colors font-bold">
                     {event.title}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <p className="text-collektiv-gray text-sm line-clamp-2">{event.description}</p>
+                  <p className="text-white/60 text-sm line-clamp-2">{event.description}</p>
                   <div className="space-y-2 text-sm">
-                    <div className="flex items-start gap-2 text-collektiv-gray">
+                    <div className="flex items-start gap-2 text-white/60">
                       <Calendar className="w-4 h-4 mt-0.5 flex-shrink-0 text-collektiv-green" />
                       <span>{event.date}</span>
                     </div>
-                    <div className="flex items-start gap-2 text-collektiv-gray">
+                    <div className="flex items-start gap-2 text-white/60">
                       <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-collektiv-green" />
                       <span>{event.location}</span>
                     </div>

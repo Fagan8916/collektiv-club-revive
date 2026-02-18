@@ -64,23 +64,23 @@ const Portfolio = () => {
         {/* Hero */}
         <section className="pt-32 pb-16 bg-gradient-to-br from-collektiv-dark to-collektiv-darkTeal text-primary-foreground">
           <div className="container text-center">
-            <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">
+            <h1 className="font-display text-4xl md:text-5xl font-bold mb-4 text-white">
               Our Portfolio
             </h1>
-            <p className="text-lg text-primary-foreground/80 max-w-2xl mx-auto">
+            <p className="text-lg text-white/70 max-w-2xl mx-auto">
               A curated selection of VC-backed startups we've invested in alongside our members.
             </p>
           </div>
         </section>
 
         {/* Portfolio Grid */}
-        <section className="py-20 bg-background">
+        <section className="py-20 bg-collektiv-dark">
           <div className="container max-w-5xl">
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {investments.map((inv) => (
                 <div
                   key={inv.slug}
-                  className="rounded-2xl border border-border bg-card p-6 flex flex-col items-center text-center gap-4 shadow-sm hover:shadow-md transition-shadow"
+                  className="rounded-2xl border border-white/10 bg-white/5 p-6 flex flex-col items-center text-center gap-4 hover:bg-white/10 transition-all"
                 >
                   <div className="h-14 flex items-center justify-center">
                     <img
@@ -89,8 +89,8 @@ const Portfolio = () => {
                       className="max-h-14 w-auto object-contain"
                     />
                   </div>
-                  <h3 className="text-xl font-bold text-collektiv-dark">{inv.name}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed flex-1">
+                  <h3 className="text-xl font-bold text-white">{inv.name}</h3>
+                  <p className="text-white/60 text-sm leading-relaxed flex-1">
                     {inv.description}
                   </p>
                   <a

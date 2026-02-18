@@ -13,7 +13,6 @@ const Insights = () => {
 
   const categories = ["All Articles", ...Array.from(new Set(articles.map(article => article.category)))];
   
-  // Filter articles based on search term and category
   const filteredArticles = articles.filter(article => {
     const matchesSearch = article.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
                         article.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -30,7 +29,7 @@ const Insights = () => {
       <main>
         <InsightsHero searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
-        <section className="section bg-white">
+        <section className="section bg-collektiv-dark">
           <div className="container">
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
               <InsightsSidebar 

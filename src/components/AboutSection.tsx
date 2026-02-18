@@ -38,22 +38,22 @@ const AboutSection = () => {
   ];
 
   return (
-    <section className="py-20 md:py-28 bg-white" id="about">
+    <section className="py-20 md:py-28 bg-gradient-to-br from-collektiv-dark to-collektiv-darkTeal" id="about">
       <div className="container">
         <div className="text-center mb-16">
           <p className="text-collektiv-green text-sm font-medium uppercase tracking-widest mb-3">About Us</p>
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-collektiv-dark mb-4">The Collektiv Club</h2>
-          <p className="text-collektiv-gray text-lg max-w-3xl mx-auto">
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">The Collektiv Club</h2>
+          <p className="text-white/60 text-lg max-w-3xl mx-auto">
             A community-driven organization bringing together ambitious individuals who believe in the power of collective growth.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="order-2 lg:order-1">
-            <h3 className="font-display text-2xl font-bold mb-6 text-collektiv-dark">
+            <h3 className="font-display text-2xl font-bold mb-6 text-white">
               Why Join Our Community?
             </h3>
-            <p className="text-collektiv-gray mb-8 leading-relaxed">
+            <p className="text-white/60 mb-8 leading-relaxed">
               At The Collektiv Club, we believe that individual success is amplified through 
               community support. Our members gain access to exclusive resources, events, 
               and a network of like-minded individuals all committed to growth and excellence.
@@ -63,7 +63,7 @@ const AboutSection = () => {
               {features.map((feature, index) => (
                 <div key={index} className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-collektiv-green mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-collektiv-gray text-sm">{feature}</span>
+                  <span className="text-white/70 text-sm">{feature}</span>
                 </div>
               ))}
             </div>
@@ -78,7 +78,7 @@ const AboutSection = () => {
           
           <div className="order-1 lg:order-2">
             <div className="rounded-2xl overflow-hidden shadow-xl">
-              <div className="bg-gradient-to-br from-collektiv-dark via-collektiv-darkTeal to-collektiv-dark h-full w-full relative">
+              <div className="bg-white/5 border border-white/10 h-full w-full relative">
                 <Carousel className="w-full h-full" opts={{ align: "start", loop: true }}>
                   <CarouselContent className="h-full">
                     {carouselSlides.map((slide, index) => (

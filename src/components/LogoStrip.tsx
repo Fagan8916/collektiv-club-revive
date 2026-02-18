@@ -40,10 +40,10 @@ const allLogos = [...logos, ...logos];
 
 const LogoStrip = () => {
   return (
-    <section className="py-12 bg-muted/50 border-y border-border overflow-hidden">
+    <section className="py-12 bg-collektiv-dark border-y border-white/10 overflow-hidden">
       <div className="container mb-6">
         <Link to="/portfolio" className="block">
-          <p className="text-center text-sm font-medium text-muted-foreground uppercase tracking-widest hover:text-collektiv-green transition-colors">
+          <p className="text-center text-sm font-medium text-white/50 uppercase tracking-widest hover:text-collektiv-green transition-colors">
             Our Portfolio
           </p>
         </Link>
