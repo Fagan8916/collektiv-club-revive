@@ -181,56 +181,57 @@ const Header = () => {
       </div>
       {/* Join Now Dialog */}
       <Dialog open={joinDialogOpen} onOpenChange={setJoinDialogOpen}>
-        <DialogContent className="bg-collektiv-dark border-white/10 text-white max-w-md p-0 gap-0 overflow-hidden">
-          <DialogHeader className="p-6 pb-2">
-            <DialogTitle className="text-xl font-bold text-white">Get Started</DialogTitle>
+        <DialogContent className="bg-gradient-to-br from-[#0c1a2e] via-collektiv-dark to-[#0a1628] border border-white/[0.08] text-white max-w-xl p-0 gap-0 overflow-hidden rounded-2xl shadow-2xl shadow-black/60">
+          {/* Subtle glow accent */}
+          <div className="absolute -top-20 -right-20 w-40 h-40 bg-collektiv-green/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-16 -left-16 w-32 h-32 bg-collektiv-green/5 rounded-full blur-3xl pointer-events-none" />
+          
+          <DialogHeader className="p-8 pb-3 relative">
+            <p className="text-collektiv-green text-xs font-semibold uppercase tracking-[0.2em] mb-1">The Collektiv</p>
+            <DialogTitle className="text-2xl font-display font-bold text-white">Get Started</DialogTitle>
           </DialogHeader>
-          <div className="flex flex-col gap-3 p-6 pt-2">
-            <a
-              href="https://airtable.com/appWGyTHcjHMgZrUz/pagHdPVxVwljspHTq/form"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all group"
-              onClick={() => setJoinDialogOpen(false)}
-            >
-              <div className="w-10 h-10 bg-collektiv-green rounded-full flex items-center justify-center flex-shrink-0">
-                <Users className="h-5 w-5 text-white" />
-              </div>
-              <div>
-                <p className="font-semibold text-white">Become a Member</p>
-                <p className="text-sm text-white/50">Apply to join our investor community</p>
-              </div>
-            </a>
-            <a
-              href="https://zcal.co/collektiv/15min"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all group"
-              onClick={() => setJoinDialogOpen(false)}
-            >
-              <div className="w-10 h-10 bg-collektiv-green rounded-full flex items-center justify-center flex-shrink-0">
-                <Calendar className="h-5 w-5 text-white" />
-              </div>
-              <div>
-                <p className="font-semibold text-white">Book a Discovery Call</p>
-                <p className="text-sm text-white/50">15-min intro call with our team</p>
-              </div>
-            </a>
-            <a
-              href="https://airtable.com/appWGyTHcjHMgZrUz/pagTxXOeZJ2McNFHZ/form"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all group"
-              onClick={() => setJoinDialogOpen(false)}
-            >
-              <div className="w-10 h-10 bg-collektiv-green rounded-full flex items-center justify-center flex-shrink-0">
-                <FileText className="h-5 w-5 text-white" />
-              </div>
-              <div>
-                <p className="font-semibold text-white">Submit a Founder Pitch Deck</p>
-                <p className="text-sm text-white/50">Share your startup with our investors</p>
-              </div>
-            </a>
+          <div className="flex flex-col gap-3 px-8 pb-8 pt-1 relative">
+            {[
+              {
+                href: "https://airtable.com/appWGyTHcjHMgZrUz/pagHdPVxVwljspHTq/form",
+                icon: Users,
+                title: "Become a Member",
+                desc: "Apply to join our investor community",
+              },
+              {
+                href: "https://zcal.co/collektiv/15min",
+                icon: Calendar,
+                title: "Book a Discovery Call",
+                desc: "15-min intro call with our team",
+              },
+              {
+                href: "https://airtable.com/appWGyTHcjHMgZrUz/pagTxXOeZJ2McNFHZ/form",
+                icon: FileText,
+                title: "Submit a Founder Pitch Deck",
+                desc: "Share your startup with our investors",
+              },
+            ].map((item) => {
+              const Icon = item.icon;
+              return (
+                <a
+                  key={item.title}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-5 p-5 rounded-xl bg-white/[0.03] border border-white/[0.07] hover:bg-white/[0.08] hover:border-collektiv-green/30 hover:shadow-lg hover:shadow-collektiv-green/5 transition-all duration-300 group"
+                  onClick={() => setJoinDialogOpen(false)}
+                >
+                  <div className="w-12 h-12 bg-gradient-to-br from-collektiv-green to-collektiv-green/80 rounded-xl flex items-center justify-center flex-shrink-0 shadow-md shadow-collektiv-green/20 group-hover:scale-105 transition-transform duration-300">
+                    <Icon className="h-5 w-5 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-semibold text-[15px] text-white group-hover:text-collektiv-green transition-colors duration-300">{item.title}</p>
+                    <p className="text-sm text-white/40 mt-0.5">{item.desc}</p>
+                  </div>
+                  <ChevronRight className="h-4 w-4 text-white/20 group-hover:text-collektiv-green group-hover:translate-x-0.5 transition-all duration-300 flex-shrink-0" />
+                </a>
+              );
+            })}
           </div>
         </DialogContent>
       </Dialog>
