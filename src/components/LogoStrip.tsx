@@ -7,7 +7,7 @@ const logos = [
   {
     name: "Anthropic",
     type: "image" as const,
-    src: "lovable-uploads/anthropic-logo.png",
+    src: "lovable-uploads/anthropic-logo-new.png",
   },
   {
     name: "be/impact",
@@ -22,7 +22,7 @@ const logos = [
   {
     name: "Webel",
     type: "image" as const,
-    src: "lovable-uploads/webel-logo.png",
+    src: "lovable-uploads/webel-logo-new.png",
   },
   {
     name: "Loxa",
