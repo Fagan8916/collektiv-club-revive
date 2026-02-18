@@ -24,10 +24,10 @@ const HeroSection = () => {
           <p className="text-collektiv-green text-sm md:text-base mb-8 tracking-widest uppercase">The Collektiv Revolution</p>
           
           {/* Main headline */}
-          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-2 leading-tight">
+          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-2 leading-tight" style={{ textShadow: '0 4px 12px rgba(0, 0, 0, 0.5)' }}>
             Invest in VC-Backed
           </h1>
-          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold italic text-collektiv-green mb-8 leading-tight">
+          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold italic text-collektiv-green mb-8 leading-tight" style={{ textShadow: '0 4px 12px rgba(0, 0, 0, 0.4)' }}>
             Start-ups
           </h1>
           
