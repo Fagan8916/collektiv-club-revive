@@ -132,7 +132,7 @@ const Header = () => {
       {/* Mobile menu */}
       <div
         className={cn(
-          "fixed inset-0 bg-collektiv-dark z-40 lg:hidden transition-transform duration-300 pt-20 overflow-y-auto",
+          "fixed inset-0 bg-collektiv-dark z-[60] lg:hidden transition-transform duration-300 pt-20 overflow-y-auto",
           mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         )}
       >
