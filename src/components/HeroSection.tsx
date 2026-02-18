@@ -6,7 +6,7 @@ import { getAssetPath } from "@/utils/assetUtils";
 
 const HeroSection = () => {
   const logoPath = getAssetPath("lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png");
-
+  
   return (
     <section className="relative min-h-screen flex items-center pt-20 bg-gradient-to-br from-collektiv-dark via-collektiv-darkTeal to-collektiv-dark overflow-hidden">
       {/* Subtle radial glow */}
@@ -36,27 +36,31 @@ const HeroSection = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 mb-16">
-            <Link
-              to="/membership"
-              className="bg-collektiv-green text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-collektiv-lightgreen transition-all duration-300 flex items-center shadow-lg shadow-collektiv-green/25">
-
+            <a 
+              href="https://airtable.com/appWGyTHcjHMgZrUz/pagHdPVxVwljspHTq/form"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-collektiv-green text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-collektiv-lightgreen transition-all duration-300 flex items-center shadow-lg shadow-collektiv-green/25"
+            >
               Become a Member
               <ArrowRight size={20} className="ml-2" />
-            </Link>
-            
-
-
-
-
-
+            </a>
+            <a 
+              href="https://zcal.co/collektiv/15min"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-transparent border-2 border-white/30 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white/10 transition-all duration-300 text-center"
+            >
+              Book a Discovery Call
+            </a>
           </div>
 
           {/* Trust line */}
           <p className="text-white/40 text-sm">Trusted by investors across the world</p>
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 };
 
 export default HeroSection;
