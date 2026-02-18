@@ -157,11 +157,11 @@ const Events = () => {
       
       <main className="pt-20">
         {/* Hero Section */}
-        <section className="py-16 bg-gradient-to-b from-green-50 to-white">
+        <section className="py-16 bg-gradient-to-br from-collektiv-dark to-collektiv-darkTeal">
           <div className="container">
             <div className="text-center max-w-3xl mx-auto">
-              <h1 className="text-5xl font-bold mb-6 text-collektiv-green">Our Events</h1>
-              <p className="text-xl text-gray-600">
+              <h1 className="text-5xl font-bold mb-6 text-white">Our Events</h1>
+              <p className="text-xl text-white/80">
                 Connect with fellow investors, founders, and innovators at our exclusive events. 
                 From intimate dinners to large-scale expos, we create meaningful networking opportunities.
               </p>

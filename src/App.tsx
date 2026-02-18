@@ -12,7 +12,6 @@ import Events from './pages/Events';
 import News from './pages/News';
 import Founders from './pages/Founders';
 import Contact from './pages/Contact';
-import Partnerships from './pages/Partnerships';
 import Portfolio from './pages/Portfolio';
 import Login from './pages/Login';
 import Members from './pages/Members';
@@ -265,7 +264,6 @@ function App() {
             <Route path="/insights" element={<News />} />
             <Route path="/founders" element={<Founders />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/partnerships" element={<Partnerships />} />
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/login" element={<Login />} />
             <Route path="/members" element={<Members />} />

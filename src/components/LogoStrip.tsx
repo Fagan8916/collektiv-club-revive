@@ -35,7 +35,6 @@ const logos = [
   },
 ];
 
-// Duplicate for seamless infinite scroll
 const allLogos = [...logos, ...logos];
 
 const LogoStrip = () => {
@@ -53,7 +52,7 @@ const LogoStrip = () => {
           {allLogos.map((logo, i) => (
             <div
               key={`${logo.name}-${i}`}
-              className="flex-shrink-0 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+              className="flex-shrink-0 hover:opacity-80 transition-all duration-300"
             >
               {logo.type === "image" ? (
                 <img

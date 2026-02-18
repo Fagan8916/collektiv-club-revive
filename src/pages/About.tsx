@@ -10,11 +10,11 @@ const About = () => {
       <Header />
       <main>
         {/* Hero Section */}
-        <section className="pt-32 pb-16 bg-gradient-to-r from-blue-50 to-white">
+        <section className="pt-32 pb-16 bg-gradient-to-br from-collektiv-dark to-collektiv-darkTeal">
           <div className="container">
             <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-collektiv-green">About The Collektiv Club</h1>
-              <p className="text-xl text-gray-700">
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">About The Collektiv Club</h1>
+              <p className="text-xl text-white/80">
                 With over 30 years of combined experience working with top organisations, we bring a deep understanding of market growth, strategic business development, and financial expertise. This experience gives us the insight to identify high-potential opportunities and the trusted network to access them early.
               </p>
             </div>

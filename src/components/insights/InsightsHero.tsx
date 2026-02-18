@@ -9,11 +9,11 @@ interface InsightsHeroProps {
 
 const InsightsHero: React.FC<InsightsHeroProps> = ({ searchTerm, setSearchTerm }) => {
   return (
-    <section className="pt-32 pb-16 bg-gradient-to-r from-blue-50 to-white">
+    <section className="pt-32 pb-16 bg-gradient-to-br from-collektiv-dark to-collektiv-darkTeal">
       <div className="container">
         <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-collektiv-green">Insights & Updates</h1>
-          <p className="text-xl text-gray-700 mb-8">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">Insights & Updates</h1>
+          <p className="text-xl text-white/80 mb-8">
             Stay informed with the latest news, events, and stories from our community.
           </p>
           

@@ -75,11 +75,11 @@ const Membership = () => {
       <Header />
       <main>
         {/* Hero Section */}
-        <section className="pt-32 pb-16 bg-gradient-to-r from-collektiv-accent to-white">
+        <section className="pt-32 pb-16 bg-gradient-to-br from-collektiv-dark to-collektiv-darkTeal">
           <div className="container">
             <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-collektiv-green">Membership Benefits</h1>
-              <p className="text-xl text-gray-700">
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">Membership Benefits</h1>
+              <p className="text-xl text-white/80">
                 Discover all the advantages of joining our community and find the perfect membership option for you.
               </p>
             </div>

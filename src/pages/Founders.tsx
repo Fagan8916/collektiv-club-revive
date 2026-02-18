@@ -41,11 +41,11 @@ const Founders = () => {
       <Header />
       <main>
         {/* Hero Section */}
-        <section className="pt-32 pb-20 bg-gradient-to-r from-collektiv-accent to-white">
+        <section className="pt-32 pb-20 bg-gradient-to-br from-collektiv-dark to-collektiv-darkTeal">
           <div className="container">
             <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-collektiv-green">For Founders</h1>
-              <p className="text-xl text-gray-700 mb-8">
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">For Founders</h1>
+              <p className="text-xl text-white/80 mb-8">
                 Raise capital efficiently and access a network of strategic investors committed to your success.
               </p>
               <a

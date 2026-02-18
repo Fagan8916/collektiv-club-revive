@@ -13,6 +13,7 @@ import InvestmentStatsSection from "@/components/InvestmentStatsSection";
 import MissionSection from "@/components/MissionSection";
 import EventsSection from "@/components/EventsSection";
 import LogoStrip from "@/components/LogoStrip";
+import PartnersSection from "@/components/PartnersSection";
 
 const Index = () => {
 
@@ -32,6 +33,7 @@ const Index = () => {
         <MembershipSection />
         <NewsSection />
         <ContactSection />
+        <PartnersSection />
         <CTASection />
       </main>
       <Footer />
