@@ -187,3 +187,22 @@
 .article-content hr {
   @apply my-8 border-gray-200;
 }
+
+/* Scrolling logo animation */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-left {
+  animation: scroll-left 20s linear infinite;
+  width: max-content;
+}
+
+.animate-scroll-left:hover {
+  animation-play-state: paused;
+}

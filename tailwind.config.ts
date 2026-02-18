@@ -64,8 +64,8 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				collektiv: {
-					green: '#10B981',       // Primary emerald green
-					lightgreen: '#34D399',  // Secondary lighter green
+					green: '#037b5f',       // Primary logo green
+					lightgreen: '#04996f',  // Secondary lighter green
 					dark: '#0F172A',        // Dark navy for backgrounds
 					darkTeal: '#134E4A',    // Dark teal for gradients
 					blue: '#0EA5E9',        // Ocean blue color for links

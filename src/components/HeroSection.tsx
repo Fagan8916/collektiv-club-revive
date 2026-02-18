@@ -57,24 +57,7 @@ const HeroSection = () => {
           </div>
 
           {/* Trust line */}
-          <p className="text-white/40 text-sm mb-6">Trusted by investors across the UK</p>
-
-          {/* Stats cards */}
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            {[
-              { value: "£0", label: "Joining Fee" },
-              { value: "6-12", label: "Deals / Year" },
-              { value: "£500", label: "Min Investment" },
-            ].map((stat, idx) => (
-              <div 
-                key={idx} 
-                className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-8 py-5 text-center min-w-[160px]"
-              >
-                <div className="font-display text-3xl md:text-4xl font-bold text-white mb-1">{stat.value}</div>
-                <div className="text-white/50 text-sm">{stat.label}</div>
-              </div>
-            ))}
-          </div>
+          <p className="text-white/40 text-sm">Trusted by investors across the world</p>
         </div>
       </div>
     </section>

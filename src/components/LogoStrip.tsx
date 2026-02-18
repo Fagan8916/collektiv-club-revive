@@ -1,48 +1,59 @@
 
 import React from "react";
+import { Link } from "react-router-dom";
 import { getAssetPath } from "@/utils/assetUtils";
 
 const logos = [
   {
     name: "Anthropic",
-    href: "https://www.anthropic.com/",
     type: "text" as const,
   },
   {
     name: "be/impact",
-    href: "https://beimpact.co.uk/",
     type: "image" as const,
     src: "lovable-uploads/beimpact-logo.jpg",
   },
   {
     name: "Propane",
-    href: "https://usepropane.ai/",
     type: "image" as const,
     src: "lovable-uploads/8429af36-140a-4fc4-a401-e12fd22d19cc.png",
   },
   {
     name: "Webel",
-    href: "https://appwebel.com/",
     type: "image" as const,
     src: "lovable-uploads/webel-logo.png",
   },
+  {
+    name: "Loxa",
+    type: "image" as const,
+    src: "lovable-uploads/7b1277a2-292c-4e86-ae2a-8dcae7fa5781.png",
+  },
+  {
+    name: "Pandektes",
+    type: "image" as const,
+    src: "lovable-uploads/2801fd4b-1d50-485c-a999-0695274f5f05.png",
+  },
 ];
+
+// Duplicate for seamless infinite scroll
+const allLogos = [...logos, ...logos];
 
 const LogoStrip = () => {
   return (
-    <section className="py-12 bg-muted/50 border-y border-border">
-      <div className="container">
-        <p className="text-center text-sm font-medium text-muted-foreground mb-8 uppercase tracking-widest">
-          Our Network
-        </p>
-        <div className="flex flex-wrap items-center justify-center gap-10 md:gap-16">
-          {logos.map((logo) => (
-            <a
-              key={logo.name}
-              href={logo.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+    <section className="py-12 bg-muted/50 border-y border-border overflow-hidden">
+      <div className="container mb-6">
+        <Link to="/portfolio" className="block">
+          <p className="text-center text-sm font-medium text-muted-foreground uppercase tracking-widest hover:text-collektiv-green transition-colors">
+            Our Portfolio
+          </p>
+        </Link>
+      </div>
+      <div className="relative">
+        <div className="flex items-center gap-16 animate-scroll-left">
+          {allLogos.map((logo, i) => (
+            <div
+              key={`${logo.name}-${i}`}
+              className="flex-shrink-0 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
             >
               {logo.type === "image" ? (
                 <img
@@ -51,11 +62,11 @@ const LogoStrip = () => {
                   className="h-10 md:h-12 w-auto object-contain"
                 />
               ) : (
-                <span className="text-2xl md:text-3xl font-semibold text-collektiv-dark tracking-tight">
+                <span className="text-2xl md:text-3xl font-semibold text-collektiv-dark tracking-tight whitespace-nowrap">
                   {logo.name}
                 </span>
               )}
-            </a>
+            </div>
           ))}
         </div>
       </div>
