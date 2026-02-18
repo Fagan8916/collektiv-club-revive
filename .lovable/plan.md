@@ -1,74 +1,66 @@
 
 
-## Plan: Add Logo Strip to Homepage + New Partnerships Page
+## Changes Overview
 
-### 1. Homepage Logo Strip
-
-Add a new "Trusted By" / "Our Network" logo strip section on the homepage, displayed beneath the hero section. This will show logos for:
-
-- **Anthropic** (needs logo uploaded -- will use a clean text placeholder styled like their wordmark until you upload the actual logo image)
-- **be/impact** (logo already exists: `beimpact-logo.jpg`)
-- **Propane** (logo already exists: `8429af36-...png`)
-- **Webel** (logo already exists: `webel-logo.png`)
-
-The logos will be displayed in a horizontal row with grayscale styling that turns to color on hover, similar to a typical "trusted by" section.
-
-**New file:** `src/components/LogoStrip.tsx`
-**Modified file:** `src/pages/Index.tsx` -- insert `<LogoStrip />` after `<HeroSection />`
-
-### 2. New Partnerships Page
-
-Create a dedicated `/partnerships` page featuring:
-
-- A hero banner with heading "Our Partners"
-- Logo cards for **SwissEP** and **Plug and Play Tech Center** (logos will need to be uploaded by you, or I can use text-based placeholders styled to match)
-- Each card will have the partner name, a brief description, and a link to their website
-
-**New files:**
-- `src/pages/Partnerships.tsx`
-
-**Modified files:**
-- `src/App.tsx` -- add route for `/partnerships`
-- `src/components/Header.tsx` -- add "Partnerships" to the navigation menu
-
-### 3. Important Note on Logos
-
-For **Anthropic**, **SwissEP**, and **Plug and Play Tech Center**, I don't have their logo image files in the project. I have two options:
-
-- **Option A:** Use styled text placeholders that match each brand's wordmark style (can be swapped later when you upload the actual logo files)
-- **Option B:** You upload the logo images for these three companies, and I use those directly
-
-I'll proceed with **Option A** (text-based placeholders) so you can see the layout immediately, and you can upload the real logos afterward for me to swap in.
+This plan covers 5 distinct updates to your site.
 
 ---
 
-### Technical Details
+### 1. Remove "Invest in the future of tech" badge from Hero
 
-**LogoStrip.tsx structure:**
-```text
-Section: light background
-  Row of 4 logos (Anthropic, be/impact, Propane, Webel)
-  Each logo: grayscale filter, hover -> full color
-  Wrapped in anchor tags linking to their websites
-```
+The sparkle badge pill at the top of the hero section (`src/components/HeroSection.tsx`, lines 20-23) will be removed entirely.
 
-**Partnerships.tsx structure:**
-```text
-Header + Footer wrapping
-Hero: "Our Partners" heading with dark teal background
-Partner cards (2): SwissEP, Plug and Play
-  - Logo / name
-  - 2-sentence description
-  - External link button
-```
+---
 
-**Route addition in App.tsx:**
-```text
-import Partnerships from './pages/Partnerships';
-<Route path="/partnerships" element={<Partnerships />} />
-```
+### 2. Refresh the "How It Works" section
 
-**Navigation update in Header.tsx:**
-```text
-Add { name: "Partnerships", href: "/partnerships" } to navigation array
-```
+Based on the reference image you provided, here are **3 design options** for refreshing this section:
+
+**Option A -- Numbered Timeline (Vertical)**
+A clean vertical timeline with numbered circles on a central line, alternating left/right content cards. Each step has a large number, title, and short description. No images -- just clean typography and subtle connecting lines. Premium and minimal.
+
+**Option B -- Horizontal Stepper with Icons**
+A horizontal row of steps connected by a thin line/arrow. Each step is a card with a large step number, icon, title, and description. Works well on desktop; stacks vertically on mobile. Similar to the reference image's clean, step-by-step flow.
+
+**Option C -- Accordion/Expand Style**
+Steps listed vertically as expandable rows. Each shows the step number and title; clicking expands to reveal the description. Compact and modern, great for mobile.
+
+You can pick one (or describe what you liked from the attached reference) and I will implement it.
+
+---
+
+### 3. Fix SwissEP Logo
+
+The SwissEP logo is referenced as `lovable-uploads/swissep-logo.svg` in `PartnersSection.tsx`. The uploaded file `swiss-ep-logo.svg` from earlier was saved to `public/lovable-uploads/swissep-logo.svg`. I will:
+
+- Copy the newly uploaded SwissEP logo (`images.png`) to a reliable PNG format file (e.g., `swissep-logo-new.png`)
+- Update `PartnersSection.tsx` to reference the new PNG file instead of the SVG, which has been problematic
+
+---
+
+### 4. Fix Kevin's Photo on About Page
+
+Kevin's photo (`kevin-chavanne-transparent.png`) currently shows a visible white background inside the circular crop, unlike Manon and Ryan's photos which have proper transparent backgrounds. The fix:
+
+- Re-process Kevin's headshot image to properly remove the white background, matching the transparent style of Manon and Ryan
+- The circular crop styling (`rounded-full`, `object-cover`) in `About.tsx` will remain the same -- the issue is the image file itself, not the CSS
+
+---
+
+### 5. Change "Get Started" to "Become a Member" on Membership Page
+
+In `src/components/MembershipSection.tsx` (line 57), change the button text from "Get Started" to "Become a Member".
+
+---
+
+### Technical Summary
+
+| File | Change |
+|------|--------|
+| `src/components/HeroSection.tsx` | Remove lines 20-23 (badge pill) |
+| `src/components/HowItWorksSection.tsx` | Redesign layout (pending option choice) |
+| `public/lovable-uploads/swissep-logo-new.png` | New PNG logo file |
+| `src/components/PartnersSection.tsx` | Update SwissEP logo path to PNG |
+| `public/lovable-uploads/kevin-chavanne-transparent.png` | Re-process with proper transparency |
+| `src/components/MembershipSection.tsx` | "Get Started" to "Become a Member" |
+
