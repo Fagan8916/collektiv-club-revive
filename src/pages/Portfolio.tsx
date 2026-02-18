@@ -2,18 +2,25 @@
 import React from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Link } from "react-router-dom";
 import { getAssetPath } from "@/utils/assetUtils";
 import { ExternalLink } from "lucide-react";
 
 const investments = [
+  {
+    name: "Anthropic",
+    slug: "anthropic",
+    logo: "lovable-uploads/anthropic-logo.png",
+    href: "https://www.anthropic.com/",
+    description:
+      "Anthropic is a leading AI safety company building reliable, interpretable, and steerable AI systems. Founded by former OpenAI researchers, they are the creators of Claude, one of the world's most capable AI assistants.",
+  },
   {
     name: "Propane AI",
     slug: "propane",
     logo: "lovable-uploads/8429af36-140a-4fc4-a401-e12fd22d19cc.png",
     href: "https://usepropane.ai/",
     description:
-      "Propane AI is building the first always-on customer intelligence platform for product and go-to-market teams. Based in Copenhagen, they raised €1.1M in pre-seed funding backed by the founder of Lovable.dev.",
+      "Propane AI is building the first always-on customer intelligence platform for product and go-to-market teams. Based in Copenhagen, they raised pre-seed funding backed by the founder of Lovable.dev.",
   },
   {
     name: "Loxa Cover",
@@ -21,7 +28,7 @@ const investments = [
     logo: "lovable-uploads/7b1277a2-292c-4e86-ae2a-8dcae7fa5781.png",
     href: "https://www.loxacover.com/",
     description:
-      "Loxa Cover is a London-based insurtech startup that raised £500K in pre-seed funding. Led by Jamie Harper, a founder with a successful previous exit, the company is on a strong growth trajectory in the insurance technology space.",
+      "Loxa Cover is a London-based insurtech startup on a strong growth trajectory. Led by Jamie Harper, a founder with a successful previous exit, the company is innovating in the insurance technology space.",
   },
   {
     name: "be/impact",
@@ -29,7 +36,7 @@ const investments = [
     logo: "lovable-uploads/beimpact-logo.jpg",
     href: "https://beimpact.co.uk/",
     description:
-      "be/impact is a B2B SaaS platform revolutionising corporate training through a teach-to-learn model that delivers 300% better learning outcomes. The platform creates measurable social impact alongside exceptional knowledge retention.",
+      "be/impact is a B2B SaaS platform revolutionising corporate training through a teach-to-learn model that delivers 300% better learning outcomes alongside measurable social impact.",
   },
   {
     name: "Pandektes",
@@ -37,7 +44,7 @@ const investments = [
     logo: "lovable-uploads/2801fd4b-1d50-485c-a999-0695274f5f05.png",
     href: "https://pandektes.com/",
     description:
-      "Pandektes is a Copenhagen-based legal tech company we invested in early. They raised €4M in their Series A at a €12M valuation and have scaled to 30 employees with strong continued growth.",
+      "Pandektes is a Copenhagen-based legal tech company we invested in early. They have scaled significantly with strong continued growth in the legal technology sector.",
   },
   {
     name: "Webel",
@@ -45,7 +52,7 @@ const investments = [
     logo: "lovable-uploads/webel-logo.png",
     href: "https://appwebel.com/",
     description:
-      "Webel is Spain's leading on-demand home-services marketplace connecting vetted professionals with homeowners. With ~€18M GMV run-rate, 83% gross margin, and 85% repeat customer rate, they are expanding across Europe.",
+      "Webel is Spain's leading on-demand home-services marketplace connecting vetted professionals with homeowners. With strong unit economics and high customer retention, they are expanding across Europe.",
   },
 ];
 
@@ -75,11 +82,11 @@ const Portfolio = () => {
                   key={inv.slug}
                   className="rounded-2xl border border-border bg-card p-6 flex flex-col items-center text-center gap-4 shadow-sm hover:shadow-md transition-shadow"
                 >
-                  <div className="h-16 flex items-center justify-center">
+                  <div className="h-14 flex items-center justify-center">
                     <img
                       src={getAssetPath(inv.logo)}
                       alt={inv.name}
-                      className="max-h-16 w-auto object-contain"
+                      className="max-h-14 w-auto object-contain"
                     />
                   </div>
                   <h3 className="text-xl font-bold text-collektiv-dark">{inv.name}</h3>

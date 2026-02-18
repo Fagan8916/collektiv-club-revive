@@ -18,6 +18,7 @@ import Members from './pages/Members';
 
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
+import HNWISI from './pages/HNWISI';
 import ResetPassword from './pages/ResetPassword';
 import SetupAccount from './pages/SetupAccount';
 import Propane from './pages/members/investments/Propane';
@@ -298,6 +299,7 @@ function App() {
             <Route path="/setup-account" element={<SetupAccount />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/hnwi-si" element={<HNWISI />} />
           </Routes>
           <Toaster />
         </div>
