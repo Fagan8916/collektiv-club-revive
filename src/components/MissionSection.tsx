@@ -5,30 +5,27 @@ import { Link } from "react-router-dom";
 
 const MissionSection = () => {
   return (
-    <section className="py-6 md:py-8" id="philosophy">
+    <section className="py-16 md:py-24 bg-white" id="philosophy">
       <div className="container">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-collektiv-accent p-8 rounded-xl">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-collektiv-green text-center">
-              Our Investment Philosophy
-            </h2>
-            <p className="text-sm md:text-base text-gray-700 mb-8 leading-relaxed text-left">
-              We believe investing in technology start-ups should be accessible to all investors, not just a 
-              select few. We set out to break down barriers and empower people. <strong>Begin investing in the future 
-              with as little as £500 per investment.</strong> As a member, you'll gain access to exclusive early-stage 
-              investment opportunities, expert insights, and a powerful network.
-            </p>
-            <div className="text-center">
-              <Link to="/about">
-                <Button 
-                  size="lg"
-                  variant="outline"
-                  className="bg-transparent border-collektiv-green text-collektiv-green hover:bg-collektiv-green hover:text-white"
-                >
-                  Learn More About Us →
-                </Button>
-              </Link>
-            </div>
+          <p className="text-collektiv-green text-sm font-medium uppercase tracking-widest mb-3 text-center">Our Philosophy</p>
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-collektiv-dark text-center leading-tight">
+            Investing in technology start-ups should be accessible to all
+          </h2>
+          <p className="text-base md:text-lg text-collektiv-gray mb-10 leading-relaxed text-center max-w-3xl mx-auto">
+            We break down barriers and empower people. <strong className="text-collektiv-dark">Begin investing in the future 
+            with as little as £500 per investment.</strong> As a member, you'll gain access to exclusive early-stage 
+            investment opportunities, expert insights, and a powerful network.
+          </p>
+          <div className="text-center">
+            <Link to="/about">
+              <Button 
+                size="lg"
+                className="bg-collektiv-green text-white hover:bg-collektiv-lightgreen rounded-full px-8"
+              >
+                Learn More About Us →
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

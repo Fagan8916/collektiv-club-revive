@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -108,19 +108,19 @@
   }
 
   .section-title {
-    @apply text-3xl md:text-4xl font-bold mb-6 text-collektiv-green;
+    @apply font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-collektiv-dark;
   }
 
   .section-subtitle {
-    @apply text-xl text-collektiv-gray max-w-3xl mx-auto mb-12;
+    @apply text-lg text-collektiv-gray max-w-3xl mx-auto mb-12;
   }
 
   .btn-primary {
-    @apply bg-collektiv-green text-white px-6 py-3 rounded-md hover:bg-collektiv-lightgreen transition-colors font-medium;
+    @apply bg-collektiv-green text-white px-6 py-3 rounded-full hover:bg-collektiv-lightgreen transition-all duration-300 font-semibold;
   }
 
   .btn-secondary {
-    @apply bg-transparent border-2 border-collektiv-green text-collektiv-green px-6 py-3 rounded-md hover:bg-collektiv-green/5 transition-colors font-medium;
+    @apply bg-transparent border-2 border-collektiv-dark text-collektiv-dark px-6 py-3 rounded-full hover:bg-collektiv-dark/5 transition-all duration-300 font-semibold;
   }
 }
 
@@ -130,15 +130,15 @@
 }
 
 .article-content h2 {
-  @apply text-2xl md:text-3xl font-bold mt-8 mb-6 text-collektiv-green;
+  @apply font-display text-2xl md:text-3xl font-bold mt-8 mb-6 text-collektiv-dark;
 }
 
 .article-content h3 {
-  @apply text-xl md:text-2xl font-bold mt-7 mb-4 text-collektiv-green;
+  @apply font-display text-xl md:text-2xl font-bold mt-7 mb-4 text-collektiv-dark;
 }
 
 .article-content h4 {
-  @apply text-lg md:text-xl font-bold mt-6 mb-3 text-collektiv-lightgreen;
+  @apply font-display text-lg md:text-xl font-bold mt-6 mb-3 text-collektiv-green;
 }
 
 .article-content p {

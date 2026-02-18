@@ -1,50 +1,42 @@
 
 import React from "react";
-import { Mail, MapPin } from "lucide-react";
+import { Mail, Calendar } from "lucide-react";
 
 const ContactSection = () => {
   return (
-    <section className="section bg-gray-50" id="contact">
+    <section className="py-20 bg-white" id="contact">
       <div className="container">
-        <div className="max-w-4xl mx-auto">
-          <div>
-            <h3 className="text-2xl font-bold mb-6 text-collektiv-green">
-              Contact Information
-            </h3>
-            
-            <div className="space-y-6 mb-8">
-              <div className="flex items-start">
-                <div className="bg-collektiv-green/10 p-3 rounded-full mr-4">
-                  <Mail className="h-6 w-6 text-collektiv-green" />
-                </div>
-                <div>
-                  <h4 className="font-medium mb-1">Email Us</h4>
-                  <a 
-                    href="mailto:info@collektiv.club" 
-                    className="text-collektiv-lightgreen hover:underline"
-                  >
-                    info@collektiv.club
-                  </a>
-                </div>
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-collektiv-green text-sm font-medium uppercase tracking-widest mb-3">Get in Touch</p>
+          <h2 className="font-display text-3xl md:text-4xl font-bold mb-8 text-collektiv-dark">Contact Us</h2>
+          <p className="text-collektiv-gray text-lg mb-12">Have questions? We'd love to hear from you.</p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+            <a 
+              href="mailto:info@collektiv.club"
+              className="bg-gray-50 rounded-2xl p-8 hover:shadow-lg transition-all duration-300 group text-left"
+            >
+              <div className="bg-collektiv-green/10 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                <Mail className="h-6 w-6 text-collektiv-green" />
               </div>
-              
-              <div className="flex items-start">
-                <div className="bg-collektiv-green/10 p-3 rounded-full mr-4">
-                  <MapPin className="h-6 w-6 text-collektiv-green" />
-                </div>
-                <div>
-                  <h4 className="font-medium mb-1">Book Time with Us</h4>
-                  <a 
-                    href="https://zcal.co/collektiv/15min" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="text-collektiv-lightgreen hover:underline"
-                  >
-                    Schedule a Meeting
-                  </a>
-                </div>
+              <h4 className="font-bold text-collektiv-dark mb-1">Email Us</h4>
+              <p className="text-collektiv-gray text-sm mb-2">Drop us a message anytime</p>
+              <span className="text-collektiv-green font-medium text-sm">info@collektiv.club</span>
+            </a>
+
+            <a 
+              href="https://zcal.co/collektiv/15min"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-gray-50 rounded-2xl p-8 hover:shadow-lg transition-all duration-300 group text-left"
+            >
+              <div className="bg-collektiv-green/10 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                <Calendar className="h-6 w-6 text-collektiv-green" />
               </div>
-            </div>
+              <h4 className="font-bold text-collektiv-dark mb-1">Book a Call</h4>
+              <p className="text-collektiv-gray text-sm mb-2">Schedule a 15-minute chat with us</p>
+              <span className="text-collektiv-green font-medium text-sm">Schedule a Meeting →</span>
+            </a>
           </div>
         </div>
       </div>

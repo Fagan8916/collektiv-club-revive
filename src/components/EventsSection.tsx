@@ -36,11 +36,12 @@ const EventsSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-b from-white to-green-50">
+    <section className="py-20 bg-gray-50">
       <div className="container">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4 text-collektiv-green">Recent Events</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-collektiv-green text-sm font-medium uppercase tracking-widest mb-3">Community</p>
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-collektiv-dark mb-4">Recent Events</h2>
+          <p className="text-collektiv-gray text-lg max-w-2xl mx-auto">
             Discover our latest gatherings bringing together investors, founders, and innovators
           </p>
         </div>
@@ -52,36 +53,36 @@ const EventsSection = () => {
               to={`/events/${event.slug}`}
               className="group"
             >
-              <Card className="cursor-pointer hover:shadow-2xl hover:scale-[1.03] transition-all duration-300 overflow-hidden h-full">
+              <Card className="cursor-pointer hover:shadow-xl hover:scale-[1.02] transition-all duration-300 overflow-hidden h-full rounded-2xl border-0 shadow-sm">
                 <div className="relative h-56 overflow-hidden">
                   <img 
                     src={event.image} 
                     alt={event.title}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                  <Badge className="absolute top-4 right-4 bg-collektiv-green text-white">
+                  <Badge className="absolute top-4 right-4 bg-collektiv-green text-white border-0">
                     Completed
                   </Badge>
                 </div>
                 <CardHeader>
-                  <CardTitle className="text-xl text-collektiv-green group-hover:text-collektiv-dark transition-colors">
+                  <CardTitle className="text-lg text-collektiv-dark group-hover:text-collektiv-green transition-colors font-bold">
                     {event.title}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <p className="text-muted-foreground text-sm line-clamp-2">{event.description}</p>
+                  <p className="text-collektiv-gray text-sm line-clamp-2">{event.description}</p>
                   <div className="space-y-2 text-sm">
-                    <div className="flex items-start gap-2 text-muted-foreground">
-                      <Calendar className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                    <div className="flex items-start gap-2 text-collektiv-gray">
+                      <Calendar className="w-4 h-4 mt-0.5 flex-shrink-0 text-collektiv-green" />
                       <span>{event.date}</span>
                     </div>
-                    <div className="flex items-start gap-2 text-muted-foreground">
-                      <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                    <div className="flex items-start gap-2 text-collektiv-gray">
+                      <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-collektiv-green" />
                       <span>{event.location}</span>
                     </div>
                   </div>
-                  <div className="flex items-center text-collektiv-green font-medium group-hover:text-collektiv-dark transition-colors">
+                  <div className="flex items-center text-collektiv-green font-semibold text-sm group-hover:text-collektiv-lightgreen transition-colors">
                     View Details <ArrowRight className="ml-2 w-4 h-4" />
                   </div>
                 </CardContent>
@@ -93,7 +94,7 @@ const EventsSection = () => {
         <div className="text-center">
           <Link 
             to="/events" 
-            className="inline-flex items-center text-collektiv-green hover:text-collektiv-dark font-semibold text-lg transition-colors"
+            className="inline-flex items-center text-collektiv-green hover:text-collektiv-lightgreen font-semibold text-lg transition-colors"
           >
             View All Events <ArrowRight className="ml-2 w-5 h-5" />
           </Link>

@@ -64,10 +64,12 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				collektiv: {
-					green: '#00815D',       // Primary green color
-					lightgreen: '#00B5AA',  // Secondary lighter green
+					green: '#10B981',       // Primary emerald green
+					lightgreen: '#34D399',  // Secondary lighter green
+					dark: '#0F172A',        // Dark navy for backgrounds
+					darkTeal: '#134E4A',    // Dark teal for gradients
 					blue: '#0EA5E9',        // Ocean blue color for links
-					accent: '#E3FBF8',      // Light accent color
+					accent: '#ECFDF5',      // Light mint accent
 					gray: '#6b7280',
 					light: '#f9fafb'
 				}
@@ -111,7 +113,7 @@ export default {
 			},
 			fontFamily: {
 				sans: ['Inter', 'sans-serif'],
-				display: ['Montserrat', 'sans-serif']
+				display: ['Playfair Display', 'serif']
 			}
 		}
 	},

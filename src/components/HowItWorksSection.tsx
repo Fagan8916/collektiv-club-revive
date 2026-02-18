@@ -1,77 +1,73 @@
 
 import React from "react";
-import { Check } from "lucide-react";
 
 const HowItWorksSection = () => {
   const steps = [
     {
-      number: "1",
-      title: "Apply to join",
-      description: "Your application will be reviewed, and if accepted, you will be invtited to an onboarding call and added to the community",
-      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+      number: "01",
+      title: "Apply to Join",
+      description: "Your application will be reviewed, and if accepted, you'll be invited to an onboarding call and added to the community",
+      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
-      number: "2",
+      number: "02",
       title: "Access Deals",
-      description: "After passing our screening process, deals are released by email, Slack/Whatsapp community. You will get access to the data room and Founder deck.",
-      image: "https://images.unsplash.com/photo-1543286386-2e659306cd6c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+      description: "Deals are released via email and our Slack/WhatsApp community. Get full access to data rooms and Founder decks",
+      image: "https://images.unsplash.com/photo-1543286386-2e659306cd6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
-      number: "3",
+      number: "03",
       title: "Meet the Founders",
-      description: "Meet the founders in a video call, hear them pitch, ask questions and consider the investment",
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+      description: "Meet founders in video calls, hear them pitch, ask questions and evaluate the investment opportunity",
+      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
-      number: "4",
-      title: "Register your Interest",
-      description: "Once your due diligence is completed, register your interest to invest, with the associated committed amount",
-      image: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+      number: "04",
+      title: "Register Interest",
+      description: "Once your due diligence is complete, register your interest to invest with your committed amount",
+      image: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
-      number: "5",
+      number: "05",
       title: "Send Funds",
-      description: "We will create the SPV and you will have 48hours to transfer the funds. Upon completion your Share certificate & S/EIS Tax form will be issued and you will get access to your dashboard.",
-      image: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+      description: "We create the SPV and you have 48 hours to transfer funds. Share certificates & S/EIS Tax forms issued upon completion",
+      image: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
-      number: "6",
-      title: "Access your Dashboard",
-      description: "Follow all your investments performance in one platform",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+      number: "06",
+      title: "Track Performance",
+      description: "Follow all your investments' performance through your personal dashboard",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
   ];
 
   return (
-    <section className="section bg-white" id="how-it-works">
+    <section className="py-20 md:py-28 bg-gray-50" id="how-it-works">
       <div className="container">
         <div className="text-center mb-16">
-          <h2 className="section-title">How It Works</h2>
-          <p className="section-subtitle">
+          <p className="text-collektiv-green text-sm font-medium uppercase tracking-widest mb-3">The Process</p>
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-collektiv-dark mb-4">How It Works</h2>
+          <p className="text-collektiv-gray text-lg max-w-2xl mx-auto">
             Joining the Collektiv Club is simple. Here's how to start investing and be part of our community.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {steps.map((step, index) => (
-            <div key={index} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all">
+            <div key={index} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 group">
               <div className="relative">
                 <img 
                   src={step.image} 
                   alt={step.title}
-                  className="w-full h-48 object-cover"
+                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute top-4 left-4 w-10 h-10 rounded-full bg-collektiv-green text-white flex items-center justify-center font-bold text-xl">
+                <div className="absolute top-4 left-4 bg-collektiv-green text-white text-sm font-bold px-3 py-1 rounded-full">
                   {step.number}
                 </div>
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold mb-3 text-gray-800">
-                  {step.title}
-                </h3>
-                <p className="text-gray-600">
-                  {step.description}
-                </p>
+                <h3 className="text-xl font-bold mb-3 text-collektiv-dark">{step.title}</h3>
+                <p className="text-collektiv-gray text-sm leading-relaxed">{step.description}</p>
               </div>
             </div>
           ))}
