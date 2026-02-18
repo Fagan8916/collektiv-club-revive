@@ -6,7 +6,8 @@ import { getAssetPath } from "@/utils/assetUtils";
 const logos = [
   {
     name: "Anthropic",
-    type: "text" as const,
+    type: "image" as const,
+    src: "lovable-uploads/anthropic-logo.png",
   },
   {
     name: "be/impact",
@@ -54,17 +55,11 @@ const LogoStrip = () => {
               key={`${logo.name}-${i}`}
               className="flex-shrink-0 hover:opacity-80 transition-all duration-300"
             >
-              {logo.type === "image" ? (
-                <img
-                  src={getAssetPath(logo.src!)}
-                  alt={logo.name}
-                  className="h-10 md:h-12 w-auto object-contain"
-                />
-              ) : (
-                <span className="text-2xl md:text-3xl font-semibold text-collektiv-dark tracking-tight whitespace-nowrap">
-                  {logo.name}
-                </span>
-              )}
+              <img
+                src={getAssetPath(logo.src)}
+                alt={logo.name}
+                className="h-10 md:h-12 w-auto object-contain"
+              />
             </div>
           ))}
         </div>
