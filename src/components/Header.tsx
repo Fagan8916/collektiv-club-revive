@@ -1,11 +1,12 @@
 
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, User, ChevronRight } from "lucide-react";
+import { Menu, X, User, ChevronRight, Users, Calendar, FileText } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getAssetPath } from "@/utils/assetUtils";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -21,6 +22,7 @@ const navigation = [
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [joinDialogOpen, setJoinDialogOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { isAuthenticated, loading, signOut } = useAuth();
@@ -110,13 +112,12 @@ const Header = () => {
               </button>
             )
           )}
-          <Link 
-            to="/membership" 
-            onClick={scrollToTop}
+          <button 
+            onClick={() => setJoinDialogOpen(true)}
             className="bg-collektiv-green text-white px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-collektiv-lightgreen transition-all duration-300 flex items-center gap-1 shadow-sm"
           >
             Join Now <ChevronRight size={16} />
-          </Link>
+          </button>
         </div>
 
         {/* Mobile menu button */}
@@ -151,13 +152,12 @@ const Header = () => {
               {item.name}
             </Link>
           ))}
-          <Link
-            to="/membership"
-            className="bg-collektiv-green text-white text-center py-3 rounded-full font-semibold mt-4"
-            onClick={() => { setMobileMenuOpen(false); scrollToTop(); }}
+          <button
+            className="bg-collektiv-green text-white text-center py-3 rounded-full font-semibold mt-4 w-full"
+            onClick={() => { setMobileMenuOpen(false); setJoinDialogOpen(true); }}
           >
             Join Now
-          </Link>
+          </button>
           
           {!loading && (
             isAuthenticated ? (
@@ -179,6 +179,61 @@ const Header = () => {
           )}
         </div>
       </div>
+      {/* Join Now Dialog */}
+      <Dialog open={joinDialogOpen} onOpenChange={setJoinDialogOpen}>
+        <DialogContent className="bg-collektiv-dark border-white/10 text-white max-w-md p-0 gap-0 overflow-hidden">
+          <DialogHeader className="p-6 pb-2">
+            <DialogTitle className="text-xl font-bold text-white">Get Started</DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-col gap-3 p-6 pt-2">
+            <a
+              href="https://airtable.com/appWGyTHcjHMgZrUz/pagHdPVxVwljspHTq/form"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all group"
+              onClick={() => setJoinDialogOpen(false)}
+            >
+              <div className="w-10 h-10 bg-collektiv-green rounded-full flex items-center justify-center flex-shrink-0">
+                <Users className="h-5 w-5 text-white" />
+              </div>
+              <div>
+                <p className="font-semibold text-white">Become a Member</p>
+                <p className="text-sm text-white/50">Apply to join our investor community</p>
+              </div>
+            </a>
+            <a
+              href="https://zcal.co/collektiv/15min"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all group"
+              onClick={() => setJoinDialogOpen(false)}
+            >
+              <div className="w-10 h-10 bg-collektiv-green rounded-full flex items-center justify-center flex-shrink-0">
+                <Calendar className="h-5 w-5 text-white" />
+              </div>
+              <div>
+                <p className="font-semibold text-white">Book a Discovery Call</p>
+                <p className="text-sm text-white/50">15-min intro call with our team</p>
+              </div>
+            </a>
+            <a
+              href="https://airtable.com/appWGyTHcjHMgZrUz/pagTxXOeZJ2McNFHZ/form"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all group"
+              onClick={() => setJoinDialogOpen(false)}
+            >
+              <div className="w-10 h-10 bg-collektiv-green rounded-full flex items-center justify-center flex-shrink-0">
+                <FileText className="h-5 w-5 text-white" />
+              </div>
+              <div>
+                <p className="font-semibold text-white">Submit a Founder Pitch Deck</p>
+                <p className="text-sm text-white/50">Share your startup with our investors</p>
+              </div>
+            </a>
+          </div>
+        </DialogContent>
+      </Dialog>
     </header>
   );
 };

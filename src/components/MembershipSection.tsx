@@ -45,7 +45,7 @@ const MembershipSection = () => {
             })}
           </div>
 
-          <div className="flex justify-center">
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
             <a 
               href="https://airtable.com/appWGyTHcjHMgZrUz/pagHdPVxVwljspHTq/form" 
               target="_blank" 
@@ -54,6 +54,14 @@ const MembershipSection = () => {
             >
               <span>Become a Member</span>
               <Sparkles className="h-5 w-5" />
+            </a>
+            <a 
+              href="https://zcal.co/collektiv/15min" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-3 border-2 border-white/30 text-white text-lg font-bold py-4 px-10 rounded-full hover:bg-white/10 hover:scale-105 transition-all duration-300"
+            >
+              <span>Book a Discovery Call</span>
             </a>
           </div>
 
