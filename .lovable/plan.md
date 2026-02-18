@@ -1,105 +1,74 @@
 
-## Issue Analysis and Solution Plan
 
-You're experiencing two separate issues that I've identified through investigation:
+## Plan: Add Logo Strip to Homepage + New Partnerships Page
 
----
+### 1. Homepage Logo Strip
 
-## Issue 1: "Unknown User" in Recent Decisions
+Add a new "Trusted By" / "Our Network" logo strip section on the homepage, displayed beneath the hero section. This will show logos for:
 
-### Root Cause
-The MembershipManager component attempts to fetch user details using `supabase.auth.admin.getUserById()` (line 47 in MembershipManager.tsx). This Admin API call requires special privileges that aren't available to regular authenticated users in the browser. When it fails, the code catches the error and falls back to displaying "Unknown User".
+- **Anthropic** (needs logo uploaded -- will use a clean text placeholder styled like their wordmark until you upload the actual logo image)
+- **be/impact** (logo already exists: `beimpact-logo.jpg`)
+- **Propane** (logo already exists: `8429af36-...png`)
+- **Webel** (logo already exists: `webel-logo.png`)
 
-The invited members do have their names stored in `user_metadata.full_name` (passed during the invite), but the client can't access this data without admin privileges.
+The logos will be displayed in a horizontal row with grayscale styling that turns to color on hover, similar to a typical "trusted by" section.
 
-### Solution
-Modify the MembershipManager to look up the invited member's name from an accessible source:
+**New file:** `src/components/LogoStrip.tsx`
+**Modified file:** `src/pages/Index.tsx` -- insert `<LogoStrip />` after `<HeroSection />`
 
-1. **Add a `full_name` column to `pre_approved_emails` table** - Store the name when sending invitations
-2. **Update the admin-invite edge function** - Save the name to `pre_approved_emails` when inviting
-3. **Update MembershipManager** - Join with `pre_approved_emails` to get the invited name, or look up from `member_profiles` if the user has created one
+### 2. New Partnerships Page
 
-### Files to Modify
-- `supabase/functions/admin-invite/index.ts` - Add full_name to pre_approved_emails upsert
-- `src/components/MembershipManager.tsx` - Query pre_approved_emails for display names
-- Create a database migration to add `full_name` column to `pre_approved_emails`
+Create a dedicated `/partnerships` page featuring:
 
----
+- A hero banner with heading "Our Partners"
+- Logo cards for **SwissEP** and **Plug and Play Tech Center** (logos will need to be uploaded by you, or I can use text-based placeholders styled to match)
+- Each card will have the partner name, a brief description, and a link to their website
 
-## Issue 2: "Edge Function returned a non-2xx status code" on Invitation
+**New files:**
+- `src/pages/Partnerships.tsx`
 
-### Root Cause
-The auth logs reveal the exact error:
-```
-535 5.7.8 Username and Password not accepted
-https://support.google.com/mail/?p=BadCredentials
-```
+**Modified files:**
+- `src/App.tsx` -- add route for `/partnerships`
+- `src/components/Header.tsx` -- add "Partnerships" to the navigation menu
 
-The SMTP email credentials configured in your Supabase project are invalid or have expired. Supabase uses these credentials to send invitation emails, and they're failing authentication.
+### 3. Important Note on Logos
 
-This is an infrastructure/configuration issue, not a code issue.
+For **Anthropic**, **SwissEP**, and **Plug and Play Tech Center**, I don't have their logo image files in the project. I have two options:
 
-### Solution
-You need to update the SMTP configuration in your Supabase project:
+- **Option A:** Use styled text placeholders that match each brand's wordmark style (can be swapped later when you upload the actual logo files)
+- **Option B:** You upload the logo images for these three companies, and I use those directly
 
-1. **Go to Supabase Dashboard** (https://supabase.com/dashboard)
-2. Navigate to **Authentication** then **Email Templates** or **SMTP Settings**
-3. Update the SMTP credentials with valid credentials
-
-**If using Gmail SMTP:**
-- You need to use an "App Password" instead of your regular Gmail password
-- Enable 2-Factor Authentication on the Google account
-- Generate an App Password at: https://myaccount.google.com/apppasswords
-- Use this App Password in the SMTP settings
-
-**Alternative - Use a dedicated email service:**
-- Consider using Resend, SendGrid, or Mailgun for more reliable email delivery
-- These services are designed for transactional emails and are more stable
+I'll proceed with **Option A** (text-based placeholders) so you can see the layout immediately, and you can upload the real logos afterward for me to swap in.
 
 ---
 
-## Implementation Summary
+### Technical Details
 
-| Task | Type | Complexity |
-|------|------|------------|
-| Fix SMTP credentials in Supabase dashboard | Configuration | Quick fix (manual) |
-| Add `full_name` column to `pre_approved_emails` | Database migration | Low |
-| Update admin-invite to store name | Edge function | Low |
-| Update MembershipManager to show names | Frontend | Medium |
-
----
-
-## Technical Details
-
-### Database Migration
-```sql
-ALTER TABLE pre_approved_emails 
-ADD COLUMN full_name TEXT;
+**LogoStrip.tsx structure:**
+```text
+Section: light background
+  Row of 4 logos (Anthropic, be/impact, Propane, Webel)
+  Each logo: grayscale filter, hover -> full color
+  Wrapped in anchor tags linking to their websites
 ```
 
-### Edge Function Change (admin-invite/index.ts)
-Update the upsert to include the name:
-```typescript
-const preapprovePayload = {
-  email: normalizedEmail,
-  full_name: name || null,  // Add this line
-  notes: "Added via admin-invite edge function",
-  added_by: callerId,
-};
+**Partnerships.tsx structure:**
+```text
+Header + Footer wrapping
+Hero: "Our Partners" heading with dark teal background
+Partner cards (2): SwissEP, Plug and Play
+  - Logo / name
+  - 2-sentence description
+  - External link button
 ```
 
-### MembershipManager.tsx Change
-Instead of relying on the failing admin API, look up names from accessible tables:
-```typescript
-// Get email from user_roles via pre_approved_emails join
-// or check member_profiles for display name
+**Route addition in App.tsx:**
+```text
+import Partnerships from './pages/Partnerships';
+<Route path="/partnerships" element={<Partnerships />} />
 ```
 
----
-
-## Recommended Next Steps
-
-1. **First (Immediate)**: Fix the SMTP credentials in Supabase to unblock invitations
-2. **Second**: Implement the database and code changes to show invited member names
-
-Do you want me to implement the code changes for displaying member names once you've fixed the SMTP configuration?
+**Navigation update in Header.tsx:**
+```text
+Add { name: "Partnerships", href: "/partnerships" } to navigation array
+```
