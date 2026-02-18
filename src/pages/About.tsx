@@ -110,9 +110,9 @@ const About = () => {
               </div>
 
               <div className="bg-white/5 border border-white/10 p-6 rounded-lg text-center">
-                <div className="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full">
+                <div className="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full bg-white">
                   <img 
-                    src="/lovable-uploads/kevin-chavanne-transparent.png"
+                    src="/lovable-uploads/kevin-chavanne-new.png"
                     alt="Kevin Chavanne" 
                     className="w-full h-full object-cover"
                   />
