@@ -1,45 +1,79 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { getAssetPath } from "@/utils/assetUtils";
 
 const HeroSection = () => {
-  // Use the getAssetPath utility for correct image paths
   const logoPath = getAssetPath("lovable-uploads/f8c8ddc0-f08b-4fd1-88ba-d214d1af74b4.png");
   
   return (
-    <section className="relative min-h-screen flex items-center pt-20 bg-gradient-to-br from-collektiv-accent to-white">
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQ0MCIgaGVpZ2h0PSI4MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48Y2lyY2xlIHN0cm9rZT0iI2UwZTdmZiIgc3Ryb2tlLXdpZHRoPSIxLjUiIGN4PSI3MDAiIGN5PSI0MDAiIHI9IjIwMCIvPjxjaXJjbGUgc3Ryb2tlPSIjZTBlN2ZmIiBzdHJva2Utd2lkdGg9IjEuNSIgY3g9IjcwMCIgY3k9IjQwMCIgcj0iMzAwIi8+PGNpcmNsZSBzdHJva2U9IiNlMGU3ZmYiIHN0cm9rZS13aWR0aD0iMS41IiBjeD0iNzAwIiBjeT0iNDAwIiByPSI0MDAiLz48Y2lyY2xlIHN0cm9rZT0iI2UwZTdmZiIgc3Ryb2tlLXdpZHRoPSIxLjUiIGN4PSI3MDAiIGN5PSI0MDAiIHI9IjUwMCIvPjxjaXJjbGUgc3Ryb2tlPSIjZTBlN2ZmIiBzdHJva2Utd2lkdGg9IjEuNSIgY3g9IjcwMCIgY3k9IjQwMCIgcj0iNjAwIi8+PC9nPjwvc3ZnPg==')]"></div>
+    <section className="relative min-h-screen flex items-center pt-20 bg-gradient-to-br from-collektiv-dark via-collektiv-darkTeal to-collektiv-dark overflow-hidden">
+      {/* Subtle radial glow */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-collektiv-green/10 rounded-full blur-3xl"></div>
       </div>
+
       <div className="container relative z-10">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="flex justify-center mb-6">
-            <img 
-              src={logoPath}
-              alt="the Collektiv Club" 
-              className="h-24 md:h-32 animate-fade-in" 
-            />
+        <div className="max-w-4xl mx-auto text-center">
+          {/* Badge pill */}
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-5 py-2 mb-8">
+            <Sparkles className="h-4 w-4 text-collektiv-green" />
+            <span className="text-white/80 text-sm font-medium">Invest in the future of tech</span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-collektiv-green">Invest in VC backed Start-ups</h2>
-          
-          
-          <div className="mb-8">
-            <h4 className="text-lg md:text-xl font-semibold mb-3 text-collektiv-green">Our Mission</h4>
-            <p className="text-lg md:text-xl text-gray-700 mb-6">
-              To empower individuals to invest together in high-potential tech startups by sourcing vetted opportunities, keeping fees low, providing clear information, and supporting continuous investor learning.
-            </p>
+
+          {/* Logo text */}
+          <div className="flex justify-center mb-2">
+            <h2 className="font-display text-4xl md:text-5xl text-collektiv-green tracking-wide">Collektiv</h2>
           </div>
+          <p className="text-collektiv-green text-sm md:text-base mb-8 tracking-widest uppercase">The Collektiv Revolution</p>
           
-          <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
-            <Link to="/membership" className="btn-primary flex items-center">
+          {/* Main headline */}
+          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-2 leading-tight">
+            Invest in VC-Backed
+          </h1>
+          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold italic text-collektiv-green mb-8 leading-tight">
+            Start-ups
+          </h1>
+          
+          <p className="text-lg md:text-xl text-white/70 mb-10 max-w-2xl mx-auto leading-relaxed">
+            Join a community of ambitious investors accessing vetted opportunities, lower fees, and continuous learning to build your portfolio.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 mb-16">
+            <Link 
+              to="/membership" 
+              className="bg-collektiv-green text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-collektiv-lightgreen transition-all duration-300 flex items-center shadow-lg shadow-collektiv-green/25"
+            >
               Become a Member
-              <ArrowRight size={18} className="ml-2" />
+              <ArrowRight size={20} className="ml-2" />
             </Link>
-            <Link to="/about" className="btn-secondary">
+            <Link 
+              to="/about" 
+              className="bg-transparent border-2 border-white/30 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white/10 transition-all duration-300"
+            >
               Learn More
             </Link>
+          </div>
+
+          {/* Trust line */}
+          <p className="text-white/40 text-sm mb-6">Trusted by investors across the UK</p>
+
+          {/* Stats cards */}
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            {[
+              { value: "£0", label: "Joining Fee" },
+              { value: "6-12", label: "Deals / Year" },
+              { value: "£500", label: "Min Investment" },
+            ].map((stat, idx) => (
+              <div 
+                key={idx} 
+                className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-8 py-5 text-center min-w-[160px]"
+              >
+                <div className="font-display text-3xl md:text-4xl font-bold text-white mb-1">{stat.value}</div>
+                <div className="text-white/50 text-sm">{stat.label}</div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

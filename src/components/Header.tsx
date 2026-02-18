@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, User } from "lucide-react";
+import { Menu, X, User, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getAssetPath } from "@/utils/assetUtils";
 import { Button } from "@/components/ui/button";
@@ -38,101 +38,93 @@ const Header = () => {
   }, [location.pathname]);
 
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleMemberZoneClick = () => {
-    console.log("Header: Member Zone clicked, loading:", loading, "authenticated:", isAuthenticated);
-    
-    if (loading) {
-      console.log("Header: Still loading auth state, waiting...");
-      return;
-    }
-    
-    if (isAuthenticated) {
-      console.log("Header: User authenticated, navigating to members");
-      navigate("/members");
-    } else {
-      console.log("Header: User not authenticated, navigating to login");
-      navigate("/login");
-    }
+    if (loading) return;
+    navigate(isAuthenticated ? "/members" : "/login");
   };
 
   const handleLogout = async () => {
-    console.log("Header: Logging out");
     await signOut();
     navigate("/");
   };
+
+  const isActive = (href: string) => location.pathname === href;
 
   return (
     <header
       className={cn(
         "fixed w-full top-0 left-0 z-50 transition-all duration-300",
         isScrolled
-          ? "bg-white shadow-md py-3"
-          : "bg-transparent py-5"
+          ? "bg-white/95 backdrop-blur-md shadow-sm py-3"
+          : "bg-white/90 backdrop-blur-sm py-4"
       )}
     >
       <div className="container flex items-center justify-between">
-        <Link 
-          to="/" 
-          className="flex items-center"
-          onClick={scrollToTop}
-        >
-          <img 
-            src={logoPath}
-            alt="the Collektiv Club" 
-            className="h-12"
-          />
+        {/* Logo */}
+        <Link to="/" className="flex items-center gap-2" onClick={scrollToTop}>
+          <span className="font-display text-xl font-bold text-collektiv-dark">Collektiv</span>
+          <span className="text-[10px] text-collektiv-green font-medium leading-tight hidden sm:block">The Collektiv<br/>Revolution</span>
         </Link>
 
-        <div className="hidden lg:flex items-center space-x-8">
+        {/* Desktop nav */}
+        <nav className="hidden lg:flex items-center gap-1">
           {navigation.map((item) => (
             <Link
               key={item.name}
               to={item.href}
-              className="text-gray-700 hover:text-collektiv-green font-medium transition-colors"
               onClick={scrollToTop}
+              className={cn(
+                "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200",
+                isActive(item.href)
+                  ? "bg-collektiv-dark text-white"
+                  : "text-collektiv-gray hover:text-collektiv-dark hover:bg-gray-100"
+              )}
             >
               {item.name}
             </Link>
           ))}
-          <Link 
-            to="/membership" 
-            className="btn-primary"
-            onClick={scrollToTop}
-          >
-            Join Now
-          </Link>
-          
+        </nav>
+
+        {/* Right side actions */}
+        <div className="hidden lg:flex items-center gap-3">
           {!loading && (
             isAuthenticated ? (
               <>
-                <Link to="/members" className="ml-4 flex items-center text-collektiv-green hover:text-collektiv-dark transition-colors">
-                  <User className="mr-1" size={18} /> Member Zone
+                <Link 
+                  to="/members" 
+                  className="flex items-center gap-2 text-sm text-collektiv-dark border border-gray-200 rounded-full px-4 py-2 hover:bg-gray-50 transition-colors"
+                >
+                  <User size={16} /> Member Zone
                 </Link>
-                <Button variant="ghost" className="ml-2" onClick={handleLogout}>Log out</Button>
+                <Button variant="ghost" size="sm" onClick={handleLogout}>Log out</Button>
               </>
             ) : (
-              <Button variant="outline" className="ml-4" onClick={handleMemberZoneClick}>
-                Member Zone
-              </Button>
+              <button
+                onClick={handleMemberZoneClick}
+                className="flex items-center gap-2 text-sm text-collektiv-dark border border-gray-200 rounded-full px-4 py-2 hover:bg-gray-50 transition-colors"
+              >
+                <User size={16} /> Member Zone
+              </button>
             )
           )}
+          <Link 
+            to="/membership" 
+            onClick={scrollToTop}
+            className="bg-collektiv-green text-white px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-collektiv-lightgreen transition-all duration-300 flex items-center gap-1 shadow-sm"
+          >
+            Join Now <ChevronRight size={16} />
+          </Link>
         </div>
 
+        {/* Mobile menu button */}
         <button
-          className="lg:hidden text-gray-700"
+          className="lg:hidden text-collektiv-dark"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
-          {mobileMenuOpen ? (
-            <X size={24} />
-          ) : (
-            <Menu size={24} />
-          )}
+          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
@@ -143,27 +135,26 @@ const Header = () => {
           mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         )}
       >
-        <div className="container flex flex-col space-y-6 py-8">
+        <div className="container flex flex-col space-y-4 py-8">
           {navigation.map((item) => (
             <Link
               key={item.name}
               to={item.href}
-              className="text-gray-700 hover:text-collektiv-green text-xl font-medium transition-colors"
-              onClick={() => {
-                setMobileMenuOpen(false);
-                scrollToTop();
-              }}
+              className={cn(
+                "text-lg font-medium transition-colors px-4 py-2 rounded-lg",
+                isActive(item.href)
+                  ? "bg-collektiv-dark text-white"
+                  : "text-collektiv-gray hover:text-collektiv-dark hover:bg-gray-50"
+              )}
+              onClick={() => { setMobileMenuOpen(false); scrollToTop(); }}
             >
               {item.name}
             </Link>
           ))}
           <Link
             to="/membership"
-            className="btn-primary w-full text-center mt-6"
-            onClick={() => {
-              setMobileMenuOpen(false);
-              scrollToTop();
-            }}
+            className="bg-collektiv-green text-white text-center py-3 rounded-full font-semibold mt-4"
+            onClick={() => { setMobileMenuOpen(false); scrollToTop(); }}
           >
             Join Now
           </Link>
@@ -173,15 +164,15 @@ const Header = () => {
               <>
                 <Link
                   to="/members"
-                  className="text-collektiv-green text-lg mt-4 flex items-center hover:text-collektiv-dark transition-colors"
+                  className="text-collektiv-dark text-lg flex items-center gap-2 px-4"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <User className="mr-1" size={20} /> Member Zone
+                  <User size={20} /> Member Zone
                 </Link>
-                <Button variant="ghost" className="mt-2" onClick={() => { setMobileMenuOpen(false); handleLogout(); }}>Log out</Button>
+                <Button variant="ghost" onClick={() => { setMobileMenuOpen(false); handleLogout(); }}>Log out</Button>
               </>
             ) : (
-              <Button variant="outline" className="mt-6" onClick={() => { setMobileMenuOpen(false); handleMemberZoneClick(); }}>
+              <Button variant="outline" className="rounded-full" onClick={() => { setMobileMenuOpen(false); handleMemberZoneClick(); }}>
                 Member Zone
               </Button>
             )
