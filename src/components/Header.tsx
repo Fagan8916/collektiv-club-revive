@@ -10,11 +10,11 @@ import { useAuth } from "@/hooks/useAuth";
 const navigation = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
+  { name: "Portfolio", href: "/portfolio" },
   { name: "Membership", href: "/membership" },
   { name: "Events", href: "/events" },
   { name: "Insights", href: "/insights" },
   { name: "Founders", href: "/founders" },
-  { name: "Partnerships", href: "/partnerships" },
   { name: "Contact", href: "/contact" },
 ];
 
