@@ -65,7 +65,6 @@ const Header = () => {
       <div className="container flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2" onClick={scrollToTop}>
-          <span className="font-display text-xl font-bold text-collektiv-dark">Collektiv</span>
           <span className="text-[10px] text-collektiv-green font-medium leading-tight hidden sm:block">The Collektiv<br/>Revolution</span>
         </Link>
 
