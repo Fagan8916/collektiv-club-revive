@@ -12,6 +12,7 @@ import Footer from "@/components/Footer";
 import InvestmentStatsSection from "@/components/InvestmentStatsSection";
 import MissionSection from "@/components/MissionSection";
 import EventsSection from "@/components/EventsSection";
+import LogoStrip from "@/components/LogoStrip";
 
 const Index = () => {
 
@@ -22,6 +23,7 @@ const Index = () => {
       <Header />
       <main>
         <HeroSection />
+        <LogoStrip />
         <InvestmentStatsSection />
         <MissionSection />
         <HowItWorksSection />
