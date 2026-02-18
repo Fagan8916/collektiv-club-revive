@@ -122,7 +122,7 @@ const Header = () => {
 
         {/* Mobile menu button */}
         <button
-          className="lg:hidden text-collektiv-dark"
+          className={cn("lg:hidden", mobileMenuOpen ? "text-white z-50" : "text-collektiv-dark")}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -132,7 +132,7 @@ const Header = () => {
       {/* Mobile menu */}
       <div
         className={cn(
-          "fixed inset-0 bg-white z-40 lg:hidden transition-transform duration-300 pt-20",
+          "fixed inset-0 bg-collektiv-dark z-40 lg:hidden transition-transform duration-300 pt-20 overflow-y-auto",
           mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         )}
       >
@@ -145,7 +145,7 @@ const Header = () => {
                 "text-lg font-medium transition-colors px-4 py-2 rounded-lg",
                 isActive(item.href)
                   ? "bg-collektiv-green text-white"
-                  : "text-collektiv-gray hover:text-collektiv-dark hover:bg-gray-50"
+                  : "text-white/70 hover:text-white hover:bg-white/10"
               )}
               onClick={() => { setMobileMenuOpen(false); scrollToTop(); }}
             >
@@ -164,7 +164,7 @@ const Header = () => {
               <>
                 <Link
                   to="/members"
-                  className="text-collektiv-dark text-lg flex items-center gap-2 px-4"
+                  className="text-white/70 text-lg flex items-center gap-2 px-4"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <User size={20} /> Member Zone
