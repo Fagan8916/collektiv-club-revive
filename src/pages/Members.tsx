@@ -154,19 +154,19 @@ const Members = () => {
     {
       icon: Building2,
       title: "Active Investments",
-      value: "5",
+      value: "6",
       description: "Current portfolio companies"
     },
     {
       icon: Users,
       title: "Club Members",
-      value: "65+",
+      value: "80+",
       description: "Growing community"
     },
     {
       icon: TrendingUp,
       title: "Total Deployed",
-      value: "£450K+",
+      value: "£550K+",
       description: "Capital invested to date"
     }
   ];
