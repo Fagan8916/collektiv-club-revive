@@ -63,11 +63,11 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				collektiv: {
+			collektiv: {
 					green: '#037b5f',       // Primary logo green
 					lightgreen: '#04996f',  // Secondary lighter green
-					dark: '#0F172A',        // Dark navy for backgrounds
-					darkTeal: '#134E4A',    // Dark teal for gradients
+					dark: '#0A2E26',        // Dark green for backgrounds
+					darkTeal: '#0D3B32',    // Dark teal-green for gradients
 					blue: '#0EA5E9',        // Ocean blue color for links
 					accent: '#ECFDF5',      // Light mint accent
 					gray: '#6b7280',

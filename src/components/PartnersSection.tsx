@@ -7,7 +7,7 @@ const partners = [
   {
     name: "SwissEP",
     href: "https://swissep.org/",
-    logo: "lovable-uploads/swissep-logo.jpg",
+    logo: "lovable-uploads/swissep-logo.svg",
     description:
       "Swiss Entrepreneurship Program strengthens startup ecosystems globally by sharing knowledge and connections through their network of experienced founders, investors, and experts.",
   },
@@ -45,7 +45,7 @@ const PartnersSection = () => {
                 <img
                   src={getAssetPath(partner.logo)}
                   alt={partner.name}
-                  className="max-h-16 w-auto object-contain brightness-0 invert"
+                  className="max-h-16 w-auto object-contain"
                 />
               </div>
               <p className="text-white/70 text-sm leading-relaxed">
