@@ -14,7 +14,7 @@ const partners = [
   {
     name: "Plug and Play",
     href: "https://www.plugandplaytechcenter.com/",
-    logo: "lovable-uploads/plugandplay-logo.svg",
+    logo: "lovable-uploads/Plug-n-Play-logo.webp",
     description:
       "One of the world's largest innovation platforms, accelerating startups and connecting them with leading corporations across 40+ global locations.",
   },

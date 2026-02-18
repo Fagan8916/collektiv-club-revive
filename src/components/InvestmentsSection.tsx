@@ -5,6 +5,12 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const investments = [
   {
+    name: "Anthropic",
+    logo: "/lovable-uploads/anthropic-logo.png",
+    website: "https://www.anthropic.com/",
+    slug: "anthropic"
+  },
+  {
     name: "Propane",
     logo: "/lovable-uploads/8429af36-140a-4fc4-a401-e12fd22d19cc.png",
     website: "http://www.usepropane.ai",
