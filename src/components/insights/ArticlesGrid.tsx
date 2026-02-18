@@ -24,7 +24,7 @@ const ArticlesGrid: React.FC<ArticlesGridProps> = ({ articles }) => {
       {articles.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {articles.map((article) => (
-            <div key={article.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all">
+            <div key={article.id} className="bg-white/5 border border-white/10 rounded-lg overflow-hidden hover:bg-white/10 transition-all">
               <img 
                 src={article.image} 
                 alt={article.title}
@@ -35,14 +35,14 @@ const ArticlesGrid: React.FC<ArticlesGridProps> = ({ articles }) => {
               />
               <div className="p-6">
                 <div className="mb-3">
-                  <span className="inline-block bg-collektiv-green/10 text-collektiv-green text-sm px-3 py-1 rounded-full">
+                  <span className="inline-block bg-collektiv-green/20 text-collektiv-green text-sm px-3 py-1 rounded-full">
                     {article.category}
                   </span>
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-gray-800 line-clamp-2">
+                <h3 className="text-xl font-bold mb-3 text-white line-clamp-2">
                   {article.title}
                 </h3>
-                <div className="flex items-center text-sm text-gray-500 mb-3 space-x-4">
+                <div className="flex items-center text-sm text-white/50 mb-3 space-x-4">
                   <div className="flex items-center">
                     <Calendar size={14} className="mr-1" />
                     <span>{article.date}</span>
@@ -52,7 +52,7 @@ const ArticlesGrid: React.FC<ArticlesGridProps> = ({ articles }) => {
                     <span>{article.author}</span>
                   </div>
                 </div>
-                <p className="text-gray-600 mb-4 line-clamp-3">
+                <p className="text-white/60 mb-4 line-clamp-3">
                   {article.excerpt}
                 </p>
                 <Link 
@@ -68,8 +68,8 @@ const ArticlesGrid: React.FC<ArticlesGridProps> = ({ articles }) => {
         </div>
       ) : (
         <div className="text-center py-12">
-          <h3 className="text-xl font-bold text-gray-600 mb-2">No articles found</h3>
-          <p className="text-gray-500">Try adjusting your search or category filter</p>
+          <h3 className="text-xl font-bold text-white/60 mb-2">No articles found</h3>
+          <p className="text-white/50">Try adjusting your search or category filter</p>
         </div>
       )}
     </div>

@@ -62,11 +62,11 @@ const Founders = () => {
         </section>
 
         {/* Why Choose Us */}
-        <section className="section bg-white">
+        <section className="section bg-collektiv-dark">
           <div className="container">
             <div className="text-center mb-16">
-              <h2 className="section-title">Why Choose The Collektiv Club</h2>
-              <p className="section-subtitle">
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">Why Choose The Collektiv Club</h2>
+              <p className="text-white/60 text-lg max-w-2xl mx-auto">
                 We bring together capital, expertise, and connections to help your startup thrive.
               </p>
             </div>
@@ -83,15 +83,15 @@ const Founders = () => {
                 <ul className="space-y-4">
                   {benefits.map((benefit, index) => (
                     <li key={index} className="flex items-start">
-                      <div className="bg-collektiv-green/10 p-2 rounded-full mr-3 mt-1">
+                      <div className="bg-collektiv-green/20 p-2 rounded-full mr-3 mt-1">
                         <Check className="h-4 w-4 text-collektiv-green" />
                       </div>
-                      <span className="text-gray-700">{benefit}</span>
+                      <span className="text-white/70">{benefit}</span>
                     </li>
                   ))}
                 </ul>
                 <div className="mt-8">
-                  <p className="text-gray-700 mb-6">
+                  <p className="text-white/70 mb-6">
                     The Collektiv Club brings together a diverse group of investors with experience across various industries and functions. When you raise with us, you don't just get capital—you get a community invested in your success.
                   </p>
                   <a
@@ -110,11 +110,11 @@ const Founders = () => {
         </section>
 
         {/* Our Process */}
-        <section className="section bg-gray-50">
+        <section className="section bg-gradient-to-br from-collektiv-darkTeal to-collektiv-dark">
           <div className="container">
             <div className="text-center mb-16">
-              <h2 className="section-title">Our Investment Process</h2>
-              <p className="section-subtitle">
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">Our Investment Process</h2>
+              <p className="text-white/60 text-lg max-w-2xl mx-auto">
                 A streamlined approach to help you secure funding efficiently.
               </p>
             </div>
@@ -127,10 +127,10 @@ const Founders = () => {
                       {index + 1}
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold mb-2 text-gray-800">
+                      <h3 className="text-xl font-bold mb-2 text-white">
                         {step.title}
                       </h3>
-                      <p className="text-gray-600">
+                      <p className="text-white/60">
                         {step.description}
                       </p>
                     </div>
@@ -153,55 +153,49 @@ const Founders = () => {
         </section>
 
         {/* What We Look For */}
-        <section className="section bg-white">
+        <section className="section bg-collektiv-dark">
           <div className="container">
             <div className="text-center mb-16">
-              <h2 className="section-title">What We Look For</h2>
-              <p className="section-subtitle">
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">What We Look For</h2>
+              <p className="text-white/60 text-lg max-w-2xl mx-auto">
                 Our investment criteria to help ambitious founders scale.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition-all">
-                <div className="bg-collektiv-green/10 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+              <div className="bg-white/5 border border-white/10 rounded-lg p-8 hover:bg-white/10 transition-all">
+                <div className="bg-collektiv-green/20 w-16 h-16 rounded-full flex items-center justify-center mb-6">
                   <svg className="w-8 h-8 text-collektiv-green" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path>
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-gray-800">
-                  Strong Team
-                </h3>
-                <p className="text-gray-600">
+                <h3 className="text-xl font-bold mb-3 text-white">Strong Team</h3>
+                <p className="text-white/60">
                   Founders with domain expertise, complementary skills, and a track record of execution. We value grit, adaptability, and a deep understanding of the problem being solved.
                 </p>
               </div>
 
-              <div className="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition-all">
-                <div className="bg-collektiv-green/10 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+              <div className="bg-white/5 border border-white/10 rounded-lg p-8 hover:bg-white/10 transition-all">
+                <div className="bg-collektiv-green/20 w-16 h-16 rounded-full flex items-center justify-center mb-6">
                   <svg className="w-8 h-8 text-collektiv-green" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path fillRule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clipRule="evenodd"></path>
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-gray-800">
-                  Market Opportunity
-                </h3>
-                <p className="text-gray-600">
+                <h3 className="text-xl font-bold mb-3 text-white">Market Opportunity</h3>
+                <p className="text-white/60">
                   Products addressing significant market needs with clear growth potential. We focus on scalable solutions in expanding markets with a defensible competitive advantage.
                 </p>
               </div>
 
-              <div className="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition-all">
-                <div className="bg-collektiv-green/10 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+              <div className="bg-white/5 border border-white/10 rounded-lg p-8 hover:bg-white/10 transition-all">
+                <div className="bg-collektiv-green/20 w-16 h-16 rounded-full flex items-center justify-center mb-6">
                   <svg className="w-8 h-8 text-collektiv-green" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
                     <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-gray-800">
-                  Traction & Growth
-                </h3>
-                <p className="text-gray-600">
+                <h3 className="text-xl font-bold mb-3 text-white">Traction & Growth</h3>
+                <p className="text-white/60">
                   Evidence of market validation through revenue, user growth, or strategic partnerships. We value capital efficiency and a clear path to scalable growth.
                 </p>
               </div>
@@ -221,60 +215,36 @@ const Founders = () => {
         </section>
 
         {/* FAQ */}
-        <section className="section bg-gray-50">
+        <section className="section bg-gradient-to-br from-collektiv-dark to-collektiv-darkTeal">
           <div className="container">
             <div className="text-center mb-16">
-              <h2 className="section-title">Frequently Asked Questions</h2>
-              <p className="section-subtitle">
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">Frequently Asked Questions</h2>
+              <p className="text-white/60 text-lg max-w-2xl mx-auto">
                 Common questions from founders about working with The Collektiv Club.
               </p>
             </div>
 
             <div className="max-w-3xl mx-auto">
               <div className="space-y-6">
-                <div className="bg-white rounded-lg shadow p-6">
-                  <h3 className="text-lg font-bold mb-2 text-gray-800">
-                    What types of startups do you fund?
-                  </h3>
-                  <p className="text-gray-600">
-                    We focus primarily on technology startups with scalable business models. While we're sector-agnostic, we have particular expertise in SaaS, fintech, health tech, and consumer technology.
-                  </p>
+                <div className="bg-white/5 border border-white/10 rounded-lg p-6">
+                  <h3 className="text-lg font-bold mb-2 text-white">What types of startups do you fund?</h3>
+                  <p className="text-white/60">We focus primarily on technology startups with scalable business models. While we're sector-agnostic, we have particular expertise in SaaS, fintech, health tech, and consumer technology.</p>
                 </div>
-
-                <div className="bg-white rounded-lg shadow p-6">
-                  <h3 className="text-lg font-bold mb-2 text-gray-800">
-                    What investment stage do you focus on?
-                  </h3>
-                  <p className="text-gray-600">
-                    We typically invest in pre-seed to Series A rounds, with check sizes ranging from £50,000 to £500,000 per deal.
-                  </p>
+                <div className="bg-white/5 border border-white/10 rounded-lg p-6">
+                  <h3 className="text-lg font-bold mb-2 text-white">What investment stage do you focus on?</h3>
+                  <p className="text-white/60">We typically invest in pre-seed to Series A rounds, with check sizes ranging from £50,000 to £500,000 per deal.</p>
                 </div>
-
-                <div className="bg-white rounded-lg shadow p-6">
-                  <h3 className="text-lg font-bold mb-2 text-gray-800">
-                    What's your typical investment process and timeline?
-                  </h3>
-                  <p className="text-gray-600">
-                    From initial contact to investment, the process typically takes 4-8 weeks. This includes screening, due diligence, investor presentation, and completing the investment round.
-                  </p>
+                <div className="bg-white/5 border border-white/10 rounded-lg p-6">
+                  <h3 className="text-lg font-bold mb-2 text-white">What's your typical investment process and timeline?</h3>
+                  <p className="text-white/60">From initial contact to investment, the process typically takes 4-8 weeks. This includes screening, due diligence, investor presentation, and completing the investment round.</p>
                 </div>
-
-                <div className="bg-white rounded-lg shadow p-6">
-                  <h3 className="text-lg font-bold mb-2 text-gray-800">
-                    How do you support portfolio companies post-investment?
-                  </h3>
-                  <p className="text-gray-600">
-                    Beyond capital, we provide strategic guidance, connections to potential customers and partners, help with future fundraising, and access to our network of industry experts.
-                  </p>
+                <div className="bg-white/5 border border-white/10 rounded-lg p-6">
+                  <h3 className="text-lg font-bold mb-2 text-white">How do you support portfolio companies post-investment?</h3>
+                  <p className="text-white/60">Beyond capital, we provide strategic guidance, connections to potential customers and partners, help with future fundraising, and access to our network of industry experts.</p>
                 </div>
-                
-                <div className="bg-white rounded-lg shadow p-6">
-                  <h3 className="text-lg font-bold mb-2 text-gray-800">
-                    Do you charge to pitch?
-                  </h3>
-                  <p className="text-gray-600">
-                    No, we do not charge an upfront fee to pitch to our members however, we do charge a success fee of 8% of the total funds raised to support our operational costs, including SPV creation.
-                  </p>
+                <div className="bg-white/5 border border-white/10 rounded-lg p-6">
+                  <h3 className="text-lg font-bold mb-2 text-white">Do you charge to pitch?</h3>
+                  <p className="text-white/60">No, we do not charge an upfront fee to pitch to our members however, we do charge a success fee of 8% of the total funds raised to support our operational costs, including SPV creation.</p>
                 </div>
               </div>
 

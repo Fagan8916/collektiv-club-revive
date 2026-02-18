@@ -42,19 +42,19 @@ const HowItWorksSection = () => {
   ];
 
   return (
-    <section className="py-20 md:py-28 bg-gray-50" id="how-it-works">
+    <section className="py-20 md:py-28 bg-collektiv-dark" id="how-it-works">
       <div className="container">
         <div className="text-center mb-16">
           <p className="text-collektiv-green text-sm font-medium uppercase tracking-widest mb-3">The Process</p>
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-collektiv-dark mb-4">How It Works</h2>
-          <p className="text-collektiv-gray text-lg max-w-2xl mx-auto">
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">How It Works</h2>
+          <p className="text-white/60 text-lg max-w-2xl mx-auto">
             Joining the Collektiv Club is simple. Here's how to start investing and be part of our community.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {steps.map((step, index) => (
-            <div key={index} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 group">
+            <div key={index} className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:bg-white/10 transition-all duration-300 group">
               <div className="relative">
                 <img 
                   src={step.image} 
@@ -66,8 +66,8 @@ const HowItWorksSection = () => {
                 </div>
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold mb-3 text-collektiv-dark">{step.title}</h3>
-                <p className="text-collektiv-gray text-sm leading-relaxed">{step.description}</p>
+                <h3 className="text-xl font-bold mb-3 text-white">{step.title}</h3>
+                <p className="text-white/60 text-sm leading-relaxed">{step.description}</p>
               </div>
             </div>
           ))}

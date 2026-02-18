@@ -13,7 +13,6 @@ const Membership = () => {
   
   const handleSubscribe = (e) => {
     e.preventDefault();
-    // In a real implementation, you'd send this to your backend
     console.log("Subscribing email:", email);
     toast({
       title: "Thank you for subscribing to our newsletter",
@@ -50,7 +49,7 @@ const Membership = () => {
     },
     {
       q: "How do these fees compare to other similar groups?",
-      a: "Collektiv offers competitive fees compared to traditional angel syndicates. We charge 5% upfront + 20% carry, with reduced structures available for committed investors. Traditional syndicates typically charge 2-15% upfront fees plus 20% carry, with annual investment fees of 0-10% and membership costs up to £10,000 per annum. <a href=\"https://www.perplexity.ai/search/give-me-a-breakdown-of-the-ave-NluXPHO.Tmm2zFG_DM8jaw#0\" target=\"_blank\" rel=\"noopener noreferrer\" className=\"text-collektiv-blue hover:underline\">Don't take our word for it, ask Perplexity about typical fees</a>."
+      a: "Collektiv offers competitive fees compared to traditional angel syndicates. We charge 5% upfront + 20% carry, with reduced structures available for committed investors. Traditional syndicates typically charge 2-15% upfront fees plus 20% carry, with annual investment fees of 0-10% and membership costs up to £10,000 per annum. <a href=\"https://www.perplexity.ai/search/give-me-a-breakdown-of-the-ave-NluXPHO.Tmm2zFG_DM8jaw#0\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"text-collektiv-green hover:underline\">Don't take our word for it, ask Perplexity about typical fees</a>."
     },
     {
       q: "How many investment opportunities will I see?",
@@ -86,12 +85,12 @@ const Membership = () => {
           </div>
         </section>
 
-        {/* Benefits in Detail - Moved this section up */}
-        <section className="section bg-white" id="benefits">
+        {/* Benefits in Detail */}
+        <section className="section bg-collektiv-dark" id="benefits">
           <div className="container">
             <div className="text-center mb-16">
-              <h2 className="section-title" id="why-join-the-collektiv-club">Why Join the Collektiv Club?</h2>
-              <p className="section-subtitle">
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4" id="why-join-the-collektiv-club">Why Join the Collektiv Club?</h2>
+              <p className="text-white/60 text-lg max-w-2xl mx-auto">
                 Here's a closer look at what makes our community special and the benefits you'll receive as a member.
               </p>
             </div>
@@ -107,29 +106,29 @@ const Membership = () => {
               
               <div>
                 <h3 className="text-2xl font-bold mb-4 text-collektiv-green">Investment Opportunities</h3>
-                <p className="text-gray-700 mb-4">
+                <p className="text-white/70 mb-4">
                   Gain access to curated investment opportunities and expert insights to help grow your portfolio.
                 </p>
                 <ul className="space-y-3">
                   <li className="flex items-start">
-                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Curated EIS & SEIS investment opportunities</span>
+                    <Check className="h-5 w-5 text-collektiv-green mr-2 flex-shrink-0 mt-0.5" />
+                    <span className="text-white/70">Curated EIS & SEIS investment opportunities</span>
                   </li>
                   <li className="flex items-start">
-                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Expert evaluation and vetting process</span>
+                    <Check className="h-5 w-5 text-collektiv-green mr-2 flex-shrink-0 mt-0.5" />
+                    <span className="text-white/70">Expert evaluation and vetting process</span>
                   </li>
                   <li className="flex items-start">
-                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>You're in full control, you decide what to invest in</span>
+                    <Check className="h-5 w-5 text-collektiv-green mr-2 flex-shrink-0 mt-0.5" />
+                    <span className="text-white/70">You're in full control, you decide what to invest in</span>
                   </li>
                   <li className="flex items-start">
-                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Preferential investment terms for members</span>
+                    <Check className="h-5 w-5 text-collektiv-green mr-2 flex-shrink-0 mt-0.5" />
+                    <span className="text-white/70">Preferential investment terms for members</span>
                   </li>
                   <li className="flex items-start">
-                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Regular investment updates and portfolio tracking</span>
+                    <Check className="h-5 w-5 text-collektiv-green mr-2 flex-shrink-0 mt-0.5" />
+                    <span className="text-white/70">Regular investment updates and portfolio tracking</span>
                   </li>
                 </ul>
               </div>
@@ -138,26 +137,26 @@ const Membership = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-12">
               <div className="order-2 md:order-1">
                 <h3 className="text-2xl font-bold mb-4 text-collektiv-green">Exclusive Insights, Events & Networking</h3>
-                <p className="text-gray-700 mb-4">
+                <p className="text-white/70 mb-4">
                   Access members-only events, workshops, and networking opportunities 
                   designed to help you connect with industry leaders and like-minded professionals.
                 </p>
                 <ul className="space-y-3">
                   <li className="flex items-start">
-                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Monthly insights newsletter</span>
+                    <Check className="h-5 w-5 text-collektiv-green mr-2 flex-shrink-0 mt-0.5" />
+                    <span className="text-white/70">Monthly insights newsletter</span>
                   </li>
                   <li className="flex items-start">
-                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Quarterly network events</span>
+                    <Check className="h-5 w-5 text-collektiv-green mr-2 flex-shrink-0 mt-0.5" />
+                    <span className="text-white/70">Quarterly network events</span>
                   </li>
                   <li className="flex items-start">
-                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>In person pitch days</span>
+                    <Check className="h-5 w-5 text-collektiv-green mr-2 flex-shrink-0 mt-0.5" />
+                    <span className="text-white/70">In person pitch days</span>
                   </li>
                   <li className="flex items-start">
-                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Industry-specific meetups</span>
+                    <Check className="h-5 w-5 text-collektiv-green mr-2 flex-shrink-0 mt-0.5" />
+                    <span className="text-white/70">Industry-specific meetups</span>
                   </li>
                 </ul>
               </div>
@@ -173,15 +172,15 @@ const Membership = () => {
           </div>
         </section>
 
-        {/* Membership Plans - Moved this section down */}
+        {/* Membership Plans */}
         <MembershipSection />
 
         {/* FAQ Section */}
-        <section className="section bg-gray-50" id="faq">
+        <section className="section bg-collektiv-dark" id="faq">
           <div className="container">
             <div className="text-center mb-16">
-              <h2 className="section-title">Frequently Asked Questions</h2>
-              <p className="section-subtitle">
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">Frequently Asked Questions</h2>
+              <p className="text-white/60 text-lg max-w-2xl mx-auto">
                 Find answers to common questions about our membership options and benefits.
               </p>
             </div>
@@ -189,18 +188,18 @@ const Membership = () => {
             <div className="max-w-3xl mx-auto">
               <Accordion type="single" collapsible className="w-full">
                 {faqs.map((faq, index) => (
-                  <AccordionItem key={index} value={`item-${index}`}>
+                  <AccordionItem key={index} value={`item-${index}`} className="border-white/10">
                     <AccordionTrigger className="text-xl font-bold text-collektiv-green text-left">
                       {faq.q}
                     </AccordionTrigger>
-                    <AccordionContent dangerouslySetInnerHTML={{ __html: faq.a }} />
+                    <AccordionContent className="text-white/70" dangerouslySetInnerHTML={{ __html: faq.a }} />
                   </AccordionItem>
                 ))}
               </Accordion>
             </div>
 
             <div className="text-center mt-12">
-              <Link to="/contact" className="btn-secondary inline-flex items-center">
+              <Link to="/contact" className="btn-secondary inline-flex items-center border-white/30 text-white hover:bg-white/10">
                 Have More Questions? Contact Us
                 <ArrowRight size={16} className="ml-2" />
               </Link>

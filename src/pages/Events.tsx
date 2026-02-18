@@ -38,7 +38,7 @@ const Events = () => {
       time: "6:30 PM - 9:30 PM",
       location: "Dishoom King's Cross, London",
       attendees: "15 attendees",
-      description: "A roaming event series for founders, operators, and builders shaping what it means to build AI companies today. Gathering top minds across product, technology, go-to-market, and investment — powered by Propane.",
+      description: "A roaming event series for founders, operators, and builders shaping what it means to build AI companies today.",
       slug: "propane-catalyst-2024",
       image: "/lovable-uploads/propane-catalyst-featured.jpg"
     }
@@ -72,7 +72,7 @@ const Events = () => {
 
     return (
       <Card 
-        className="cursor-pointer hover:shadow-2xl hover:scale-[1.03] transition-all duration-300 overflow-hidden group"
+        className="cursor-pointer hover:shadow-2xl hover:scale-[1.03] transition-all duration-300 overflow-hidden group bg-white/5 border-white/10"
         onClick={handleClick}
       >
         <div className="relative h-56 overflow-hidden">
@@ -87,28 +87,28 @@ const Events = () => {
           </Badge>
         </div>
         <CardHeader>
-          <CardTitle className="text-xl text-collektiv-green">{event.title}</CardTitle>
+          <CardTitle className="text-xl text-white">{event.title}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-muted-foreground text-sm">{event.description}</p>
+          <p className="text-white/60 text-sm">{event.description}</p>
           <div className="space-y-2 text-sm">
-            <div className="flex items-start gap-2 text-muted-foreground">
-              <Calendar className="w-4 h-4 mt-0.5 flex-shrink-0" />
+            <div className="flex items-start gap-2 text-white/60">
+              <Calendar className="w-4 h-4 mt-0.5 flex-shrink-0 text-collektiv-green" />
               <span>{event.date}</span>
             </div>
             {event.time && (
-              <div className="flex items-start gap-2 text-muted-foreground">
-                <Calendar className="w-4 h-4 mt-0.5 flex-shrink-0" />
+              <div className="flex items-start gap-2 text-white/60">
+                <Calendar className="w-4 h-4 mt-0.5 flex-shrink-0 text-collektiv-green" />
                 <span>{event.time}</span>
               </div>
             )}
-            <div className="flex items-start gap-2 text-muted-foreground">
-              <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
+            <div className="flex items-start gap-2 text-white/60">
+              <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-collektiv-green" />
               <span>{event.location}</span>
             </div>
             {event.attendees && (
-              <div className="flex items-start gap-2 text-muted-foreground">
-                <Users className="w-4 h-4 mt-0.5 flex-shrink-0" />
+              <div className="flex items-start gap-2 text-white/60">
+                <Users className="w-4 h-4 mt-0.5 flex-shrink-0 text-collektiv-green" />
                 <span>{event.attendees}</span>
               </div>
             )}
@@ -122,27 +122,27 @@ const Events = () => {
   };
 
   const EventCard = ({ event }) => (
-    <Card className="hover:shadow-lg transition-shadow duration-300">
+    <Card className="hover:shadow-lg transition-shadow duration-300 bg-white/5 border-white/10">
       <CardHeader>
         <div className="flex justify-between items-start">
-          <CardTitle className="text-xl text-collektiv-green">{event.title}</CardTitle>
-          <Badge variant="secondary">Upcoming</Badge>
+          <CardTitle className="text-xl text-white">{event.title}</CardTitle>
+          <Badge variant="secondary" className="bg-collektiv-green/20 text-collektiv-green border-0">Upcoming</Badge>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-muted-foreground text-sm">{event.description}</p>
+        <p className="text-white/60 text-sm">{event.description}</p>
         <div className="space-y-2 text-sm">
-          <div className="flex items-start gap-2 text-muted-foreground">
-            <Calendar className="w-4 h-4 mt-0.5 flex-shrink-0" />
+          <div className="flex items-start gap-2 text-white/60">
+            <Calendar className="w-4 h-4 mt-0.5 flex-shrink-0 text-collektiv-green" />
             <span>{event.date}</span>
           </div>
-          <div className="flex items-start gap-2 text-muted-foreground">
-            <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
+          <div className="flex items-start gap-2 text-white/60">
+            <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-collektiv-green" />
             <span>{event.location}</span>
           </div>
           {event.attendees && (
-            <div className="flex items-start gap-2 text-muted-foreground">
-              <Users className="w-4 h-4 mt-0.5 flex-shrink-0" />
+            <div className="flex items-start gap-2 text-white/60">
+              <Users className="w-4 h-4 mt-0.5 flex-shrink-0 text-collektiv-green" />
               <span>{event.attendees}</span>
             </div>
           )}
@@ -170,7 +170,7 @@ const Events = () => {
         </section>
 
         {/* Past Events */}
-        <section className="py-16">
+        <section className="py-16 bg-collektiv-dark">
           <div className="container">
             <h2 className="text-3xl font-bold mb-8 text-collektiv-green">Past Events</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -182,7 +182,7 @@ const Events = () => {
         </section>
 
         {/* Upcoming Events */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-gradient-to-br from-collektiv-darkTeal to-collektiv-dark">
           <div className="container">
             <h2 className="text-3xl font-bold mb-8 text-collektiv-green">Upcoming Events</h2>
             <div className="grid md:grid-cols-2 gap-8">
