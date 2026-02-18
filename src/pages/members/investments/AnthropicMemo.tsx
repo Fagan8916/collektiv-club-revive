@@ -15,7 +15,7 @@ const AnthropicMemo = () => {
         
         <div className="text-center mb-8">
           <img 
-            src="/lovable-uploads/anthropic-logo.png" 
+            src="/lovable-uploads/anthropic-logo-new.png" 
             alt="Anthropic"
             className="h-20 w-auto object-contain mx-auto mb-4"
           />

@@ -9,7 +9,7 @@ const investments = [
   {
     name: "Anthropic",
     slug: "anthropic",
-    logo: "lovable-uploads/anthropic-logo.png",
+    logo: "lovable-uploads/anthropic-logo-new.png",
     href: "https://www.anthropic.com/",
     description:
       "Anthropic is a leading AI safety company building reliable, interpretable, and steerable AI systems. Founded by former OpenAI researchers, they are the creators of Claude, one of the world's most capable AI assistants.",
@@ -49,7 +49,7 @@ const investments = [
   {
     name: "Webel",
     slug: "webel",
-    logo: "lovable-uploads/webel-logo.png",
+    logo: "lovable-uploads/webel-logo-new.png",
     href: "https://appwebel.com/",
     description:
       "Webel is Spain's leading on-demand home-services marketplace connecting vetted professionals with homeowners. With strong unit economics and high customer retention, they are expanding across Europe.",

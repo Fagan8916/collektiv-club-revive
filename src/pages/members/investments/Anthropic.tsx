@@ -18,7 +18,7 @@ const Anthropic = () => {
           <CardHeader className="text-center">
             <div className="flex justify-center mb-4">
               <img 
-                src="/lovable-uploads/anthropic-logo.png" 
+                src="/lovable-uploads/anthropic-logo-new.png" 
                 alt="Anthropic"
                 className="h-20 w-auto object-contain"
               />

@@ -21,7 +21,7 @@ const Webel = () => {
             <div className="flex flex-col md:flex-row items-center gap-8">
               <div className="flex-shrink-0">
                 <img 
-                  src="/lovable-uploads/webel-logo.png" 
+                  src="/lovable-uploads/webel-logo-new.png" 
                   alt="Webel"
                   className="h-24 w-auto object-contain"
                 />

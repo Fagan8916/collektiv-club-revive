@@ -17,7 +17,7 @@ const WebelMemo = () => {
         {/* Header */}
         <div className="text-center mb-12">
           <img 
-            src="/lovable-uploads/webel-logo.png" 
+            src="/lovable-uploads/webel-logo-new.png" 
             alt="Webel"
             className="h-16 mx-auto mb-4"
           />

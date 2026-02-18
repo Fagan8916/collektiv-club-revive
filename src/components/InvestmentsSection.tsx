@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 const investments = [
   {
     name: "Anthropic",
-    logo: "/lovable-uploads/anthropic-logo.png",
+    logo: "/lovable-uploads/anthropic-logo-new.png",
     website: "https://www.anthropic.com/",
     slug: "anthropic"
   },
@@ -36,7 +36,7 @@ const investments = [
   },
   {
     name: "Webel",
-    logo: "/lovable-uploads/webel-logo.png",
+    logo: "/lovable-uploads/webel-logo-new.png",
     website: "https://webel.app/",
     slug: "webel"
   }
