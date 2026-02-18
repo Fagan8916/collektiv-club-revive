@@ -51,7 +51,7 @@ const HeroSection = () => {
               rel="noopener noreferrer"
               className="bg-transparent border-2 border-white/30 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white/10 transition-all duration-300 text-center"
             >
-              Book a call to learn more about investment membership
+              Book a Discovery Call
             </a>
           </div>
 
