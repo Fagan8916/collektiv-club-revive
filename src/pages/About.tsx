@@ -110,11 +110,11 @@ const About = () => {
               </div>
 
               <div className="bg-white/5 border border-white/10 p-6 rounded-lg text-center">
-                <div className="w-40 h-40 mx-auto mb-4 overflow-hidden">
+                <div className="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full">
                   <img 
-                    src="/lovable-uploads/kevin-chavanne-white-bg.jpg"
+                    src="/lovable-uploads/kevin-chavanne-transparent.png"
                     alt="Kevin Chavanne" 
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-cover"
                   />
                 </div>
                 <h3 className="text-xl font-bold mb-1 text-collektiv-green">Kevin Chavanne</h3>
