@@ -64,17 +64,40 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Parse request body
-    const { email, name, redirectTo }: CRMInviteRequest = await req.json();
+    // Parse and validate request body
+    const body = await req.json();
+    const email = typeof body.email === "string" ? body.email.trim() : "";
+    const name = typeof body.name === "string" ? body.name.trim() : undefined;
+    const redirectTo = typeof body.redirectTo === "string" ? body.redirectTo.trim() : undefined;
 
-    if (!email) {
+    // Validate email format and length
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || email.length > 255 || !emailRegex.test(email)) {
       return new Response(
-        JSON.stringify({ error: 'Email is required' }),
-        { 
-          status: 400, 
-          headers: { 'Content-Type': 'application/json', ...corsHeaders } 
-        }
+        JSON.stringify({ error: 'A valid email address is required (max 255 characters)' }),
+        { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
       );
+    }
+
+    // Validate name length if provided
+    if (name && name.length > 255) {
+      return new Response(
+        JSON.stringify({ error: 'Name must be 255 characters or less' }),
+        { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      );
+    }
+
+    // Validate redirectTo URL if provided
+    if (redirectTo) {
+      try {
+        const parsed = new URL(redirectTo);
+        if (!["http:", "https:"].includes(parsed.protocol)) throw new Error();
+      } catch {
+        return new Response(
+          JSON.stringify({ error: 'redirectTo must be a valid HTTPS URL' }),
+          { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+        );
+      }
     }
 
     console.log(`Processing CRM invite for email: ${email}, name: ${name}`);

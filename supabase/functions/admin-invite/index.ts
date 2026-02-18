@@ -31,13 +31,41 @@ serve(async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { email, name, redirectTo }: AdminInviteRequest = await req.json();
+    const body = await req.json();
+    const email = typeof body.email === "string" ? body.email.trim() : "";
+    const name = typeof body.name === "string" ? body.name.trim() : undefined;
+    const redirectTo = typeof body.redirectTo === "string" ? body.redirectTo.trim() : undefined;
 
-    if (!email || typeof email !== "string") {
-      return new Response(JSON.stringify({ error: "Email is required" }), {
+    // Validate email format and length
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || email.length > 255 || !emailRegex.test(email)) {
+      return new Response(JSON.stringify({ error: "A valid email address is required (max 255 characters)" }), {
         status: 400,
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
+    }
+
+    // Validate name length if provided
+    if (name && name.length > 255) {
+      return new Response(JSON.stringify({ error: "Name must be 255 characters or less" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
+    }
+
+    // Validate redirectTo URL if provided
+    if (redirectTo) {
+      try {
+        const parsed = new URL(redirectTo);
+        if (!["http:", "https:"].includes(parsed.protocol)) {
+          throw new Error("Invalid protocol");
+        }
+      } catch {
+        return new Response(JSON.stringify({ error: "redirectTo must be a valid HTTPS URL" }), {
+          status: 400,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        });
+      }
     }
 
     // Create clients
