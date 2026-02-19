@@ -57,79 +57,81 @@ const Header = () => {
   const isActive = (href: string) => location.pathname === href;
 
   return (
-    <header
-      className={cn(
-        "fixed w-full top-0 left-0 z-50 transition-all duration-300",
-        isScrolled
-          ? "bg-white/95 backdrop-blur-md shadow-sm py-3"
-          : "bg-white/90 backdrop-blur-sm py-4"
-      )}
-    >
-      <div className="container flex items-center justify-between">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2" onClick={scrollToTop}>
-          <span className="text-[10px] text-collektiv-green font-medium leading-tight hidden sm:block">The Collektiv<br/>Revolution</span>
-        </Link>
+    <>
+      <header
+        className={cn(
+          "fixed w-full top-0 left-0 z-50 transition-all duration-300",
+          isScrolled
+            ? "bg-white/95 backdrop-blur-md shadow-sm py-3"
+            : "bg-white/90 backdrop-blur-sm py-4"
+        )}
+      >
+        <div className="container flex items-center justify-between">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2" onClick={scrollToTop}>
+            <span className="text-[10px] text-collektiv-green font-medium leading-tight hidden sm:block">The Collektiv<br/>Revolution</span>
+          </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-1">
-          {navigation.map((item) => (
-            <Link
-              key={item.name}
-              to={item.href}
-              onClick={scrollToTop}
-              className={cn(
-                "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200",
-                isActive(item.href)
-                  ? "bg-collektiv-green text-white"
-                  : "text-collektiv-gray hover:text-collektiv-dark hover:bg-gray-100"
-              )}
-            >
-              {item.name}
-            </Link>
-          ))}
-        </nav>
+          {/* Desktop nav */}
+          <nav className="hidden lg:flex items-center gap-1">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                onClick={scrollToTop}
+                className={cn(
+                  "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200",
+                  isActive(item.href)
+                    ? "bg-collektiv-green text-white"
+                    : "text-collektiv-gray hover:text-collektiv-dark hover:bg-gray-100"
+                )}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </nav>
 
-        {/* Right side actions */}
-        <div className="hidden lg:flex items-center gap-3">
-          {!loading && (
-            isAuthenticated ? (
-              <>
-                <Link 
-                  to="/members" 
+          {/* Right side actions */}
+          <div className="hidden lg:flex items-center gap-3">
+            {!loading && (
+              isAuthenticated ? (
+                <>
+                  <Link 
+                    to="/members" 
+                    className="flex items-center gap-2 text-sm text-collektiv-dark border border-gray-200 rounded-full px-4 py-2 hover:bg-gray-50 transition-colors"
+                  >
+                    <User size={16} /> Member Zone
+                  </Link>
+                  <Button variant="ghost" size="sm" onClick={handleLogout}>Log out</Button>
+                </>
+              ) : (
+                <button
+                  onClick={handleMemberZoneClick}
                   className="flex items-center gap-2 text-sm text-collektiv-dark border border-gray-200 rounded-full px-4 py-2 hover:bg-gray-50 transition-colors"
                 >
                   <User size={16} /> Member Zone
-                </Link>
-                <Button variant="ghost" size="sm" onClick={handleLogout}>Log out</Button>
-              </>
-            ) : (
-              <button
-                onClick={handleMemberZoneClick}
-                className="flex items-center gap-2 text-sm text-collektiv-dark border border-gray-200 rounded-full px-4 py-2 hover:bg-gray-50 transition-colors"
-              >
-                <User size={16} /> Member Zone
-              </button>
-            )
-          )}
-          <button 
-            onClick={() => setJoinDialogOpen(true)}
-            className="bg-collektiv-green text-white px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-collektiv-lightgreen transition-all duration-300 flex items-center gap-1 shadow-sm"
+                </button>
+              )
+            )}
+            <button 
+              onClick={() => setJoinDialogOpen(true)}
+              className="bg-collektiv-green text-white px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-collektiv-lightgreen transition-all duration-300 flex items-center gap-1 shadow-sm"
+            >
+              Join Now <ChevronRight size={16} />
+            </button>
+          </div>
+
+          {/* Mobile menu button */}
+          <button
+            className={cn("lg:hidden relative z-[70]", mobileMenuOpen ? "text-white" : "text-collektiv-dark")}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            Join Now <ChevronRight size={16} />
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
+      </header>
 
-        {/* Mobile menu button */}
-        <button
-          className={cn("lg:hidden", mobileMenuOpen ? "text-white z-50" : "text-collektiv-dark")}
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-
-      {/* Mobile menu */}
+      {/* Mobile menu - OUTSIDE header to avoid stacking context issues */}
       <div
         className={cn(
           "fixed inset-0 bg-collektiv-dark z-[60] lg:hidden transition-transform duration-300 pt-20 overflow-y-auto",
@@ -179,10 +181,10 @@ const Header = () => {
           )}
         </div>
       </div>
+
       {/* Join Now Dialog */}
       <Dialog open={joinDialogOpen} onOpenChange={setJoinDialogOpen}>
         <DialogContent className="bg-gradient-to-br from-[#0c1a2e] via-collektiv-dark to-[#0a1628] border border-white/[0.08] text-white max-w-xl p-0 gap-0 overflow-hidden rounded-2xl shadow-2xl shadow-black/60">
-          {/* Subtle glow accent */}
           <div className="absolute -top-20 -right-20 w-40 h-40 bg-collektiv-green/10 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute -bottom-16 -left-16 w-32 h-32 bg-collektiv-green/5 rounded-full blur-3xl pointer-events-none" />
           
@@ -235,7 +237,7 @@ const Header = () => {
           </div>
         </DialogContent>
       </Dialog>
-    </header>
+    </>
   );
 };
 
