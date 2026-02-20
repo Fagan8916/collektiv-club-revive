@@ -85,6 +85,9 @@ const Membership = () => {
           </div>
         </section>
 
+        {/* Membership Plans */}
+        <MembershipSection />
+
         {/* Benefits in Detail */}
         <section className="section bg-collektiv-dark" id="benefits">
           <div className="container">
@@ -171,9 +174,6 @@ const Membership = () => {
             </div>
           </div>
         </section>
-
-        {/* Membership Plans */}
-        <MembershipSection />
 
         {/* FAQ Section */}
         <section className="section bg-collektiv-dark" id="faq">
