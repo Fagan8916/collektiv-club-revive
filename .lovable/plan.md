@@ -1,32 +1,29 @@
 
-## Two Changes: Membership Page CTA + Header "Join Now" Popup
 
-### 1. Add "Book a Discovery Call" CTA to Membership Page
+## Fix Rollup CVE-2026-27606 (High Severity Path Traversal)
 
-In `src/components/MembershipSection.tsx`, add a second button below the existing "Become a Member" button linking to the Zcal booking page (`https://zcal.co/collektiv/15min`). This mirrors the hero section pattern on the home page -- a primary green button plus a secondary outlined button.
+### Problem
+Your project uses Rollup **4.46.2** (via Vite), which is vulnerable to CVE-2026-27606 — an arbitrary file write via path traversal. The patched version is **4.59.0+**.
 
-### 2. Replace "Join Now" Link with a Popup Dialog
+### Solution
+Add an `overrides` field in `package.json` to force Rollup to update to a patched version, regardless of what Vite requests.
 
-In `src/components/Header.tsx`, replace the `<Link to="/membership">` "Join Now" button (both desktop and mobile) with a Dialog popup containing three options:
+### Changes
 
-| Option | Link |
-|--------|------|
-| Become a Member | `https://airtable.com/appWGyTHcjHMgZrUz/pagHdPVxVwljspHTq/form` |
-| Book a Discovery Call | `https://zcal.co/collektiv/15min` |
-| Submit a Founder Pitch Deck | `https://airtable.com/appWGyTHcjHMgZrUz/pagTxXOeZJ2McNFHZ/form` |
+**File: `package.json`**
+- Add an `overrides` block to pin `rollup` to `>=4.59.0`:
 
-All three open in new tabs. The popup will be a styled card using the existing `Dialog` component with a dark theme to match the site aesthetic.
+```json
+{
+  "overrides": {
+    "rollup": ">=4.59.0"
+  }
+}
+```
 
-### Technical Details
+This tells npm to use at least version 4.59.0 of rollup for all dependencies that require it (primarily Vite), resolving the vulnerability.
 
-**`src/components/MembershipSection.tsx`**
-- Change the CTA area (lines 48-58) from a single button to a flex column/row with two buttons
-- Add a "Book a Discovery Call" `<a>` tag styled as an outlined/secondary button linking to `https://zcal.co/collektiv/15min`
+### Risk Assessment
+- **Low risk**: Rollup 4.59.0 is a patch release with no breaking API changes, so Vite will continue to work normally.
+- The override only affects the build toolchain, not your production website code.
 
-**`src/components/Header.tsx`**
-- Import `Dialog, DialogContent, DialogHeader, DialogTitle` from `@/components/ui/dialog`
-- Add `useState` for dialog open state
-- Replace the desktop "Join Now" `<Link>` (line 113-119) with a `<button>` that opens the dialog
-- Replace the mobile "Join Now" `<Link>` (line 154-160) with a `<button>` that opens the dialog
-- Add a single `<Dialog>` component rendered once, containing three styled link cards, each opening their respective URL in a new tab
-- Each option will have an icon, title, and brief description for clarity
