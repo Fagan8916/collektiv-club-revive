@@ -7,6 +7,15 @@ import { Badge } from "@/components/ui/badge";
 const EventsSection = () => {
   const featuredEvents = [
     {
+      id: 6,
+      title: "Pizza, Pints & Great Conversations",
+      date: "February 20, 2025",
+      location: "The White Bear, Farringdon, London",
+      description: "An intimate evening of wood-fired pizza, craft pints, and wide-ranging conversations covering investment opportunities, ethical investing, AI, and life catch-ups.",
+      image: "/lovable-uploads/pizza-meetup-food.webp",
+      slug: "pizza-pints-feb-2025"
+    },
+    {
       id: 1,
       title: "Collektiv Member and Founder Meet Up",
       date: "9th October 2025",
@@ -23,15 +32,6 @@ const EventsSection = () => {
       description: "The grand finale of the Plug and Play Tirana Accelerator Program - celebrating Albania's emerging startup ecosystem.",
       image: "/lovable-uploads/tirana-expo-featured.jpg",
       slug: "tirana-expo-2024"
-    },
-    {
-      id: 3,
-      title: "Catalyst: Dinner @ London",
-      date: "October 14, 2025",
-      location: "Dishoom King's Cross, London",
-      description: "A roaming event series for founders, operators, and builders shaping what it means to build AI companies today.",
-      image: "/lovable-uploads/propane-catalyst-featured.jpg",
-      slug: "propane-catalyst-2024"
     }
   ];
 

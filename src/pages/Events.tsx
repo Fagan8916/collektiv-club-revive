@@ -11,6 +11,17 @@ const Events = () => {
 
   const pastEvents = [
     {
+      id: 6,
+      title: "Pizza, Pints & Great Conversations",
+      date: "February 20, 2025",
+      time: "6:30 PM onwards",
+      location: "The White Bear, Farringdon, London",
+      attendees: "20+ members",
+      description: "An intimate evening of wood-fired pizza, craft pints, and wide-ranging conversations covering investment opportunities, ethical investing, AI, and general life catch-ups.",
+      slug: "pizza-pints-feb-2025",
+      image: "/lovable-uploads/pizza-meetup-food.webp"
+    },
+    {
       id: 1,
       title: "Collektiv Member and Founder Meet Up",
       date: "9th October 2025",
