@@ -34,6 +34,7 @@ import AnthropicMemo from './pages/members/investments/AnthropicMemo';
 import TiranaExpo2024 from './pages/members/events/TiranaExpo2024';
 import CollektivMeetupOct2024 from './pages/members/events/CollektivMeetupOct2024';
 import PropaneCatalyst2024 from './pages/members/events/PropaneCatalyst2024';
+
 import BuildProfile from './pages/members/BuildProfile';
 import EditProfile from './pages/members/EditProfile';
 import BareTrusts from './pages/insights/BareTrusts';
