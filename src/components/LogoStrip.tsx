@@ -34,6 +34,11 @@ const logos = [
     type: "image" as const,
     src: "lovable-uploads/2801fd4b-1d50-485c-a999-0695274f5f05.png",
   },
+  {
+    name: "Kalshi",
+    type: "image" as const,
+    src: "lovable-uploads/kalshi-logo.png",
+  },
 ];
 
 const allLogos = [...logos, ...logos];
