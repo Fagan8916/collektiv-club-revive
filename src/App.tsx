@@ -34,6 +34,7 @@ import AnthropicMemo from './pages/members/investments/AnthropicMemo';
 import TiranaExpo2024 from './pages/members/events/TiranaExpo2024';
 import CollektivMeetupOct2024 from './pages/members/events/CollektivMeetupOct2024';
 import PropaneCatalyst2024 from './pages/members/events/PropaneCatalyst2024';
+import PizzaPintsFeb2025 from './pages/members/events/PizzaPintsFeb2025';
 
 import BuildProfile from './pages/members/BuildProfile';
 import EditProfile from './pages/members/EditProfile';
@@ -265,6 +266,7 @@ function App() {
             <Route path="/events/tirana-expo-2024" element={<TiranaExpo2024 />} />
             <Route path="/events/collektiv-meetup-oct-2024" element={<CollektivMeetupOct2024 />} />
             <Route path="/events/propane-catalyst-2024" element={<PropaneCatalyst2024 />} />
+            <Route path="/events/pizza-pints-feb-2025" element={<PizzaPintsFeb2025 />} />
             <Route path="/insights" element={<News />} />
             <Route path="/founders" element={<Founders />} />
             <Route path="/contact" element={<Contact />} />
@@ -286,6 +288,7 @@ function App() {
           <Route path="/members/events/tirana-expo-2024" element={<TiranaExpo2024 />} />
           <Route path="/members/events/collektiv-meetup-oct-2024" element={<CollektivMeetupOct2024 />} />
           <Route path="/members/events/propane-catalyst-2024" element={<PropaneCatalyst2024 />} />
+          <Route path="/members/events/pizza-pints-feb-2025" element={<PizzaPintsFeb2025 />} />
             <Route path="/insights/bare-trusts" element={<BareTrusts />} />
             <Route path="/insights/carry-and-performance-fees" element={<CarryAndPerformanceFees />} />
             <Route path="/insights/angel-syndicates" element={<AngelSyndicates />} />
