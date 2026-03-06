@@ -53,7 +53,7 @@ const Membership = () => {
     },
     {
       q: "How many investment opportunities will I see?",
-      a: "We present 6-12 investment opportunities per year. We believe in quality over quantity and thoroughly vet each opportunity before offering it to our members."
+      a: "We present 6-12 investment opportunities per year. We believe in quality over quantity and thoroughly vet each opportunity before bringing it to our members for due diligence."
     },
     {
       q: "What happens after I invest?",
