@@ -10,6 +10,7 @@ const PizzaPintsFeb2025 = () => {
   const eventImages = [
     "/lovable-uploads/pizza-meetup-food.webp",
     "/lovable-uploads/pizza-meetup-venue.jpg",
+    "/lovable-uploads/pizza-meetup-bar.jpg",
   ];
 
   return (
