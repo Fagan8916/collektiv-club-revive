@@ -45,7 +45,7 @@ const Membership = () => {
     },
     {
       q: "What types of companies do you invest in?",
-      a: "We focus primarily on technology startups with strong growth potential, particularly those eligible for EIS and SEIS tax benefits. Our investment committee carefully vets all opportunities before presenting them to our members."
+      a: "We focus primarily on technology startups with strong growth potential, particularly those eligible for EIS and SEIS tax benefits. Our investment committee carefully vets all opportunities before presenting them to our members for their due diligence."
     },
     {
       q: "How do these fees compare to other similar groups?",
