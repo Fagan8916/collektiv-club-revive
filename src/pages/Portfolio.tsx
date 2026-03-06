@@ -54,6 +54,14 @@ const investments = [
     description:
       "Webel is Spain's leading on-demand home-services marketplace connecting vetted professionals with homeowners. With strong unit economics and high customer retention, they are expanding across Europe.",
   },
+  {
+    name: "Kalshi",
+    slug: "kalshi",
+    logo: "lovable-uploads/kalshi-logo.png",
+    href: "https://kalshi.com/",
+    description:
+      "Kalshi is the first federally regulated exchange for event contracts in the US. Backed by top-tier investors, they allow users to trade on the outcomes of real-world events across economics, politics, and more.",
+  },
 ];
 
 const Portfolio = () => {
