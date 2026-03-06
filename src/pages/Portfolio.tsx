@@ -15,20 +15,28 @@ const investments = [
       "Anthropic is a leading AI safety company building reliable, interpretable, and steerable AI systems. Founded by former OpenAI researchers, they are the creators of Claude, one of the world's most capable AI assistants.",
   },
   {
-    name: "Propane AI",
-    slug: "propane",
-    logo: "lovable-uploads/8429af36-140a-4fc4-a401-e12fd22d19cc.png",
-    href: "https://usepropane.ai/",
-    description:
-      "Propane AI is building the first always-on customer intelligence platform for product and go-to-market teams. Based in Copenhagen, they raised pre-seed funding backed by the founder of Lovable.dev.",
-  },
-  {
     name: "Loxa Cover",
     slug: "loxa",
     logo: "lovable-uploads/7b1277a2-292c-4e86-ae2a-8dcae7fa5781.png",
     href: "https://www.loxacover.com/",
     description:
       "Loxa Cover is a London-based insurtech startup on a strong growth trajectory. Led by Jamie Harper, a founder with a successful previous exit, the company is innovating in the insurance technology space.",
+  },
+  {
+    name: "Kalshi",
+    slug: "kalshi",
+    logo: "lovable-uploads/kalshi-logo.png",
+    href: "https://kalshi.com/",
+    description:
+      "Kalshi is the first federally regulated exchange for event contracts in the US. Backed by top-tier investors, they allow users to trade on the outcomes of real-world events across economics, politics, and more.",
+  },
+  {
+    name: "Propane AI",
+    slug: "propane",
+    logo: "lovable-uploads/8429af36-140a-4fc4-a401-e12fd22d19cc.png",
+    href: "https://usepropane.ai/",
+    description:
+      "Propane AI is building the first always-on customer intelligence platform for product and go-to-market teams. Based in Copenhagen, they raised pre-seed funding backed by the founder of Lovable.dev.",
   },
   {
     name: "be/impact",
@@ -53,14 +61,6 @@ const investments = [
     href: "https://appwebel.com/",
     description:
       "Webel is Spain's leading on-demand home-services marketplace connecting vetted professionals with homeowners. With strong unit economics and high customer retention, they are expanding across Europe.",
-  },
-  {
-    name: "Kalshi",
-    slug: "kalshi",
-    logo: "lovable-uploads/kalshi-logo.png",
-    href: "https://kalshi.com/",
-    description:
-      "Kalshi is the first federally regulated exchange for event contracts in the US. Backed by top-tier investors, they allow users to trade on the outcomes of real-world events across economics, politics, and more.",
   },
 ];
 
