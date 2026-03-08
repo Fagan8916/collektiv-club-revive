@@ -11,6 +11,12 @@ const investments = [
     slug: "anthropic"
   },
   {
+    name: "Kalshi",
+    logo: "/lovable-uploads/kalshi-logo.png",
+    website: "https://kalshi.com/",
+    slug: "kalshi"
+  },
+  {
     name: "Propane",
     logo: "/lovable-uploads/8429af36-140a-4fc4-a401-e12fd22d19cc.png",
     website: "http://www.usepropane.ai",

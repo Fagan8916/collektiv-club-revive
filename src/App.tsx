@@ -287,6 +287,8 @@ function App() {
               <Route path="/members/investments/webel/memo" element={<WebelMemo />} />
               <Route path="/members/investments/anthropic" element={<Anthropic />} />
               <Route path="/members/investments/anthropic/memo" element={<AnthropicMemo />} />
+              <Route path="/members/investments/kalshi" element={<Kalshi />} />
+              <Route path="/members/investments/kalshi/memo" element={<KalshiMemo />} />
           <Route path="/members/events/tirana-expo-2024" element={<TiranaExpo2024 />} />
           <Route path="/members/events/collektiv-meetup-oct-2024" element={<CollektivMeetupOct2024 />} />
           <Route path="/members/events/propane-catalyst-2024" element={<PropaneCatalyst2024 />} />
