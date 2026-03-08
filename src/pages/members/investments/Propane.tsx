@@ -83,6 +83,19 @@ const Propane = () => {
                 <li><strong>Status:</strong> Active and growing</li>
               </ul>
             </div>
+
+            <div>
+              <h3 className="text-xl font-semibold mb-3 text-collektiv-green">Pitch Recording</h3>
+              <div className="aspect-video rounded-lg overflow-hidden">
+                <iframe
+                  src="https://drive.google.com/file/d/1mu_3dwymdPWXQidTYQy_n6bzyagUXr8F/preview"
+                  className="w-full h-full"
+                  allow="autoplay"
+                  allowFullScreen
+                  title="Propane AI Pitch Recording"
+                />
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>

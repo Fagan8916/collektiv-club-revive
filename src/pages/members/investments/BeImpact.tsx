@@ -90,6 +90,19 @@ const BeImpact = () => {
                 <li><strong>Status:</strong> Active and raising</li>
               </ul>
             </div>
+
+            <div>
+              <h3 className="text-xl font-semibold mb-3 text-collektiv-green">Pitch Recording</h3>
+              <div className="aspect-video rounded-lg overflow-hidden">
+                <iframe
+                  src="https://drive.google.com/file/d/1UfzaGTH-X7TrHAf4oCfR164o00qzRfti/preview"
+                  className="w-full h-full"
+                  allow="autoplay"
+                  allowFullScreen
+                  title="be/impact Pitch Recording"
+                />
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>
