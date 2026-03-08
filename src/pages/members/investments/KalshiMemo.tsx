@@ -290,9 +290,14 @@ const KalshiMemo = () => {
               <h2 className="text-2xl font-bold text-collektiv-green mb-4 border-b-2 border-collektiv-green pb-2">
                 Investment Video
               </h2>
-              <div className="bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-                <p className="text-gray-500 text-lg">🎥 Video coming soon</p>
-                <p className="text-gray-400 text-sm mt-2">The investment walkthrough video will be added here shortly.</p>
+              <div className="aspect-video rounded-lg overflow-hidden">
+                <iframe
+                  src="https://drive.google.com/file/d/1-MK2fZzU8FB4XxGTIjJKrZttlVKhfxF8/preview"
+                  className="w-full h-full"
+                  allow="autoplay"
+                  allowFullScreen
+                  title="Kalshi Investment Video"
+                />
               </div>
             </section>
 
