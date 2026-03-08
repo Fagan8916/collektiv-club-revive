@@ -31,6 +31,8 @@ import Webel from './pages/members/investments/Webel';
 import WebelMemo from './pages/members/investments/WebelMemo';
 import Anthropic from './pages/members/investments/Anthropic';
 import AnthropicMemo from './pages/members/investments/AnthropicMemo';
+import Kalshi from './pages/members/investments/Kalshi';
+import KalshiMemo from './pages/members/investments/KalshiMemo';
 import TiranaExpo2024 from './pages/members/events/TiranaExpo2024';
 import CollektivMeetupOct2024 from './pages/members/events/CollektivMeetupOct2024';
 import PropaneCatalyst2024 from './pages/members/events/PropaneCatalyst2024';
