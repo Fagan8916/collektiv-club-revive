@@ -90,6 +90,17 @@ const Webel = () => {
             <li>1.5m downloads | 1.0m accounts | 350k providers | 175k MAUs</li>
             <li>19 Spanish cities live; 5 UK cities ramping</li>
           </ul>
+
+          <h2 className="text-2xl font-bold text-collektiv-green mb-4 mt-8">Investment Video</h2>
+          <div className="aspect-video rounded-lg overflow-hidden">
+            <iframe
+              src="https://drive.google.com/file/d/1-XfomY4WnOaflM0WgKliYb5RswRimZyP/preview"
+              className="w-full h-full"
+              allow="autoplay"
+              allowFullScreen
+              title="Webel Investment Video"
+            />
+          </div>
         </div>
       </div>
     </div>
