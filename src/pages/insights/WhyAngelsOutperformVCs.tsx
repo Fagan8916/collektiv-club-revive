@@ -93,7 +93,7 @@ const WhyAngelsOutperformVCs = () => {
                 How do I join Collektiv?
               </AccordionTrigger>
               <AccordionContent className="text-gray-600">
-                We're invite-only for operators. If you've built something meaningful and want to invest alongside others who have too, email ryan@collektiv.club with your background.
+                We're invite-only for operators. If you've built something meaningful and want to invest alongside others who have too, <a href="https://airtable.com/appWGyTHcjHMgZrUz/pagHdPVxVwljspHTq/form" target="_blank" rel="noopener noreferrer" className="text-collektiv-green underline hover:text-collektiv-lightgreen">apply to join here</a>.
               </AccordionContent>
             </AccordionItem>
           </Accordion>
