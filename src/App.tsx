@@ -53,6 +53,7 @@ import SaasMetrics from './pages/insights/SaasMetrics';
 import Valuations from './pages/insights/Valuations';
 import WhatToLookForInFounders from './pages/insights/WhatToLookForInFounders';
 import ZeroToOneMillion from './pages/insights/ZeroToOneMillion';
+import WhyAngelsOutperformVCs from './pages/insights/WhyAngelsOutperformVCs';
 
 const queryClient = new QueryClient();
 
@@ -306,6 +307,7 @@ function App() {
             <Route path="/insights/startup-valuations" element={<Valuations />} />
             <Route path="/insights/what-to-look-for-in-founders" element={<WhatToLookForInFounders />} />
             <Route path="/insights/zero-to-one-million-saas-journey" element={<ZeroToOneMillion />} />
+            <Route path="/insights/why-angels-outperform-vcs" element={<WhyAngelsOutperformVCs />} />
             
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/setup-account" element={<SetupAccount />} />
