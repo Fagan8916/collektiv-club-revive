@@ -53,6 +53,7 @@ import SaasMetrics from './pages/insights/SaasMetrics';
 import Valuations from './pages/insights/Valuations';
 import WhatToLookForInFounders from './pages/insights/WhatToLookForInFounders';
 import ZeroToOneMillion from './pages/insights/ZeroToOneMillion';
+import WhyAngelsOutperformVCs from './pages/insights/WhyAngelsOutperformVCs';
 
 const queryClient = new QueryClient();
 
