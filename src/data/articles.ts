@@ -2,6 +2,19 @@ import businessHandshakeImage from "@/assets/business-handshake-real.jpg";
 
 export const articles = [
   {
+    id: 14,
+    title: "Why Angels Outperform VCs (And Why Operators Do It Best)",
+    excerpt:
+      "Data shows angel investors deliver 22-27% IRR vs 15-20% for top VC funds. Here's why operator-angels outperform both — and how Collektiv's operator-only model produces better returns.",
+    content: "Extended content about why angels outperform VCs...",
+    date: "March 2026",
+    author: "Collektiv Team",
+    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+    slug: "why-angels-outperform-vcs",
+    route: "/insights/why-angels-outperform-vcs",
+    category: "Strategy",
+  },
+  {
     id: 13,
     title: "What Are Carry and Performance Fees?",
     excerpt:
