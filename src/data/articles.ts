@@ -1,6 +1,31 @@
 import businessHandshakeImage from "@/assets/business-handshake-real.jpg";
 
-export const articles = [
+export interface Article {
+  id: number;
+  title: string;
+  excerpt: string;
+  content: string;
+  date: string;
+  author: string;
+  image?: string;
+  slug: string;
+  route: string;
+  category: string;
+}
+
+export const articles: Article[] = [
+  {
+    id: 15,
+    title: "The Anatomy of a Successful Series A Pitch",
+    excerpt:
+      "Your Seed round slide probably said: 'We are the Shopify for independent creators.' Your Series A pitch needs to say something very different. Here's the anatomy of a pitch that actually closes.",
+    content: "Extended content about Series A pitches...",
+    date: "March 19, 2026",
+    author: "Corey Lahey",
+    slug: "series-a-pitch",
+    route: "/insights/series-a-pitch",
+    category: "Fundraising",
+  },
   {
     id: 14,
     title: "Why Angels Outperform VCs (And Why Operators Do It Best)",

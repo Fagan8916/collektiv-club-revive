@@ -22,11 +22,19 @@ const NewsSection = () => {
           {featuredArticles.map((article) => (
             <div key={article.id} className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:bg-white/10 transition-all duration-300 group">
               <div className="overflow-hidden">
-                <img 
-                  src={article.image} 
-                  alt={article.title}
-                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+                {article.image ? (
+                  <img 
+                    src={article.image} 
+                    alt={article.title}
+                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                ) : (
+                  <div className="w-full h-48 bg-gradient-to-br from-collektiv-green/30 via-collektiv-darkTeal to-collektiv-dark flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+                    <span className="text-white/80 text-xs font-semibold tracking-wider uppercase px-3 py-1.5 rounded-full border border-white/20 backdrop-blur-sm">
+                      {article.category}
+                    </span>
+                  </div>
+                )}
               </div>
               <div className="p-5">
                 <h3 className="text-base font-bold mb-2 text-white line-clamp-2 group-hover:text-collektiv-green transition-colors">

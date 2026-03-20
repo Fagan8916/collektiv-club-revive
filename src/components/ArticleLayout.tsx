@@ -20,7 +20,7 @@ const ArticleLayout: React.FC<ArticleLayoutProps> = ({
   author,
   category,
   content,
-  image = "https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80"
+  image
 }) => {
   const [imageError, setImageError] = useState(false);
 
@@ -59,23 +59,19 @@ const ArticleLayout: React.FC<ArticleLayoutProps> = ({
           </div>
         </section>
 
-        {/* Featured Image */}
-        <div className="container my-8">
-          <div className="max-w-4xl mx-auto">
-            {imageError ? (
-              <div className="w-full h-80 bg-gray-100 rounded-xl shadow-md flex items-center justify-center">
-                <ImageIcon size={48} className="text-gray-400" />
-              </div>
-            ) : (
+        {/* Featured Image - only shown when image is provided */}
+        {image && !imageError && (
+          <div className="container my-8">
+            <div className="max-w-4xl mx-auto">
               <img 
                 src={image} 
                 alt={title}
                 className="w-full h-80 object-cover rounded-xl shadow-md"
                 onError={() => setImageError(true)}
               />
-            )}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Article Content */}
         <article className="container my-12">

@@ -2,21 +2,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Calendar, User, ArrowRight } from "lucide-react";
-
-interface Article {
-  id: number;
-  title: string;
-  excerpt: string;
-  date: string;
-  author: string;
-  image: string;
-  route: string;
-  category: string;
-}
+import type { Article } from "@/data/articles";
 
 interface ArticlesGridProps {
   articles: Article[];
 }
+
+const GradientPlaceholder: React.FC<{ category: string }> = ({ category }) => (
+  <div className="w-full h-48 bg-gradient-to-br from-collektiv-green/30 via-collektiv-darkTeal to-collektiv-dark flex items-center justify-center">
+    <span className="text-white/80 text-sm font-semibold tracking-wider uppercase px-4 py-2 rounded-full border border-white/20 backdrop-blur-sm">
+      {category}
+    </span>
+  </div>
+);
 
 const ArticlesGrid: React.FC<ArticlesGridProps> = ({ articles }) => {
   return (
@@ -25,14 +23,18 @@ const ArticlesGrid: React.FC<ArticlesGridProps> = ({ articles }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {articles.map((article) => (
             <div key={article.id} className="bg-white/5 border border-white/10 rounded-lg overflow-hidden hover:bg-white/10 transition-all">
-              <img 
-                src={article.image} 
-                alt={article.title}
-                className="w-full h-48 object-cover"
-                onError={(e) => {
-                  e.currentTarget.src = "https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80";
-                }}
-              />
+              {article.image ? (
+                <img 
+                  src={article.image} 
+                  alt={article.title}
+                  className="w-full h-48 object-cover"
+                  onError={(e) => {
+                    e.currentTarget.src = "https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80";
+                  }}
+                />
+              ) : (
+                <GradientPlaceholder category={article.category} />
+              )}
               <div className="p-6">
                 <div className="mb-3">
                   <span className="inline-block bg-collektiv-green/20 text-collektiv-green text-sm px-3 py-1 rounded-full">
