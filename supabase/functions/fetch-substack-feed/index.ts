@@ -22,6 +22,61 @@ function stripHtml(html: string): string {
   return html.replace(/<[^>]*>/g, '').replace(/&[^;]+;/g, ' ').trim();
 }
 
+// Curated image pool — each image is unique and mapped to topic keywords
+const IMAGE_POOL = [
+  { url: 'https://images.unsplash.com/photo-1591696205602-2f950c417cb9?auto=format&fit=crop&w=800&q=80', keywords: ['pitch', 'presentation', 'slides', 'deck', 'series a'] },
+  { url: 'https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&w=800&q=80', keywords: ['angel', 'investor', 'investing', 'returns', 'portfolio'] },
+  { url: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80', keywords: ['funding', 'capital', 'raise', 'round', 'finance'] },
+  { url: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80', keywords: ['metrics', 'data', 'analytics', 'measure', 'kpi'] },
+  { url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80', keywords: ['founder', 'team', 'leadership', 'people', 'hire'] },
+  { url: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80', keywords: ['valuation', 'worth', 'multiple', 'revenue'] },
+  { url: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80', keywords: ['syndicate', 'group', 'collective', 'club', 'network'] },
+  { url: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80', keywords: ['growth', 'scale', 'startup', 'saas', 'traction'] },
+  { url: 'https://images.unsplash.com/photo-1560472355-536de3962603?auto=format&fit=crop&w=800&q=80', keywords: ['tax', 'eis', 'seis', 'relief', 'scheme'] },
+  { url: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=80', keywords: ['strategy', 'plan', 'roadmap', 'market'] },
+  { url: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=800&q=80', keywords: ['deal', 'agreement', 'contract', 'term', 'note'] },
+  { url: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80', keywords: ['tech', 'product', 'software', 'build', 'engineering'] },
+  { url: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80', keywords: ['meeting', 'event', 'conference', 'community'] },
+  { url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80', keywords: ['chart', 'graph', 'performance', 'trend'] },
+  { url: 'https://images.unsplash.com/photo-1553484771-371a605b060b?auto=format&fit=crop&w=800&q=80', keywords: ['money', 'cash', 'profit', 'exit', 'return'] },
+  { url: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80', keywords: ['office', 'workspace', 'work', 'business'] },
+];
+
+function assignImage(title: string, index: number, usedIndices: Set<number>): string {
+  const lowerTitle = title.toLowerCase();
+
+  // Score each image by keyword matches
+  let bestIdx = -1;
+  let bestScore = 0;
+  for (let i = 0; i < IMAGE_POOL.length; i++) {
+    if (usedIndices.has(i)) continue;
+    const score = IMAGE_POOL[i].keywords.filter(kw => lowerTitle.includes(kw)).length;
+    if (score > bestScore) {
+      bestScore = score;
+      bestIdx = i;
+    }
+  }
+
+  // If no keyword match or all matched are taken, use index-based fallback
+  if (bestIdx === -1) {
+    for (let i = 0; i < IMAGE_POOL.length; i++) {
+      const candidate = (index + i) % IMAGE_POOL.length;
+      if (!usedIndices.has(candidate)) {
+        bestIdx = candidate;
+        break;
+      }
+    }
+  }
+
+  // Ultimate fallback: reset and use index
+  if (bestIdx === -1) {
+    bestIdx = index % IMAGE_POOL.length;
+  }
+
+  usedIndices.add(bestIdx);
+  return IMAGE_POOL[bestIdx].url;
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -45,6 +100,7 @@ Deno.serve(async (req) => {
 
     // Split into items
     const items = xml.split('<item>').slice(1);
+    const usedImageIndices = new Set<number>();
 
     const articles = items.map((item, i) => {
       const title = extractText(item, 'title');
@@ -55,9 +111,8 @@ Deno.serve(async (req) => {
       const link = extractText(item, 'link');
       const slug = slugify(title);
 
-      // Try to extract first image from content
-      const imgMatch = contentEncoded.match(/<img[^>]+src=\\"([^\\"]+)\\"/);
-      const image = imgMatch ? imgMatch[1] : undefined;
+      // Assign a curated image based on title keywords, no duplicates
+      const image = assignImage(title, i, usedImageIndices);
 
       // Create excerpt from description or content
       const excerpt = stripHtml(description || contentEncoded).slice(0, 200) + '...';
