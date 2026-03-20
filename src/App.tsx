@@ -54,6 +54,7 @@ import Valuations from './pages/insights/Valuations';
 import WhatToLookForInFounders from './pages/insights/WhatToLookForInFounders';
 import ZeroToOneMillion from './pages/insights/ZeroToOneMillion';
 import WhyAngelsOutperformVCs from './pages/insights/WhyAngelsOutperformVCs';
+import SeriesAPitch from './pages/insights/SeriesAPitch';
 
 const queryClient = new QueryClient();
 
