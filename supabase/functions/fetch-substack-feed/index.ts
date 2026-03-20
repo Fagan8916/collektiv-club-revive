@@ -81,7 +81,7 @@ Deno.serve(async (req) => {
         excerpt,
         content: contentEncoded,
         date: formattedDate,
-        author: creator === 'Corey Lahey' ? 'Kevin Chavanne' : creator,
+        author: (creator === 'Corey Lahey' || creator === 'Kevin Chavanne') ? 'Kevin Chavanne (Ugly Baby/Collektiv)' : creator,
         image,
         slug,
         route: `/insights/${slug}`,
