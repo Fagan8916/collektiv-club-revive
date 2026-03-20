@@ -6,7 +6,7 @@ const SeriesAPitch = () => {
     <ArticleLayout
       title="The Anatomy of a Successful Series A Pitch"
       date="March 19, 2026"
-      author="Corey Lahey"
+      author="Kevin Chavanne"
       category="Fundraising"
       content={
         <div className="space-y-6">
