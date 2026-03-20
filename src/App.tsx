@@ -311,6 +311,7 @@ function App() {
             <Route path="/insights/zero-to-one-million-saas-journey" element={<ZeroToOneMillion />} />
             <Route path="/insights/why-angels-outperform-vcs" element={<WhyAngelsOutperformVCs />} />
             <Route path="/insights/series-a-pitch" element={<SeriesAPitch />} />
+            <Route path="/insights/:slug" element={<SubstackArticle />} />
             
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/setup-account" element={<SetupAccount />} />

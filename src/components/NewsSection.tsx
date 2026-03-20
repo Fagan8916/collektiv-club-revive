@@ -1,11 +1,27 @@
 
-import React from "react";
+import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Calendar, User, ArrowRight } from "lucide-react";
 import { articles } from "@/data/articles";
+import { useSubstackArticles } from "@/hooks/useSubstackArticles";
 
 const NewsSection = () => {
-  const featuredArticles = articles.slice(0, 4);
+  const { data: substackArticles = [] } = useSubstackArticles();
+
+  const featuredArticles = useMemo(() => {
+    const hardcodedSlugs = new Set(articles.map(a => a.slug));
+    const deduped = substackArticles.filter(a => !hardcodedSlugs.has(a.slug));
+    const merged = [...articles, ...deduped];
+    merged.sort((a, b) => {
+      const da = new Date(a.date).getTime();
+      const db = new Date(b.date).getTime();
+      if (isNaN(da) && isNaN(db)) return 0;
+      if (isNaN(da)) return 1;
+      if (isNaN(db)) return -1;
+      return db - da;
+    });
+    return merged.slice(0, 4);
+  }, [substackArticles]);
 
   return (
     <section className="py-20 bg-gradient-to-br from-collektiv-darkTeal to-collektiv-dark" id="insights">
