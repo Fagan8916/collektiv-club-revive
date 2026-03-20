@@ -100,6 +100,7 @@ Deno.serve(async (req) => {
 
     // Split into items
     const items = xml.split('<item>').slice(1);
+    const usedImageIndices = new Set<number>();
 
     const articles = items.map((item, i) => {
       const title = extractText(item, 'title');
@@ -110,9 +111,8 @@ Deno.serve(async (req) => {
       const link = extractText(item, 'link');
       const slug = slugify(title);
 
-      // Try to extract first image from content
-      const imgMatch = contentEncoded.match(/<img[^>]+src=\\"([^\\"]+)\\"/);
-      const image = imgMatch ? imgMatch[1] : undefined;
+      // Assign a curated image based on title keywords, no duplicates
+      const image = assignImage(title, i, usedImageIndices);
 
       // Create excerpt from description or content
       const excerpt = stripHtml(description || contentEncoded).slice(0, 200) + '...';
