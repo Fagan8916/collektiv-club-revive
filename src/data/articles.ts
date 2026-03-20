@@ -21,7 +21,7 @@ export const articles: Article[] = [
       "Your Seed round slide probably said: 'We are the Shopify for independent creators.' Your Series A pitch needs to say something very different. Here's the anatomy of a pitch that actually closes.",
     content: "Extended content about Series A pitches...",
     date: "March 19, 2026",
-    author: "Corey Lahey",
+    author: "Kevin Chavanne",
     slug: "series-a-pitch",
     route: "/insights/series-a-pitch",
     category: "Fundraising",
