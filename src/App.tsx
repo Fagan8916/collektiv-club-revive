@@ -55,6 +55,7 @@ import WhatToLookForInFounders from './pages/insights/WhatToLookForInFounders';
 import ZeroToOneMillion from './pages/insights/ZeroToOneMillion';
 import WhyAngelsOutperformVCs from './pages/insights/WhyAngelsOutperformVCs';
 import SeriesAPitch from './pages/insights/SeriesAPitch';
+import SubstackArticle from './pages/insights/SubstackArticle';
 
 const queryClient = new QueryClient();
 
@@ -310,6 +311,7 @@ function App() {
             <Route path="/insights/zero-to-one-million-saas-journey" element={<ZeroToOneMillion />} />
             <Route path="/insights/why-angels-outperform-vcs" element={<WhyAngelsOutperformVCs />} />
             <Route path="/insights/series-a-pitch" element={<SeriesAPitch />} />
+            <Route path="/insights/:slug" element={<SubstackArticle />} />
             
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/setup-account" element={<SetupAccount />} />
