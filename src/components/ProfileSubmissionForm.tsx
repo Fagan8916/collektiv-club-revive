@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { normalizeUrl } from "@/utils/urlUtils";
 import { useUserRole } from "@/hooks/useUserRole";
-import FounderResourcesSection from "./FounderResourcesSection";
+
 
 interface ProfileSubmissionData {
   first_name?: string;
