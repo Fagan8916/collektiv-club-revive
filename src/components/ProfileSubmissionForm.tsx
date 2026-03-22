@@ -372,7 +372,7 @@ const ProfileSubmissionForm = () => {
               </>
             )}
 
-            <FounderResourcesSection />
+            
 
             <Button 
               type="submit" 
