@@ -372,6 +372,8 @@ const ProfileSubmissionForm = () => {
               </>
             )}
 
+            <FounderResourcesSection />
+
             <Button 
               type="submit" 
               disabled={isSubmitting || hasExistingSubmission || roleLoading}
