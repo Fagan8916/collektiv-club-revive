@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Link } from "react-router-dom";
 import { Check, ArrowRight } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import FounderResourcesSection from "@/components/FounderResourcesSection";
+import { Button } from "@/components/ui/button";
+
+const AIRTABLE_URL = "https://airtable.com/appWGyTHcjHMgZrUz/pagTxXOeZJ2McNFHZ/form";
 
 const Founders = () => {
+  const [showPromo, setShowPromo] = useState(false);
+
+  const handleEnquiryClick = () => {
+    setShowPromo(true);
+  };
+
+  const handleContinue = () => {
+    window.open(AIRTABLE_URL, "_blank", "noopener,noreferrer");
+    setShowPromo(false);
+  };
+
   const benefits = [
     "Access to a network of high-net-worth individuals and sophisticated investors",
     "Quick fundraising through a single entity",
@@ -48,15 +63,13 @@ const Founders = () => {
               <p className="text-xl text-white/80 mb-8">
                 Raise capital efficiently and access a network of strategic investors committed to your success.
               </p>
-              <a
-                href="https://airtable.com/appWGyTHcjHMgZrUz/pagTxXOeZJ2McNFHZ/form"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={handleEnquiryClick}
                 className="btn-primary inline-flex items-center"
               >
                 Submit an Investment Enquiry
                 <ArrowRight size={18} className="ml-2" />
-              </a>
+              </button>
             </div>
           </div>
         </section>
@@ -94,15 +107,13 @@ const Founders = () => {
                   <p className="text-white/70 mb-6">
                     The Collektiv Club brings together a diverse group of investors with experience across various industries and functions. When you raise with us, you don't just get capital—you get a community invested in your success.
                   </p>
-                  <a
-                    href="https://airtable.com/appWGyTHcjHMgZrUz/pagTxXOeZJ2McNFHZ/form"
-                    target="_blank"
-                    rel="noopener noreferrer" 
+                  <button
+                    onClick={handleEnquiryClick}
                     className="text-collektiv-green font-medium inline-flex items-center hover:text-collektiv-lightgreen transition-colors"
                   >
                     Start the conversation
                     <ArrowRight size={16} className="ml-1" />
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
@@ -139,14 +150,12 @@ const Founders = () => {
               </div>
 
               <div className="text-center mt-16">
-                <a
-                  href="https://airtable.com/appWGyTHcjHMgZrUz/pagTxXOeZJ2McNFHZ/form"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={handleEnquiryClick}
                   className="btn-primary"
                 >
                   Submit an Investment Enquiry
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -202,14 +211,12 @@ const Founders = () => {
             </div>
 
             <div className="text-center mt-12">
-              <a
-                href="https://airtable.com/appWGyTHcjHMgZrUz/pagTxXOeZJ2McNFHZ/form"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={handleEnquiryClick}
                 className="btn-primary"
               >
                 Submit Your Startup
-              </a>
+              </button>
             </div>
           </div>
         </section>
@@ -249,20 +256,40 @@ const Founders = () => {
               </div>
 
               <div className="text-center mt-12">
-                <a
-                  href="https://airtable.com/appWGyTHcjHMgZrUz/pagTxXOeZJ2McNFHZ/form"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={handleEnquiryClick}
                   className="btn-primary"
                 >
                   Submit an Investment Enquiry
-                </a>
+                </button>
               </div>
             </div>
           </div>
         </section>
       </main>
       <Footer />
+
+      {/* VC Brain Promo Dialog */}
+      <Dialog open={showPromo} onOpenChange={setShowPromo}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="sr-only">Founder Resources</DialogTitle>
+          </DialogHeader>
+          <FounderResourcesSection />
+          <div className="flex flex-col gap-3 mt-2">
+            <Button onClick={handleContinue} className="w-full bg-collektiv-green hover:bg-collektiv-green/90 text-white">
+              Continue to Enquiry Form
+              <ArrowRight size={16} className="ml-2" />
+            </Button>
+            <button
+              onClick={() => setShowPromo(false)}
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Skip for now
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
