@@ -102,7 +102,15 @@ Deno.serve(async (req) => {
     const items = xml.split('<item>').slice(1);
     const usedImageIndices = new Set<number>();
 
-    const articles = items.map((item, i) => {
+    // Titles to exclude from the feed
+    const EXCLUDED_TITLES = new Set(['day one', 'day two', 'day three', 'day four']);
+
+    const articles = items
+      .filter((item) => {
+        const title = extractText(item, 'title').toLowerCase();
+        return !EXCLUDED_TITLES.has(title);
+      })
+      .map((item, i) => {
       const title = extractText(item, 'title');
       const contentEncoded = extractText(item, 'content:encoded') || extractText(item, 'description');
       const description = extractText(item, 'description');
