@@ -48,19 +48,19 @@ const BuildProfile: React.FC = () => {
     const checkExistingProfile = async () => {
       if (!loading && isAuthenticated && user?.id) {
         try {
-          // Only redirect if user has an approved profile
+          // Only redirect if user has a truly complete profile
           const { data: profile } = await supabase
             .from('member_profiles')
-            .select('id')
+            .select('id, first_name, full_name, bio, company, position, linkedin_url, profile_image_url')
             .eq('user_id', user.id)
             .maybeSingle();
           
-          if (profile) {
+          if (profile && isProfileComplete(profile)) {
             navigate("/members");
             return;
           }
           
-          // Allow users with submissions to stay on this page to edit/resubmit
+          // Allow users with trigger-created or incomplete profiles to stay and fill out the form
         } catch (error) {
           console.warn('Error checking profile status:', error);
         }
