@@ -1,39 +1,36 @@
 
 
-## Plan: Move VC Brain Promo to Founders Page as Popup
+## Fix: Member Name Duplication
 
-### What changes
+### Root Cause
 
-Currently the FounderResourcesSection sits inside `ProfileSubmissionForm.tsx` (the member profile builder). It needs to be removed from there and instead appear as a **dialog/popup on the Founders page** triggered by clicking any "Submit an Investment Enquiry" button.
+The `handle_new_member` database trigger receives a full name like "Brian Leggit" and stores:
+- `first_name` = "Brian" (first word)
+- `full_name` = "Brian Leggit" (entire name, unchanged)
 
-### Flow
+Then the UI displays `first_name + " " + full_name` = "Brian Brian Leggit".
 
-```text
-User clicks "Submit an Investment Enquiry" (any of the 4 buttons)
-        ↓
-Dialog/popup appears with VC Brain recommendation
-        ↓
-Two actions available:
-  - "Continue to Enquiry Form" → opens Airtable form in new tab
-  - "Close" / dismiss the dialog
+### Fix (3 parts)
+
+**1. Fix the `handle_new_member` trigger** so `full_name` stores only the LAST name (everything after the first space):
+```sql
+first_name_value := split_part(full_name_value, ' ', 1);
+-- Change full_name to store only the remaining parts (last name)
+last_name_value := trim(substring(full_name_value from position(' ' in full_name_value)));
+```
+If there's no space (single name), `full_name` stays as-is and `first_name` stays the same.
+
+**2. Fix existing data** with a migration that strips the duplicated first name from `full_name` for all affected rows:
+```sql
+UPDATE member_profiles
+SET full_name = trim(substring(full_name from length(first_name) + 1))
+WHERE first_name IS NOT NULL
+  AND full_name LIKE first_name || ' %';
 ```
 
-### Changes
+**3. Review display logic** across components (`AdminProfileManager`, `MemberDirectory`, `ProfileEditForm`, etc.) to ensure they consistently show `first_name + " " + full_name` (which will now be correct since full_name = last name only).
 
-**1. Update `src/pages/Founders.tsx`**
-- Import the `Dialog` component and `FounderResourcesSection`
-- Add state to control dialog open/close
-- Change all 4 Airtable link buttons (`<a>` tags on lines 51-59, 97-105, 142-149, 205-212, 252-259) from direct links to `onClick` handlers that open the dialog
-- Render a `Dialog` containing the FounderResourcesSection content plus a "Continue to Enquiry Form" button that opens the Airtable URL
-
-**2. Update `src/components/FounderResourcesSection.tsx`**
-- Optionally adapt styling for dialog context (slightly smaller padding), or reuse as-is inside the dialog
-
-**3. Update `src/components/ProfileSubmissionForm.tsx`**
-- Remove the `<FounderResourcesSection />` and its import (it doesn't belong in the profile form)
-
-### Result
-- Founders page visitors see the VC Brain promo every time they click to submit an enquiry
-- They can still proceed to the Airtable form from the popup
-- Profile submission form is cleaned up (no unrelated promo)
+### Files changed
+- Database migration: fix trigger + fix existing data
+- Verify display logic in `AdminProfileManager.tsx`, `MemberDirectory.tsx`, and related components (likely already correct once data is fixed)
 
