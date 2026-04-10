@@ -151,7 +151,7 @@ function App() {
             // Check for existing profile assigned to this user
             const { data: profile } = await supabase
               .from('member_profiles')
-              .select('id, first_name, full_name')
+              .select('id, first_name, full_name, bio, company, position, linkedin_url, profile_image_url')
               .eq('user_id', userId)
               .maybeSingle();
             

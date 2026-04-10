@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { isProfileComplete } from "@/utils/profileUtils";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -66,16 +67,41 @@ const Members = () => {
     }
   }, [toast]);
 
-  // Redirect unapproved members to external membership signup (except for profile building)
+  // Redirect unapproved members to membership signup page
   useEffect(() => {
-    const currentHash = window.location.hash;
-    const isProfileBuildPath = currentHash.includes('/build-profile');
-    
-    if (!authLoading && !roleLoading && isAuthenticated && !isAdmin && !isApprovedMember && !isProfileBuildPath) {
-      console.log('Members: User not approved, redirecting to build-profile');
-      navigate('/members/build-profile');
+    if (!authLoading && !roleLoading && isAuthenticated && !isAdmin && !isApprovedMember) {
+      console.log('Members: User not approved, redirecting to membership signup');
+      window.location.href = 'https://collektiv.club/#/membership';
     }
-  }, [isAuthenticated, authLoading, roleLoading, isAdmin, isApprovedMember, navigate]);
+  }, [isAuthenticated, authLoading, roleLoading, isAdmin, isApprovedMember]);
+
+  // Redirect approved members with incomplete profiles to build-profile
+  useEffect(() => {
+    const checkProfileCompleteness = async () => {
+      if (!authLoading && !roleLoading && isAuthenticated && (isApprovedMember || isAdmin) && user?.id) {
+        const { data: profile } = await supabase
+          .from('member_profiles')
+          .select('id, first_name, full_name, bio, company, position, linkedin_url, profile_image_url')
+          .eq('user_id', user.id)
+          .maybeSingle();
+
+        if (!isProfileComplete(profile)) {
+          // Check if they have a pending submission already
+          const { data: submission } = await supabase
+            .from('member_profile_submissions')
+            .select('id')
+            .eq('user_id', user.id)
+            .maybeSingle();
+
+          if (!submission) {
+            console.log('Members: Approved member with incomplete profile, redirecting to build-profile');
+            navigate('/members/build-profile');
+          }
+        }
+      }
+    };
+    checkProfileCompleteness();
+  }, [isAuthenticated, authLoading, roleLoading, isAdmin, isApprovedMember, user, navigate]);
 
   // Fetch user profile when user is available
   useEffect(() => {
