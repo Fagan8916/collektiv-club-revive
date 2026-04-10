@@ -72,8 +72,8 @@ const Members = () => {
     const isProfileBuildPath = currentHash.includes('/build-profile');
     
     if (!authLoading && !roleLoading && isAuthenticated && !isAdmin && !isApprovedMember && !isProfileBuildPath) {
-      console.log('Members: User not approved, redirecting to external membership signup');
-      window.location.href = 'https://collektiv.club/#/membership';
+      console.log('Members: User not approved, redirecting to build-profile');
+      navigate('/members/build-profile');
     }
   }, [isAuthenticated, authLoading, roleLoading, isAdmin, isApprovedMember, navigate]);
 
