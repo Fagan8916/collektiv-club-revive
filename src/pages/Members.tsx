@@ -154,10 +154,9 @@ const Members = () => {
 
   // Extract first name from various sources
   const getDisplayName = () => {
-    // First try member profile full_name
-    if (userProfile?.full_name) {
-      const firstName = userProfile.full_name.split(' ')[0];
-      return firstName;
+    // First try member profile first_name (full_name stores last name)
+    if (userProfile?.first_name) {
+      return userProfile.first_name;
     }
     
     // Then try user metadata full_name (from Google SSO)
