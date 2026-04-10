@@ -1,36 +1,29 @@
 
 
-## Fix: Member Name Duplication
+## Fix: New Members Redirected to /membership Instead of Build Profile
 
 ### Root Cause
 
-The `handle_new_member` database trigger receives a full name like "Brian Leggit" and stores:
-- `first_name` = "Brian" (first word)
-- `full_name` = "Brian Leggit" (entire name, unchanged)
+In `src/pages/Members.tsx` (lines 70-77), there's a check to redirect unapproved members away. It uses `window.location.pathname` to detect if the user is on the build-profile page. But since the app uses **HashRouter**, `window.location.pathname` is always `/` — the route lives in `window.location.hash`. So the build-profile exception never matches, and all unapproved new members get kicked to `/membership`.
 
-Then the UI displays `first_name + " " + full_name` = "Brian Brian Leggit".
+### Fix
 
-### Fix (3 parts)
+**File: `src/pages/Members.tsx` (lines 71-72)**
 
-**1. Fix the `handle_new_member` trigger** so `full_name` stores only the LAST name (everything after the first space):
-```sql
-first_name_value := split_part(full_name_value, ' ', 1);
--- Change full_name to store only the remaining parts (last name)
-last_name_value := trim(substring(full_name_value from position(' ' in full_name_value)));
-```
-If there's no space (single name), `full_name` stays as-is and `first_name` stays the same.
-
-**2. Fix existing data** with a migration that strips the duplicated first name from `full_name` for all affected rows:
-```sql
-UPDATE member_profiles
-SET full_name = trim(substring(full_name from length(first_name) + 1))
-WHERE first_name IS NOT NULL
-  AND full_name LIKE first_name || ' %';
+Change:
+```javascript
+const currentPath = window.location.pathname;
+const isProfileBuildPath = currentPath.includes('/build-profile');
 ```
 
-**3. Review display logic** across components (`AdminProfileManager`, `MemberDirectory`, `ProfileEditForm`, etc.) to ensure they consistently show `first_name + " " + full_name` (which will now be correct since full_name = last name only).
+To:
+```javascript
+const currentHash = window.location.hash;
+const isProfileBuildPath = currentHash.includes('/build-profile');
+```
 
-### Files changed
-- Database migration: fix trigger + fix existing data
-- Verify display logic in `AdminProfileManager.tsx`, `MemberDirectory.tsx`, and related components (likely already correct once data is fixed)
+This single two-line change ensures new members arriving at `/#/members/build-profile` are not incorrectly redirected to the membership page.
+
+### No other files affected
+The rest of the auth flow (App.tsx, main.tsx, useAuth) correctly routes new signups to build-profile. Only this guard was broken due to the pathname vs hash mismatch.
 
