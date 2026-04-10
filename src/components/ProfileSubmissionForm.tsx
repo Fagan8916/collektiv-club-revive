@@ -181,39 +181,31 @@ const ProfileSubmissionForm = () => {
       if (isApprovedMember) {
         console.log("ProfileSubmissionForm: User is pre-approved, creating profile directly");
         
+        // Use upsert since the trigger may have already created a skeleton row
         const { error } = await supabase
           .from("member_profiles")
-          .insert({
+          .upsert({
             ...payload,
             is_visible: true,
-          });
+          }, { onConflict: 'user_id' });
 
         if (error) {
           console.error("ProfileSubmissionForm: Direct profile creation error:", error);
-          
-          if (error.code === '23505') {
-            toast({
-              title: "Profile Already Exists",
-              description: "You already have a profile in our directory.",
-              variant: "destructive",
-            });
-          } else {
-            toast({
-              title: "Profile Creation Failed",
-              description: `Failed to create profile: ${error.message}. Please try again.`,
-              variant: "destructive",
-            });
-          }
+          toast({
+            title: "Profile Creation Failed",
+            description: `Failed to create profile: ${error.message}. Please try again.`,
+            variant: "destructive",
+          });
         } else {
           console.log("ProfileSubmissionForm: Direct profile creation successful");
-          setIsAutoApproved(true);
-          setHasSubmitted(true);
           toast({
             title: "Profile Created Successfully!",
             description: "Welcome to the member directory! Your profile is now live.",
           });
           form.reset();
           setExpertise([]);
+          // Redirect to members home page
+          window.location.href = "/#/members";
         }
       } else {
         console.log("ProfileSubmissionForm: User not pre-approved, submitting for admin review");
