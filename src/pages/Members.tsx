@@ -68,8 +68,8 @@ const Members = () => {
 
   // Redirect unapproved members to external membership signup (except for profile building)
   useEffect(() => {
-    const currentPath = window.location.pathname;
-    const isProfileBuildPath = currentPath.includes('/build-profile');
+    const currentHash = window.location.hash;
+    const isProfileBuildPath = currentHash.includes('/build-profile');
     
     if (!authLoading && !roleLoading && isAuthenticated && !isAdmin && !isApprovedMember && !isProfileBuildPath) {
       console.log('Members: User not approved, redirecting to external membership signup');
