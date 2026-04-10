@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { User, CheckCircle } from "lucide-react";
+import { isProfileComplete } from "@/utils/profileUtils";
 
 const BuildProfile: React.FC = () => {
   const { isAuthenticated, loading, user } = useAuth();
