@@ -34,10 +34,10 @@ const ProfileFormFields = ({ form, isAnonymous }: ProfileFormFieldsProps) => {
       <FormField
         control={form.control}
         name="full_name"
-        rules={{ required: "Last name is required" }}
+        rules={{ required: "Last name is required", minLength: { value: 2, message: "Last name must be at least 2 characters" } }}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Last Name *</FormLabel>
+            <FormLabel>Last Name <span className="text-red-500">*</span></FormLabel>
             <FormControl>
               <Input placeholder="Your last name" {...field} />
             </FormControl>
@@ -130,9 +130,10 @@ const ProfileFormFields = ({ form, isAnonymous }: ProfileFormFieldsProps) => {
         <FormField
           control={form.control}
           name="linkedin_url"
+          rules={{ required: "LinkedIn URL is required" }}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>LinkedIn URL</FormLabel>
+              <FormLabel>LinkedIn URL <span className="text-red-500">*</span></FormLabel>
               <FormControl>
                 <Input placeholder="https://linkedin.com/in/..." {...field} />
               </FormControl>
