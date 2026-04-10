@@ -1,29 +1,27 @@
 
 
-## Fix: New Members Redirected to /membership Instead of Build Profile
+## Fix: Build Profile Shows "Already Created" Instead of Form
 
-### Root Cause
-
-In `src/pages/Members.tsx` (lines 70-77), there's a check to redirect unapproved members away. It uses `window.location.pathname` to detect if the user is on the build-profile page. But since the app uses **HashRouter**, `window.location.pathname` is always `/` — the route lives in `window.location.hash`. So the build-profile exception never matches, and all unapproved new members get kicked to `/membership`.
+### Problem
+The database trigger auto-creates a skeleton `member_profiles` row on signup. The `ProfileSubmissionForm` checks if any profile row exists (`profileData`) and immediately shows the "Profile Already Created" screen with skip buttons — even though the profile is empty.
 
 ### Fix
 
-**File: `src/pages/Members.tsx` (lines 71-72)**
+**File: `src/components/ProfileSubmissionForm.tsx`**
 
-Change:
-```javascript
-const currentPath = window.location.pathname;
-const isProfileBuildPath = currentPath.includes('/build-profile');
-```
+1. **Use `isProfileComplete` instead of row existence** — Import `isProfileComplete` from `profileUtils.ts` and fetch the full profile fields (bio, company, position, linkedin_url, profile_image_url). Only set `hasExistingSubmission = true` if the profile is genuinely complete. If an incomplete trigger-created profile exists, pre-fill the form with whatever data exists (first_name, full_name) so the user sees their name pre-populated.
 
-To:
-```javascript
-const currentHash = window.location.hash;
-const isProfileBuildPath = currentHash.includes('/build-profile');
-```
+2. **Remove "View Directory" skip button** — The "Profile Already Created" screen (which now only shows for truly complete profiles) should not let users skip. Replace with a message like "Your profile is complete" and only offer "Edit Profile" and "View Directory" (this is fine since profile IS complete).
 
-This single two-line change ensures new members arriving at `/#/members/build-profile` are not incorrectly redirected to the membership page.
+3. **Update copy for the complete-profile screen** — Change "Profile Already Created" to "Profile Complete" or "You're All Set!" to be more welcoming.
 
-### No other files affected
-The rest of the auth flow (App.tsx, main.tsx, useAuth) correctly routes new signups to build-profile. Only this guard was broken due to the pathname vs hash mismatch.
+**Specific changes (lines 62-80):**
+- Change the profile query to fetch `id, first_name, full_name, bio, company, position, linkedin_url, profile_image_url`
+- Import and use `isProfileComplete()` to decide `hasExistingSubmission`
+- If profile exists but is incomplete, pre-fill form defaults with existing data (first_name, full_name)
+
+**Copy improvements for the already-complete screen (lines 276-307):**
+- Title: "You're All Set!" instead of "Profile Already Created"
+- Body: "Your profile is live in the member directory. You can update it anytime."
+- Keep both buttons (Edit Profile / View Directory) since profile IS genuinely complete
 
