@@ -343,11 +343,12 @@ const ProfileSubmissionForm = () => {
               <FormField
                 control={form.control}
                 name="first_name"
+                rules={{ required: "First name is required", minLength: { value: 2, message: "First name must be at least 2 characters" } }}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>First Name (for anonymity)</FormLabel>
+                    <FormLabel>First Name <span className="text-red-500">*</span></FormLabel>
                     <FormControl>
-                      <Input placeholder="Shown if you choose anonymity" {...field} />
+                      <Input placeholder="Your first name" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
