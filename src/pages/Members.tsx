@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { isProfileComplete } from "@/utils/profileUtils";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
