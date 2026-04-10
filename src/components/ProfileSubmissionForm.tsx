@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { normalizeUrl } from "@/utils/urlUtils";
 import { useUserRole } from "@/hooks/useUserRole";
+import { isProfileComplete } from "@/utils/profileUtils";
 
 
 interface ProfileSubmissionData {
@@ -65,10 +66,10 @@ const ProfileSubmissionForm = () => {
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) return;
 
-        // Check for existing profile first
+        // Check for existing profile with enough fields to assess completeness
         const { data: profileData, error: profileError } = await supabase
           .from("member_profiles")
-          .select("id")
+          .select("id, first_name, full_name, bio, company, position, linkedin_url, profile_image_url")
           .eq("user_id", user.id)
           .maybeSingle();
 
@@ -76,8 +77,27 @@ const ProfileSubmissionForm = () => {
           console.error("Error checking existing profile:", profileError);
         }
 
-        if (profileData) {
+        if (profileData && isProfileComplete(profileData)) {
+          // Profile exists AND is genuinely complete
           setHasExistingSubmission(true);
+          return;
+        }
+
+        // If profile exists but is incomplete (trigger-created), pre-fill form
+        if (profileData) {
+          form.reset({
+            first_name: profileData.first_name || "",
+            full_name: profileData.full_name || "",
+            bio: "",
+            company: "",
+            position: "",
+            linkedin_url: "",
+            website_url: "",
+            location: "",
+            profile_image_url: "",
+            services_offered: "",
+            is_anonymous: false,
+          });
           return;
         }
 
@@ -283,9 +303,9 @@ const ProfileSubmissionForm = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h3 className="text-2xl font-bold text-collektiv-green mb-2">Profile Already Created</h3>
+            <h3 className="text-2xl font-bold text-collektiv-green mb-2">You're All Set!</h3>
             <p className="text-gray-600 mb-6">
-              Your profile has already been created and is live in the member directory.
+              Your profile is live in the member directory. You can update it anytime.
             </p>
             <div className="flex gap-4 justify-center">
               <Button
