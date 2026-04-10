@@ -159,32 +159,6 @@ const ProfileSubmissionForm = () => {
       console.log("ProfileSubmissionForm: Checking user approval status...");
       const anon = !!data.is_anonymous;
       
-      // Validate required fields based on anonymity - be more lenient
-      if (anon) {
-        const first = (data.first_name || '').trim();
-        if (!first || first.length < 2) {
-          toast({
-            title: "First name required",
-            description: "When anonymous, please provide at least your first name (minimum 2 characters).",
-            variant: "destructive",
-          });
-          setIsSubmitting(false);
-          return;
-        }
-      } else {
-        // For non-anonymous users, allow shorter names and be more flexible
-        const fullNameToStore = (data.full_name || '').trim();
-        if (!fullNameToStore || fullNameToStore.length < 2) {
-          toast({
-            title: "Name required",
-            description: "Please provide your name (minimum 2 characters).",
-            variant: "destructive",
-          });
-          setIsSubmitting(false);
-          return;
-        }
-      }
-      
       const fullNameToStore = anon ? (data.first_name || '').trim() : (data.full_name || '').trim();
 
       const payload = {
@@ -331,8 +305,8 @@ const ProfileSubmissionForm = () => {
     <Card className="max-w-2xl mx-auto">
       <CardHeader>
         <CardTitle className="text-2xl text-collektiv-green">Submit Your Profile</CardTitle>
-        <p className="text-gray-600">
-          Submit your profile to be featured in the member directory. All submissions require admin approval.
+        <p className="text-muted-foreground">
+          Submit your profile to be featured in the member directory. Fields marked with <span className="text-red-500">*</span> are required.
         </p>
       </CardHeader>
       <CardContent>
