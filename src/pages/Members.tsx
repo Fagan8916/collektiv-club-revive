@@ -20,6 +20,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import MemberAppShell from "@/components/members/MemberAppShell";
 import { MemberTab } from "@/components/members/MemberBottomNav";
+import InstallAndPushBanner from "@/components/members/InstallAndPushBanner";
+import AdminPushNotifications from "@/components/AdminPushNotifications";
 
 const Members = () => {
   console.log('Members: Component rendering, current URL:', window.location.href);
@@ -235,6 +237,9 @@ const Members = () => {
             </p>
           </div>
 
+          {/* PWA install + push opt-in */}
+          <InstallAndPushBanner />
+
           {/* Stats */}
           <div className="grid grid-cols-3 gap-3">
             {stats.map((stat, i) => (
@@ -360,11 +365,12 @@ const Members = () => {
               <TabsContent value="admin">
                 <Tabs defaultValue="membership" className="w-full">
                   <div className="flex justify-center mb-6 overflow-x-auto">
-                    <TabsList className="grid h-auto w-full grid-cols-2 md:grid-cols-4 gap-2 p-1 rounded-md bg-transparent">
+                    <TabsList className="grid h-auto w-full grid-cols-3 md:grid-cols-5 gap-2 p-1 rounded-md bg-transparent">
                       <TabsTrigger value="membership" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Membership</TabsTrigger>
                       <TabsTrigger value="invite" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Invite</TabsTrigger>
                       <TabsTrigger value="profiles-to-review" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Submissions</TabsTrigger>
                       <TabsTrigger value="profiles" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Profiles</TabsTrigger>
+                      <TabsTrigger value="push" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Push</TabsTrigger>
                     </TabsList>
                   </div>
 
@@ -372,6 +378,7 @@ const Members = () => {
                   <TabsContent value="invite"><div className="max-w-2xl mx-auto"><AdminInviteManager /></div></TabsContent>
                   <TabsContent value="profiles-to-review"><AdminSubmissionsManager /></TabsContent>
                   <TabsContent value="profiles"><AdminProfileManager /></TabsContent>
+                  <TabsContent value="push"><AdminPushNotifications /></TabsContent>
                 </Tabs>
               </TabsContent>
             )}

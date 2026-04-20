@@ -5,6 +5,7 @@ import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Toaster } from '@/components/ui/sonner';
 import { isProfileComplete } from '@/utils/profileUtils';
+import { initOneSignal, tagOneSignalUser } from '@/lib/onesignal';
 import Index from './pages/Index';
 import About from './pages/About';
 import Membership from './pages/Membership';
@@ -63,7 +64,21 @@ function App() {
   console.log('App: Rendering with current location:', window.location.pathname);
   console.log('App: Full URL:', window.location.href);
   console.log('App: Hash:', window.location.hash);
-  
+
+  // Initialize OneSignal once (no-op in preview/iframe) + tag user when session changes
+  useEffect(() => {
+    initOneSignal();
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user?.id) {
+        tagOneSignalUser(session.user.id, session.user.email);
+      }
+    });
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user?.id) tagOneSignalUser(session.user.id, session.user.email);
+    });
+    return () => sub.subscription.unsubscribe();
+  }, []);
+
   // CRITICAL: Handle auth tokens and PKCE code BEFORE router processes anything
   useEffect(() => {
     const href = window.location.href;
