@@ -1,0 +1,142 @@
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
+
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+};
+
+interface PushPayload {
+  title: string;
+  message: string;
+  url?: string;
+}
+
+Deno.serve(async (req) => {
+  if (req.method === "OPTIONS") {
+    return new Response(null, { headers: corsHeaders });
+  }
+
+  try {
+    const ONESIGNAL_APP_ID = Deno.env.get("ONESIGNAL_APP_ID");
+    const ONESIGNAL_REST_API_KEY = Deno.env.get("ONESIGNAL_REST_API_KEY");
+    const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
+    const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
+
+    if (!ONESIGNAL_APP_ID || !ONESIGNAL_REST_API_KEY) {
+      return new Response(
+        JSON.stringify({ error: "OneSignal credentials not configured" }),
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+
+    // Auth check — must be admin
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) {
+      return new Response(JSON.stringify({ error: "Missing authorization" }), {
+        status: 401,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      global: { headers: { Authorization: authHeader } },
+    });
+
+    const { data: userData, error: userErr } = await supabase.auth.getUser();
+    if (userErr || !userData.user) {
+      return new Response(JSON.stringify({ error: "Invalid session" }), {
+        status: 401,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    const { data: isAdmin } = await supabase.rpc("is_current_user_admin");
+    if (!isAdmin) {
+      return new Response(JSON.stringify({ error: "Admin access required" }), {
+        status: 403,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // Parse + validate body
+    const body = (await req.json()) as PushPayload;
+    const title = (body.title || "").trim();
+    const message = (body.message || "").trim();
+    const url = (body.url || "").trim();
+
+    if (!title || title.length > 120) {
+      return new Response(
+        JSON.stringify({ error: "Title required (1-120 chars)" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+    if (!message || message.length > 500) {
+      return new Response(
+        JSON.stringify({ error: "Message required (1-500 chars)" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+    if (url && !/^https?:\/\/.{1,2000}$/.test(url)) {
+      return new Response(JSON.stringify({ error: "Invalid URL" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // Send via OneSignal REST API — broadcast to all subscribed users
+    const oneSignalPayload: Record<string, unknown> = {
+      app_id: ONESIGNAL_APP_ID,
+      included_segments: ["Subscribed Users"],
+      headings: { en: title },
+      contents: { en: message },
+    };
+    if (url) oneSignalPayload.url = url;
+
+    const oneSignalRes = await fetch("https://onesignal.com/api/v1/notifications", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Basic ${ONESIGNAL_REST_API_KEY}`,
+      },
+      body: JSON.stringify(oneSignalPayload),
+    });
+
+    const oneSignalData = await oneSignalRes.json();
+
+    if (!oneSignalRes.ok) {
+      console.error("OneSignal error:", oneSignalData);
+      return new Response(
+        JSON.stringify({ error: "OneSignal send failed", details: oneSignalData }),
+        { status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+
+    // Log to push_notifications table
+    const { error: insertErr } = await supabase.from("push_notifications").insert({
+      title,
+      message,
+      url: url || null,
+      sent_by: userData.user.id,
+      recipients: oneSignalData.recipients ?? null,
+      onesignal_id: oneSignalData.id ?? null,
+    });
+    if (insertErr) console.error("Log insert error:", insertErr);
+
+    return new Response(
+      JSON.stringify({
+        success: true,
+        recipients: oneSignalData.recipients ?? 0,
+        onesignal_id: oneSignalData.id,
+      }),
+      { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+    );
+  } catch (err) {
+    console.error("send-push-notification error:", err);
+    return new Response(JSON.stringify({ error: String(err) }), {
+      status: 500,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
+});

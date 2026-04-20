@@ -227,6 +227,39 @@ export type Database = {
         }
         Relationships: []
       }
+      push_notifications: {
+        Row: {
+          created_at: string
+          id: string
+          message: string
+          onesignal_id: string | null
+          recipients: number | null
+          sent_by: string
+          title: string
+          url: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message: string
+          onesignal_id?: string | null
+          recipients?: number | null
+          sent_by: string
+          title: string
+          url?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string
+          onesignal_id?: string | null
+          recipients?: number | null
+          sent_by?: string
+          title?: string
+          url?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           approved_at: string | null
