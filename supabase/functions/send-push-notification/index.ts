@@ -137,12 +137,35 @@ Deno.serve(async (req) => {
     });
 
     const oneSignalData = await oneSignalRes.json();
+    console.log("OneSignal response:", JSON.stringify(oneSignalData));
 
     if (!oneSignalRes.ok) {
       console.error("OneSignal error:", oneSignalData);
+      const detailMsg =
+        oneSignalData?.errors?.[0] ||
+        (typeof oneSignalData?.errors === "object"
+          ? JSON.stringify(oneSignalData.errors)
+          : "OneSignal send failed");
       return new Response(
-        JSON.stringify({ error: "OneSignal send failed", details: oneSignalData }),
+        JSON.stringify({ error: detailMsg, details: oneSignalData }),
         { status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+
+    // OneSignal can return 200 with errors array (e.g., "All included players are not subscribed")
+    if (oneSignalData?.errors && !oneSignalData?.id) {
+      const detailMsg = Array.isArray(oneSignalData.errors)
+        ? oneSignalData.errors[0]
+        : JSON.stringify(oneSignalData.errors);
+      console.error("OneSignal returned errors:", detailMsg);
+      return new Response(
+        JSON.stringify({
+          error: detailMsg,
+          hint:
+            "Make sure recipients have installed the PWA and opted in to push notifications.",
+          details: oneSignalData,
+        }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
       );
     }
 
