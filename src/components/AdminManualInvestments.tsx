@@ -146,18 +146,25 @@ const AdminManualInvestments = () => {
         data: { user },
       } = await supabase.auth.getUser();
 
-      const { error } = await supabase.from("member_investments").upsert(
-        {
-          email: cleanEmail,
-          deal_slug: dealSlug,
-          amount_pence: pence,
-          currency: "GBP",
-          imported_by: user?.id ?? null,
-        },
-        { onConflict: "deal_slug,email" },
-      );
+      const payload = {
+        email: cleanEmail,
+        deal_slug: dealSlug,
+        amount_pence: pence,
+        currency: "GBP",
+        imported_by: user?.id ?? null,
+      };
+      console.log("[AdminManualInvestments] upsert payload:", payload);
 
-      if (error) throw error;
+      const { data, error } = await supabase
+        .from("member_investments")
+        .upsert(payload, { onConflict: "deal_slug,email" })
+        .select();
+
+      if (error) {
+        console.error("[AdminManualInvestments] upsert error:", error);
+        throw new Error(error.message || error.details || error.hint || "Unknown DB error");
+      }
+      console.log("[AdminManualInvestments] upsert success:", data);
 
       toast.success(
         `${editingId ? "Updated" : "Saved"} ${formatGBP(pence)} for ${cleanEmail} on ${
