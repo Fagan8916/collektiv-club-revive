@@ -73,17 +73,21 @@ const AdminDealsManager: React.FC = () => {
   const uploadLogo = async (file: File) => {
     if (!file) return;
     if (!user?.id) {
-      toast({ title: "Not signed in", description: "Please sign in as an admin first.", variant: "destructive" });
+      setLogoFeedback("Please sign in as an admin first.");
+      toast.error("Not signed in", { description: "Please sign in as an admin first." });
       return;
     }
     if (!file.type.startsWith("image/")) {
-      toast({ title: "Logo must be an image", variant: "destructive" });
+      setLogoFeedback("Logo must be an image file.");
+      toast.error("Logo must be an image");
       return;
     }
     if (file.size > 5 * 1024 * 1024) {
-      toast({ title: "Logo too large (max 5MB)", variant: "destructive" });
+      setLogoFeedback("Logo too large. Maximum size is 5MB.");
+      toast.error("Logo too large", { description: "Maximum size is 5MB." });
       return;
     }
+    setLogoFeedback(`Uploading ${file.name}…`);
     setUploadingLogo(true);
     try {
       const ext = (file.name.split(".").pop() || "png").toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -95,10 +99,9 @@ const AdminDealsManager: React.FC = () => {
         .upload(path, file, { upsert: true, contentType: file.type, cacheControl: "3600" });
       if (error) {
         console.error("[AdminDealsManager] Logo upload error:", error);
-        toast({
-          title: "Logo upload failed",
+        setLogoFeedback(error.message || "Logo upload failed.");
+        toast.error("Logo upload failed", {
           description: error.message || "Check that you are signed in as an admin.",
-          variant: "destructive",
         });
         return;
       }
@@ -106,14 +109,13 @@ const AdminDealsManager: React.FC = () => {
       const { data: pub } = supabase.storage.from("deal-logos").getPublicUrl(path);
       console.log("[AdminDealsManager] Logo public URL:", pub.publicUrl);
       setForm((f) => ({ ...f, logo_url: pub.publicUrl }));
-      toast({ title: "Logo uploaded", description: "Don't forget to click Save / Update." });
+      setLogoFeedback(`Uploaded ${file.name}. Click Save / Update to keep it.`);
+      toast.success("Logo uploaded", { description: "Click Save / Update to keep it." });
     } catch (err) {
       console.error("[AdminDealsManager] Logo upload exception:", err);
-      toast({
-        title: "Logo upload failed",
-        description: err instanceof Error ? err.message : String(err),
-        variant: "destructive",
-      });
+      const message = err instanceof Error ? err.message : String(err);
+      setLogoFeedback(message);
+      toast.error("Logo upload failed", { description: message });
     } finally {
       setUploadingLogo(false);
     }
@@ -122,17 +124,21 @@ const AdminDealsManager: React.FC = () => {
   const uploadMemoPdf = async (file: File) => {
     if (!file) return;
     if (!user?.id) {
-      toast({ title: "Not signed in", description: "Please sign in as an admin first.", variant: "destructive" });
+      setMemoFeedback("Please sign in as an admin first.");
+      toast.error("Not signed in", { description: "Please sign in as an admin first." });
       return;
     }
     if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith(".pdf")) {
-      toast({ title: "Memo must be a PDF", variant: "destructive" });
+      setMemoFeedback("Memo must be a PDF file.");
+      toast.error("Memo must be a PDF");
       return;
     }
     if (file.size > 25 * 1024 * 1024) {
-      toast({ title: "PDF too large (max 25MB)", variant: "destructive" });
+      setMemoFeedback("Memo PDF too large. Maximum size is 25MB.");
+      toast.error("PDF too large", { description: "Maximum size is 25MB." });
       return;
     }
+    setMemoFeedback(`Uploading ${file.name}…`);
     setUploadingMemo(true);
     try {
       const baseSlug = (form.slug || slugify(form.name) || "deal").replace(/[^a-z0-9-]/g, "");
@@ -143,23 +149,21 @@ const AdminDealsManager: React.FC = () => {
         .upload(path, file, { upsert: true, contentType: "application/pdf", cacheControl: "3600" });
       if (error) {
         console.error("[AdminDealsManager] Memo upload error:", error);
-        toast({
-          title: "Memo upload failed",
+        setMemoFeedback(error.message || "Memo upload failed.");
+        toast.error("Memo upload failed", {
           description: error.message || "Check that you are signed in as an admin.",
-          variant: "destructive",
         });
         return;
       }
       console.log("[AdminDealsManager] Memo uploaded:", data);
       setForm((f) => ({ ...f, memo_pdf_path: path }));
-      toast({ title: "Memo PDF uploaded", description: "Don't forget to click Save / Update." });
+      setMemoFeedback(`Uploaded ${file.name}. Click Save / Update to keep it.`);
+      toast.success("Memo PDF uploaded", { description: "Click Save / Update to keep it." });
     } catch (err) {
       console.error("[AdminDealsManager] Memo upload exception:", err);
-      toast({
-        title: "Memo upload failed",
-        description: err instanceof Error ? err.message : String(err),
-        variant: "destructive",
-      });
+      const message = err instanceof Error ? err.message : String(err);
+      setMemoFeedback(message);
+      toast.error("Memo upload failed", { description: message });
     } finally {
       setUploadingMemo(false);
     }
@@ -173,7 +177,7 @@ const AdminDealsManager: React.FC = () => {
       .order("sort_order", { ascending: false })
       .order("created_at", { ascending: false });
     if (error) {
-      toast({ title: "Failed to load deals", description: error.message, variant: "destructive" });
+      toast.error("Failed to load deals", { description: error.message });
     } else {
       setDeals((data ?? []) as Deal[]);
     }
@@ -187,6 +191,8 @@ const AdminDealsManager: React.FC = () => {
   const reset = () => {
     setEditingId(null);
     setForm(emptyForm);
+    setLogoFeedback("");
+    setMemoFeedback("");
   };
 
   const startEdit = (d: Deal) => {
@@ -209,6 +215,8 @@ const AdminDealsManager: React.FC = () => {
       sort_order: d.sort_order ?? 0,
       is_published: d.is_published,
     });
+    setLogoFeedback(d.logo_url ? "Existing logo attached." : "");
+    setMemoFeedback(d.memo_pdf_path ? "Existing memo PDF attached." : "");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -216,13 +224,13 @@ const AdminDealsManager: React.FC = () => {
     e.preventDefault();
     if (!user?.id) return;
     if (!form.name.trim()) {
-      toast({ title: "Name is required", variant: "destructive" });
+      toast.error("Name is required");
       return;
     }
 
     const slug = (form.slug || slugify(form.name)).trim();
     if (!slug) {
-      toast({ title: "Slug is required", variant: "destructive" });
+      toast.error("Slug is required");
       return;
     }
 
@@ -254,7 +262,7 @@ const AdminDealsManager: React.FC = () => {
 
     if (error || !saved) {
       setSubmitting(false);
-      toast({ title: "Save failed", description: error?.message ?? "Unknown error", variant: "destructive" });
+      toast.error("Save failed", { description: error?.message ?? "Unknown error" });
       return;
     }
 
@@ -280,15 +288,14 @@ const AdminDealsManager: React.FC = () => {
           is_active: false, // draft — admin enables in Announcements tab
           created_by: user.id,
         });
-        toast({
-          title: "Draft announcement created",
+        toast.success("Draft announcement created", {
           description: "Open the Announcements tab to review and publish it.",
         });
       }
     }
 
     setSubmitting(false);
-    toast({ title: editingId ? "Deal updated" : "Deal created" });
+    toast.success(editingId ? "Deal updated" : "Deal created");
     reset();
     load();
   };
@@ -300,7 +307,7 @@ const AdminDealsManager: React.FC = () => {
       .update({ is_published: next, published_at: next ? new Date().toISOString() : null })
       .eq("id", d.id);
     if (error) {
-      toast({ title: "Update failed", description: error.message, variant: "destructive" });
+      toast.error("Update failed", { description: error.message });
     } else {
       load();
     }
@@ -310,9 +317,9 @@ const AdminDealsManager: React.FC = () => {
     if (!confirm(`Delete "${d.name}"? Member investments mapped to this slug will remain.`)) return;
     const { error } = await supabase.from("investment_deals").delete().eq("id", d.id);
     if (error) {
-      toast({ title: "Delete failed", description: error.message, variant: "destructive" });
+      toast.error("Delete failed", { description: error.message });
     } else {
-      toast({ title: "Deleted" });
+      toast.success("Deleted");
       load();
     }
   };
