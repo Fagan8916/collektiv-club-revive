@@ -162,7 +162,7 @@ const DealCommitButton: React.FC<DealCommitButtonProps> = ({
           fullWidth ? "w-full justify-center" : ""
         } ${className ?? ""}`}
       >
-        Commitments open when live
+        Past deal
       </div>
     );
   }
