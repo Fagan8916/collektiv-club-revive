@@ -180,18 +180,6 @@ const Events = () => {
           </div>
         </section>
 
-        {/* Past Events */}
-        <section className="py-16 bg-collektiv-dark">
-          <div className="container">
-            <h2 className="text-3xl font-bold mb-8 text-collektiv-green">Past Events</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {pastEvents.map((event) => (
-                <FeaturedEventCard key={event.id} event={event} />
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Upcoming Events */}
         <section className="py-16 bg-gradient-to-br from-collektiv-darkTeal to-collektiv-dark">
           <div className="container">
@@ -199,6 +187,18 @@ const Events = () => {
             <div className="grid md:grid-cols-2 gap-8">
               {upcomingEvents.map((event) => (
                 <EventCard key={event.id} event={event} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Past Events */}
+        <section className="py-16 bg-collektiv-dark">
+          <div className="container">
+            <h2 className="text-3xl font-bold mb-8 text-collektiv-green">Past Events</h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {pastEvents.map((event) => (
+                <FeaturedEventCard key={event.id} event={event} />
               ))}
             </div>
           </div>
