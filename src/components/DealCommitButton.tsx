@@ -27,11 +27,15 @@ type Commitment = {
 interface DealCommitButtonProps {
   dealSlug: string;
   dealName: string;
+  dealStatus?: string | null;
   size?: "sm" | "default" | "lg";
   variant?: "default" | "outline";
   className?: string;
   fullWidth?: boolean;
 }
+
+const isLiveStatus = (status?: string | null) =>
+  (status ?? "").trim().toLowerCase() === "live";
 
 const formatGBP = (pence: number) =>
   new Intl.NumberFormat("en-GB", {
