@@ -123,7 +123,7 @@ Deno.serve(async (req) => {
       oneSignalPayload.include_external_user_ids = adminIds;
       oneSignalPayload.channel_for_external_user_ids = "push";
     } else {
-      oneSignalPayload.included_segments = ["Subscribed Users"];
+      oneSignalPayload.included_segments = ["Active Subscriptions"];
     }
 
     if (url) oneSignalPayload.url = url;
