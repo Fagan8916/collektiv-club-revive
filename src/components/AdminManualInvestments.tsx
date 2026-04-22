@@ -57,6 +57,7 @@ const AdminManualInvestments = () => {
   const [email, setEmail] = useState("");
   const [dealSlug, setDealSlug] = useState("");
   const [amountInput, setAmountInput] = useState("");
+  const [currency, setCurrency] = useState<SupportedCurrency>("GBP");
   const [editingId, setEditingId] = useState<string | null>(null);
 
   const dealMap = useMemo(
