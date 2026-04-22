@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
+import DealCommitButton from "@/components/DealCommitButton";
 
 type DbDeal = {
   slug: string;
@@ -61,9 +62,9 @@ const NewDealsSection: React.FC = () => {
         {deals.map((deal) => {
           const logo = deal.logo_url || LEGACY_LOGOS[deal.slug];
           return (
-            <Link key={deal.slug} to={`/members/investments/${deal.slug}`}>
-              <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
-                <CardContent className="p-6 text-center">
+            <Card key={deal.slug} className="hover:shadow-lg transition-shadow h-full flex flex-col">
+              <CardContent className="p-6 text-center flex-1 flex flex-col">
+                <Link to={`/members/investments/${deal.slug}`} className="block flex-1">
                   <div className="mb-4 flex justify-center items-center h-16">
                     {logo ? (
                       <img src={logo} alt={deal.name} className="max-h-16 w-auto object-contain" />
@@ -76,9 +77,16 @@ const NewDealsSection: React.FC = () => {
                   <h3 className="font-bold text-lg mb-1 text-collektiv-green">{deal.name}</h3>
                   {deal.tagline && <p className="text-sm text-gray-600 mb-2">{deal.tagline}</p>}
                   <Badge className="bg-collektiv-green">Status: {deal.status}</Badge>
-                </CardContent>
-              </Card>
-            </Link>
+                </Link>
+                <div className="mt-4 pt-4 border-t border-gray-100">
+                  <DealCommitButton
+                    dealSlug={deal.slug}
+                    dealName={deal.name}
+                    fullWidth
+                  />
+                </div>
+              </CardContent>
+            </Card>
           );
         })}
       </div>
