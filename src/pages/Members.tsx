@@ -239,6 +239,9 @@ const Members = () => {
             </p>
           </div>
 
+          {/* Announcements (e.g. new investments) */}
+          <MemberAnnouncements />
+
           {/* PWA install + push opt-in */}
           <InstallAndPushBanner />
 
