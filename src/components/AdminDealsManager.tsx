@@ -322,13 +322,42 @@ const AdminDealsManager: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="logo_url">Logo URL</Label>
-                <Input
-                  id="logo_url"
-                  value={form.logo_url ?? ""}
-                  onChange={(e) => setForm({ ...form, logo_url: e.target.value })}
-                  placeholder="/lovable-uploads/acme-logo.png or https://…"
-                />
+                <Label htmlFor="logo_file">Logo</Label>
+                <div className="flex items-center gap-2">
+                  <Input
+                    id="logo_file"
+                    type="file"
+                    accept="image/*"
+                    disabled={uploadingLogo}
+                    onChange={(e) => {
+                      const f = e.target.files?.[0];
+                      if (f) uploadLogo(f);
+                      e.currentTarget.value = "";
+                    }}
+                  />
+                  {uploadingLogo && <Loader2 className="h-4 w-4 animate-spin text-collektiv-green" />}
+                </div>
+                {form.logo_url ? (
+                  <div className="flex items-center gap-2 rounded-md border p-2 bg-collektiv-green/5">
+                    <img src={form.logo_url} alt="Logo preview" className="h-8 w-auto object-contain" />
+                    <span className="text-xs text-muted-foreground truncate flex-1">{form.logo_url}</span>
+                    <Button
+                      type="button"
+                      size="icon"
+                      variant="ghost"
+                      onClick={() => setForm({ ...form, logo_url: "" })}
+                      aria-label="Remove logo"
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                ) : (
+                  <Input
+                    value={form.logo_url ?? ""}
+                    onChange={(e) => setForm({ ...form, logo_url: e.target.value })}
+                    placeholder="…or paste an existing logo URL"
+                  />
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="website_url">Website URL</Label>
