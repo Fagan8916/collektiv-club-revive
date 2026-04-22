@@ -18,12 +18,28 @@ interface ParsedRow {
   perDeal: Record<string, number>; // pence
 }
 
+interface HeaderMatch {
+  header: string[];
+  headerRowIndex: number;
+  emailIdx: number;
+  dealColumns: { idx: number; slug: string }[];
+}
+
+const normalizeText = (value: string) =>
+  value
+    .trim()
+    .toLowerCase()
+    .replace(/[_-]+/g, " ")
+    .replace(/[^a-z0-9/& ]/g, "")
+    .replace(/\s+/g, " ");
+
 // Normalise column header → deal slug. We try exact name match first
 // (case-insensitive), then a few well-known aliases.
 const ALIASES: Record<string, string> = {
   beimpact: "beimpact",
   "be/impact": "beimpact",
   "be impact": "beimpact",
+  "be-impact": "beimpact",
   antrophic: "anthropic",
   anthropic: "anthropic",
   propane: "propane",
@@ -34,22 +50,32 @@ const ALIASES: Record<string, string> = {
 };
 
 const slugifyHeader = (header: string, deals: Deal[]): string | null => {
-  const norm = header.trim().toLowerCase();
+  const norm = normalizeText(header);
   if (!norm) return null;
-  const direct = deals.find((d) => d.name.toLowerCase() === norm);
+  const direct = deals.find((d) => normalizeText(d.name) === norm || normalizeText(d.slug) === norm);
   if (direct) return direct.slug;
   if (ALIASES[norm]) return ALIASES[norm];
   return null;
 };
 
-// Parse a £-formatted value to integer pence. Returns null if blank/zero.
 const parseAmountToPence = (raw: string): number | null => {
-  if (!raw) return null;
-  const cleaned = raw.replace(/[£$€,\s"]/g, "").trim();
-  if (!cleaned) return null;
+  const input = String(raw ?? "").trim();
+  if (!input) return null;
+
+  const compact = input
+    .replace(/[£$€\s"]/g, "")
+    .replace(/\((.*)\)/, "-$1")
+    .toLowerCase();
+
+  if (!compact) return null;
+
+  const multiplier = compact.endsWith("m") ? 1_000_000 : compact.endsWith("k") ? 1_000 : 1;
+  const numericPart = multiplier === 1 ? compact : compact.slice(0, -1);
+  const cleaned = numericPart.replace(/,/g, "");
   const n = Number(cleaned);
+
   if (!Number.isFinite(n) || n <= 0) return null;
-  return Math.round(n * 100);
+  return Math.round(n * multiplier * 100);
 };
 
 // Minimal CSV parser that supports quoted fields with commas.
@@ -93,6 +119,24 @@ const parseCsv = (text: string): string[][] => {
   return rows.filter((r) => r.some((c) => c.trim() !== ""));
 };
 
+const findHeaderRow = (rows: string[][], deals: Deal[]): HeaderMatch | null => {
+  for (let rowIndex = 0; rowIndex < Math.min(rows.length, 10); rowIndex++) {
+    const header = rows[rowIndex].map((cell) => String(cell ?? ""));
+    const emailIdx = header.findIndex((h) => normalizeText(h).startsWith("email"));
+    if (emailIdx === -1) continue;
+
+    const dealColumns = header
+      .map((h, idx) => ({ idx, slug: idx === emailIdx ? null : slugifyHeader(h, deals) }))
+      .filter((col): col is { idx: number; slug: string } => Boolean(col.slug));
+
+    if (dealColumns.length > 0) {
+      return { header, headerRowIndex: rowIndex, emailIdx, dealColumns };
+    }
+  }
+
+  return null;
+};
+
 const AdminInvestmentsImporter = () => {
   const fileRef = useRef<HTMLInputElement>(null);
   const [deals, setDeals] = useState<Deal[]>([]);
@@ -127,44 +171,56 @@ const AdminInvestmentsImporter = () => {
       }
       if (rows.length < 2) throw new Error("File is empty");
 
-      const header = rows[0];
-      // Find email column
-      const emailIdx = header.findIndex((h) => h.trim().toLowerCase().startsWith("email"));
-      if (emailIdx === -1) throw new Error("No 'Email' column found in header");
-
-      // Map deal columns
-      const dealColumns: { idx: number; slug: string }[] = [];
-      header.forEach((h, idx) => {
-        if (idx === emailIdx) return;
-        const slug = slugifyHeader(h, deals);
-        if (slug) dealColumns.push({ idx, slug });
-      });
-      if (dealColumns.length === 0) {
-        throw new Error("No deal columns recognised. Headers must match deal names.");
+      const match = findHeaderRow(rows, deals);
+      if (!match) {
+        const sampleHeaders = rows
+          .slice(0, 5)
+          .map((row, idx) => `Row ${idx + 1}: ${row.join(" | ")}`)
+          .join("\n");
+        throw new Error(
+          `Could not detect a valid header row. I need an Email column and at least one deal column.\n\n${sampleHeaders}`,
+        );
       }
+
+      const { header, headerRowIndex, emailIdx, dealColumns } = match;
 
       // Build parsed rows
       const parsed: ParsedRow[] = [];
-      for (let r = 1; r < rows.length; r++) {
+      const skippedRows: string[] = [];
+      for (let r = headerRowIndex + 1; r < rows.length; r++) {
         const row = rows[r];
-        const email = (row[emailIdx] ?? "").trim().toLowerCase();
-        if (!email || !email.includes("@")) continue;
+        const email = String(row[emailIdx] ?? "").trim().toLowerCase();
+        if (!email) continue;
+        if (!email.includes("@")) {
+          skippedRows.push(`Row ${r + 1}: invalid email '${email}'`);
+          continue;
+        }
+
         const perDeal: Record<string, number> = {};
         for (const col of dealColumns) {
-          const pence = parseAmountToPence(row[col.idx] ?? "");
+          const pence = parseAmountToPence(String(row[col.idx] ?? ""));
           if (pence !== null) perDeal[col.slug] = pence;
         }
+
         if (Object.keys(perDeal).length > 0) {
           parsed.push({ email, perDeal });
+        } else {
+          skippedRows.push(`Row ${r + 1}: no recognised investment amounts`);
         }
       }
 
       if (parsed.length === 0) {
-        throw new Error("No member rows with investment amounts found.");
+        throw new Error(
+          `No member rows with investment amounts found. Recognised deal columns: ${dealColumns
+            .map((d) => header[d.idx])
+            .join(", ") || "none"}`,
+        );
       }
 
-      // Build upsert payload: one row per (email, deal)
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
       const payload = parsed.flatMap((p) =>
         Object.entries(p.perDeal).map(([slug, pence]) => ({
           deal_slug: slug,
@@ -179,10 +235,19 @@ const AdminInvestmentsImporter = () => {
         .from("member_investments")
         .upsert(payload, { onConflict: "deal_slug,email" });
 
-      if (error) throw error;
+      if (error) {
+        throw new Error(`Database import failed: ${error.message}`);
+      }
 
       setStats({ rows: parsed.length, deals: dealColumns.length });
-      toast.success(`Imported ${payload.length} investment lines for ${parsed.length} members.`);
+      toast.success(
+        `Imported ${payload.length} investment lines for ${parsed.length} members${
+          skippedRows.length ? ` (${skippedRows.length} rows skipped)` : ""
+        }.`,
+      );
+      if (skippedRows.length) {
+        console.warn("Investment import skipped rows", skippedRows.slice(0, 20));
+      }
     } catch (err) {
       console.error("Import failed", err);
       toast.error(err instanceof Error ? err.message : "Import failed");
