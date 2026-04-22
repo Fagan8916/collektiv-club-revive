@@ -172,18 +172,42 @@ const AdminDealsManager: React.FC = () => {
 
   const load = async () => {
     setLoading(true);
-    const { data, error } = await supabase
-      .from("investment_deals")
-      .select("*")
-      .order("sort_order", { ascending: false })
-      .order("created_at", { ascending: false });
-    if (error) {
-      toast.error("Failed to load deals", { description: error.message });
+    const [dealsRes, investmentsRes] = await Promise.all([
+      supabase
+        .from("investment_deals")
+        .select("*")
+        .order("sort_order", { ascending: false })
+        .order("created_at", { ascending: false }),
+      supabase.from("member_investments").select("deal_slug, amount_pence, email"),
+    ]);
+
+    if (dealsRes.error) {
+      toast.error("Failed to load deals", { description: dealsRes.error.message });
     } else {
-      setDeals((data ?? []) as Deal[]);
+      setDeals((dealsRes.data ?? []) as Deal[]);
+    }
+
+    if (investmentsRes.error) {
+      console.error("[AdminDealsManager] Failed to load member investments", investmentsRes.error);
+    } else {
+      const totals: Record<string, { totalPence: number; investors: Set<string> }> = {};
+      for (const row of investmentsRes.data ?? []) {
+        const slug = row.deal_slug;
+        if (!totals[slug]) totals[slug] = { totalPence: 0, investors: new Set() };
+        totals[slug].totalPence += Number(row.amount_pence) || 0;
+        if (row.email) totals[slug].investors.add(row.email.toLowerCase());
+      }
+      const summary: Record<string, { totalPence: number; investorCount: number }> = {};
+      for (const [slug, v] of Object.entries(totals)) {
+        summary[slug] = { totalPence: v.totalPence, investorCount: v.investors.size };
+      }
+      setInvestedBySlug(summary);
     }
     setLoading(false);
   };
+
+  const formatGBP = (pence: number) =>
+    new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 }).format(pence / 100);
 
   useEffect(() => {
     load();
