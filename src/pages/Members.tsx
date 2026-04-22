@@ -24,6 +24,8 @@ import InstallAndPushBanner from "@/components/members/InstallAndPushBanner";
 import AdminPushNotifications from "@/components/AdminPushNotifications";
 import MemberAnnouncements from "@/components/members/MemberAnnouncements";
 import AdminAnnouncementsManager from "@/components/AdminAnnouncementsManager";
+import MyInvestments from "@/components/members/MyInvestments";
+import AdminInvestmentsImporter from "@/components/AdminInvestmentsImporter";
 
 const Members = () => {
   console.log('Members: Component rendering, current URL:', window.location.href);
