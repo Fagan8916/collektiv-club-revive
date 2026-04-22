@@ -365,8 +365,16 @@ const StatCard: React.FC<{
   icon: React.ReactNode;
   label: string;
   value: number;
-}> = ({ icon, label, value }) => (
-  <div className="bg-collektiv-green/5 border border-collektiv-green/15 rounded-xl p-3">
+  highlight?: boolean;
+  subtitle?: string;
+}> = ({ icon, label, value, highlight, subtitle }) => (
+  <div
+    className={
+      highlight
+        ? "bg-collektiv-green/15 border-2 border-collektiv-green/40 rounded-xl p-3"
+        : "bg-collektiv-green/5 border border-collektiv-green/15 rounded-xl p-3"
+    }
+  >
     <div className="flex items-center gap-1.5 text-collektiv-green mb-1">
       {icon}
       <span className="text-[10px] uppercase tracking-wide font-semibold">
@@ -376,6 +384,9 @@ const StatCard: React.FC<{
     <div className="text-2xl font-bold text-collektiv-dark font-playfair">
       {value.toLocaleString()}
     </div>
+    {subtitle && (
+      <div className="text-[9px] text-gray-500 mt-0.5">{subtitle}</div>
+    )}
   </div>
 );
 
