@@ -428,7 +428,9 @@ const AdminManualInvestments = () => {
                       {members.find((m) => m.email === member.email)?.label ?? member.email}
                     </div>
                     <div className="text-sm font-bold text-collektiv-green">
-                      {formatGBP(member.total)}
+                      {Object.entries(member.totals)
+                        .map(([cur, amt]) => formatMoney(amt, cur))
+                        .join(" · ")}
                     </div>
                   </div>
                   <div className="divide-y">
