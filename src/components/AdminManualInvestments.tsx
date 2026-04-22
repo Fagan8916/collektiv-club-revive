@@ -345,9 +345,24 @@ const AdminManualInvestments = () => {
               </div>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-[1fr_auto]">
+            <div className="grid gap-4 md:grid-cols-[140px_1fr_auto]">
               <div className="space-y-2">
-                <Label>Amount invested (£)</Label>
+                <Label htmlFor="currency-select">Currency</Label>
+                <select
+                  id="currency-select"
+                  value={currency}
+                  onChange={(e) => setCurrency(e.target.value as SupportedCurrency)}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {SUPPORTED_CURRENCIES.map((c) => (
+                    <option key={c} value={c}>
+                      {CURRENCY_SYMBOLS[c]} {c}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="space-y-2">
+                <Label>Amount invested ({CURRENCY_SYMBOLS[currency]})</Label>
                 <Input
                   inputMode="decimal"
                   placeholder="e.g. 2500"
