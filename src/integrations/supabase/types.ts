@@ -56,6 +56,51 @@ export type Database = {
         }
         Relationships: []
       }
+      deal_commitments: {
+        Row: {
+          admin_notes: string | null
+          amount_pence: number
+          created_at: string
+          currency: string
+          deal_slug: string
+          email: string
+          id: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          amount_pence: number
+          created_at?: string
+          currency?: string
+          deal_slug: string
+          email: string
+          id?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_notes?: string | null
+          amount_pence?: number
+          created_at?: string
+          currency?: string
+          deal_slug?: string
+          email?: string
+          id?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       investment_deals: {
         Row: {
           close_date: string | null
