@@ -4,6 +4,7 @@ import { ArrowLeft, ExternalLink, FileText, PlayCircle, Download } from "lucide-
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import DealCommitButton from "@/components/DealCommitButton";
 
 type Deal = {
   slug: string;
@@ -147,6 +148,16 @@ const DynamicDeal = () => {
                   </a>
                 </Button>
               )}
+            </div>
+
+            <div className="mt-6 max-w-sm mx-auto">
+              <DealCommitButton
+                dealSlug={deal.slug}
+                dealName={deal.name}
+                dealStatus={deal.status}
+                size="lg"
+                fullWidth
+              />
             </div>
           </CardHeader>
 

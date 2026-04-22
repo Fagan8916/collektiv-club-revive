@@ -27,11 +27,15 @@ type Commitment = {
 interface DealCommitButtonProps {
   dealSlug: string;
   dealName: string;
+  dealStatus?: string | null;
   size?: "sm" | "default" | "lg";
   variant?: "default" | "outline";
   className?: string;
   fullWidth?: boolean;
 }
+
+const isLiveStatus = (status?: string | null) =>
+  (status ?? "").trim().toLowerCase() === "live";
 
 const formatGBP = (pence: number) =>
   new Intl.NumberFormat("en-GB", {
@@ -43,6 +47,7 @@ const formatGBP = (pence: number) =>
 const DealCommitButton: React.FC<DealCommitButtonProps> = ({
   dealSlug,
   dealName,
+  dealStatus,
   size = "sm",
   variant = "default",
   className,
@@ -119,7 +124,9 @@ const DealCommitButton: React.FC<DealCommitButtonProps> = ({
 
   if (loading) return null;
 
-  // Already committed → show status badge instead of button
+  const live = isLiveStatus(dealStatus);
+
+  // Already committed → show status badge regardless of current deal status
   if (existing) {
     const isPending = existing.status === "pending";
     const isConfirmed = existing.status === "confirmed";
@@ -143,6 +150,19 @@ const DealCommitButton: React.FC<DealCommitButtonProps> = ({
           {formatGBP(existing.amount_pence)} ·{" "}
           {isConfirmed ? "Confirmed" : isPending ? "Pending review" : existing.status}
         </span>
+      </div>
+    );
+  }
+
+  // Only allow new commitments on live deals
+  if (!live) {
+    return (
+      <div
+        className={`inline-flex items-center gap-2 rounded-md px-3 py-1.5 text-xs font-medium bg-gray-100 text-gray-500 ${
+          fullWidth ? "w-full justify-center" : ""
+        } ${className ?? ""}`}
+      >
+        Commitments open when live
       </div>
     );
   }
