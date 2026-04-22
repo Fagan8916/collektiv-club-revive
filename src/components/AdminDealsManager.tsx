@@ -653,6 +653,12 @@ const AdminDealsManager: React.FC = () => {
                       <p className="text-xs text-muted-foreground mt-2 break-all">
                         /members/investments/{d.slug}
                       </p>
+                      <div className="mt-2 inline-flex items-center gap-2 rounded-md bg-collektiv-green/10 px-2 py-1 text-xs font-medium text-collektiv-green">
+                        Total invested: {formatGBP(investedBySlug[d.slug]?.totalPence ?? 0)}
+                        <span className="text-muted-foreground font-normal">
+                          ({investedBySlug[d.slug]?.investorCount ?? 0} {(investedBySlug[d.slug]?.investorCount ?? 0) === 1 ? "investor" : "investors"})
+                        </span>
+                      </div>
                     </div>
                     <div className="flex flex-col items-end gap-2 flex-shrink-0">
                       <div className="flex items-center gap-2">
