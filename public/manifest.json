@@ -1,6 +1,6 @@
 {
   "name": "Collektiv Club",
-  "short_name": "Collektiv",
+  "short_name": "Collektiv Club",
   "description": "Members zone for Collektiv Club — invest together in disruptive startups.",
   "start_url": "/#/members",
   "scope": "/",
@@ -10,16 +10,22 @@
   "theme_color": "#037b5f",
   "icons": [
     {
-      "src": "/lovable-uploads/a3fd0962-db0c-4a92-8c9a-96d807501887.png",
+      "src": "/pwa-icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "/lovable-uploads/a3fd0962-db0c-4a92-8c9a-96d807501887.png",
+      "src": "/pwa-icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }
