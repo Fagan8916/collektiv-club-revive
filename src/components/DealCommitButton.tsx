@@ -154,6 +154,19 @@ const DealCommitButton: React.FC<DealCommitButtonProps> = ({
     );
   }
 
+  // Only allow new commitments on live deals
+  if (!live) {
+    return (
+      <div
+        className={`inline-flex items-center gap-2 rounded-md px-3 py-1.5 text-xs font-medium bg-gray-100 text-gray-500 ${
+          fullWidth ? "w-full justify-center" : ""
+        } ${className ?? ""}`}
+      >
+        Commitments open when live
+      </div>
+    );
+  }
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
