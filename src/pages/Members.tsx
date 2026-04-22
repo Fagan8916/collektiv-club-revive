@@ -22,6 +22,7 @@ import MemberAppShell from "@/components/members/MemberAppShell";
 import { MemberTab } from "@/components/members/MemberBottomNav";
 import InstallAndPushBanner from "@/components/members/InstallAndPushBanner";
 import AdminPushNotifications from "@/components/AdminPushNotifications";
+import MemberAnnouncements from "@/components/members/MemberAnnouncements";
 
 const Members = () => {
   console.log('Members: Component rendering, current URL:', window.location.href);
