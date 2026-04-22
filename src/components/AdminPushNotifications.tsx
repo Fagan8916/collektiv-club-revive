@@ -87,9 +87,22 @@ const AdminPushNotifications: React.FC = () => {
     setAdminCount(adminC ?? 0);
   };
 
+  const loadLiveSubscribers = async () => {
+    try {
+      const { data, error } = await supabase.functions.invoke("onesignal-stats");
+      if (error) throw error;
+      if ((data as any)?.error) throw new Error((data as any).error);
+      setLiveSubscribers((data as any)?.messageable_players ?? 0);
+    } catch (err) {
+      console.error("Failed to load OneSignal stats:", err);
+      setLiveSubscribers(null);
+    }
+  };
+
   useEffect(() => {
     loadHistory();
     loadStats();
+    loadLiveSubscribers();
   }, []);
 
   const handleSend = async () => {
