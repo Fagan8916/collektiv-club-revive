@@ -244,19 +244,24 @@ const AdminManualInvestments = () => {
     await loadAll();
   };
 
-  // Group rows by member email for nicer overview
+  // Group rows by member email; track totals per currency for accurate display
   const grouped = useMemo(() => {
-    const map = new Map<string, { total: number; rows: InvestmentRow[] }>();
+    const map = new Map<
+      string,
+      { totals: Record<string, number>; sortKey: number; rows: InvestmentRow[] }
+    >();
     for (const r of rows) {
       const key = r.email.toLowerCase();
-      const entry = map.get(key) ?? { total: 0, rows: [] };
-      entry.total += r.amount_pence;
+      const entry = map.get(key) ?? { totals: {}, sortKey: 0, rows: [] };
+      const cur = r.currency || "GBP";
+      entry.totals[cur] = (entry.totals[cur] ?? 0) + r.amount_pence;
+      entry.sortKey += r.amount_pence; // rough cross-currency sort
       entry.rows.push(r);
       map.set(key, entry);
     }
     return Array.from(map.entries())
       .map(([email, value]) => ({ email, ...value }))
-      .sort((a, b) => b.total - a.total);
+      .sort((a, b) => b.sortKey - a.sortKey);
   }, [rows]);
 
   return (
