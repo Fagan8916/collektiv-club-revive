@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, ExternalLink, FileText, PlayCircle } from "lucide-react";
+import { ArrowLeft, ExternalLink, FileText, PlayCircle, Download } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,6 +19,7 @@ type Deal = {
   overview: string | null;
   memo: string | null;
   recording_url: string | null;
+  memo_pdf_path: string | null;
 };
 
 const detailRows: { label: string; key: keyof Deal }[] = [
@@ -41,7 +42,7 @@ const DynamicDeal = () => {
       const { data, error } = await supabase
         .from("investment_deals")
         .select(
-          "slug, name, tagline, logo_url, website_url, status, round, valuation, ticket_min, close_date, overview, memo, recording_url",
+          "slug, name, tagline, logo_url, website_url, status, round, valuation, ticket_min, close_date, overview, memo, recording_url, memo_pdf_path",
         )
         .eq("slug", slug)
         .maybeSingle();
