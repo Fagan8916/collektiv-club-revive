@@ -212,7 +212,19 @@ const MemberEvents = () => {
 
   return (
     <div className="space-y-12">
-      {/* Past Events - Featured at Top */}
+      {/* Upcoming Events */}
+      {upcomingEvents.length > 0 && (
+        <div>
+          <h3 className="text-2xl font-bold text-collektiv-green mb-6">Upcoming Events</h3>
+          <div className="grid gap-6">
+            {upcomingEvents.map((event) => (
+              <EventCard key={event.id} event={event} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Past Events */}
       {pastEvents.length > 0 && (
         <div>
           <div className="mb-6">
@@ -236,18 +248,6 @@ const MemberEvents = () => {
               .map((event) => (
                 <EventCard key={event.id} event={event} isPast={true} />
               ))}
-          </div>
-        </div>
-      )}
-
-      {/* Upcoming Events */}
-      {upcomingEvents.length > 0 && (
-        <div>
-          <h3 className="text-2xl font-bold text-collektiv-green mb-6">Upcoming Events</h3>
-          <div className="grid gap-6">
-            {upcomingEvents.map((event) => (
-              <EventCard key={event.id} event={event} />
-            ))}
           </div>
         </div>
       )}
