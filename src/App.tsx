@@ -34,6 +34,8 @@ import Anthropic from './pages/members/investments/Anthropic';
 import AnthropicMemo from './pages/members/investments/AnthropicMemo';
 import Kalshi from './pages/members/investments/Kalshi';
 import KalshiMemo from './pages/members/investments/KalshiMemo';
+import DynamicDeal from './pages/members/investments/DynamicDeal';
+import DynamicDealMemo from './pages/members/investments/DynamicDealMemo';
 import TiranaExpo2024 from './pages/members/events/TiranaExpo2024';
 import CollektivMeetupOct2024 from './pages/members/events/CollektivMeetupOct2024';
 import PropaneCatalyst2024 from './pages/members/events/PropaneCatalyst2024';
@@ -307,6 +309,9 @@ function App() {
               <Route path="/members/investments/anthropic/memo" element={<AnthropicMemo />} />
               <Route path="/members/investments/kalshi" element={<Kalshi />} />
               <Route path="/members/investments/kalshi/memo" element={<KalshiMemo />} />
+              {/* Catch-all for admin-created deals (must be after the hardcoded ones) */}
+              <Route path="/members/investments/:slug/memo" element={<DynamicDealMemo />} />
+              <Route path="/members/investments/:slug" element={<DynamicDeal />} />
           <Route path="/members/events/tirana-expo-2024" element={<TiranaExpo2024 />} />
           <Route path="/members/events/collektiv-meetup-oct-2024" element={<CollektivMeetupOct2024 />} />
           <Route path="/members/events/propane-catalyst-2024" element={<PropaneCatalyst2024 />} />
