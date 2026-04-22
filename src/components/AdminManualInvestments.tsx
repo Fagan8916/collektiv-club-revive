@@ -3,13 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Loader2, Plus, Trash2, PencilLine, UserPlus } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -257,23 +250,20 @@ const AdminManualInvestments = () => {
                   </button>
                 </div>
                 {emailMode === "select" ? (
-                  <Select value={email} onValueChange={setEmail}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a member…" />
-                    </SelectTrigger>
-                    <SelectContent className="max-h-72">
-                      {members.length === 0 && (
-                        <div className="px-3 py-2 text-sm text-gray-500">
-                          No members found
-                        </div>
-                      )}
-                      {members.map((m) => (
-                        <SelectItem key={m.email} value={m.email}>
-                          {m.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <select
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    <option value="">
+                      {members.length === 0 ? "No members found" : "Select a member…"}
+                    </option>
+                    {members.map((m) => (
+                      <option key={m.email} value={m.email}>
+                        {m.label}
+                      </option>
+                    ))}
+                  </select>
                 ) : (
                   <Input
                     type="email"
@@ -285,19 +275,25 @@ const AdminManualInvestments = () => {
               </div>
 
               <div className="space-y-2">
-                <Label>Deal</Label>
-                <Select value={dealSlug} onValueChange={setDealSlug}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a deal…" />
-                  </SelectTrigger>
-                  <SelectContent className="max-h-72">
-                    {deals.map((d) => (
-                      <SelectItem key={d.slug} value={d.slug}>
-                        {d.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <Label htmlFor="deal-select">Deal</Label>
+                <select
+                  id="deal-select"
+                  value={dealSlug}
+                  onChange={(e) => setDealSlug(e.target.value)}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  <option value="">Select a deal…</option>
+                  {deals.map((d) => (
+                    <option key={d.slug} value={d.slug}>
+                      {d.name}
+                    </option>
+                  ))}
+                </select>
+                {deals.length === 0 && !loading && (
+                  <p className="text-xs text-red-600">
+                    No deals found. Add deals in the Deals tab first.
+                  </p>
+                )}
               </div>
             </div>
 
