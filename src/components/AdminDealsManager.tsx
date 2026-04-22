@@ -8,8 +8,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { useToast } from "@/hooks/use-toast";
 import { Loader2, Plus, Trash2, Eye, EyeOff, Save, ExternalLink, Upload, FileText, X } from "lucide-react";
+import { toast } from "sonner";
 
 type Deal = {
   id: string;
@@ -60,7 +60,6 @@ const emptyForm: Omit<Deal, "id" | "published_at"> = {
 
 const AdminDealsManager: React.FC = () => {
   const { user } = useAuth();
-  const { toast } = useToast();
   const [deals, setDeals] = useState<Deal[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -68,6 +67,8 @@ const AdminDealsManager: React.FC = () => {
   const [form, setForm] = useState(emptyForm);
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [uploadingMemo, setUploadingMemo] = useState(false);
+  const [logoFeedback, setLogoFeedback] = useState("");
+  const [memoFeedback, setMemoFeedback] = useState("");
 
   const uploadLogo = async (file: File) => {
     if (!file) return;
