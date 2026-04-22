@@ -41,6 +41,7 @@ const AdminPushNotifications: React.FC = () => {
   const [last30Sent, setLast30Sent] = useState(0);
   const [approvedMembers, setApprovedMembers] = useState(0);
   const [adminCount, setAdminCount] = useState(0);
+  const [liveSubscribers, setLiveSubscribers] = useState<number | null>(null);
 
   const loadHistory = async () => {
     setLoadingHistory(true);
@@ -86,9 +87,22 @@ const AdminPushNotifications: React.FC = () => {
     setAdminCount(adminC ?? 0);
   };
 
+  const loadLiveSubscribers = async () => {
+    try {
+      const { data, error } = await supabase.functions.invoke("onesignal-stats");
+      if (error) throw error;
+      if ((data as any)?.error) throw new Error((data as any).error);
+      setLiveSubscribers((data as any)?.messageable_players ?? 0);
+    } catch (err) {
+      console.error("Failed to load OneSignal stats:", err);
+      setLiveSubscribers(null);
+    }
+  };
+
   useEffect(() => {
     loadHistory();
     loadStats();
+    loadLiveSubscribers();
   }, []);
 
   const handleSend = async () => {
@@ -154,6 +168,13 @@ const AdminPushNotifications: React.FC = () => {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <StatCard
+            icon={<Smartphone className="h-4 w-4" />}
+            label="Live subscribers"
+            value={liveSubscribers ?? 0}
+            highlight
+            subtitle={liveSubscribers === null ? "Unable to load" : "From OneSignal"}
+          />
+          <StatCard
             icon={<Bell className="h-4 w-4" />}
             label="Total broadcasts"
             value={totalSent}
@@ -164,7 +185,7 @@ const AdminPushNotifications: React.FC = () => {
             value={totalDeliveries}
           />
           <StatCard
-            icon={<Smartphone className="h-4 w-4" />}
+            icon={<BarChart3 className="h-4 w-4" />}
             label="Avg reach / send"
             value={avgReach}
           />
@@ -185,9 +206,9 @@ const AdminPushNotifications: React.FC = () => {
           />
         </div>
         <p className="text-[11px] text-gray-500 mt-3 leading-relaxed">
-          Deliveries reflect OneSignal subscribers (members who installed the app
-          and opted in to push). Open / click rates are visible in the OneSignal
-          dashboard.
+          <strong>Live subscribers</strong> = devices currently opted in via
+          OneSignal (the real broadcast audience). "Approved members" reflects
+          your DB — gap = members who haven't installed the PWA + enabled push.
         </p>
       </div>
 
@@ -218,7 +239,7 @@ const AdminPushNotifications: React.FC = () => {
                 <SelectItem value="all">
                   <div className="flex items-center gap-2">
                     <Users className="h-4 w-4" />
-                    All members ({approvedMembers})
+                    All subscribers ({liveSubscribers ?? "?"})
                   </div>
                 </SelectItem>
                 <SelectItem value="admins">
@@ -344,8 +365,16 @@ const StatCard: React.FC<{
   icon: React.ReactNode;
   label: string;
   value: number;
-}> = ({ icon, label, value }) => (
-  <div className="bg-collektiv-green/5 border border-collektiv-green/15 rounded-xl p-3">
+  highlight?: boolean;
+  subtitle?: string;
+}> = ({ icon, label, value, highlight, subtitle }) => (
+  <div
+    className={
+      highlight
+        ? "bg-collektiv-green/15 border-2 border-collektiv-green/40 rounded-xl p-3"
+        : "bg-collektiv-green/5 border border-collektiv-green/15 rounded-xl p-3"
+    }
+  >
     <div className="flex items-center gap-1.5 text-collektiv-green mb-1">
       {icon}
       <span className="text-[10px] uppercase tracking-wide font-semibold">
@@ -355,6 +384,9 @@ const StatCard: React.FC<{
     <div className="text-2xl font-bold text-collektiv-dark font-playfair">
       {value.toLocaleString()}
     </div>
+    {subtitle && (
+      <div className="text-[9px] text-gray-500 mt-0.5">{subtitle}</div>
+    )}
   </div>
 );
 
