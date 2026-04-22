@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Building2, Users, TrendingUp, Award } from "lucide-react";
-import InvestmentsSection from "@/components/InvestmentsSection";
 import MemberDirectory from "@/components/MemberDirectory";
 import MemberEvents from "@/components/MemberEvents";
 import ProfileSubmissionForm from "@/components/ProfileSubmissionForm";
@@ -391,7 +390,6 @@ const Members = () => {
 
             <TabsContent value="portfolio">
               <NewDealsSection />
-              <InvestmentsSection />
             </TabsContent>
             <TabsContent value="mine">
               <div className="max-w-2xl mx-auto">
