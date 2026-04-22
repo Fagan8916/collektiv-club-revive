@@ -124,7 +124,9 @@ const DealCommitButton: React.FC<DealCommitButtonProps> = ({
 
   if (loading) return null;
 
-  // Already committed → show status badge instead of button
+  const live = isLiveStatus(dealStatus);
+
+  // Already committed → show status badge regardless of current deal status
   if (existing) {
     const isPending = existing.status === "pending";
     const isConfirmed = existing.status === "confirmed";
