@@ -36,8 +36,8 @@ const NewDealsSection: React.FC = () => {
         .from("investment_deals")
         .select("slug, name, tagline, logo_url, website_url, status, sort_order")
         .eq("is_published", true)
-        .order("sort_order", { ascending: false })
-        .order("created_at", { ascending: false });
+        .order("created_at", { ascending: false })
+        .order("sort_order", { ascending: false });
       // Deduplicate by slug just in case the table has duplicates
       const seen = new Set<string>();
       const unique = ((data ?? []) as DbDeal[]).filter((d) => {
