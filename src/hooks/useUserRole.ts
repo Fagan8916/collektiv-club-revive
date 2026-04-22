@@ -69,11 +69,6 @@ export const useUserRole = () => {
           role.role === 'member' && role.status === 'approved'
         ) || false;
         
-        // Check for approved member role
-        const hasMemberRole = userRoles?.some(role => 
-          role.role === 'member' && role.status === 'approved'
-        ) || false;
-        
         console.log("useUserRole: Role analysis - hasAdminRole:", hasAdminRole, "hasMemberRole:", hasMemberRole);
 
         if (mounted) {
