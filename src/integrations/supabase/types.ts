@@ -58,25 +58,67 @@ export type Database = {
       }
       investment_deals: {
         Row: {
+          close_date: string | null
           created_at: string
           id: string
+          is_published: boolean
+          logo_url: string | null
+          memo: string | null
           name: string
+          overview: string | null
+          published_at: string | null
+          recording_url: string | null
+          round: string | null
           slug: string
+          sort_order: number
+          status: string
+          tagline: string | null
+          ticket_min: string | null
           updated_at: string
+          valuation: string | null
+          website_url: string | null
         }
         Insert: {
+          close_date?: string | null
           created_at?: string
           id?: string
+          is_published?: boolean
+          logo_url?: string | null
+          memo?: string | null
           name: string
+          overview?: string | null
+          published_at?: string | null
+          recording_url?: string | null
+          round?: string | null
           slug: string
+          sort_order?: number
+          status?: string
+          tagline?: string | null
+          ticket_min?: string | null
           updated_at?: string
+          valuation?: string | null
+          website_url?: string | null
         }
         Update: {
+          close_date?: string | null
           created_at?: string
           id?: string
+          is_published?: boolean
+          logo_url?: string | null
+          memo?: string | null
           name?: string
+          overview?: string | null
+          published_at?: string | null
+          recording_url?: string | null
+          round?: string | null
           slug?: string
+          sort_order?: number
+          status?: string
+          tagline?: string | null
+          ticket_min?: string | null
           updated_at?: string
+          valuation?: string | null
+          website_url?: string | null
         }
         Relationships: []
       }
