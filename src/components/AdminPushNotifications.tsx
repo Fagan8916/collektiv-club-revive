@@ -168,6 +168,13 @@ const AdminPushNotifications: React.FC = () => {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <StatCard
+            icon={<Smartphone className="h-4 w-4" />}
+            label="Live subscribers"
+            value={liveSubscribers ?? 0}
+            highlight
+            subtitle={liveSubscribers === null ? "Unable to load" : "From OneSignal"}
+          />
+          <StatCard
             icon={<Bell className="h-4 w-4" />}
             label="Total broadcasts"
             value={totalSent}
@@ -178,7 +185,7 @@ const AdminPushNotifications: React.FC = () => {
             value={totalDeliveries}
           />
           <StatCard
-            icon={<Smartphone className="h-4 w-4" />}
+            icon={<BarChart3 className="h-4 w-4" />}
             label="Avg reach / send"
             value={avgReach}
           />
@@ -199,9 +206,9 @@ const AdminPushNotifications: React.FC = () => {
           />
         </div>
         <p className="text-[11px] text-gray-500 mt-3 leading-relaxed">
-          Deliveries reflect OneSignal subscribers (members who installed the app
-          and opted in to push). Open / click rates are visible in the OneSignal
-          dashboard.
+          <strong>Live subscribers</strong> = devices currently opted in via
+          OneSignal (the real broadcast audience). "Approved members" reflects
+          your DB — gap = members who haven't installed the PWA + enabled push.
         </p>
       </div>
 
