@@ -171,44 +171,56 @@ const AdminInvestmentsImporter = () => {
       }
       if (rows.length < 2) throw new Error("File is empty");
 
-      const header = rows[0];
-      // Find email column
-      const emailIdx = header.findIndex((h) => h.trim().toLowerCase().startsWith("email"));
-      if (emailIdx === -1) throw new Error("No 'Email' column found in header");
-
-      // Map deal columns
-      const dealColumns: { idx: number; slug: string }[] = [];
-      header.forEach((h, idx) => {
-        if (idx === emailIdx) return;
-        const slug = slugifyHeader(h, deals);
-        if (slug) dealColumns.push({ idx, slug });
-      });
-      if (dealColumns.length === 0) {
-        throw new Error("No deal columns recognised. Headers must match deal names.");
+      const match = findHeaderRow(rows, deals);
+      if (!match) {
+        const sampleHeaders = rows
+          .slice(0, 5)
+          .map((row, idx) => `Row ${idx + 1}: ${row.join(" | ")}`)
+          .join("\n");
+        throw new Error(
+          `Could not detect a valid header row. I need an Email column and at least one deal column.\n\n${sampleHeaders}`,
+        );
       }
+
+      const { header, headerRowIndex, emailIdx, dealColumns } = match;
 
       // Build parsed rows
       const parsed: ParsedRow[] = [];
-      for (let r = 1; r < rows.length; r++) {
+      const skippedRows: string[] = [];
+      for (let r = headerRowIndex + 1; r < rows.length; r++) {
         const row = rows[r];
-        const email = (row[emailIdx] ?? "").trim().toLowerCase();
-        if (!email || !email.includes("@")) continue;
+        const email = String(row[emailIdx] ?? "").trim().toLowerCase();
+        if (!email) continue;
+        if (!email.includes("@")) {
+          skippedRows.push(`Row ${r + 1}: invalid email '${email}'`);
+          continue;
+        }
+
         const perDeal: Record<string, number> = {};
         for (const col of dealColumns) {
-          const pence = parseAmountToPence(row[col.idx] ?? "");
+          const pence = parseAmountToPence(String(row[col.idx] ?? ""));
           if (pence !== null) perDeal[col.slug] = pence;
         }
+
         if (Object.keys(perDeal).length > 0) {
           parsed.push({ email, perDeal });
+        } else {
+          skippedRows.push(`Row ${r + 1}: no recognised investment amounts`);
         }
       }
 
       if (parsed.length === 0) {
-        throw new Error("No member rows with investment amounts found.");
+        throw new Error(
+          `No member rows with investment amounts found. Recognised deal columns: ${dealColumns
+            .map((d) => header[d.idx])
+            .join(", ") || "none"}`,
+        );
       }
 
-      // Build upsert payload: one row per (email, deal)
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
       const payload = parsed.flatMap((p) =>
         Object.entries(p.perDeal).map(([slug, pence]) => ({
           deal_slug: slug,
@@ -223,10 +235,19 @@ const AdminInvestmentsImporter = () => {
         .from("member_investments")
         .upsert(payload, { onConflict: "deal_slug,email" });
 
-      if (error) throw error;
+      if (error) {
+        throw new Error(`Database import failed: ${error.message}`);
+      }
 
       setStats({ rows: parsed.length, deals: dealColumns.length });
-      toast.success(`Imported ${payload.length} investment lines for ${parsed.length} members.`);
+      toast.success(
+        `Imported ${payload.length} investment lines for ${parsed.length} members${
+          skippedRows.length ? ` (${skippedRows.length} rows skipped)` : ""
+        }.`,
+      );
+      if (skippedRows.length) {
+        console.warn("Investment import skipped rows", skippedRows.slice(0, 20));
+      }
     } catch (err) {
       console.error("Import failed", err);
       toast.error(err instanceof Error ? err.message : "Import failed");
