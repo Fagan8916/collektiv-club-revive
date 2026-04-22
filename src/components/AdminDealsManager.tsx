@@ -107,6 +107,7 @@ const AdminDealsManager: React.FC = () => {
       overview: d.overview ?? "",
       memo: d.memo ?? "",
       recording_url: d.recording_url ?? "",
+      memo_pdf_path: d.memo_pdf_path ?? "",
       sort_order: d.sort_order ?? 0,
       is_published: d.is_published,
     });
