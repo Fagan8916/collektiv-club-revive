@@ -159,9 +159,9 @@ const AdminManualInvestments = () => {
       return;
     }
 
-    const numeric = Number(amountInput.replace(/[£,\s]/g, ""));
+    const numeric = Number(amountInput.replace(/[£€$,\s]/g, ""));
     if (!Number.isFinite(numeric) || numeric <= 0) {
-      toast.error("Please enter a valid amount in £ (e.g. 2500).");
+      toast.error(`Please enter a valid amount in ${currency} (e.g. 2500).`);
       return;
     }
     const pence = Math.round(numeric * 100);
@@ -176,7 +176,7 @@ const AdminManualInvestments = () => {
         email: cleanEmail,
         deal_slug: dealSlug,
         amount_pence: pence,
-        currency: "GBP",
+        currency,
         imported_by: user?.id ?? null,
       };
       console.log("[AdminManualInvestments] upsert payload:", payload);
