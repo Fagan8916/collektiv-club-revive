@@ -1,0 +1,130 @@
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { TrendingUp, Wallet } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
+
+interface Row {
+  deal_slug: string;
+  amount_pence: number;
+  currency: string;
+  deal_name: string;
+}
+
+const formatGBP = (pence: number, currency = "GBP") =>
+  new Intl.NumberFormat("en-GB", {
+    style: "currency",
+    currency,
+    maximumFractionDigits: 0,
+  }).format(pence / 100);
+
+const MyInvestments = () => {
+  const { user } = useAuth();
+  const [loading, setLoading] = useState(true);
+  const [rows, setRows] = useState<Row[]>([]);
+
+  useEffect(() => {
+    const load = async () => {
+      if (!user?.email) {
+        setLoading(false);
+        return;
+      }
+      setLoading(true);
+
+      const [{ data: investments }, { data: deals }] = await Promise.all([
+        supabase
+          .from("member_investments")
+          .select("deal_slug, amount_pence, currency")
+          .ilike("email", user.email),
+        supabase.from("investment_deals").select("slug, name"),
+      ]);
+
+      const dealMap = new Map((deals ?? []).map((d) => [d.slug, d.name]));
+      const enriched: Row[] = (investments ?? []).map((r) => ({
+        deal_slug: r.deal_slug,
+        amount_pence: r.amount_pence,
+        currency: r.currency,
+        deal_name: dealMap.get(r.deal_slug) ?? r.deal_slug,
+      }));
+      enriched.sort((a, b) => b.amount_pence - a.amount_pence);
+      setRows(enriched);
+      setLoading(false);
+    };
+    load();
+  }, [user?.email]);
+
+  const total = rows.reduce((sum, r) => sum + r.amount_pence, 0);
+  const currency = rows[0]?.currency ?? "GBP";
+
+  if (loading) {
+    return (
+      <div className="space-y-4">
+        <Skeleton className="h-28 w-full" />
+        <Skeleton className="h-20 w-full" />
+        <Skeleton className="h-20 w-full" />
+      </div>
+    );
+  }
+
+  if (rows.length === 0) {
+    return (
+      <Card className="border-dashed">
+        <CardContent className="p-8 text-center">
+          <Wallet className="mx-auto h-10 w-10 text-collektiv-green mb-3" />
+          <h3 className="font-playfair text-lg font-bold text-collektiv-dark mb-1">
+            No investments on file yet
+          </h3>
+          <p className="text-sm text-gray-600">
+            Once you participate in a deal, your contributions will appear here.
+          </p>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  return (
+    <div className="space-y-5">
+      {/* Total banner */}
+      <div className="rounded-2xl bg-gradient-to-br from-collektiv-green to-collektiv-dark text-white p-6 shadow-lg">
+        <div className="flex items-center gap-2 mb-1 text-green-100 text-xs uppercase tracking-wide">
+          <TrendingUp className="h-4 w-4" /> Total invested to date
+        </div>
+        <div className="font-playfair text-3xl font-bold">
+          {formatGBP(total, currency)}
+        </div>
+        <div className="text-green-100 text-xs mt-1">
+          Across {rows.length} {rows.length === 1 ? "deal" : "deals"}
+        </div>
+      </div>
+
+      {/* Per-deal breakdown */}
+      <div className="space-y-3">
+        {rows.map((row) => (
+          <Link
+            key={row.deal_slug}
+            to={`/members/investments/${row.deal_slug}`}
+            className="block"
+          >
+            <Card className="hover:shadow-md transition-shadow border border-collektiv-green/15">
+              <CardContent className="p-4 flex items-center justify-between">
+                <div>
+                  <div className="font-bold text-collektiv-dark">{row.deal_name}</div>
+                  <div className="text-xs text-gray-500">View deal details →</div>
+                </div>
+                <div className="text-right">
+                  <div className="text-lg font-bold text-collektiv-green">
+                    {formatGBP(row.amount_pence, row.currency)}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default MyInvestments;
