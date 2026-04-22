@@ -333,13 +333,14 @@ const Members = () => {
           </div>
           <Tabs defaultValue="membership" className="w-full">
             <div className="flex justify-center mb-6 overflow-x-auto">
-              <TabsList className="grid h-auto w-full grid-cols-3 md:grid-cols-6 gap-2 p-1 rounded-md bg-transparent">
+              <TabsList className="grid h-auto w-full grid-cols-3 md:grid-cols-7 gap-2 p-1 rounded-md bg-transparent">
                 <TabsTrigger value="membership" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Membership</TabsTrigger>
                 <TabsTrigger value="invite" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Invite</TabsTrigger>
                 <TabsTrigger value="profiles-to-review" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Submissions</TabsTrigger>
                 <TabsTrigger value="profiles" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Profiles</TabsTrigger>
                 <TabsTrigger value="push" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Push</TabsTrigger>
                 <TabsTrigger value="announcements" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">News</TabsTrigger>
+                <TabsTrigger value="investments-import" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Investments</TabsTrigger>
               </TabsList>
             </div>
 
@@ -349,6 +350,7 @@ const Members = () => {
             <TabsContent value="profiles"><AdminProfileManager /></TabsContent>
             <TabsContent value="push"><AdminPushNotifications /></TabsContent>
             <TabsContent value="announcements"><AdminAnnouncementsManager /></TabsContent>
+            <TabsContent value="investments-import"><AdminInvestmentsImporter /></TabsContent>
           </Tabs>
         </div>
       )}
@@ -357,12 +359,38 @@ const Members = () => {
       {activeTab === 'investments' && (
         <div className="container mx-auto px-4 py-6 max-w-5xl">
           <div className="text-center mb-6">
-            <h2 className="font-playfair text-2xl font-bold text-collektiv-green mb-2">Investment Portfolio</h2>
+            <h2 className="font-playfair text-2xl font-bold text-collektiv-green mb-2">Investments</h2>
             <p className="text-sm text-gray-600">
-              Explore our curated portfolio of innovative companies.
+              Explore the Collektiv portfolio and track your personal contributions.
             </p>
           </div>
-          <InvestmentsSection />
+          <Tabs defaultValue="portfolio" className="w-full">
+            <div className="flex justify-center mb-6">
+              <TabsList className="grid h-auto w-full max-w-md grid-cols-2 gap-2 p-1 rounded-md bg-transparent">
+                <TabsTrigger
+                  value="portfolio"
+                  className="text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white"
+                >
+                  Collektiv Portfolio
+                </TabsTrigger>
+                <TabsTrigger
+                  value="mine"
+                  className="text-xs sm:text-sm px-3 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white"
+                >
+                  My Investments
+                </TabsTrigger>
+              </TabsList>
+            </div>
+
+            <TabsContent value="portfolio">
+              <InvestmentsSection />
+            </TabsContent>
+            <TabsContent value="mine">
+              <div className="max-w-2xl mx-auto">
+                <MyInvestments />
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
       )}
 
