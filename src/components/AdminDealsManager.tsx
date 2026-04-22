@@ -61,6 +61,7 @@ const emptyForm: Omit<Deal, "id" | "published_at"> = {
 const AdminDealsManager: React.FC = () => {
   const { user } = useAuth();
   const [deals, setDeals] = useState<Deal[]>([]);
+  const [investedBySlug, setInvestedBySlug] = useState<Record<string, { totalPence: number; investorCount: number }>>({});
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -171,18 +172,42 @@ const AdminDealsManager: React.FC = () => {
 
   const load = async () => {
     setLoading(true);
-    const { data, error } = await supabase
-      .from("investment_deals")
-      .select("*")
-      .order("sort_order", { ascending: false })
-      .order("created_at", { ascending: false });
-    if (error) {
-      toast.error("Failed to load deals", { description: error.message });
+    const [dealsRes, investmentsRes] = await Promise.all([
+      supabase
+        .from("investment_deals")
+        .select("*")
+        .order("sort_order", { ascending: false })
+        .order("created_at", { ascending: false }),
+      supabase.from("member_investments").select("deal_slug, amount_pence, email"),
+    ]);
+
+    if (dealsRes.error) {
+      toast.error("Failed to load deals", { description: dealsRes.error.message });
     } else {
-      setDeals((data ?? []) as Deal[]);
+      setDeals((dealsRes.data ?? []) as Deal[]);
+    }
+
+    if (investmentsRes.error) {
+      console.error("[AdminDealsManager] Failed to load member investments", investmentsRes.error);
+    } else {
+      const totals: Record<string, { totalPence: number; investors: Set<string> }> = {};
+      for (const row of investmentsRes.data ?? []) {
+        const slug = row.deal_slug;
+        if (!totals[slug]) totals[slug] = { totalPence: 0, investors: new Set() };
+        totals[slug].totalPence += Number(row.amount_pence) || 0;
+        if (row.email) totals[slug].investors.add(row.email.toLowerCase());
+      }
+      const summary: Record<string, { totalPence: number; investorCount: number }> = {};
+      for (const [slug, v] of Object.entries(totals)) {
+        summary[slug] = { totalPence: v.totalPence, investorCount: v.investors.size };
+      }
+      setInvestedBySlug(summary);
     }
     setLoading(false);
   };
+
+  const formatGBP = (pence: number) =>
+    new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 }).format(pence / 100);
 
   useEffect(() => {
     load();
@@ -628,6 +653,12 @@ const AdminDealsManager: React.FC = () => {
                       <p className="text-xs text-muted-foreground mt-2 break-all">
                         /members/investments/{d.slug}
                       </p>
+                      <div className="mt-2 inline-flex items-center gap-2 rounded-md bg-collektiv-green/10 px-2 py-1 text-xs font-medium text-collektiv-green">
+                        Total invested: {formatGBP(investedBySlug[d.slug]?.totalPence ?? 0)}
+                        <span className="text-muted-foreground font-normal">
+                          ({investedBySlug[d.slug]?.investorCount ?? 0} {(investedBySlug[d.slug]?.investorCount ?? 0) === 1 ? "investor" : "investors"})
+                        </span>
+                      </div>
                     </div>
                     <div className="flex flex-col items-end gap-2 flex-shrink-0">
                       <div className="flex items-center gap-2">
