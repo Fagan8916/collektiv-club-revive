@@ -71,6 +71,10 @@ const AdminDealsManager: React.FC = () => {
 
   const uploadLogo = async (file: File) => {
     if (!file) return;
+    if (!user?.id) {
+      toast({ title: "Not signed in", description: "Please sign in as an admin first.", variant: "destructive" });
+      return;
+    }
     if (!file.type.startsWith("image/")) {
       toast({ title: "Logo must be an image", variant: "destructive" });
       return;
@@ -80,25 +84,46 @@ const AdminDealsManager: React.FC = () => {
       return;
     }
     setUploadingLogo(true);
-    const ext = file.name.split(".").pop()?.toLowerCase() || "png";
-    const baseSlug = form.slug || slugify(form.name) || "deal";
-    const path = `${baseSlug}-${Date.now()}.${ext}`;
-    const { error } = await supabase.storage
-      .from("deal-logos")
-      .upload(path, file, { upsert: true, contentType: file.type });
-    if (error) {
+    try {
+      const ext = (file.name.split(".").pop() || "png").toLowerCase().replace(/[^a-z0-9]/g, "");
+      const baseSlug = (form.slug || slugify(form.name) || "deal").replace(/[^a-z0-9-]/g, "");
+      const path = `${baseSlug}-${Date.now()}.${ext}`;
+      console.log("[AdminDealsManager] Uploading logo to deal-logos:", path, "type=", file.type, "size=", file.size);
+      const { data, error } = await supabase.storage
+        .from("deal-logos")
+        .upload(path, file, { upsert: true, contentType: file.type, cacheControl: "3600" });
+      if (error) {
+        console.error("[AdminDealsManager] Logo upload error:", error);
+        toast({
+          title: "Logo upload failed",
+          description: error.message || "Check that you are signed in as an admin.",
+          variant: "destructive",
+        });
+        return;
+      }
+      console.log("[AdminDealsManager] Logo uploaded:", data);
+      const { data: pub } = supabase.storage.from("deal-logos").getPublicUrl(path);
+      console.log("[AdminDealsManager] Logo public URL:", pub.publicUrl);
+      setForm((f) => ({ ...f, logo_url: pub.publicUrl }));
+      toast({ title: "Logo uploaded", description: "Don't forget to click Save / Update." });
+    } catch (err) {
+      console.error("[AdminDealsManager] Logo upload exception:", err);
+      toast({
+        title: "Logo upload failed",
+        description: err instanceof Error ? err.message : String(err),
+        variant: "destructive",
+      });
+    } finally {
       setUploadingLogo(false);
-      toast({ title: "Logo upload failed", description: error.message, variant: "destructive" });
-      return;
     }
-    const { data: pub } = supabase.storage.from("deal-logos").getPublicUrl(path);
-    setForm((f) => ({ ...f, logo_url: pub.publicUrl }));
-    setUploadingLogo(false);
-    toast({ title: "Logo uploaded" });
   };
 
   const uploadMemoPdf = async (file: File) => {
     if (!file) return;
+    if (!user?.id) {
+      toast({ title: "Not signed in", description: "Please sign in as an admin first.", variant: "destructive" });
+      return;
+    }
     if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith(".pdf")) {
       toast({ title: "Memo must be a PDF", variant: "destructive" });
       return;
@@ -108,19 +133,35 @@ const AdminDealsManager: React.FC = () => {
       return;
     }
     setUploadingMemo(true);
-    const baseSlug = form.slug || slugify(form.name) || "deal";
-    const path = `${baseSlug}-${Date.now()}.pdf`;
-    const { error } = await supabase.storage
-      .from("deal-memos")
-      .upload(path, file, { upsert: true, contentType: "application/pdf" });
-    if (error) {
+    try {
+      const baseSlug = (form.slug || slugify(form.name) || "deal").replace(/[^a-z0-9-]/g, "");
+      const path = `${baseSlug}-${Date.now()}.pdf`;
+      console.log("[AdminDealsManager] Uploading memo PDF to deal-memos:", path, "size=", file.size);
+      const { data, error } = await supabase.storage
+        .from("deal-memos")
+        .upload(path, file, { upsert: true, contentType: "application/pdf", cacheControl: "3600" });
+      if (error) {
+        console.error("[AdminDealsManager] Memo upload error:", error);
+        toast({
+          title: "Memo upload failed",
+          description: error.message || "Check that you are signed in as an admin.",
+          variant: "destructive",
+        });
+        return;
+      }
+      console.log("[AdminDealsManager] Memo uploaded:", data);
+      setForm((f) => ({ ...f, memo_pdf_path: path }));
+      toast({ title: "Memo PDF uploaded", description: "Don't forget to click Save / Update." });
+    } catch (err) {
+      console.error("[AdminDealsManager] Memo upload exception:", err);
+      toast({
+        title: "Memo upload failed",
+        description: err instanceof Error ? err.message : String(err),
+        variant: "destructive",
+      });
+    } finally {
       setUploadingMemo(false);
-      toast({ title: "Memo upload failed", description: error.message, variant: "destructive" });
-      return;
     }
-    setForm((f) => ({ ...f, memo_pdf_path: path }));
-    setUploadingMemo(false);
-    toast({ title: "Memo PDF uploaded" });
   };
 
   const load = async () => {
