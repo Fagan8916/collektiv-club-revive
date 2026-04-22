@@ -391,7 +391,6 @@ const Members = () => {
 
             <TabsContent value="portfolio">
               <NewDealsSection />
-              <InvestmentsSection />
             </TabsContent>
             <TabsContent value="mine">
               <div className="max-w-2xl mx-auto">
