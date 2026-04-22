@@ -202,29 +202,31 @@ const AdminInvestmentsImporter = () => {
               Import members' investments
             </h3>
             <p className="text-sm text-gray-600">
-              Upload the CSV exported from your tracking spreadsheet. Members are matched by
-              email (case-insensitive). Re-uploading overwrites existing amounts for the same
+              Upload a CSV or Excel file (.xlsx) — for Google Sheets, use{" "}
+              <em>File → Download → Microsoft Excel (.xlsx)</em> or{" "}
+              <em>Comma-separated values (.csv)</em>. Members are matched by email
+              (case-insensitive). Re-uploading overwrites existing amounts for the same
               member/deal pair.
             </p>
           </div>
         </div>
 
         <div className="rounded-md bg-gray-50 border border-gray-200 p-3 text-xs text-gray-700">
-          <p className="font-semibold mb-1">Expected CSV format</p>
+          <p className="font-semibold mb-1">Expected format</p>
           <p>
             Header row must contain an <code>Email</code> column plus one column per deal whose
             name matches a deal in the catalog (e.g.{" "}
             {deals.map((d) => d.name).join(", ")}). Cells can be blank or formatted like{" "}
-            <code>£2,500.00</code>.
+            <code>£2,500.00</code>. Only the first sheet/tab is read.
           </p>
         </div>
 
         <div className="space-y-2">
-          <Label>CSV file</Label>
+          <Label>CSV or Excel file</Label>
           <Input
             ref={fileRef}
             type="file"
-            accept=".csv,text/csv"
+            accept=".csv,text/csv,.xlsx,.xls,.ods,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
             disabled={importing}
             onChange={handleFile}
           />
