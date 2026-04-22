@@ -4,8 +4,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Send, Bell, Loader2 } from "lucide-react";
+import { Send, Bell, Loader2, Users, Shield, BarChart3, Smartphone } from "lucide-react";
 
 interface PushHistoryRow {
   id: string;
@@ -16,14 +23,24 @@ interface PushHistoryRow {
   created_at: string;
 }
 
+type Audience = "all" | "admins";
+
 const AdminPushNotifications: React.FC = () => {
   const { toast } = useToast();
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [url, setUrl] = useState("");
+  const [audience, setAudience] = useState<Audience>("all");
   const [sending, setSending] = useState(false);
   const [history, setHistory] = useState<PushHistoryRow[]>([]);
   const [loadingHistory, setLoadingHistory] = useState(true);
+
+  // Dashboard stats
+  const [totalSent, setTotalSent] = useState(0);
+  const [totalDeliveries, setTotalDeliveries] = useState(0);
+  const [last30Sent, setLast30Sent] = useState(0);
+  const [approvedMembers, setApprovedMembers] = useState(0);
+  const [adminCount, setAdminCount] = useState(0);
 
   const loadHistory = async () => {
     setLoadingHistory(true);
@@ -37,23 +54,50 @@ const AdminPushNotifications: React.FC = () => {
     setLoadingHistory(false);
   };
 
+  const loadStats = async () => {
+    // Notification totals
+    const { data: allNotifs } = await supabase
+      .from("push_notifications")
+      .select("recipients, created_at");
+    if (allNotifs) {
+      setTotalSent(allNotifs.length);
+      setTotalDeliveries(
+        allNotifs.reduce((sum, n) => sum + (n.recipients || 0), 0),
+      );
+      const cutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
+      setLast30Sent(
+        allNotifs.filter((n) => new Date(n.created_at).getTime() >= cutoff).length,
+      );
+    }
+
+    // Member / admin counts
+    const { count: memberC } = await supabase
+      .from("user_roles")
+      .select("*", { count: "exact", head: true })
+      .eq("role", "member")
+      .eq("status", "approved");
+    setApprovedMembers(memberC ?? 0);
+
+    const { count: adminC } = await supabase
+      .from("user_roles")
+      .select("*", { count: "exact", head: true })
+      .eq("role", "admin")
+      .eq("status", "approved");
+    setAdminCount(adminC ?? 0);
+  };
+
   useEffect(() => {
     loadHistory();
+    loadStats();
   }, []);
 
   const handleSend = async () => {
     if (!title.trim() || !message.trim()) {
-      toast({
-        title: "Title and message are required",
-        variant: "destructive",
-      });
+      toast({ title: "Title and message are required", variant: "destructive" });
       return;
     }
-    if (
-      !window.confirm(
-        `Send this notification to ALL subscribed members?\n\n${title}\n${message}`,
-      )
-    ) {
+    const audienceLabel = audience === "admins" ? "ADMINS only" : "ALL subscribed members";
+    if (!window.confirm(`Send this notification to ${audienceLabel}?\n\n${title}\n${message}`)) {
       return;
     }
     setSending(true);
@@ -65,6 +109,7 @@ const AdminPushNotifications: React.FC = () => {
             title: title.trim(),
             message: message.trim(),
             url: url.trim() || undefined,
+            audience,
           },
         },
       );
@@ -73,12 +118,15 @@ const AdminPushNotifications: React.FC = () => {
 
       toast({
         title: "Notification sent",
-        description: `Delivered to ${(data as any).recipients ?? 0} subscribers.`,
+        description: `Delivered to ${(data as any).recipients ?? 0} ${
+          audience === "admins" ? "admins" : "subscribers"
+        }.`,
       });
       setTitle("");
       setMessage("");
       setUrl("");
       loadHistory();
+      loadStats();
     } catch (err: any) {
       console.error(err);
       toast({
@@ -91,8 +139,59 @@ const AdminPushNotifications: React.FC = () => {
     }
   };
 
+  const avgReach =
+    totalSent > 0 ? Math.round(totalDeliveries / totalSent) : 0;
+
   return (
     <div className="space-y-6">
+      {/* Dashboard */}
+      <div className="bg-white rounded-2xl border border-collektiv-green/20 p-5 shadow-sm">
+        <div className="flex items-center gap-2 mb-4">
+          <BarChart3 className="h-5 w-5 text-collektiv-green" />
+          <h3 className="font-playfair text-lg font-bold text-collektiv-dark">
+            Dashboard
+          </h3>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <StatCard
+            icon={<Bell className="h-4 w-4" />}
+            label="Total broadcasts"
+            value={totalSent}
+          />
+          <StatCard
+            icon={<Send className="h-4 w-4" />}
+            label="Total deliveries"
+            value={totalDeliveries}
+          />
+          <StatCard
+            icon={<Smartphone className="h-4 w-4" />}
+            label="Avg reach / send"
+            value={avgReach}
+          />
+          <StatCard
+            icon={<BarChart3 className="h-4 w-4" />}
+            label="Sent (last 30d)"
+            value={last30Sent}
+          />
+          <StatCard
+            icon={<Users className="h-4 w-4" />}
+            label="Approved members"
+            value={approvedMembers}
+          />
+          <StatCard
+            icon={<Shield className="h-4 w-4" />}
+            label="Admins"
+            value={adminCount}
+          />
+        </div>
+        <p className="text-[11px] text-gray-500 mt-3 leading-relaxed">
+          Deliveries reflect OneSignal subscribers (members who installed the app
+          and opted in to push). Open / click rates are visible in the OneSignal
+          dashboard.
+        </p>
+      </div>
+
+      {/* Composer */}
       <div className="bg-white rounded-2xl border border-collektiv-green/20 p-5 shadow-sm">
         <div className="flex items-center gap-2 mb-1">
           <Bell className="h-5 w-5 text-collektiv-green" />
@@ -101,10 +200,37 @@ const AdminPushNotifications: React.FC = () => {
           </h3>
         </div>
         <p className="text-xs text-gray-600 mb-4">
-          Broadcasts to every member who has installed the app and opted in.
+          Choose audience, then broadcast to installed + opted-in devices.
         </p>
 
         <div className="space-y-3">
+          <div>
+            <Label className="text-xs">Audience</Label>
+            <Select
+              value={audience}
+              onValueChange={(v) => setAudience(v as Audience)}
+              disabled={sending}
+            >
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">
+                  <div className="flex items-center gap-2">
+                    <Users className="h-4 w-4" />
+                    All members ({approvedMembers})
+                  </div>
+                </SelectItem>
+                <SelectItem value="admins">
+                  <div className="flex items-center gap-2">
+                    <Shield className="h-4 w-4" />
+                    Admins only ({adminCount})
+                  </div>
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
           <div>
             <Label htmlFor="push-title" className="text-xs">
               Title <span className="text-red-500">*</span>
@@ -167,13 +293,14 @@ const AdminPushNotifications: React.FC = () => {
             ) : (
               <>
                 <Send className="h-4 w-4 mr-2" />
-                Send to all members
+                {audience === "admins" ? "Send to admins" : "Send to all members"}
               </>
             )}
           </Button>
         </div>
       </div>
 
+      {/* History */}
       <div className="bg-white rounded-2xl border border-collektiv-green/20 p-5 shadow-sm">
         <h3 className="font-playfair text-base font-bold text-collektiv-dark mb-3">
           Recent broadcasts
@@ -212,5 +339,23 @@ const AdminPushNotifications: React.FC = () => {
     </div>
   );
 };
+
+const StatCard: React.FC<{
+  icon: React.ReactNode;
+  label: string;
+  value: number;
+}> = ({ icon, label, value }) => (
+  <div className="bg-collektiv-green/5 border border-collektiv-green/15 rounded-xl p-3">
+    <div className="flex items-center gap-1.5 text-collektiv-green mb-1">
+      {icon}
+      <span className="text-[10px] uppercase tracking-wide font-semibold">
+        {label}
+      </span>
+    </div>
+    <div className="text-2xl font-bold text-collektiv-dark font-playfair">
+      {value.toLocaleString()}
+    </div>
+  </div>
+);
 
 export default AdminPushNotifications;

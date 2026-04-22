@@ -11,6 +11,7 @@ interface PushPayload {
   title: string;
   message: string;
   url?: string;
+  audience?: "all" | "admins";
 }
 
 Deno.serve(async (req) => {
@@ -23,6 +24,7 @@ Deno.serve(async (req) => {
     const ONESIGNAL_REST_API_KEY = Deno.env.get("ONESIGNAL_REST_API_KEY");
     const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
     const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
+    const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
     if (!ONESIGNAL_APP_ID || !ONESIGNAL_REST_API_KEY) {
       return new Response(
@@ -65,6 +67,7 @@ Deno.serve(async (req) => {
     const title = (body.title || "").trim();
     const message = (body.message || "").trim();
     const url = (body.url || "").trim();
+    const audience: "all" | "admins" = body.audience === "admins" ? "admins" : "all";
 
     if (!title || title.length > 120) {
       return new Response(
@@ -85,13 +88,43 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Send via OneSignal REST API — broadcast to all subscribed users
+    // Build OneSignal payload — broadcast to all OR target admin user_ids
     const oneSignalPayload: Record<string, unknown> = {
       app_id: ONESIGNAL_APP_ID,
-      included_segments: ["Subscribed Users"],
       headings: { en: title },
       contents: { en: message },
     };
+
+    if (audience === "admins") {
+      // Resolve admin user_ids via service-role client (bypass RLS)
+      const adminClient = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+      const { data: adminRoles, error: adminErr } = await adminClient
+        .from("user_roles")
+        .select("user_id")
+        .eq("role", "admin")
+        .eq("status", "approved");
+
+      if (adminErr) {
+        console.error("Admin lookup error:", adminErr);
+        return new Response(
+          JSON.stringify({ error: "Failed to resolve admin recipients" }),
+          { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+        );
+      }
+
+      const adminIds = (adminRoles || []).map((r) => r.user_id).filter(Boolean);
+      if (adminIds.length === 0) {
+        return new Response(
+          JSON.stringify({ error: "No admin recipients found" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+        );
+      }
+      oneSignalPayload.include_external_user_ids = adminIds;
+      oneSignalPayload.channel_for_external_user_ids = "push";
+    } else {
+      oneSignalPayload.included_segments = ["Subscribed Users"];
+    }
+
     if (url) oneSignalPayload.url = url;
 
     const oneSignalRes = await fetch("https://onesignal.com/api/v1/notifications", {
@@ -113,9 +146,10 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Log to push_notifications table
+    // Log to push_notifications table — prefix audience tag in title for history clarity
+    const loggedTitle = audience === "admins" ? `[Admins] ${title}` : title;
     const { error: insertErr } = await supabase.from("push_notifications").insert({
-      title,
+      title: loggedTitle,
       message,
       url: url || null,
       sent_by: userData.user.id,
@@ -127,6 +161,7 @@ Deno.serve(async (req) => {
     return new Response(
       JSON.stringify({
         success: true,
+        audience,
         recipients: oneSignalData.recipients ?? 0,
         onesignal_id: oneSignalData.id,
       }),
