@@ -26,12 +26,24 @@ interface InvestmentRow {
   imported_at: string;
 }
 
-const formatGBP = (pence: number, currency = "GBP") =>
+const SUPPORTED_CURRENCIES = ["GBP", "EUR", "USD"] as const;
+type SupportedCurrency = (typeof SUPPORTED_CURRENCIES)[number];
+
+const CURRENCY_SYMBOLS: Record<string, string> = {
+  GBP: "£",
+  EUR: "€",
+  USD: "$",
+};
+
+const formatMoney = (pence: number, currency = "GBP") =>
   new Intl.NumberFormat("en-GB", {
     style: "currency",
     currency,
     maximumFractionDigits: 0,
   }).format(pence / 100);
+
+// Backwards-compatible alias used in a few places
+const formatGBP = formatMoney;
 
 const AdminManualInvestments = () => {
   const [deals, setDeals] = useState<Deal[]>([]);
