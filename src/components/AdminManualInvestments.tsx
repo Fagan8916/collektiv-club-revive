@@ -142,6 +142,7 @@ const AdminManualInvestments = () => {
     setEmail("");
     setDealSlug("");
     setAmountInput("");
+    setCurrency("GBP");
     setEmailMode("select");
   };
 
