@@ -386,12 +386,13 @@ const Members = () => {
               <TabsContent value="admin">
                 <Tabs defaultValue="membership" className="w-full">
                   <div className="flex justify-center mb-6 overflow-x-auto">
-                    <TabsList className="grid h-auto w-full grid-cols-3 md:grid-cols-5 gap-2 p-1 rounded-md bg-transparent">
+                    <TabsList className="grid h-auto w-full grid-cols-3 md:grid-cols-6 gap-2 p-1 rounded-md bg-transparent">
                       <TabsTrigger value="membership" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Membership</TabsTrigger>
                       <TabsTrigger value="invite" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Invite</TabsTrigger>
                       <TabsTrigger value="profiles-to-review" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Submissions</TabsTrigger>
                       <TabsTrigger value="profiles" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Profiles</TabsTrigger>
                       <TabsTrigger value="push" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Push</TabsTrigger>
+                      <TabsTrigger value="announcements" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">News</TabsTrigger>
                     </TabsList>
                   </div>
 
@@ -400,6 +401,7 @@ const Members = () => {
                   <TabsContent value="profiles-to-review"><AdminSubmissionsManager /></TabsContent>
                   <TabsContent value="profiles"><AdminProfileManager /></TabsContent>
                   <TabsContent value="push"><AdminPushNotifications /></TabsContent>
+                  <TabsContent value="announcements"><AdminAnnouncementsManager /></TabsContent>
                 </Tabs>
               </TabsContent>
             )}
