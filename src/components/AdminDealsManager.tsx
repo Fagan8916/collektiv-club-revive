@@ -66,6 +66,62 @@ const AdminDealsManager: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState(emptyForm);
+  const [uploadingLogo, setUploadingLogo] = useState(false);
+  const [uploadingMemo, setUploadingMemo] = useState(false);
+
+  const uploadLogo = async (file: File) => {
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      toast({ title: "Logo must be an image", variant: "destructive" });
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast({ title: "Logo too large (max 5MB)", variant: "destructive" });
+      return;
+    }
+    setUploadingLogo(true);
+    const ext = file.name.split(".").pop()?.toLowerCase() || "png";
+    const baseSlug = form.slug || slugify(form.name) || "deal";
+    const path = `${baseSlug}-${Date.now()}.${ext}`;
+    const { error } = await supabase.storage
+      .from("deal-logos")
+      .upload(path, file, { upsert: true, contentType: file.type });
+    if (error) {
+      setUploadingLogo(false);
+      toast({ title: "Logo upload failed", description: error.message, variant: "destructive" });
+      return;
+    }
+    const { data: pub } = supabase.storage.from("deal-logos").getPublicUrl(path);
+    setForm((f) => ({ ...f, logo_url: pub.publicUrl }));
+    setUploadingLogo(false);
+    toast({ title: "Logo uploaded" });
+  };
+
+  const uploadMemoPdf = async (file: File) => {
+    if (!file) return;
+    if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith(".pdf")) {
+      toast({ title: "Memo must be a PDF", variant: "destructive" });
+      return;
+    }
+    if (file.size > 25 * 1024 * 1024) {
+      toast({ title: "PDF too large (max 25MB)", variant: "destructive" });
+      return;
+    }
+    setUploadingMemo(true);
+    const baseSlug = form.slug || slugify(form.name) || "deal";
+    const path = `${baseSlug}-${Date.now()}.pdf`;
+    const { error } = await supabase.storage
+      .from("deal-memos")
+      .upload(path, file, { upsert: true, contentType: "application/pdf" });
+    if (error) {
+      setUploadingMemo(false);
+      toast({ title: "Memo upload failed", description: error.message, variant: "destructive" });
+      return;
+    }
+    setForm((f) => ({ ...f, memo_pdf_path: path }));
+    setUploadingMemo(false);
+    toast({ title: "Memo PDF uploaded" });
+  };
 
   const load = async () => {
     setLoading(true);
