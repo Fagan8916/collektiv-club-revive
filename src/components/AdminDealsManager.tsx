@@ -9,7 +9,7 @@ import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Plus, Trash2, Eye, EyeOff, Save, ExternalLink } from "lucide-react";
+import { Loader2, Plus, Trash2, Eye, EyeOff, Save, ExternalLink, Upload, FileText, X } from "lucide-react";
 
 type Deal = {
   id: string;
@@ -26,6 +26,7 @@ type Deal = {
   overview: string | null;
   memo: string | null;
   recording_url: string | null;
+  memo_pdf_path: string | null;
   sort_order: number;
   is_published: boolean;
   published_at: string | null;
@@ -52,6 +53,7 @@ const emptyForm: Omit<Deal, "id" | "published_at"> = {
   overview: "",
   memo: "",
   recording_url: "",
+  memo_pdf_path: "",
   sort_order: 0,
   is_published: false,
 };
@@ -64,6 +66,62 @@ const AdminDealsManager: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState(emptyForm);
+  const [uploadingLogo, setUploadingLogo] = useState(false);
+  const [uploadingMemo, setUploadingMemo] = useState(false);
+
+  const uploadLogo = async (file: File) => {
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      toast({ title: "Logo must be an image", variant: "destructive" });
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast({ title: "Logo too large (max 5MB)", variant: "destructive" });
+      return;
+    }
+    setUploadingLogo(true);
+    const ext = file.name.split(".").pop()?.toLowerCase() || "png";
+    const baseSlug = form.slug || slugify(form.name) || "deal";
+    const path = `${baseSlug}-${Date.now()}.${ext}`;
+    const { error } = await supabase.storage
+      .from("deal-logos")
+      .upload(path, file, { upsert: true, contentType: file.type });
+    if (error) {
+      setUploadingLogo(false);
+      toast({ title: "Logo upload failed", description: error.message, variant: "destructive" });
+      return;
+    }
+    const { data: pub } = supabase.storage.from("deal-logos").getPublicUrl(path);
+    setForm((f) => ({ ...f, logo_url: pub.publicUrl }));
+    setUploadingLogo(false);
+    toast({ title: "Logo uploaded" });
+  };
+
+  const uploadMemoPdf = async (file: File) => {
+    if (!file) return;
+    if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith(".pdf")) {
+      toast({ title: "Memo must be a PDF", variant: "destructive" });
+      return;
+    }
+    if (file.size > 25 * 1024 * 1024) {
+      toast({ title: "PDF too large (max 25MB)", variant: "destructive" });
+      return;
+    }
+    setUploadingMemo(true);
+    const baseSlug = form.slug || slugify(form.name) || "deal";
+    const path = `${baseSlug}-${Date.now()}.pdf`;
+    const { error } = await supabase.storage
+      .from("deal-memos")
+      .upload(path, file, { upsert: true, contentType: "application/pdf" });
+    if (error) {
+      setUploadingMemo(false);
+      toast({ title: "Memo upload failed", description: error.message, variant: "destructive" });
+      return;
+    }
+    setForm((f) => ({ ...f, memo_pdf_path: path }));
+    setUploadingMemo(false);
+    toast({ title: "Memo PDF uploaded" });
+  };
 
   const load = async () => {
     setLoading(true);
@@ -105,6 +163,7 @@ const AdminDealsManager: React.FC = () => {
       overview: d.overview ?? "",
       memo: d.memo ?? "",
       recording_url: d.recording_url ?? "",
+      memo_pdf_path: d.memo_pdf_path ?? "",
       sort_order: d.sort_order ?? 0,
       is_published: d.is_published,
     });
@@ -141,6 +200,7 @@ const AdminDealsManager: React.FC = () => {
       overview: form.overview.trim() || null,
       memo: form.memo.trim() || null,
       recording_url: form.recording_url.trim() || null,
+      memo_pdf_path: form.memo_pdf_path?.trim() || null,
       sort_order: Number(form.sort_order) || 0,
       is_published: form.is_published,
       published_at: form.is_published ? new Date().toISOString() : null,
@@ -262,13 +322,42 @@ const AdminDealsManager: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="logo_url">Logo URL</Label>
-                <Input
-                  id="logo_url"
-                  value={form.logo_url ?? ""}
-                  onChange={(e) => setForm({ ...form, logo_url: e.target.value })}
-                  placeholder="/lovable-uploads/acme-logo.png or https://…"
-                />
+                <Label htmlFor="logo_file">Logo</Label>
+                <div className="flex items-center gap-2">
+                  <Input
+                    id="logo_file"
+                    type="file"
+                    accept="image/*"
+                    disabled={uploadingLogo}
+                    onChange={(e) => {
+                      const f = e.target.files?.[0];
+                      if (f) uploadLogo(f);
+                      e.currentTarget.value = "";
+                    }}
+                  />
+                  {uploadingLogo && <Loader2 className="h-4 w-4 animate-spin text-collektiv-green" />}
+                </div>
+                {form.logo_url ? (
+                  <div className="flex items-center gap-2 rounded-md border p-2 bg-collektiv-green/5">
+                    <img src={form.logo_url} alt="Logo preview" className="h-8 w-auto object-contain" />
+                    <span className="text-xs text-muted-foreground truncate flex-1">{form.logo_url}</span>
+                    <Button
+                      type="button"
+                      size="icon"
+                      variant="ghost"
+                      onClick={() => setForm({ ...form, logo_url: "" })}
+                      aria-label="Remove logo"
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                ) : (
+                  <Input
+                    value={form.logo_url ?? ""}
+                    onChange={(e) => setForm({ ...form, logo_url: e.target.value })}
+                    placeholder="…or paste an existing logo URL"
+                  />
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="website_url">Website URL</Label>
@@ -371,6 +460,43 @@ const AdminDealsManager: React.FC = () => {
                 onChange={(e) => setForm({ ...form, recording_url: e.target.value })}
                 placeholder="https://drive.google.com/file/d/…/preview"
               />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="memo_pdf_file">Investment memo PDF</Label>
+              <div className="flex items-center gap-2">
+                <Input
+                  id="memo_pdf_file"
+                  type="file"
+                  accept="application/pdf,.pdf"
+                  disabled={uploadingMemo}
+                  onChange={(e) => {
+                    const f = e.target.files?.[0];
+                    if (f) uploadMemoPdf(f);
+                    e.currentTarget.value = "";
+                  }}
+                />
+                {uploadingMemo && <Loader2 className="h-4 w-4 animate-spin text-collektiv-green" />}
+              </div>
+              {form.memo_pdf_path ? (
+                <div className="flex items-center gap-2 rounded-md border p-2 bg-collektiv-green/5">
+                  <FileText className="h-4 w-4 text-collektiv-green" />
+                  <span className="text-xs text-collektiv-dark truncate flex-1">{form.memo_pdf_path}</span>
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    onClick={() => setForm({ ...form, memo_pdf_path: "" })}
+                    aria-label="Remove memo PDF"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              ) : (
+                <p className="text-xs text-muted-foreground">
+                  Optional. Members will see a "Download memo PDF" button on the deal page.
+                </p>
+              )}
             </div>
 
             <div className="flex items-center justify-between rounded-md border p-3 bg-collektiv-green/5">

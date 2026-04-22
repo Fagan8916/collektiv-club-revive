@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, ExternalLink, FileText, PlayCircle } from "lucide-react";
+import { ArrowLeft, ExternalLink, FileText, PlayCircle, Download } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,6 +19,7 @@ type Deal = {
   overview: string | null;
   memo: string | null;
   recording_url: string | null;
+  memo_pdf_path: string | null;
 };
 
 const detailRows: { label: string; key: keyof Deal }[] = [
@@ -34,6 +35,7 @@ const DynamicDeal = () => {
   const navigate = useNavigate();
   const [deal, setDeal] = useState<Deal | null>(null);
   const [loading, setLoading] = useState(true);
+  const [downloadingPdf, setDownloadingPdf] = useState(false);
 
   useEffect(() => {
     const load = async () => {
@@ -41,7 +43,7 @@ const DynamicDeal = () => {
       const { data, error } = await supabase
         .from("investment_deals")
         .select(
-          "slug, name, tagline, logo_url, website_url, status, round, valuation, ticket_min, close_date, overview, memo, recording_url",
+          "slug, name, tagline, logo_url, website_url, status, round, valuation, ticket_min, close_date, overview, memo, recording_url, memo_pdf_path",
         )
         .eq("slug", slug)
         .maybeSingle();
@@ -51,6 +53,20 @@ const DynamicDeal = () => {
     };
     load();
   }, [slug]);
+
+  const openMemoPdf = async () => {
+    if (!deal?.memo_pdf_path) return;
+    setDownloadingPdf(true);
+    const { data, error } = await supabase.storage
+      .from("deal-memos")
+      .createSignedUrl(deal.memo_pdf_path, 60 * 10); // 10 minutes
+    setDownloadingPdf(false);
+    if (error || !data?.signedUrl) {
+      console.error("Memo PDF link failed", error);
+      return;
+    }
+    window.open(data.signedUrl, "_blank", "noopener,noreferrer");
+  };
 
   if (loading) {
     return (
@@ -109,6 +125,19 @@ const DynamicDeal = () => {
                   <Link to={`/members/investments/${deal.slug}/memo`}>
                     <FileText className="mr-2 h-4 w-4" /> Investment Memo
                   </Link>
+                </Button>
+              )}
+              {deal.memo_pdf_path && (
+                <Button
+                  type="button"
+                  size="lg"
+                  variant="outline"
+                  className="text-base px-6 py-3"
+                  onClick={openMemoPdf}
+                  disabled={downloadingPdf}
+                >
+                  <Download className="mr-2 h-4 w-4" />
+                  {downloadingPdf ? "Preparing…" : "Download memo PDF"}
                 </Button>
               )}
               {deal.recording_url && (
