@@ -35,6 +35,7 @@ const DynamicDeal = () => {
   const navigate = useNavigate();
   const [deal, setDeal] = useState<Deal | null>(null);
   const [loading, setLoading] = useState(true);
+  const [downloadingPdf, setDownloadingPdf] = useState(false);
 
   useEffect(() => {
     const load = async () => {
@@ -52,6 +53,20 @@ const DynamicDeal = () => {
     };
     load();
   }, [slug]);
+
+  const openMemoPdf = async () => {
+    if (!deal?.memo_pdf_path) return;
+    setDownloadingPdf(true);
+    const { data, error } = await supabase.storage
+      .from("deal-memos")
+      .createSignedUrl(deal.memo_pdf_path, 60 * 10); // 10 minutes
+    setDownloadingPdf(false);
+    if (error || !data?.signedUrl) {
+      console.error("Memo PDF link failed", error);
+      return;
+    }
+    window.open(data.signedUrl, "_blank", "noopener,noreferrer");
+  };
 
   if (loading) {
     return (
