@@ -250,7 +250,7 @@ const AdminInvestmentsImporter = () => {
           onClick={() => fileRef.current?.click()}
           disabled={importing}
         >
-          <Upload className="h-4 w-4 mr-2" /> Choose CSV
+          <Upload className="h-4 w-4 mr-2" /> Choose file
         </Button>
       </CardContent>
     </Card>
