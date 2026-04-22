@@ -335,14 +335,15 @@ const Members = () => {
           </div>
           <Tabs defaultValue="membership" className="w-full">
             <div className="flex justify-center mb-6 overflow-x-auto">
-              <TabsList className="grid h-auto w-full grid-cols-3 md:grid-cols-7 gap-2 p-1 rounded-md bg-transparent">
+              <TabsList className="grid h-auto w-full grid-cols-3 md:grid-cols-8 gap-2 p-1 rounded-md bg-transparent">
                 <TabsTrigger value="membership" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Membership</TabsTrigger>
                 <TabsTrigger value="invite" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Invite</TabsTrigger>
                 <TabsTrigger value="profiles-to-review" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Submissions</TabsTrigger>
                 <TabsTrigger value="profiles" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Profiles</TabsTrigger>
                 <TabsTrigger value="push" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Push</TabsTrigger>
                 <TabsTrigger value="announcements" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">News</TabsTrigger>
-                <TabsTrigger value="investments-import" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Investments</TabsTrigger>
+                <TabsTrigger value="deals" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Deals</TabsTrigger>
+                <TabsTrigger value="investments-import" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Imports</TabsTrigger>
               </TabsList>
             </div>
 
@@ -352,6 +353,7 @@ const Members = () => {
             <TabsContent value="profiles"><AdminProfileManager /></TabsContent>
             <TabsContent value="push"><AdminPushNotifications /></TabsContent>
             <TabsContent value="announcements"><AdminAnnouncementsManager /></TabsContent>
+            <TabsContent value="deals"><AdminDealsManager /></TabsContent>
             <TabsContent value="investments-import"><AdminInvestmentsImporter /></TabsContent>
           </Tabs>
         </div>
@@ -385,6 +387,7 @@ const Members = () => {
             </div>
 
             <TabsContent value="portfolio">
+              <NewDealsSection />
               <InvestmentsSection />
             </TabsContent>
             <TabsContent value="mine">
