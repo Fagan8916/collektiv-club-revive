@@ -112,9 +112,20 @@ const AdminInvestmentsImporter = () => {
     if (!file) return;
     setImporting(true);
     try {
-      const text = await file.text();
-      const rows = parseCsv(text);
-      if (rows.length < 2) throw new Error("CSV is empty");
+      const name = file.name.toLowerCase();
+      const isExcel = name.endsWith(".xlsx") || name.endsWith(".xls") || name.endsWith(".ods");
+      let rows: string[][];
+      if (isExcel) {
+        const buf = await file.arrayBuffer();
+        const wb = XLSX.read(buf, { type: "array" });
+        const ws = wb.Sheets[wb.SheetNames[0]];
+        const aoa = XLSX.utils.sheet_to_json<unknown[]>(ws, { header: 1, blankrows: false, defval: "" });
+        rows = aoa.map((r) => r.map((c) => (c == null ? "" : String(c))));
+      } else {
+        const text = await file.text();
+        rows = parseCsv(text);
+      }
+      if (rows.length < 2) throw new Error("File is empty");
 
       const header = rows[0];
       // Find email column
