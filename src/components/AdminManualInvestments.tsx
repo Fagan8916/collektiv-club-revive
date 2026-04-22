@@ -193,7 +193,7 @@ const AdminManualInvestments = () => {
       console.log("[AdminManualInvestments] upsert success:", data);
 
       toast.success(
-        `${editingId ? "Updated" : "Saved"} ${formatGBP(pence)} for ${cleanEmail} on ${
+        `${editingId ? "Updated" : "Saved"} ${formatMoney(pence, currency)} for ${cleanEmail} on ${
           dealMap.get(dealSlug) ?? dealSlug
         }.`,
       );
@@ -215,6 +215,11 @@ const AdminManualInvestments = () => {
     );
     setDealSlug(row.deal_slug);
     setAmountInput((row.amount_pence / 100).toString());
+    setCurrency(
+      (SUPPORTED_CURRENCIES as readonly string[]).includes(row.currency)
+        ? (row.currency as SupportedCurrency)
+        : "GBP",
+    );
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
