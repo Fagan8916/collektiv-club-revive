@@ -207,7 +207,7 @@ const Members = () => {
     directory: "Directory",
     investments: "Investments",
     profile: "Profile",
-    admin: "Admin · Push",
+    admin: "Admin",
   };
 
   // Stat click handler — switch tab in app
