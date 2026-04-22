@@ -654,8 +654,16 @@ const AdminDealsManager: React.FC = () => {
                       <p className="text-xs text-muted-foreground mt-2 break-all">
                         /members/investments/{d.slug}
                       </p>
-                      <div className="mt-2 inline-flex items-center gap-2 rounded-md bg-collektiv-green/10 px-2 py-1 text-xs font-medium text-collektiv-green">
-                        Total invested: {formatGBP(investedBySlug[d.slug]?.totalPence ?? 0)}
+                      <div className="mt-2 inline-flex flex-wrap items-center gap-2 rounded-md bg-collektiv-green/10 px-2 py-1 text-xs font-medium text-collektiv-green">
+                        <span>Total invested:</span>
+                        {(() => {
+                          const totals = investedBySlug[d.slug]?.totals ?? {};
+                          const entries = Object.entries(totals);
+                          if (entries.length === 0) return <span>{formatMoney(0)}</span>;
+                          return entries.map(([cur, amt]) => (
+                            <span key={cur}>{formatMoney(amt, cur)}</span>
+                          ));
+                        })()}
                         <span className="text-muted-foreground font-normal">
                           ({investedBySlug[d.slug]?.investorCount ?? 0} {(investedBySlug[d.slug]?.investorCount ?? 0) === 1 ? "investor" : "investors"})
                         </span>
