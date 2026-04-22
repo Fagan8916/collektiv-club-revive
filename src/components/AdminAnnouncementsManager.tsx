@@ -36,30 +36,47 @@ const AdminAnnouncementsManager: React.FC = () => {
   const { user } = useAuth();
   const { toast } = useToast();
   const [items, setItems] = useState<Announcement[]>([]);
+  const [deals, setDeals] = useState<{ slug: string; name: string }[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState(emptyForm);
 
   const load = async () => {
     setLoading(true);
-    const { data, error } = await supabase
-      .from("announcements")
-      .select("*")
-      .order("is_active", { ascending: false })
-      .order("sort_order", { ascending: false })
-      .order("created_at", { ascending: false });
+    const [{ data, error }, { data: dealRows }] = await Promise.all([
+      supabase
+        .from("announcements")
+        .select("*")
+        .order("is_active", { ascending: false })
+        .order("sort_order", { ascending: false })
+        .order("created_at", { ascending: false }),
+      supabase.from("investment_deals").select("slug, name").order("name", { ascending: true }),
+    ]);
 
     if (error) {
       toast({ title: "Failed to load announcements", description: error.message, variant: "destructive" });
     } else {
       setItems((data ?? []) as Announcement[]);
     }
+    setDeals((dealRows ?? []) as { slug: string; name: string }[]);
     setLoading(false);
   };
 
   useEffect(() => {
     load();
   }, []);
+
+  const handleDealPick = (slug: string) => {
+    if (!slug) return;
+    const deal = deals.find((d) => d.slug === slug);
+    if (!deal) return;
+    setForm((prev) => ({
+      ...prev,
+      title: prev.title || `${deal.name} is now open to members`,
+      href: `/members/investments/${deal.slug}`,
+      cta: prev.cta || "View opportunity",
+    }));
+  };
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -170,14 +187,21 @@ const AdminAnnouncementsManager: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="href">Link (internal path or URL) *</Label>
-                <Input
-                  id="href"
-                  value={form.href}
-                  onChange={(e) => setForm({ ...form, href: e.target.value })}
-                  placeholder="/members/investments/webel"
-                  required
-                />
+                <Label htmlFor="deal-pick">Link to a deal (optional)</Label>
+                <select
+                  id="deal-pick"
+                  className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
+                  value=""
+                  onChange={(e) => handleDealPick(e.target.value)}
+                  disabled={deals.length === 0}
+                >
+                  <option value="">— Pick a deal to auto-fill —</option>
+                  {deals.map((d) => (
+                    <option key={d.slug} value={d.slug}>
+                      {d.name}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="cta">CTA text</Label>
@@ -188,6 +212,17 @@ const AdminAnnouncementsManager: React.FC = () => {
                   placeholder="View opportunity"
                 />
               </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="href">Link (internal path or URL) *</Label>
+              <Input
+                id="href"
+                value={form.href}
+                onChange={(e) => setForm({ ...form, href: e.target.value })}
+                placeholder="/members/investments/webel"
+                required
+              />
             </div>
 
             <Button type="submit" disabled={submitting} className="bg-collektiv-green hover:bg-collektiv-lightgreen">
