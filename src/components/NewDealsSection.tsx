@@ -82,6 +82,7 @@ const NewDealsSection: React.FC = () => {
                   <DealCommitButton
                     dealSlug={deal.slug}
                     dealName={deal.name}
+                    dealStatus={deal.status}
                     fullWidth
                   />
                 </div>
