@@ -386,6 +386,9 @@ const AdminDealsManager: React.FC = () => {
                   />
                   {uploadingLogo && <Loader2 className="h-4 w-4 animate-spin text-collektiv-green" />}
                 </div>
+                {logoFeedback && (
+                  <p className="text-xs text-muted-foreground">{logoFeedback}</p>
+                )}
                 {form.logo_url ? (
                   <div className="flex items-center gap-2 rounded-md border p-2 bg-collektiv-green/5">
                     <img src={form.logo_url} alt="Logo preview" className="h-8 w-auto object-contain" />
@@ -394,7 +397,10 @@ const AdminDealsManager: React.FC = () => {
                       type="button"
                       size="icon"
                       variant="ghost"
-                      onClick={() => setForm({ ...form, logo_url: "" })}
+                      onClick={() => {
+                        setForm({ ...form, logo_url: "" });
+                        setLogoFeedback("");
+                      }}
                       aria-label="Remove logo"
                     >
                       <X className="h-4 w-4" />
@@ -527,6 +533,9 @@ const AdminDealsManager: React.FC = () => {
                 />
                 {uploadingMemo && <Loader2 className="h-4 w-4 animate-spin text-collektiv-green" />}
               </div>
+                {memoFeedback && (
+                  <p className="text-xs text-muted-foreground">{memoFeedback}</p>
+                )}
               {form.memo_pdf_path ? (
                 <div className="flex items-center gap-2 rounded-md border p-2 bg-collektiv-green/5">
                   <FileText className="h-4 w-4 text-collektiv-green" />
@@ -535,7 +544,10 @@ const AdminDealsManager: React.FC = () => {
                     type="button"
                     size="icon"
                     variant="ghost"
-                    onClick={() => setForm({ ...form, memo_pdf_path: "" })}
+                      onClick={() => {
+                        setForm({ ...form, memo_pdf_path: "" });
+                        setMemoFeedback("");
+                      }}
                     aria-label="Remove memo PDF"
                   >
                     <X className="h-4 w-4" />
