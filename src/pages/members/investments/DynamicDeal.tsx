@@ -149,6 +149,16 @@ const DynamicDeal = () => {
                 </Button>
               )}
             </div>
+
+            <div className="mt-6 max-w-sm mx-auto">
+              <DealCommitButton
+                dealSlug={deal.slug}
+                dealName={deal.name}
+                dealStatus={deal.status}
+                size="lg"
+                fullWidth
+              />
+            </div>
           </CardHeader>
 
           <CardContent className="space-y-6">
