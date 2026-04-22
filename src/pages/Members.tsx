@@ -205,6 +205,7 @@ const Members = () => {
     directory: "Directory",
     investments: "Investments",
     profile: "Profile",
+    admin: "Admin · Push",
   };
 
   // Stat click handler — switch tab in app
@@ -309,6 +310,21 @@ const Members = () => {
             </p>
           </div>
           <MemberDirectory />
+        </div>
+      )}
+
+      {/* ADMIN TAB (admins only) — push composer + dashboard */}
+      {activeTab === 'admin' && isAdmin && (
+        <div className="container mx-auto px-4 py-6 max-w-3xl">
+          <div className="text-center mb-6">
+            <h2 className="font-playfair text-2xl font-bold text-collektiv-green mb-2">
+              Push Notifications
+            </h2>
+            <p className="text-sm text-gray-600">
+              Compose broadcasts and review delivery stats — all in one place.
+            </p>
+          </div>
+          <AdminPushNotifications />
         </div>
       )}
 

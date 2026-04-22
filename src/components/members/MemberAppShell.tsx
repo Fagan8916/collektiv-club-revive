@@ -98,7 +98,7 @@ const MemberAppShell: React.FC<MemberAppShellProps> = ({
       </main>
 
       {/* Bottom Tab Bar */}
-      <MemberBottomNav active={activeTab} onChange={onTabChange} />
+      <MemberBottomNav active={activeTab} onChange={onTabChange} isAdmin={isAdmin} />
     </div>
   );
 };

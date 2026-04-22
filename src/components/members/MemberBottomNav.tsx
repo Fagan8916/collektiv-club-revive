@@ -1,22 +1,26 @@
 import React from "react";
-import { Home, Users, TrendingUp, User } from "lucide-react";
+import { Home, Users, TrendingUp, User, Bell } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export type MemberTab = "home" | "directory" | "investments" | "profile";
+export type MemberTab = "home" | "directory" | "investments" | "profile" | "admin";
 
 interface MemberBottomNavProps {
   active: MemberTab;
   onChange: (tab: MemberTab) => void;
+  isAdmin?: boolean;
 }
 
-const items: { id: MemberTab; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
+const baseItems: { id: MemberTab; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
   { id: "home", label: "Home", icon: Home },
   { id: "directory", label: "Directory", icon: Users },
   { id: "investments", label: "Investments", icon: TrendingUp },
   { id: "profile", label: "Profile", icon: User },
 ];
 
-const MemberBottomNav: React.FC<MemberBottomNavProps> = ({ active, onChange }) => {
+const adminItem = { id: "admin" as MemberTab, label: "Admin", icon: Bell };
+
+const MemberBottomNav: React.FC<MemberBottomNavProps> = ({ active, onChange, isAdmin }) => {
+  const items = isAdmin ? [...baseItems, adminItem] : baseItems;
   return (
     <nav
       className="fixed bottom-0 inset-x-0 z-50 bg-collektiv-dark/95 backdrop-blur-md border-t border-white/10 pb-[env(safe-area-inset-bottom)]"
