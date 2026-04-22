@@ -127,6 +127,19 @@ const DynamicDeal = () => {
                   </Link>
                 </Button>
               )}
+              {deal.memo_pdf_path && (
+                <Button
+                  type="button"
+                  size="lg"
+                  variant="outline"
+                  className="text-base px-6 py-3"
+                  onClick={openMemoPdf}
+                  disabled={downloadingPdf}
+                >
+                  <Download className="mr-2 h-4 w-4" />
+                  {downloadingPdf ? "Preparing…" : "Download memo PDF"}
+                </Button>
+              )}
               {deal.recording_url && (
                 <Button asChild size="lg" variant="outline" className="text-base px-6 py-3">
                   <a href={deal.recording_url} target="_blank" rel="noopener noreferrer">
