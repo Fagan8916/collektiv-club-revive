@@ -56,6 +56,30 @@ export type Database = {
         }
         Relationships: []
       }
+      investment_deals: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       invitations: {
         Row: {
           code: string
@@ -80,6 +104,36 @@ export type Database = {
           email?: string
           id?: string
           used_at?: string | null
+        }
+        Relationships: []
+      }
+      member_investments: {
+        Row: {
+          amount_pence: number
+          currency: string
+          deal_slug: string
+          email: string
+          id: string
+          imported_at: string
+          imported_by: string | null
+        }
+        Insert: {
+          amount_pence: number
+          currency?: string
+          deal_slug: string
+          email: string
+          id?: string
+          imported_at?: string
+          imported_by?: string | null
+        }
+        Update: {
+          amount_pence?: number
+          currency?: string
+          deal_slug?: string
+          email?: string
+          id?: string
+          imported_at?: string
+          imported_by?: string | null
         }
         Relationships: []
       }
