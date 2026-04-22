@@ -27,10 +27,14 @@ export const useUserRole = () => {
 
         console.log("useUserRole: User found:", user.email, user.id);
 
-        // Special case for admin emails - grant admin access directly
-        const adminEmails = ['fagan8916@gmail.com', 'ryan@collektiv.club', 'manon@collektiv.club'];
-        if (adminEmails.includes(user.email || '')) {
-          console.log(`useUserRole: Detected admin email ${user.email} - granting admin access`);
+        // Admin access is restricted to a hardcoded allowlist of emails.
+        // Only these accounts can ever see/use the Admin tab.
+        const ADMIN_ALLOWLIST = ['ryan@collektiv.club', 'manon@collektiv.club', 'kev@collektiv.club'];
+        const userEmail = (user.email || '').toLowerCase();
+        const isAllowlistedAdmin = ADMIN_ALLOWLIST.includes(userEmail);
+
+        if (isAllowlistedAdmin) {
+          console.log(`useUserRole: Allowlisted admin ${userEmail} - granting admin access`);
           if (mounted) {
             setIsAdmin(true);
             setIsApprovedMember(true);
