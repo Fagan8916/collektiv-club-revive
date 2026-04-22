@@ -47,6 +47,7 @@ const formatGBP = (pence: number) =>
 const DealCommitButton: React.FC<DealCommitButtonProps> = ({
   dealSlug,
   dealName,
+  dealStatus,
   size = "sm",
   variant = "default",
   className,
