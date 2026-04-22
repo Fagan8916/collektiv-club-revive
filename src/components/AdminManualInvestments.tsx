@@ -257,23 +257,20 @@ const AdminManualInvestments = () => {
                   </button>
                 </div>
                 {emailMode === "select" ? (
-                  <Select value={email} onValueChange={setEmail}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a member…" />
-                    </SelectTrigger>
-                    <SelectContent className="max-h-72">
-                      {members.length === 0 && (
-                        <div className="px-3 py-2 text-sm text-gray-500">
-                          No members found
-                        </div>
-                      )}
-                      {members.map((m) => (
-                        <SelectItem key={m.email} value={m.email}>
-                          {m.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <select
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    <option value="">
+                      {members.length === 0 ? "No members found" : "Select a member…"}
+                    </option>
+                    {members.map((m) => (
+                      <option key={m.email} value={m.email}>
+                        {m.label}
+                      </option>
+                    ))}
+                  </select>
                 ) : (
                   <Input
                     type="email"
