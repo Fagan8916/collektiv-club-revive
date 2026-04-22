@@ -318,18 +318,36 @@ const Members = () => {
         </div>
       )}
 
-      {/* ADMIN TAB (admins only) — push composer + dashboard */}
+      {/* ADMIN TAB (admins only) — full admin console */}
       {activeTab === 'admin' && isAdmin && (
         <div className="container mx-auto px-4 py-6 max-w-3xl">
           <div className="text-center mb-6">
             <h2 className="font-playfair text-2xl font-bold text-collektiv-green mb-2">
-              Push Notifications
+              Admin Console
             </h2>
             <p className="text-sm text-gray-600">
-              Compose broadcasts and review delivery stats — all in one place.
+              Manage members, invitations, submissions, profiles, push notifications and announcements.
             </p>
           </div>
-          <AdminPushNotifications />
+          <Tabs defaultValue="membership" className="w-full">
+            <div className="flex justify-center mb-6 overflow-x-auto">
+              <TabsList className="grid h-auto w-full grid-cols-3 md:grid-cols-6 gap-2 p-1 rounded-md bg-transparent">
+                <TabsTrigger value="membership" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Membership</TabsTrigger>
+                <TabsTrigger value="invite" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Invite</TabsTrigger>
+                <TabsTrigger value="profiles-to-review" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Submissions</TabsTrigger>
+                <TabsTrigger value="profiles" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Profiles</TabsTrigger>
+                <TabsTrigger value="push" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">Push</TabsTrigger>
+                <TabsTrigger value="announcements" className="text-xs px-2 py-2 rounded-md border border-collektiv-green/20 bg-white text-collektiv-dark shadow-sm data-[state=active]:bg-collektiv-green data-[state=active]:text-white">News</TabsTrigger>
+              </TabsList>
+            </div>
+
+            <TabsContent value="membership"><MembershipManager /></TabsContent>
+            <TabsContent value="invite"><div className="max-w-2xl mx-auto"><AdminInviteManager /></div></TabsContent>
+            <TabsContent value="profiles-to-review"><AdminSubmissionsManager /></TabsContent>
+            <TabsContent value="profiles"><AdminProfileManager /></TabsContent>
+            <TabsContent value="push"><AdminPushNotifications /></TabsContent>
+            <TabsContent value="announcements"><AdminAnnouncementsManager /></TabsContent>
+          </Tabs>
         </div>
       )}
 
