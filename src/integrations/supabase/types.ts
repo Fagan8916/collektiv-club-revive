@@ -64,6 +64,7 @@ export type Database = {
           is_published: boolean
           logo_url: string | null
           memo: string | null
+          memo_pdf_path: string | null
           name: string
           overview: string | null
           published_at: string | null
@@ -85,6 +86,7 @@ export type Database = {
           is_published?: boolean
           logo_url?: string | null
           memo?: string | null
+          memo_pdf_path?: string | null
           name: string
           overview?: string | null
           published_at?: string | null
@@ -106,6 +108,7 @@ export type Database = {
           is_published?: boolean
           logo_url?: string | null
           memo?: string | null
+          memo_pdf_path?: string | null
           name?: string
           overview?: string | null
           published_at?: string | null

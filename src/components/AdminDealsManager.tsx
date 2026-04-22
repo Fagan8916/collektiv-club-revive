@@ -9,7 +9,7 @@ import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Plus, Trash2, Eye, EyeOff, Save, ExternalLink } from "lucide-react";
+import { Loader2, Plus, Trash2, Eye, EyeOff, Save, ExternalLink, Upload, FileText, X } from "lucide-react";
 
 type Deal = {
   id: string;
@@ -26,6 +26,7 @@ type Deal = {
   overview: string | null;
   memo: string | null;
   recording_url: string | null;
+  memo_pdf_path: string | null;
   sort_order: number;
   is_published: boolean;
   published_at: string | null;
@@ -52,6 +53,7 @@ const emptyForm: Omit<Deal, "id" | "published_at"> = {
   overview: "",
   memo: "",
   recording_url: "",
+  memo_pdf_path: "",
   sort_order: 0,
   is_published: false,
 };
