@@ -285,19 +285,25 @@ const AdminManualInvestments = () => {
               </div>
 
               <div className="space-y-2">
-                <Label>Deal</Label>
-                <Select value={dealSlug} onValueChange={setDealSlug}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a deal…" />
-                  </SelectTrigger>
-                  <SelectContent className="max-h-72">
-                    {deals.map((d) => (
-                      <SelectItem key={d.slug} value={d.slug}>
-                        {d.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <Label htmlFor="deal-select">Deal</Label>
+                <select
+                  id="deal-select"
+                  value={dealSlug}
+                  onChange={(e) => setDealSlug(e.target.value)}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  <option value="">Select a deal…</option>
+                  {deals.map((d) => (
+                    <option key={d.slug} value={d.slug}>
+                      {d.name}
+                    </option>
+                  ))}
+                </select>
+                {deals.length === 0 && !loading && (
+                  <p className="text-xs text-red-600">
+                    No deals found. Add deals in the Deals tab first.
+                  </p>
+                )}
               </div>
             </div>
 
