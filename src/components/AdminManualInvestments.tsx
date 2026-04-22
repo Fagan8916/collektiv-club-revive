@@ -54,36 +54,72 @@ const AdminManualInvestments = () => {
 
   const loadAll = async () => {
     setLoading(true);
-    const [dealRes, investmentRes, membersRes] = await Promise.all([
+    const [dealRes, investmentRes, profileRes, preApprovedRes, membersRes] = await Promise.all([
       supabase.from("investment_deals").select("slug, name").order("name"),
       supabase
         .from("member_investments")
         .select("id, email, deal_slug, amount_pence, currency, imported_at")
         .order("imported_at", { ascending: false }),
+      supabase
+        .from("member_profiles")
+        .select("contact_email, first_name, full_name"),
+      supabase.from("pre_approved_emails").select("email, full_name"),
       supabase.functions.invoke("admin-list-members"),
     ]);
 
     if (dealRes.error) console.error("[AdminManualInvestments] deals load error:", dealRes.error);
     if (investmentRes.error)
       console.error("[AdminManualInvestments] investments load error:", investmentRes.error);
+    if (profileRes.error)
+      console.error("[AdminManualInvestments] profiles load error:", profileRes.error);
+    if (preApprovedRes.error)
+      console.error("[AdminManualInvestments] pre-approved load error:", preApprovedRes.error);
     if (membersRes.error)
-      console.error("[AdminManualInvestments] members load error:", membersRes.error);
+      console.error("[AdminManualInvestments] members fn error:", membersRes.error);
 
     console.log("[AdminManualInvestments] loaded deals:", dealRes.data?.length ?? 0);
     console.log(
-      "[AdminManualInvestments] loaded members:",
-      membersRes.data?.members?.length ?? 0,
+      "[AdminManualInvestments] loaded fn members:",
+      Array.isArray(membersRes.data?.members) ? membersRes.data.members.length : "n/a",
+      "raw response:",
+      membersRes.data,
     );
 
     setDeals(dealRes.data ?? []);
     setRows((investmentRes.data ?? []) as InvestmentRow[]);
 
-    // Members from edge function (covers ALL auth users)
+    // Build dropdown from EVERY available source so we never end up empty
     const map = new Map<string, string>();
-    const fnMembers: { email: string; label: string }[] = membersRes.data?.members ?? [];
-    fnMembers.forEach((m) => map.set(m.email.toLowerCase(), m.label));
 
-    // Include any emails from existing investments not yet known
+    // 1) Pre-approved emails (have full_name)
+    (preApprovedRes.data ?? []).forEach((p) => {
+      if (!p.email) return;
+      const key = p.email.toLowerCase();
+      map.set(key, p.full_name ? `${p.full_name} — ${p.email}` : p.email);
+    });
+
+    // 2) Member profiles (contact_email + name) — overwrite pre-approved label if richer
+    (profileRes.data ?? []).forEach((p) => {
+      if (!p.contact_email) return;
+      const key = p.contact_email.toLowerCase();
+      const name = [p.first_name, p.full_name].filter(Boolean).join(" ").trim();
+      map.set(key, name ? `${name} — ${p.contact_email}` : p.contact_email);
+    });
+
+    // 3) Edge function members (covers ALL auth users, including those without
+    //    contact_email or pre-approved record)
+    const fnMembers: { email: string; label: string }[] = Array.isArray(
+      membersRes.data?.members,
+    )
+      ? membersRes.data.members
+      : [];
+    fnMembers.forEach((m) => {
+      if (!m.email) return;
+      const key = m.email.toLowerCase();
+      if (!map.has(key)) map.set(key, m.label || m.email);
+    });
+
+    // 4) Existing investment emails as last fallback
     (investmentRes.data ?? []).forEach((inv) => {
       const key = inv.email.toLowerCase();
       if (!map.has(key)) map.set(key, inv.email);
