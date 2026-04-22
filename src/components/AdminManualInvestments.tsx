@@ -54,12 +54,7 @@ const AdminManualInvestments = () => {
 
   const loadAll = async () => {
     setLoading(true);
-    const [
-      { data: dealData },
-      { data: investmentData },
-      { data: profileData },
-      { data: preApprovedData },
-    ] = await Promise.all([
+    const [dealRes, investmentRes, profileRes, preApprovedRes] = await Promise.all([
       supabase.from("investment_deals").select("slug, name").order("name"),
       supabase
         .from("member_investments")
@@ -73,24 +68,34 @@ const AdminManualInvestments = () => {
         .select("email, full_name"),
     ]);
 
-    setDeals(dealData ?? []);
-    setRows((investmentData ?? []) as InvestmentRow[]);
+    if (dealRes.error) console.error("[AdminManualInvestments] deals load error:", dealRes.error);
+    if (investmentRes.error)
+      console.error("[AdminManualInvestments] investments load error:", investmentRes.error);
+    if (profileRes.error)
+      console.error("[AdminManualInvestments] profiles load error:", profileRes.error);
+    if (preApprovedRes.error)
+      console.error("[AdminManualInvestments] pre-approved load error:", preApprovedRes.error);
+
+    console.log("[AdminManualInvestments] loaded deals:", dealRes.data?.length ?? 0);
+
+    setDeals(dealRes.data ?? []);
+    setRows((investmentRes.data ?? []) as InvestmentRow[]);
 
     // Build unique member dropdown options from profiles + pre-approved + existing investments
     const map = new Map<string, string>();
-    (profileData ?? []).forEach((p) => {
+    (profileRes.data ?? []).forEach((p) => {
       if (!p.contact_email) return;
       const key = p.contact_email.toLowerCase();
       const name = [p.first_name, p.full_name].filter(Boolean).join(" ").trim();
       map.set(key, name ? `${name} — ${p.contact_email}` : p.contact_email);
     });
-    (preApprovedData ?? []).forEach((p) => {
+    (preApprovedRes.data ?? []).forEach((p) => {
       const key = p.email.toLowerCase();
       if (!map.has(key)) {
         map.set(key, p.full_name ? `${p.full_name} — ${p.email}` : p.email);
       }
     });
-    (investmentData ?? []).forEach((inv) => {
+    (investmentRes.data ?? []).forEach((inv) => {
       const key = inv.email.toLowerCase();
       if (!map.has(key)) map.set(key, inv.email);
     });
