@@ -61,7 +61,7 @@ const emptyForm: Omit<Deal, "id" | "published_at"> = {
 const AdminDealsManager: React.FC = () => {
   const { user } = useAuth();
   const [deals, setDeals] = useState<Deal[]>([]);
-  const [investedBySlug, setInvestedBySlug] = useState<Record<string, { totalPence: number; investorCount: number }>>({});
+  const [investedBySlug, setInvestedBySlug] = useState<Record<string, { totals: Record<string, number>; investorCount: number }>>({});
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -178,7 +178,7 @@ const AdminDealsManager: React.FC = () => {
         .select("*")
         .order("sort_order", { ascending: false })
         .order("created_at", { ascending: false }),
-      supabase.from("member_investments").select("deal_slug, amount_pence, email"),
+      supabase.from("member_investments").select("deal_slug, amount_pence, email, currency"),
     ]);
 
     if (dealsRes.error) {
@@ -190,24 +190,25 @@ const AdminDealsManager: React.FC = () => {
     if (investmentsRes.error) {
       console.error("[AdminDealsManager] Failed to load member investments", investmentsRes.error);
     } else {
-      const totals: Record<string, { totalPence: number; investors: Set<string> }> = {};
+      const totals: Record<string, { totals: Record<string, number>; investors: Set<string> }> = {};
       for (const row of investmentsRes.data ?? []) {
         const slug = row.deal_slug;
-        if (!totals[slug]) totals[slug] = { totalPence: 0, investors: new Set() };
-        totals[slug].totalPence += Number(row.amount_pence) || 0;
+        if (!totals[slug]) totals[slug] = { totals: {}, investors: new Set() };
+        const cur = row.currency || "GBP";
+        totals[slug].totals[cur] = (totals[slug].totals[cur] ?? 0) + (Number(row.amount_pence) || 0);
         if (row.email) totals[slug].investors.add(row.email.toLowerCase());
       }
-      const summary: Record<string, { totalPence: number; investorCount: number }> = {};
+      const summary: Record<string, { totals: Record<string, number>; investorCount: number }> = {};
       for (const [slug, v] of Object.entries(totals)) {
-        summary[slug] = { totalPence: v.totalPence, investorCount: v.investors.size };
+        summary[slug] = { totals: v.totals, investorCount: v.investors.size };
       }
       setInvestedBySlug(summary);
     }
     setLoading(false);
   };
 
-  const formatGBP = (pence: number) =>
-    new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 }).format(pence / 100);
+  const formatMoney = (pence: number, currency = "GBP") =>
+    new Intl.NumberFormat("en-GB", { style: "currency", currency, maximumFractionDigits: 0 }).format(pence / 100);
 
   useEffect(() => {
     load();
@@ -653,8 +654,16 @@ const AdminDealsManager: React.FC = () => {
                       <p className="text-xs text-muted-foreground mt-2 break-all">
                         /members/investments/{d.slug}
                       </p>
-                      <div className="mt-2 inline-flex items-center gap-2 rounded-md bg-collektiv-green/10 px-2 py-1 text-xs font-medium text-collektiv-green">
-                        Total invested: {formatGBP(investedBySlug[d.slug]?.totalPence ?? 0)}
+                      <div className="mt-2 inline-flex flex-wrap items-center gap-2 rounded-md bg-collektiv-green/10 px-2 py-1 text-xs font-medium text-collektiv-green">
+                        <span>Total invested:</span>
+                        {(() => {
+                          const totals = investedBySlug[d.slug]?.totals ?? {};
+                          const entries = Object.entries(totals);
+                          if (entries.length === 0) return <span>{formatMoney(0)}</span>;
+                          return entries.map(([cur, amt]) => (
+                            <span key={cur}>{formatMoney(amt, cur)}</span>
+                          ));
+                        })()}
                         <span className="text-muted-foreground font-normal">
                           ({investedBySlug[d.slug]?.investorCount ?? 0} {(investedBySlug[d.slug]?.investorCount ?? 0) === 1 ? "investor" : "investors"})
                         </span>

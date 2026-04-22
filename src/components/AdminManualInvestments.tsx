@@ -26,12 +26,24 @@ interface InvestmentRow {
   imported_at: string;
 }
 
-const formatGBP = (pence: number, currency = "GBP") =>
+const SUPPORTED_CURRENCIES = ["GBP", "EUR", "USD"] as const;
+type SupportedCurrency = (typeof SUPPORTED_CURRENCIES)[number];
+
+const CURRENCY_SYMBOLS: Record<string, string> = {
+  GBP: "£",
+  EUR: "€",
+  USD: "$",
+};
+
+const formatMoney = (pence: number, currency = "GBP") =>
   new Intl.NumberFormat("en-GB", {
     style: "currency",
     currency,
     maximumFractionDigits: 0,
   }).format(pence / 100);
+
+// Backwards-compatible alias used in a few places
+const formatGBP = formatMoney;
 
 const AdminManualInvestments = () => {
   const [deals, setDeals] = useState<Deal[]>([]);
@@ -45,6 +57,7 @@ const AdminManualInvestments = () => {
   const [email, setEmail] = useState("");
   const [dealSlug, setDealSlug] = useState("");
   const [amountInput, setAmountInput] = useState("");
+  const [currency, setCurrency] = useState<SupportedCurrency>("GBP");
   const [editingId, setEditingId] = useState<string | null>(null);
 
   const dealMap = useMemo(
@@ -129,6 +142,7 @@ const AdminManualInvestments = () => {
     setEmail("");
     setDealSlug("");
     setAmountInput("");
+    setCurrency("GBP");
     setEmailMode("select");
   };
 
@@ -145,9 +159,9 @@ const AdminManualInvestments = () => {
       return;
     }
 
-    const numeric = Number(amountInput.replace(/[£,\s]/g, ""));
+    const numeric = Number(amountInput.replace(/[£€$,\s]/g, ""));
     if (!Number.isFinite(numeric) || numeric <= 0) {
-      toast.error("Please enter a valid amount in £ (e.g. 2500).");
+      toast.error(`Please enter a valid amount in ${currency} (e.g. 2500).`);
       return;
     }
     const pence = Math.round(numeric * 100);
@@ -162,7 +176,7 @@ const AdminManualInvestments = () => {
         email: cleanEmail,
         deal_slug: dealSlug,
         amount_pence: pence,
-        currency: "GBP",
+        currency,
         imported_by: user?.id ?? null,
       };
       console.log("[AdminManualInvestments] upsert payload:", payload);
@@ -179,7 +193,7 @@ const AdminManualInvestments = () => {
       console.log("[AdminManualInvestments] upsert success:", data);
 
       toast.success(
-        `${editingId ? "Updated" : "Saved"} ${formatGBP(pence)} for ${cleanEmail} on ${
+        `${editingId ? "Updated" : "Saved"} ${formatMoney(pence, currency)} for ${cleanEmail} on ${
           dealMap.get(dealSlug) ?? dealSlug
         }.`,
       );
@@ -201,6 +215,11 @@ const AdminManualInvestments = () => {
     );
     setDealSlug(row.deal_slug);
     setAmountInput((row.amount_pence / 100).toString());
+    setCurrency(
+      (SUPPORTED_CURRENCIES as readonly string[]).includes(row.currency)
+        ? (row.currency as SupportedCurrency)
+        : "GBP",
+    );
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -225,19 +244,24 @@ const AdminManualInvestments = () => {
     await loadAll();
   };
 
-  // Group rows by member email for nicer overview
+  // Group rows by member email; track totals per currency for accurate display
   const grouped = useMemo(() => {
-    const map = new Map<string, { total: number; rows: InvestmentRow[] }>();
+    const map = new Map<
+      string,
+      { totals: Record<string, number>; sortKey: number; rows: InvestmentRow[] }
+    >();
     for (const r of rows) {
       const key = r.email.toLowerCase();
-      const entry = map.get(key) ?? { total: 0, rows: [] };
-      entry.total += r.amount_pence;
+      const entry = map.get(key) ?? { totals: {}, sortKey: 0, rows: [] };
+      const cur = r.currency || "GBP";
+      entry.totals[cur] = (entry.totals[cur] ?? 0) + r.amount_pence;
+      entry.sortKey += r.amount_pence; // rough cross-currency sort
       entry.rows.push(r);
       map.set(key, entry);
     }
     return Array.from(map.entries())
       .map(([email, value]) => ({ email, ...value }))
-      .sort((a, b) => b.total - a.total);
+      .sort((a, b) => b.sortKey - a.sortKey);
   }, [rows]);
 
   return (
@@ -321,9 +345,24 @@ const AdminManualInvestments = () => {
               </div>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-[1fr_auto]">
+            <div className="grid gap-4 md:grid-cols-[140px_1fr_auto]">
               <div className="space-y-2">
-                <Label>Amount invested (£)</Label>
+                <Label htmlFor="currency-select">Currency</Label>
+                <select
+                  id="currency-select"
+                  value={currency}
+                  onChange={(e) => setCurrency(e.target.value as SupportedCurrency)}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {SUPPORTED_CURRENCIES.map((c) => (
+                    <option key={c} value={c}>
+                      {CURRENCY_SYMBOLS[c]} {c}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="space-y-2">
+                <Label>Amount invested ({CURRENCY_SYMBOLS[currency]})</Label>
                 <Input
                   inputMode="decimal"
                   placeholder="e.g. 2500"
@@ -389,7 +428,9 @@ const AdminManualInvestments = () => {
                       {members.find((m) => m.email === member.email)?.label ?? member.email}
                     </div>
                     <div className="text-sm font-bold text-collektiv-green">
-                      {formatGBP(member.total)}
+                      {Object.entries(member.totals)
+                        .map(([cur, amt]) => formatMoney(amt, cur))
+                        .join(" · ")}
                     </div>
                   </div>
                   <div className="divide-y">
