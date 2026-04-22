@@ -18,12 +18,28 @@ interface ParsedRow {
   perDeal: Record<string, number>; // pence
 }
 
+interface HeaderMatch {
+  header: string[];
+  headerRowIndex: number;
+  emailIdx: number;
+  dealColumns: { idx: number; slug: string }[];
+}
+
+const normalizeText = (value: string) =>
+  value
+    .trim()
+    .toLowerCase()
+    .replace(/[_-]+/g, " ")
+    .replace(/[^a-z0-9/& ]/g, "")
+    .replace(/\s+/g, " ");
+
 // Normalise column header → deal slug. We try exact name match first
 // (case-insensitive), then a few well-known aliases.
 const ALIASES: Record<string, string> = {
   beimpact: "beimpact",
   "be/impact": "beimpact",
   "be impact": "beimpact",
+  "be-impact": "beimpact",
   antrophic: "anthropic",
   anthropic: "anthropic",
   propane: "propane",
@@ -34,22 +50,32 @@ const ALIASES: Record<string, string> = {
 };
 
 const slugifyHeader = (header: string, deals: Deal[]): string | null => {
-  const norm = header.trim().toLowerCase();
+  const norm = normalizeText(header);
   if (!norm) return null;
-  const direct = deals.find((d) => d.name.toLowerCase() === norm);
+  const direct = deals.find((d) => normalizeText(d.name) === norm || normalizeText(d.slug) === norm);
   if (direct) return direct.slug;
   if (ALIASES[norm]) return ALIASES[norm];
   return null;
 };
 
-// Parse a £-formatted value to integer pence. Returns null if blank/zero.
 const parseAmountToPence = (raw: string): number | null => {
-  if (!raw) return null;
-  const cleaned = raw.replace(/[£$€,\s"]/g, "").trim();
-  if (!cleaned) return null;
+  const input = String(raw ?? "").trim();
+  if (!input) return null;
+
+  const compact = input
+    .replace(/[£$€\s"]/g, "")
+    .replace(/\((.*)\)/, "-$1")
+    .toLowerCase();
+
+  if (!compact) return null;
+
+  const multiplier = compact.endsWith("m") ? 1_000_000 : compact.endsWith("k") ? 1_000 : 1;
+  const numericPart = multiplier === 1 ? compact : compact.slice(0, -1);
+  const cleaned = numericPart.replace(/,/g, "");
   const n = Number(cleaned);
+
   if (!Number.isFinite(n) || n <= 0) return null;
-  return Math.round(n * 100);
+  return Math.round(n * multiplier * 100);
 };
 
 // Minimal CSV parser that supports quoted fields with commas.
@@ -91,6 +117,24 @@ const parseCsv = (text: string): string[][] => {
     rows.push(cur);
   }
   return rows.filter((r) => r.some((c) => c.trim() !== ""));
+};
+
+const findHeaderRow = (rows: string[][], deals: Deal[]): HeaderMatch | null => {
+  for (let rowIndex = 0; rowIndex < Math.min(rows.length, 10); rowIndex++) {
+    const header = rows[rowIndex].map((cell) => String(cell ?? ""));
+    const emailIdx = header.findIndex((h) => normalizeText(h).startsWith("email"));
+    if (emailIdx === -1) continue;
+
+    const dealColumns = header
+      .map((h, idx) => ({ idx, slug: idx === emailIdx ? null : slugifyHeader(h, deals) }))
+      .filter((col): col is { idx: number; slug: string } => Boolean(col.slug));
+
+    if (dealColumns.length > 0) {
+      return { header, headerRowIndex: rowIndex, emailIdx, dealColumns };
+    }
+  }
+
+  return null;
 };
 
 const AdminInvestmentsImporter = () => {
