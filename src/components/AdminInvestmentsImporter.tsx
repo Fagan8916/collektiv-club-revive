@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2, Upload, FileSpreadsheet } from "lucide-react";
 import { toast } from "sonner";
+import * as XLSX from "xlsx";
 import { supabase } from "@/integrations/supabase/client";
 
 interface Deal {
@@ -111,9 +112,20 @@ const AdminInvestmentsImporter = () => {
     if (!file) return;
     setImporting(true);
     try {
-      const text = await file.text();
-      const rows = parseCsv(text);
-      if (rows.length < 2) throw new Error("CSV is empty");
+      const name = file.name.toLowerCase();
+      const isExcel = name.endsWith(".xlsx") || name.endsWith(".xls") || name.endsWith(".ods");
+      let rows: string[][];
+      if (isExcel) {
+        const buf = await file.arrayBuffer();
+        const wb = XLSX.read(buf, { type: "array" });
+        const ws = wb.Sheets[wb.SheetNames[0]];
+        const aoa = XLSX.utils.sheet_to_json<unknown[]>(ws, { header: 1, blankrows: false, defval: "" });
+        rows = aoa.map((r) => r.map((c) => (c == null ? "" : String(c))));
+      } else {
+        const text = await file.text();
+        rows = parseCsv(text);
+      }
+      if (rows.length < 2) throw new Error("File is empty");
 
       const header = rows[0];
       // Find email column
@@ -190,29 +202,31 @@ const AdminInvestmentsImporter = () => {
               Import members' investments
             </h3>
             <p className="text-sm text-gray-600">
-              Upload the CSV exported from your tracking spreadsheet. Members are matched by
-              email (case-insensitive). Re-uploading overwrites existing amounts for the same
+              Upload a CSV or Excel file (.xlsx) — for Google Sheets, use{" "}
+              <em>File → Download → Microsoft Excel (.xlsx)</em> or{" "}
+              <em>Comma-separated values (.csv)</em>. Members are matched by email
+              (case-insensitive). Re-uploading overwrites existing amounts for the same
               member/deal pair.
             </p>
           </div>
         </div>
 
         <div className="rounded-md bg-gray-50 border border-gray-200 p-3 text-xs text-gray-700">
-          <p className="font-semibold mb-1">Expected CSV format</p>
+          <p className="font-semibold mb-1">Expected format</p>
           <p>
             Header row must contain an <code>Email</code> column plus one column per deal whose
             name matches a deal in the catalog (e.g.{" "}
             {deals.map((d) => d.name).join(", ")}). Cells can be blank or formatted like{" "}
-            <code>£2,500.00</code>.
+            <code>£2,500.00</code>. Only the first sheet/tab is read.
           </p>
         </div>
 
         <div className="space-y-2">
-          <Label>CSV file</Label>
+          <Label>CSV or Excel file</Label>
           <Input
             ref={fileRef}
             type="file"
-            accept=".csv,text/csv"
+            accept=".csv,text/csv,.xlsx,.xls,.ods,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
             disabled={importing}
             onChange={handleFile}
           />
@@ -236,7 +250,7 @@ const AdminInvestmentsImporter = () => {
           onClick={() => fileRef.current?.click()}
           disabled={importing}
         >
-          <Upload className="h-4 w-4 mr-2" /> Choose CSV
+          <Upload className="h-4 w-4 mr-2" /> Choose file
         </Button>
       </CardContent>
     </Card>
