@@ -26,6 +26,8 @@ import MemberAnnouncements from "@/components/members/MemberAnnouncements";
 import AdminAnnouncementsManager from "@/components/AdminAnnouncementsManager";
 import MyInvestments from "@/components/members/MyInvestments";
 import AdminInvestmentsImporter from "@/components/AdminInvestmentsImporter";
+import AdminDealsManager from "@/components/AdminDealsManager";
+import NewDealsSection from "@/components/NewDealsSection";
 
 const Members = () => {
   console.log('Members: Component rendering, current URL:', window.location.href);
