@@ -41,6 +41,7 @@ const AdminPushNotifications: React.FC = () => {
   const [last30Sent, setLast30Sent] = useState(0);
   const [approvedMembers, setApprovedMembers] = useState(0);
   const [adminCount, setAdminCount] = useState(0);
+  const [liveSubscribers, setLiveSubscribers] = useState<number | null>(null);
 
   const loadHistory = async () => {
     setLoadingHistory(true);
