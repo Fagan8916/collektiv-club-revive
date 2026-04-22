@@ -61,9 +61,12 @@ export const useUserRole = () => {
 
         console.log("useUserRole: User roles from database:", userRoles);
 
-        // Check for admin role specifically - only approved admin roles count
-        const hasAdminRole = userRoles?.some(role => 
-          role.role === 'admin' && role.status === 'approved'
+        // Non-allowlisted users can NEVER be admin, even if they have an admin row in user_roles.
+        const hasAdminRole = false;
+
+        // Check for approved member role
+        const hasMemberRole = userRoles?.some(role => 
+          role.role === 'member' && role.status === 'approved'
         ) || false;
         
         // Check for approved member role
