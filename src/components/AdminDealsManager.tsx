@@ -61,6 +61,7 @@ const emptyForm: Omit<Deal, "id" | "published_at"> = {
 const AdminDealsManager: React.FC = () => {
   const { user } = useAuth();
   const [deals, setDeals] = useState<Deal[]>([]);
+  const [investedBySlug, setInvestedBySlug] = useState<Record<string, { totalPence: number; investorCount: number }>>({});
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
