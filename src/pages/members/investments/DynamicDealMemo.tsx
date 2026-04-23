@@ -51,6 +51,71 @@ const DynamicDealMemo = () => {
     );
   }
 
+  // Parse memo body into paragraphs / headings.
+  // Convention used by admins:
+  //  - Blank line separates paragraphs.
+  //  - A short line (≤ 80 chars) ending with ":" or fully wrapped in **...**
+  //    OR prefixed with "## " is treated as a section heading.
+  const blocks = deal.memo
+    .split(/\n\s*\n/)
+    .map((b) => b.trim())
+    .filter(Boolean);
+
+  const renderBlock = (block: string, idx: number) => {
+    const trimmed = block.trim();
+
+    // Markdown-style heading
+    if (/^#{1,3}\s+/.test(trimmed)) {
+      const text = trimmed.replace(/^#{1,3}\s+/, "");
+      return (
+        <h2
+          key={idx}
+          className="text-2xl font-bold text-collektiv-green mt-2 mb-3 border-b-2 border-collektiv-green pb-2"
+        >
+          {text}
+        </h2>
+      );
+    }
+
+    // Bold-wrapped single-line heading: **Heading**
+    const boldHeading = /^\*\*(.+)\*\*$/.exec(trimmed);
+    if (boldHeading && !trimmed.includes("\n")) {
+      return (
+        <h3 key={idx} className="text-xl font-semibold text-collektiv-green mt-2 mb-2">
+          {boldHeading[1]}
+        </h3>
+      );
+    }
+
+    // Short line ending with ":" → subheading
+    if (!trimmed.includes("\n") && trimmed.endsWith(":") && trimmed.length <= 80) {
+      return (
+        <h3 key={idx} className="text-xl font-semibold text-collektiv-green mt-2 mb-2">
+          {trimmed.replace(/:$/, "")}
+        </h3>
+      );
+    }
+
+    // Bullet list (lines starting with "- " or "* ")
+    const lines = trimmed.split(/\n/);
+    if (lines.every((l) => /^\s*[-*]\s+/.test(l))) {
+      return (
+        <ul key={idx} className="list-disc list-inside text-gray-700 space-y-2 ml-4">
+          {lines.map((l, i) => (
+            <li key={i}>{l.replace(/^\s*[-*]\s+/, "")}</li>
+          ))}
+        </ul>
+      );
+    }
+
+    // Default: paragraph (preserve internal line breaks)
+    return (
+      <p key={idx} className="text-gray-700 leading-relaxed whitespace-pre-line">
+        {trimmed}
+      </p>
+    );
+  };
+
   return (
     <div className="min-h-screen py-10 bg-gradient-to-r from-collektiv-accent to-white">
       <div className="container mx-auto px-4 max-w-4xl">
@@ -63,30 +128,86 @@ const DynamicDealMemo = () => {
 
         <div className="text-center mb-8">
           {deal.logo_url && (
-            <img src={deal.logo_url} alt={deal.name} className="h-20 w-auto object-contain mx-auto mb-4" />
+            <img
+              src={deal.logo_url}
+              alt={deal.name}
+              className="h-20 w-auto object-contain mx-auto mb-4"
+            />
           )}
-          <h1 className="text-4xl font-bold text-collektiv-green mb-2">Investment Memo: {deal.name}</h1>
+          <h1 className="text-4xl font-bold text-collektiv-green mb-2">
+            Investment Memo: {deal.name}
+          </h1>
           <p className="text-gray-600">Prepared by Collektiv Club</p>
         </div>
 
         <Card className="mb-8">
-          <CardContent className="p-8">
-            <div className="prose prose-collektiv max-w-none text-gray-700 leading-relaxed whitespace-pre-line">
-              {deal.memo}
-            </div>
+          <CardContent className="p-8 space-y-5">
+            {blocks.map((b, i) => renderBlock(b, i))}
           </CardContent>
         </Card>
 
-        <Card className="border-collektiv-green/30">
-          <CardContent className="p-6 text-xs text-gray-600 space-y-2">
-            <p className="font-semibold text-collektiv-dark">Important Disclaimer</p>
-            <p>
-              This memo is provided for information only and does not constitute investment advice, an offer to sell, or
-              a solicitation to buy securities. Investing in private companies involves substantial risk, including
-              total loss of capital. Investments may be illiquid for several years. Past performance is not indicative
-              of future results. Tax treatment depends on individual circumstances. Conduct your own due diligence
-              and consult independent professional advice before investing. Collektiv is not regulated by the FCA.
-            </p>
+        {/* Standardized disclaimer (always shown) */}
+        <Card className="border-collektiv-green/30 mb-8">
+          <CardContent className="p-8 space-y-5 text-sm text-gray-700 leading-relaxed">
+            <div>
+              <h3 className="text-lg font-semibold text-collektiv-dark mb-2">Disclaimer</h3>
+              <p>
+                Members are fully responsible for their own investment decisions. While Collektiv
+                facilitates co-investment opportunities through deal-specific SPVs, investors are
+                solely accountable for evaluating risks and potential returns before participating.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold text-collektiv-dark mb-2">
+                Confidentiality Statement
+              </h3>
+              <p>
+                This document is strictly intended for members of Collektiv Limited and may contain
+                confidential and proprietary information. Any unauthorised access, sharing, or
+                dissemination of this content is prohibited unless prior written approval is obtained
+                from an authorised Director of Collektiv Limited.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold text-collektiv-dark mb-2">Tax Advice</h3>
+              <p>
+                Collektiv does not provide tax advice. Investors are encouraged to consult qualified
+                tax professionals to understand the personal tax implications associated with
+                investments made via our SPVs.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold text-collektiv-dark mb-2">About SPVs</h3>
+              <p>
+                A Special Purpose Vehicle (SPV) is an independent entity created by Collektiv to
+                limit financial exposure. This structure allows syndicate members to invest in
+                specific assets without assuming the risks tied to Collektiv's broader portfolio.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold text-collektiv-dark mb-2">
+                Risks of Early-Stage Investments
+              </h3>
+              <p>
+                Investing in startups and early-stage businesses carries significant risks and
+                uncertainties. Investors should be aware that such investments could result in the
+                complete loss of their capital. Historical performance does not guarantee future
+                results.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold text-collektiv-dark mb-2">Intellectual Property</h3>
+              <p>
+                All trademarks, logos, and service marks featured in this document are owned by
+                Collektiv or third parties, which may not necessarily be affiliated with or endorsed
+                by Collektiv.
+              </p>
+            </div>
           </CardContent>
         </Card>
       </div>

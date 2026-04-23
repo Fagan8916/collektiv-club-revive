@@ -112,6 +112,7 @@ export type Database = {
           memo_pdf_path: string | null
           name: string
           overview: string | null
+          pitch_deck_pdf_path: string | null
           published_at: string | null
           recording_url: string | null
           round: string | null
@@ -134,6 +135,7 @@ export type Database = {
           memo_pdf_path?: string | null
           name: string
           overview?: string | null
+          pitch_deck_pdf_path?: string | null
           published_at?: string | null
           recording_url?: string | null
           round?: string | null
@@ -156,6 +158,7 @@ export type Database = {
           memo_pdf_path?: string | null
           name?: string
           overview?: string | null
+          pitch_deck_pdf_path?: string | null
           published_at?: string | null
           recording_url?: string | null
           round?: string | null

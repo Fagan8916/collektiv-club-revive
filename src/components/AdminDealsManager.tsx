@@ -27,6 +27,7 @@ type Deal = {
   memo: string | null;
   recording_url: string | null;
   memo_pdf_path: string | null;
+  pitch_deck_pdf_path: string | null;
   sort_order: number;
   is_published: boolean;
   published_at: string | null;
@@ -54,6 +55,7 @@ const emptyForm: Omit<Deal, "id" | "published_at"> = {
   memo: "",
   recording_url: "",
   memo_pdf_path: "",
+  pitch_deck_pdf_path: "",
   sort_order: 0,
   is_published: false,
 };
@@ -68,8 +70,10 @@ const AdminDealsManager: React.FC = () => {
   const [form, setForm] = useState(emptyForm);
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [uploadingMemo, setUploadingMemo] = useState(false);
+  const [uploadingDeck, setUploadingDeck] = useState(false);
   const [logoFeedback, setLogoFeedback] = useState("");
   const [memoFeedback, setMemoFeedback] = useState("");
+  const [deckFeedback, setDeckFeedback] = useState("");
 
   const uploadLogo = async (file: File) => {
     if (!file) return;
@@ -170,6 +174,53 @@ const AdminDealsManager: React.FC = () => {
     }
   };
 
+  const uploadPitchDeckPdf = async (file: File) => {
+    if (!file) return;
+    if (!user?.id) {
+      setDeckFeedback("Please sign in as an admin first.");
+      toast.error("Not signed in", { description: "Please sign in as an admin first." });
+      return;
+    }
+    if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith(".pdf")) {
+      setDeckFeedback("Pitch deck must be a PDF file.");
+      toast.error("Pitch deck must be a PDF");
+      return;
+    }
+    if (file.size > 50 * 1024 * 1024) {
+      setDeckFeedback("Pitch deck too large. Maximum size is 50MB.");
+      toast.error("PDF too large", { description: "Maximum size is 50MB." });
+      return;
+    }
+    setDeckFeedback(`Uploading ${file.name}…`);
+    setUploadingDeck(true);
+    try {
+      const baseSlug = (form.slug || slugify(form.name) || "deal").replace(/[^a-z0-9-]/g, "");
+      const path = `${baseSlug}-deck-${Date.now()}.pdf`;
+      const { data, error } = await supabase.storage
+        .from("deal-pitch-decks")
+        .upload(path, file, { upsert: true, contentType: "application/pdf", cacheControl: "3600" });
+      if (error) {
+        console.error("[AdminDealsManager] Pitch deck upload error:", error);
+        setDeckFeedback(error.message || "Pitch deck upload failed.");
+        toast.error("Pitch deck upload failed", {
+          description: error.message || "Check that you are signed in as an admin.",
+        });
+        return;
+      }
+      console.log("[AdminDealsManager] Pitch deck uploaded:", data);
+      setForm((f) => ({ ...f, pitch_deck_pdf_path: path }));
+      setDeckFeedback(`Uploaded ${file.name}. Click Save / Update to keep it.`);
+      toast.success("Pitch deck uploaded", { description: "Click Save / Update to keep it." });
+    } catch (err) {
+      console.error("[AdminDealsManager] Pitch deck upload exception:", err);
+      const message = err instanceof Error ? err.message : String(err);
+      setDeckFeedback(message);
+      toast.error("Pitch deck upload failed", { description: message });
+    } finally {
+      setUploadingDeck(false);
+    }
+  };
+
   const load = async () => {
     setLoading(true);
     const [dealsRes, investmentsRes] = await Promise.all([
@@ -219,6 +270,7 @@ const AdminDealsManager: React.FC = () => {
     setForm(emptyForm);
     setLogoFeedback("");
     setMemoFeedback("");
+    setDeckFeedback("");
   };
 
   const startEdit = (d: Deal) => {
@@ -238,11 +290,13 @@ const AdminDealsManager: React.FC = () => {
       memo: d.memo ?? "",
       recording_url: d.recording_url ?? "",
       memo_pdf_path: d.memo_pdf_path ?? "",
+      pitch_deck_pdf_path: d.pitch_deck_pdf_path ?? "",
       sort_order: d.sort_order ?? 0,
       is_published: d.is_published,
     });
     setLogoFeedback(d.logo_url ? "Existing logo attached." : "");
     setMemoFeedback(d.memo_pdf_path ? "Existing memo PDF attached." : "");
+    setDeckFeedback(d.pitch_deck_pdf_path ? "Existing pitch deck attached." : "");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -277,6 +331,7 @@ const AdminDealsManager: React.FC = () => {
       memo: form.memo.trim() || null,
       recording_url: form.recording_url.trim() || null,
       memo_pdf_path: form.memo_pdf_path?.trim() || null,
+      pitch_deck_pdf_path: form.pitch_deck_pdf_path?.trim() || null,
       sort_order: Number(form.sort_order) || 0,
       is_published: form.is_published,
       published_at: form.is_published ? new Date().toISOString() : null,
@@ -582,6 +637,49 @@ const AdminDealsManager: React.FC = () => {
               ) : (
                 <p className="text-xs text-muted-foreground">
                   Optional. Members will see a "Download memo PDF" button on the deal page.
+                </p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="pitch_deck_file">Pitch deck PDF</Label>
+              <div className="flex items-center gap-2">
+                <Input
+                  id="pitch_deck_file"
+                  type="file"
+                  accept="application/pdf,.pdf"
+                  disabled={uploadingDeck}
+                  onChange={(e) => {
+                    const f = e.target.files?.[0];
+                    if (f) uploadPitchDeckPdf(f);
+                    e.currentTarget.value = "";
+                  }}
+                />
+                {uploadingDeck && <Loader2 className="h-4 w-4 animate-spin text-collektiv-green" />}
+              </div>
+              {deckFeedback && (
+                <p className="text-xs text-muted-foreground">{deckFeedback}</p>
+              )}
+              {form.pitch_deck_pdf_path ? (
+                <div className="flex items-center gap-2 rounded-md border p-2 bg-collektiv-green/5">
+                  <FileText className="h-4 w-4 text-collektiv-green" />
+                  <span className="text-xs text-collektiv-dark truncate flex-1">{form.pitch_deck_pdf_path}</span>
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    onClick={() => {
+                      setForm({ ...form, pitch_deck_pdf_path: "" });
+                      setDeckFeedback("");
+                    }}
+                    aria-label="Remove pitch deck"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              ) : (
+                <p className="text-xs text-muted-foreground">
+                  Optional. Members will see a "Download pitch deck" button on the deal page.
                 </p>
               )}
             </div>

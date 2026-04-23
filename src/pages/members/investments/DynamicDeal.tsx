@@ -21,6 +21,7 @@ type Deal = {
   memo: string | null;
   recording_url: string | null;
   memo_pdf_path: string | null;
+  pitch_deck_pdf_path: string | null;
 };
 
 const detailRows: { label: string; key: keyof Deal }[] = [
@@ -37,6 +38,7 @@ const DynamicDeal = () => {
   const [deal, setDeal] = useState<Deal | null>(null);
   const [loading, setLoading] = useState(true);
   const [downloadingPdf, setDownloadingPdf] = useState(false);
+  const [downloadingDeck, setDownloadingDeck] = useState(false);
 
   useEffect(() => {
     const load = async () => {
@@ -44,7 +46,7 @@ const DynamicDeal = () => {
       const { data, error } = await supabase
         .from("investment_deals")
         .select(
-          "slug, name, tagline, logo_url, website_url, status, round, valuation, ticket_min, close_date, overview, memo, recording_url, memo_pdf_path",
+          "slug, name, tagline, logo_url, website_url, status, round, valuation, ticket_min, close_date, overview, memo, recording_url, memo_pdf_path, pitch_deck_pdf_path",
         )
         .eq("slug", slug)
         .maybeSingle();
@@ -64,6 +66,20 @@ const DynamicDeal = () => {
     setDownloadingPdf(false);
     if (error || !data?.signedUrl) {
       console.error("Memo PDF link failed", error);
+      return;
+    }
+    window.open(data.signedUrl, "_blank", "noopener,noreferrer");
+  };
+
+  const openPitchDeck = async () => {
+    if (!deal?.pitch_deck_pdf_path) return;
+    setDownloadingDeck(true);
+    const { data, error } = await supabase.storage
+      .from("deal-pitch-decks")
+      .createSignedUrl(deal.pitch_deck_pdf_path, 60 * 10);
+    setDownloadingDeck(false);
+    if (error || !data?.signedUrl) {
+      console.error("Pitch deck link failed", error);
       return;
     }
     window.open(data.signedUrl, "_blank", "noopener,noreferrer");
@@ -139,6 +155,19 @@ const DynamicDeal = () => {
                 >
                   <Download className="mr-2 h-4 w-4" />
                   {downloadingPdf ? "Preparing…" : "Download memo PDF"}
+                </Button>
+              )}
+              {deal.pitch_deck_pdf_path && (
+                <Button
+                  type="button"
+                  size="lg"
+                  variant="outline"
+                  className="text-base px-6 py-3"
+                  onClick={openPitchDeck}
+                  disabled={downloadingDeck}
+                >
+                  <Download className="mr-2 h-4 w-4" />
+                  {downloadingDeck ? "Preparing…" : "Download pitch deck"}
                 </Button>
               )}
               {deal.recording_url && (
