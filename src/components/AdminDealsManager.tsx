@@ -28,6 +28,7 @@ type Deal = {
   recording_url: string | null;
   memo_pdf_path: string | null;
   pitch_deck_pdf_path: string | null;
+  pitch_deck_url: string | null;
   sort_order: number;
   is_published: boolean;
   published_at: string | null;
@@ -56,6 +57,7 @@ const emptyForm: Omit<Deal, "id" | "published_at"> = {
   recording_url: "",
   memo_pdf_path: "",
   pitch_deck_pdf_path: "",
+  pitch_deck_url: "",
   sort_order: 0,
   is_published: false,
 };
@@ -291,6 +293,7 @@ const AdminDealsManager: React.FC = () => {
       recording_url: d.recording_url ?? "",
       memo_pdf_path: d.memo_pdf_path ?? "",
       pitch_deck_pdf_path: d.pitch_deck_pdf_path ?? "",
+      pitch_deck_url: (d as any).pitch_deck_url ?? "",
       sort_order: d.sort_order ?? 0,
       is_published: d.is_published,
     });
@@ -332,6 +335,7 @@ const AdminDealsManager: React.FC = () => {
       recording_url: form.recording_url.trim() || null,
       memo_pdf_path: form.memo_pdf_path?.trim() || null,
       pitch_deck_pdf_path: form.pitch_deck_pdf_path?.trim() || null,
+      pitch_deck_url: form.pitch_deck_url?.trim() || null,
       sort_order: Number(form.sort_order) || 0,
       is_published: form.is_published,
       published_at: form.is_published ? new Date().toISOString() : null,
@@ -682,6 +686,20 @@ const AdminDealsManager: React.FC = () => {
                   Optional. Members will see a "Download pitch deck" button on the deal page.
                 </p>
               )}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="pitch_deck_url">Pitch deck link (Google Drive, etc.)</Label>
+              <Input
+                id="pitch_deck_url"
+                type="url"
+                placeholder="https://drive.google.com/file/d/..."
+                value={form.pitch_deck_url}
+                onChange={(e) => setForm({ ...form, pitch_deck_url: e.target.value })}
+              />
+              <p className="text-xs text-muted-foreground">
+                Recommended for mobile. If set, members see a "View pitch deck" button that opens this link in a new tab. Make sure the link is set to "Anyone with the link can view".
+              </p>
             </div>
 
             <div className="flex items-center justify-between rounded-md border p-3 bg-collektiv-green/5">

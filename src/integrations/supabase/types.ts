@@ -113,6 +113,7 @@ export type Database = {
           name: string
           overview: string | null
           pitch_deck_pdf_path: string | null
+          pitch_deck_url: string | null
           published_at: string | null
           recording_url: string | null
           round: string | null
@@ -136,6 +137,7 @@ export type Database = {
           name: string
           overview?: string | null
           pitch_deck_pdf_path?: string | null
+          pitch_deck_url?: string | null
           published_at?: string | null
           recording_url?: string | null
           round?: string | null
@@ -159,6 +161,7 @@ export type Database = {
           name?: string
           overview?: string | null
           pitch_deck_pdf_path?: string | null
+          pitch_deck_url?: string | null
           published_at?: string | null
           recording_url?: string | null
           round?: string | null

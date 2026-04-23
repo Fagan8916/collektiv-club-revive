@@ -22,6 +22,7 @@ type Deal = {
   recording_url: string | null;
   memo_pdf_path: string | null;
   pitch_deck_pdf_path: string | null;
+  pitch_deck_url: string | null;
 };
 
 const detailRows: { label: string; key: keyof Deal }[] = [
@@ -46,7 +47,7 @@ const DynamicDeal = () => {
       const { data, error } = await supabase
         .from("investment_deals")
         .select(
-          "slug, name, tagline, logo_url, website_url, status, round, valuation, ticket_min, close_date, overview, memo, recording_url, memo_pdf_path, pitch_deck_pdf_path",
+          "slug, name, tagline, logo_url, website_url, status, round, valuation, ticket_min, close_date, overview, memo, recording_url, memo_pdf_path, pitch_deck_pdf_path, pitch_deck_url",
         )
         .eq("slug", slug)
         .maybeSingle();
@@ -157,7 +158,13 @@ const DynamicDeal = () => {
                   {downloadingPdf ? "Preparing…" : "Download memo PDF"}
                 </Button>
               )}
-              {deal.pitch_deck_pdf_path && (
+              {deal.pitch_deck_url ? (
+                <Button asChild size="lg" variant="outline" className="text-base px-6 py-3">
+                  <a href={deal.pitch_deck_url} target="_blank" rel="noopener noreferrer">
+                    <ExternalLink className="mr-2 h-4 w-4" /> View pitch deck
+                  </a>
+                </Button>
+              ) : deal.pitch_deck_pdf_path ? (
                 <Button
                   type="button"
                   size="lg"
@@ -169,7 +176,7 @@ const DynamicDeal = () => {
                   <Download className="mr-2 h-4 w-4" />
                   {downloadingDeck ? "Preparing…" : "Download pitch deck"}
                 </Button>
-              )}
+              ) : null}
               {deal.recording_url && (
                 <Button asChild size="lg" variant="outline" className="text-base px-6 py-3">
                   <a href={deal.recording_url} target="_blank" rel="noopener noreferrer">
