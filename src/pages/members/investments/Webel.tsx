@@ -9,11 +9,11 @@ const Webel = () => {
     <div className="min-h-screen bg-gradient-to-br from-collektiv-accent via-white to-green-50 py-12">
       <div className="container mx-auto px-4 max-w-4xl">
         <Link 
-          to="/members" 
+          to="/members?tab=investments" 
           className="inline-flex items-center text-collektiv-green hover:text-collektiv-lightgreen mb-8"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Members Zone
+          Back to Investments
         </Link>
 
         <Card className="mb-8">

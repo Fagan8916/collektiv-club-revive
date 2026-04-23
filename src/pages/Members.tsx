@@ -63,15 +63,28 @@ const Members = () => {
     }
   }, [isAuthenticated, authLoading, navigate]);
 
-  // Handle profile creation success - navigate to directory tab
+  // Handle URL params: ?profile=created or ?tab=<tab name>
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
+    // HashRouter puts the query after the hash, e.g. #/members?tab=investments
+    const hash = window.location.hash || "";
+    const queryStart = hash.indexOf("?");
+    const hashQuery = queryStart >= 0 ? hash.slice(queryStart + 1) : "";
+    const params = new URLSearchParams(hashQuery || window.location.search);
+
     if (params.get('profile') === 'created') {
       setActiveTab('directory');
       toast({
         title: "🎉 Your profile is now live!",
         description: "Welcome to the member directory. Connect with other members below.",
       });
+      window.history.replaceState({}, '', '/#/members');
+      return;
+    }
+
+    const tabParam = params.get('tab') as MemberTab | null;
+    const validTabs: MemberTab[] = ['home', 'directory', 'investments', 'profile', 'admin'];
+    if (tabParam && validTabs.includes(tabParam)) {
+      setActiveTab(tabParam);
       window.history.replaceState({}, '', '/#/members');
     }
   }, [toast]);

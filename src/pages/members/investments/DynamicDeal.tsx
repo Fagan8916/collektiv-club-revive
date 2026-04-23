@@ -97,8 +97,8 @@ const DynamicDeal = () => {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-collektiv-accent to-white p-6">
         <p className="text-collektiv-dark mb-4">This deal isn't available.</p>
-        <Button onClick={() => navigate("/members")} variant="outline">
-          Back to Members Zone
+        <Button onClick={() => navigate("/members?tab=investments")} variant="outline">
+          Back to Investments
         </Button>
       </div>
     );
@@ -107,8 +107,8 @@ const DynamicDeal = () => {
   return (
     <div className="min-h-screen py-10 bg-gradient-to-r from-collektiv-accent to-white">
       <div className="container mx-auto px-4 max-w-4xl">
-        <Link to="/members" className="inline-flex items-center mb-6 text-collektiv-green hover:underline">
-          <ArrowLeft className="mr-2" size={20} /> Back to Members Zone
+        <Link to="/members?tab=investments" className="inline-flex items-center mb-6 text-collektiv-green hover:underline">
+          <ArrowLeft className="mr-2" size={20} /> Back to Investments
         </Link>
 
         <Card>
