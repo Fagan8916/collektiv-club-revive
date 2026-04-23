@@ -641,7 +641,48 @@ const AdminDealsManager: React.FC = () => {
               )}
             </div>
 
-            <div className="flex items-center justify-between rounded-md border p-3 bg-collektiv-green/5">
+            <div className="space-y-2">
+              <Label htmlFor="pitch_deck_file">Pitch deck PDF</Label>
+              <div className="flex items-center gap-2">
+                <Input
+                  id="pitch_deck_file"
+                  type="file"
+                  accept="application/pdf,.pdf"
+                  disabled={uploadingDeck}
+                  onChange={(e) => {
+                    const f = e.target.files?.[0];
+                    if (f) uploadPitchDeckPdf(f);
+                    e.currentTarget.value = "";
+                  }}
+                />
+                {uploadingDeck && <Loader2 className="h-4 w-4 animate-spin text-collektiv-green" />}
+              </div>
+              {deckFeedback && (
+                <p className="text-xs text-muted-foreground">{deckFeedback}</p>
+              )}
+              {form.pitch_deck_pdf_path ? (
+                <div className="flex items-center gap-2 rounded-md border p-2 bg-collektiv-green/5">
+                  <FileText className="h-4 w-4 text-collektiv-green" />
+                  <span className="text-xs text-collektiv-dark truncate flex-1">{form.pitch_deck_pdf_path}</span>
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    onClick={() => {
+                      setForm({ ...form, pitch_deck_pdf_path: "" });
+                      setDeckFeedback("");
+                    }}
+                    aria-label="Remove pitch deck"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              ) : (
+                <p className="text-xs text-muted-foreground">
+                  Optional. Members will see a "Download pitch deck" button on the deal page.
+                </p>
+              )}
+            </div>
               <div>
                 <Label htmlFor="is_published" className="font-semibold text-collektiv-dark">
                   Publish deal
