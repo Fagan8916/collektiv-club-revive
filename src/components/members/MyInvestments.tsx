@@ -108,11 +108,10 @@ const MyInvestments = () => {
     load();
   }, [user?.email, user?.id]);
 
-  const total = rows.reduce((sum, r) => sum + r.amount_pence, 0);
+  const total = rows.reduce((sum, r) => sum + toGbpPence(r.amount_pence, r.currency, fxRates), 0);
   const pendingTotal = commitments
     .filter((c) => c.status === "pending")
-    .reduce((sum, c) => sum + c.amount_pence, 0);
-  const currency = rows[0]?.currency ?? "GBP";
+    .reduce((sum, c) => sum + toGbpPence(c.amount_pence, c.currency, fxRates), 0);
 
   if (loading) {
     return (
