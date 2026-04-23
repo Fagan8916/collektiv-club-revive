@@ -40,6 +40,7 @@ import TiranaExpo2024 from './pages/members/events/TiranaExpo2024';
 import CollektivMeetupOct2024 from './pages/members/events/CollektivMeetupOct2024';
 import PropaneCatalyst2024 from './pages/members/events/PropaneCatalyst2024';
 import PizzaPintsFeb2025 from './pages/members/events/PizzaPintsFeb2025';
+import DynamicMemberEvent from './pages/members/events/DynamicMemberEvent';
 
 import BuildProfile from './pages/members/BuildProfile';
 import EditProfile from './pages/members/EditProfile';
@@ -316,6 +317,8 @@ function App() {
           <Route path="/members/events/collektiv-meetup-oct-2024" element={<CollektivMeetupOct2024 />} />
           <Route path="/members/events/propane-catalyst-2024" element={<PropaneCatalyst2024 />} />
           <Route path="/members/events/pizza-pints-feb-2025" element={<PizzaPintsFeb2025 />} />
+          {/* Catch-all for admin-created events (must be after the hardcoded ones) */}
+          <Route path="/members/events/:slug" element={<DynamicMemberEvent />} />
             <Route path="/insights/bare-trusts" element={<BareTrusts />} />
             <Route path="/insights/carry-and-performance-fees" element={<CarryAndPerformanceFees />} />
             <Route path="/insights/angel-syndicates" element={<AngelSyndicates />} />
