@@ -174,6 +174,53 @@ const AdminDealsManager: React.FC = () => {
     }
   };
 
+  const uploadPitchDeckPdf = async (file: File) => {
+    if (!file) return;
+    if (!user?.id) {
+      setDeckFeedback("Please sign in as an admin first.");
+      toast.error("Not signed in", { description: "Please sign in as an admin first." });
+      return;
+    }
+    if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith(".pdf")) {
+      setDeckFeedback("Pitch deck must be a PDF file.");
+      toast.error("Pitch deck must be a PDF");
+      return;
+    }
+    if (file.size > 50 * 1024 * 1024) {
+      setDeckFeedback("Pitch deck too large. Maximum size is 50MB.");
+      toast.error("PDF too large", { description: "Maximum size is 50MB." });
+      return;
+    }
+    setDeckFeedback(`Uploading ${file.name}…`);
+    setUploadingDeck(true);
+    try {
+      const baseSlug = (form.slug || slugify(form.name) || "deal").replace(/[^a-z0-9-]/g, "");
+      const path = `${baseSlug}-deck-${Date.now()}.pdf`;
+      const { data, error } = await supabase.storage
+        .from("deal-pitch-decks")
+        .upload(path, file, { upsert: true, contentType: "application/pdf", cacheControl: "3600" });
+      if (error) {
+        console.error("[AdminDealsManager] Pitch deck upload error:", error);
+        setDeckFeedback(error.message || "Pitch deck upload failed.");
+        toast.error("Pitch deck upload failed", {
+          description: error.message || "Check that you are signed in as an admin.",
+        });
+        return;
+      }
+      console.log("[AdminDealsManager] Pitch deck uploaded:", data);
+      setForm((f) => ({ ...f, pitch_deck_pdf_path: path }));
+      setDeckFeedback(`Uploaded ${file.name}. Click Save / Update to keep it.`);
+      toast.success("Pitch deck uploaded", { description: "Click Save / Update to keep it." });
+    } catch (err) {
+      console.error("[AdminDealsManager] Pitch deck upload exception:", err);
+      const message = err instanceof Error ? err.message : String(err);
+      setDeckFeedback(message);
+      toast.error("Pitch deck upload failed", { description: message });
+    } finally {
+      setUploadingDeck(false);
+    }
+  };
+
   const load = async () => {
     setLoading(true);
     const [dealsRes, investmentsRes] = await Promise.all([
