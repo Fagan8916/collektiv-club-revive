@@ -30,11 +30,35 @@ const formatGBP = (pence: number, currency = "GBP") =>
     maximumFractionDigits: 0,
   }).format(pence / 100);
 
+// Fetch live FX rates with GBP base. Falls back to 1:1 on failure so totals never break.
+const fetchFxRates = async (): Promise<Record<string, number>> => {
+  try {
+    const res = await fetch("https://api.exchangerate.host/latest?base=GBP");
+    if (!res.ok) throw new Error("FX request failed");
+    const json = await res.json();
+    if (json && json.rates) return json.rates as Record<string, number>;
+  } catch (_) {
+    // ignore — fall back to identity rates
+  }
+  return { GBP: 1 };
+};
+
+// Convert an amount in minor units of `from` currency into GBP pence.
+const toGbpPence = (amountMinor: number, from: string, ratesGbpBase: Record<string, number>) => {
+  const cur = (from || "GBP").toUpperCase();
+  if (cur === "GBP") return amountMinor;
+  const rate = ratesGbpBase[cur];
+  if (!rate || rate <= 0) return amountMinor; // fallback: treat as GBP
+  // ratesGbpBase[X] = how many X per 1 GBP, so GBP = X / rate
+  return Math.round(amountMinor / rate);
+};
+
 const MyInvestments = () => {
   const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [rows, setRows] = useState<Row[]>([]);
   const [commitments, setCommitments] = useState<CommitmentRow[]>([]);
+  const [fxRates, setFxRates] = useState<Record<string, number>>({ GBP: 1 });
 
   useEffect(() => {
     const load = async () => {
@@ -44,7 +68,7 @@ const MyInvestments = () => {
       }
       setLoading(true);
 
-      const [{ data: investments }, { data: deals }, { data: commitData }] = await Promise.all([
+      const [{ data: investments }, { data: deals }, { data: commitData }, rates] = await Promise.all([
         supabase
           .from("member_investments")
           .select("deal_slug, amount_pence, currency")
@@ -55,7 +79,9 @@ const MyInvestments = () => {
           .select("id, deal_slug, amount_pence, currency, status")
           .eq("user_id", user.id)
           .in("status", ["pending", "rejected"]),
+        fetchFxRates(),
       ]);
+      setFxRates(rates);
 
       const dealMap = new Map((deals ?? []).map((d) => [d.slug, d.name]));
       const enriched: Row[] = (investments ?? []).map((r) => ({
@@ -82,11 +108,10 @@ const MyInvestments = () => {
     load();
   }, [user?.email, user?.id]);
 
-  const total = rows.reduce((sum, r) => sum + r.amount_pence, 0);
+  const total = rows.reduce((sum, r) => sum + toGbpPence(r.amount_pence, r.currency, fxRates), 0);
   const pendingTotal = commitments
     .filter((c) => c.status === "pending")
-    .reduce((sum, c) => sum + c.amount_pence, 0);
-  const currency = rows[0]?.currency ?? "GBP";
+    .reduce((sum, c) => sum + toGbpPence(c.amount_pence, c.currency, fxRates), 0);
 
   if (loading) {
     return (
@@ -123,7 +148,7 @@ const MyInvestments = () => {
             <TrendingUp className="h-4 w-4" /> Total invested to date
           </div>
           <div className="font-playfair text-3xl font-bold">
-            {formatGBP(total, currency)}
+            {formatGBP(total, "GBP")}
           </div>
           <div className="text-green-100 text-xs mt-1">
             Across {rows.length} {rows.length === 1 ? "deal" : "deals"}
