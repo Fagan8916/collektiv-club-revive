@@ -270,6 +270,7 @@ const AdminDealsManager: React.FC = () => {
     setForm(emptyForm);
     setLogoFeedback("");
     setMemoFeedback("");
+    setDeckFeedback("");
   };
 
   const startEdit = (d: Deal) => {
@@ -289,11 +290,13 @@ const AdminDealsManager: React.FC = () => {
       memo: d.memo ?? "",
       recording_url: d.recording_url ?? "",
       memo_pdf_path: d.memo_pdf_path ?? "",
+      pitch_deck_pdf_path: d.pitch_deck_pdf_path ?? "",
       sort_order: d.sort_order ?? 0,
       is_published: d.is_published,
     });
     setLogoFeedback(d.logo_url ? "Existing logo attached." : "");
     setMemoFeedback(d.memo_pdf_path ? "Existing memo PDF attached." : "");
+    setDeckFeedback(d.pitch_deck_pdf_path ? "Existing pitch deck attached." : "");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
