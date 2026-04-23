@@ -230,6 +230,9 @@ const DynamicDealMemo = () => {
           </CardContent>
         </Card>
 
+        {/* Member questions & comments */}
+        <DealComments dealSlug={deal.slug} dealName={deal.name} />
+
         {/* Standardized disclaimer (always shown) */}
         <Card className="border-collektiv-green/30 mb-8">
           <CardContent className="p-8 space-y-5 text-sm text-gray-700 leading-relaxed">
