@@ -27,6 +27,7 @@ type Deal = {
   memo: string | null;
   recording_url: string | null;
   memo_pdf_path: string | null;
+  pitch_deck_pdf_path: string | null;
   sort_order: number;
   is_published: boolean;
   published_at: string | null;
@@ -54,6 +55,7 @@ const emptyForm: Omit<Deal, "id" | "published_at"> = {
   memo: "",
   recording_url: "",
   memo_pdf_path: "",
+  pitch_deck_pdf_path: "",
   sort_order: 0,
   is_published: false,
 };
@@ -68,8 +70,10 @@ const AdminDealsManager: React.FC = () => {
   const [form, setForm] = useState(emptyForm);
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [uploadingMemo, setUploadingMemo] = useState(false);
+  const [uploadingDeck, setUploadingDeck] = useState(false);
   const [logoFeedback, setLogoFeedback] = useState("");
   const [memoFeedback, setMemoFeedback] = useState("");
+  const [deckFeedback, setDeckFeedback] = useState("");
 
   const uploadLogo = async (file: File) => {
     if (!file) return;
