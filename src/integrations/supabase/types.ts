@@ -203,6 +203,78 @@ export type Database = {
         }
         Relationships: []
       }
+      member_events: {
+        Row: {
+          attendees: string | null
+          created_at: string
+          created_by: string
+          description: string | null
+          event_date: string | null
+          event_date_label: string | null
+          event_time: string | null
+          gallery_images: string[] | null
+          hero_image_url: string | null
+          id: string
+          is_published: boolean
+          location: string | null
+          paragraphs: string[] | null
+          slug: string
+          sort_order: number
+          status: string
+          tagline: string | null
+          title: string
+          topics: string[] | null
+          updated_at: string
+          venue_notes: string | null
+        }
+        Insert: {
+          attendees?: string | null
+          created_at?: string
+          created_by: string
+          description?: string | null
+          event_date?: string | null
+          event_date_label?: string | null
+          event_time?: string | null
+          gallery_images?: string[] | null
+          hero_image_url?: string | null
+          id?: string
+          is_published?: boolean
+          location?: string | null
+          paragraphs?: string[] | null
+          slug: string
+          sort_order?: number
+          status?: string
+          tagline?: string | null
+          title: string
+          topics?: string[] | null
+          updated_at?: string
+          venue_notes?: string | null
+        }
+        Update: {
+          attendees?: string | null
+          created_at?: string
+          created_by?: string
+          description?: string | null
+          event_date?: string | null
+          event_date_label?: string | null
+          event_time?: string | null
+          gallery_images?: string[] | null
+          hero_image_url?: string | null
+          id?: string
+          is_published?: boolean
+          location?: string | null
+          paragraphs?: string[] | null
+          slug?: string
+          sort_order?: number
+          status?: string
+          tagline?: string | null
+          title?: string
+          topics?: string[] | null
+          updated_at?: string
+          venue_notes?: string | null
+        }
+        Relationships: []
+      }
       member_investments: {
         Row: {
           amount_pence: number
