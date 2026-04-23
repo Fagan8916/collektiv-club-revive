@@ -56,6 +56,50 @@ export type Database = {
         }
         Relationships: []
       }
+      deal_comments: {
+        Row: {
+          author_name: string
+          body: string
+          created_at: string
+          deal_slug: string
+          id: string
+          is_hidden: boolean
+          parent_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          author_name: string
+          body: string
+          created_at?: string
+          deal_slug: string
+          id?: string
+          is_hidden?: boolean
+          parent_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          author_name?: string
+          body?: string
+          created_at?: string
+          deal_slug?: string
+          id?: string
+          is_hidden?: boolean
+          parent_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "deal_comments_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "deal_comments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       deal_commitments: {
         Row: {
           admin_notes: string | null
