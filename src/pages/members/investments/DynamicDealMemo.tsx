@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import DealComments from "@/components/DealComments";
 
 type Deal = {
   slug: string;
@@ -228,6 +229,9 @@ const DynamicDealMemo = () => {
             {blocks.map((b, i) => renderBlock(b, i))}
           </CardContent>
         </Card>
+
+        {/* Member questions & comments */}
+        <DealComments dealSlug={deal.slug} dealName={deal.name} />
 
         {/* Standardized disclaimer (always shown) */}
         <Card className="border-collektiv-green/30 mb-8">
