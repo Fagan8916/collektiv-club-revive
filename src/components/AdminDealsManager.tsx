@@ -683,6 +683,8 @@ const AdminDealsManager: React.FC = () => {
                 </p>
               )}
             </div>
+
+            <div className="flex items-center justify-between rounded-md border p-3 bg-collektiv-green/5">
               <div>
                 <Label htmlFor="is_published" className="font-semibold text-collektiv-dark">
                   Publish deal
