@@ -328,6 +328,7 @@ const AdminDealsManager: React.FC = () => {
       memo: form.memo.trim() || null,
       recording_url: form.recording_url.trim() || null,
       memo_pdf_path: form.memo_pdf_path?.trim() || null,
+      pitch_deck_pdf_path: form.pitch_deck_pdf_path?.trim() || null,
       sort_order: Number(form.sort_order) || 0,
       is_published: form.is_published,
       published_at: form.is_published ? new Date().toISOString() : null,
