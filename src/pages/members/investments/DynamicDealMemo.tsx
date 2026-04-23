@@ -206,12 +206,15 @@ const DynamicDealMemo = () => {
             Investment Memo: {deal.name}
           </h1>
           <p className="text-gray-600">Prepared by Collektiv Club</p>
-          <a
-            href="#deal-comments"
+          <button
+            type="button"
+            onClick={() => {
+              document.getElementById("deal-comments")?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
             className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-collektiv-green/10 border border-collektiv-green/30 text-collektiv-green text-sm font-medium hover:bg-collektiv-green/20 transition-colors"
           >
             💬 Have a question? Scroll down to post comments and questions below
-          </a>
+          </button>
         </div>
 
         {/* HNW / Sophisticated investor notice (always shown at top) */}
