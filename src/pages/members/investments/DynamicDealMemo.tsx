@@ -206,6 +206,12 @@ const DynamicDealMemo = () => {
             Investment Memo: {deal.name}
           </h1>
           <p className="text-gray-600">Prepared by Collektiv Club</p>
+          <a
+            href="#deal-comments"
+            className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-collektiv-green/10 border border-collektiv-green/30 text-collektiv-green text-sm font-medium hover:bg-collektiv-green/20 transition-colors"
+          >
+            💬 Have a question? Scroll down to post comments and questions below
+          </a>
         </div>
 
         {/* HNW / Sophisticated investor notice (always shown at top) */}
@@ -231,7 +237,9 @@ const DynamicDealMemo = () => {
         </Card>
 
         {/* Member questions & comments */}
-        <DealComments dealSlug={deal.slug} dealName={deal.name} />
+        <div id="deal-comments" className="scroll-mt-20">
+          <DealComments dealSlug={deal.slug} dealName={deal.name} />
+        </div>
 
         {/* Standardized disclaimer (always shown) */}
         <Card className="border-collektiv-green/30 mb-8">
