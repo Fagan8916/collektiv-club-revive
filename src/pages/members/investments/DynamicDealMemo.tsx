@@ -140,6 +140,22 @@ const DynamicDealMemo = () => {
           <p className="text-gray-600">Prepared by Collektiv Club</p>
         </div>
 
+        {/* HNW / Sophisticated investor notice (always shown at top) */}
+        <Card className="mb-6 border-collektiv-green/40 bg-collektiv-green/5">
+          <CardContent className="p-6 text-sm text-gray-700 leading-relaxed">
+            <h3 className="text-base font-semibold text-collektiv-dark mb-2">
+              Important Notice to High-Net-Worth and Sophisticated Investors
+            </h3>
+            <p>
+              The investments described in this document are classified as high-risk and are
+              intended exclusively for individuals who qualify as high-net-worth investors or
+              self-certified sophisticated investors under the Financial Services and Markets Act
+              2000 (Financial Promotion) Order 2005. By engaging with this material, you confirm
+              that you meet the relevant criteria.
+            </p>
+          </CardContent>
+        </Card>
+
         <Card className="mb-8">
           <CardContent className="p-8 space-y-5">
             {blocks.map((b, i) => renderBlock(b, i))}
