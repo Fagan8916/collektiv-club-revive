@@ -1,0 +1,1 @@
+ALTER TABLE public.investment_deals ADD COLUMN IF NOT EXISTS pitch_deck_url text;
