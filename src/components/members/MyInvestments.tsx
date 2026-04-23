@@ -30,17 +30,28 @@ const formatGBP = (pence: number, currency = "GBP") =>
     maximumFractionDigits: 0,
   }).format(pence / 100);
 
-// Fetch live FX rates with GBP base. Falls back to 1:1 on failure so totals never break.
+// Fetch live FX rates with GBP base. Falls back to a sensible static table on failure.
+// Static fallback uses approximate Apr-2026 rates so totals never silently treat
+// foreign currencies as 1:1 GBP.
+const STATIC_FALLBACK_RATES_GBP_BASE: Record<string, number> = {
+  GBP: 1,
+  USD: 1.27,
+  EUR: 1.17,
+};
+
 const fetchFxRates = async (): Promise<Record<string, number>> => {
   try {
-    const res = await fetch("https://api.exchangerate.host/latest?base=GBP");
+    // open.er-api.com is free, no key required, returns { rates: { USD: ..., EUR: ... } } in base currency
+    const res = await fetch("https://open.er-api.com/v6/latest/GBP");
     if (!res.ok) throw new Error("FX request failed");
     const json = await res.json();
-    if (json && json.rates) return json.rates as Record<string, number>;
+    if (json && json.result === "success" && json.rates) {
+      return json.rates as Record<string, number>;
+    }
   } catch (_) {
-    // ignore — fall back to identity rates
+    // ignore — fall back to static table
   }
-  return { GBP: 1 };
+  return STATIC_FALLBACK_RATES_GBP_BASE;
 };
 
 // Convert an amount in minor units of `from` currency into GBP pence.
