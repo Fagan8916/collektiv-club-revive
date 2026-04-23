@@ -13,7 +13,7 @@ const Webel = () => {
           className="inline-flex items-center text-collektiv-green hover:text-collektiv-lightgreen mb-8"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Members Zone
+          Back to Investments
         </Link>
 
         <Card className="mb-8">
