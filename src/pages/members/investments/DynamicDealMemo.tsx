@@ -51,67 +51,134 @@ const DynamicDealMemo = () => {
     );
   }
 
-  // Parse memo body into paragraphs / headings.
-  // Convention used by admins:
-  //  - Blank line separates paragraphs.
-  //  - A short line (≤ 80 chars) ending with ":" or fully wrapped in **...**
-  //    OR prefixed with "## " is treated as a section heading.
-  const blocks = deal.memo
+  // Parse memo into structured blocks.
+  // Heading conventions (any of):
+  //  - Markdown: "## Heading" or "### Heading"
+  //  - Bold-wrapped: "**Heading**"
+  //  - Short line ending with ":"  (≤ 80 chars)
+  //  - ALL-CAPS short line (≤ 60 chars, mostly letters) e.g. "PROBLEM", "SOLUTION"
+  // Also: when a heading appears glued to the next paragraph (no blank line),
+  // we split it out so it renders as its own block.
+
+  const isAllCapsHeading = (line: string) => {
+    const t = line.trim();
+    if (!t || t.length > 60) return false;
+    if (!/[A-Z]/.test(t)) return false;
+    // Allow letters, numbers, spaces, &, /, -
+    if (!/^[A-Z0-9 &/\-]+$/.test(t)) return false;
+    // Must contain at least one letter and not end with punctuation like .
+    return /^[A-Z][A-Z0-9 &/\-]*$/.test(t);
+  };
+
+  const isHeadingLine = (line: string) => {
+    const t = line.trim();
+    if (!t) return false;
+    if (/^#{1,3}\s+/.test(t)) return true;
+    if (/^\*\*(.+)\*\*$/.test(t)) return true;
+    if (t.length <= 80 && t.endsWith(":")) return true;
+    if (isAllCapsHeading(t)) return true;
+    return false;
+  };
+
+  // First, split memo into raw blocks separated by blank lines,
+  // then within each block, peel off heading lines that are glued to body text.
+  const rawBlocks = deal.memo
     .split(/\n\s*\n/)
     .map((b) => b.trim())
     .filter(Boolean);
+
+  const blocks: string[] = [];
+  rawBlocks.forEach((block) => {
+    const lines = block.split(/\n/);
+    let buffer: string[] = [];
+    const flush = () => {
+      if (buffer.length) {
+        blocks.push(buffer.join("\n").trim());
+        buffer = [];
+      }
+    };
+    lines.forEach((line) => {
+      if (isHeadingLine(line) && line.trim().length > 0) {
+        flush();
+        blocks.push(line.trim());
+      } else {
+        buffer.push(line);
+      }
+    });
+    flush();
+  });
+
+  const renderHeading = (text: string, idx: number) => (
+    <h2
+      key={idx}
+      className="text-2xl font-bold text-collektiv-green mt-6 mb-3 border-b-2 border-collektiv-green/40 pb-2 tracking-tight"
+    >
+      {text}
+    </h2>
+  );
 
   const renderBlock = (block: string, idx: number) => {
     const trimmed = block.trim();
 
     // Markdown-style heading
     if (/^#{1,3}\s+/.test(trimmed)) {
-      const text = trimmed.replace(/^#{1,3}\s+/, "");
-      return (
-        <h2
-          key={idx}
-          className="text-2xl font-bold text-collektiv-green mt-2 mb-3 border-b-2 border-collektiv-green pb-2"
-        >
-          {text}
-        </h2>
-      );
+      return renderHeading(trimmed.replace(/^#{1,3}\s+/, ""), idx);
     }
 
     // Bold-wrapped single-line heading: **Heading**
     const boldHeading = /^\*\*(.+)\*\*$/.exec(trimmed);
     if (boldHeading && !trimmed.includes("\n")) {
-      return (
-        <h3 key={idx} className="text-xl font-semibold text-collektiv-green mt-2 mb-2">
-          {boldHeading[1]}
-        </h3>
-      );
+      return renderHeading(boldHeading[1], idx);
     }
 
-    // Short line ending with ":" → subheading
+    // Short line ending with ":" → heading
     if (!trimmed.includes("\n") && trimmed.endsWith(":") && trimmed.length <= 80) {
-      return (
-        <h3 key={idx} className="text-xl font-semibold text-collektiv-green mt-2 mb-2">
-          {trimmed.replace(/:$/, "")}
-        </h3>
-      );
+      return renderHeading(trimmed.replace(/:$/, ""), idx);
+    }
+
+    // ALL-CAPS heading (e.g. PROBLEM, SOLUTION)
+    if (!trimmed.includes("\n") && isAllCapsHeading(trimmed)) {
+      // Title-case the heading for display
+      const display = trimmed
+        .toLowerCase()
+        .replace(/\b\w/g, (c) => c.toUpperCase());
+      return renderHeading(display, idx);
     }
 
     // Bullet list (lines starting with "- " or "* ")
     const lines = trimmed.split(/\n/);
-    if (lines.every((l) => /^\s*[-*]\s+/.test(l))) {
+    if (lines.length > 0 && lines.every((l) => /^\s*[-*]\s+/.test(l))) {
       return (
-        <ul key={idx} className="list-disc list-inside text-gray-700 space-y-2 ml-4">
+        <ul key={idx} className="list-disc pl-6 text-gray-700 space-y-2 marker:text-collektiv-green">
           {lines.map((l, i) => (
-            <li key={i}>{l.replace(/^\s*[-*]\s+/, "")}</li>
+            <li key={i} className="leading-relaxed">
+              {l.replace(/^\s*[-*]\s+/, "")}
+            </li>
           ))}
         </ul>
       );
     }
 
-    // Default: paragraph (preserve internal line breaks)
+    // Inline bold rendering for paragraphs
+    const renderInline = (text: string) => {
+      const parts = text.split(/(\*\*[^*]+\*\*)/g);
+      return parts.map((part, i) => {
+        const m = /^\*\*([^*]+)\*\*$/.exec(part);
+        if (m) {
+          return (
+            <strong key={i} className="font-semibold text-collektiv-dark">
+              {m[1]}
+            </strong>
+          );
+        }
+        return <React.Fragment key={i}>{part}</React.Fragment>;
+      });
+    };
+
+    // Default: paragraph (preserve internal line breaks, render inline bold)
     return (
-      <p key={idx} className="text-gray-700 leading-relaxed whitespace-pre-line">
-        {trimmed}
+      <p key={idx} className="text-gray-700 leading-relaxed whitespace-pre-line text-base">
+        {renderInline(trimmed)}
       </p>
     );
   };
