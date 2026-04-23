@@ -170,6 +170,7 @@ const DynamicDeal = () => {
                   {downloadingDeck ? "Preparing…" : "Download pitch deck"}
                 </Button>
               )}
+              {deal.recording_url && (
                 <Button asChild size="lg" variant="outline" className="text-base px-6 py-3">
                   <a href={deal.recording_url} target="_blank" rel="noopener noreferrer">
                     <PlayCircle className="mr-2 h-4 w-4" /> Watch recording
