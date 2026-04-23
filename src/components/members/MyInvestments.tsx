@@ -148,7 +148,7 @@ const MyInvestments = () => {
             <TrendingUp className="h-4 w-4" /> Total invested to date
           </div>
           <div className="font-playfair text-3xl font-bold">
-            {formatGBP(total, currency)}
+            {formatGBP(total, "GBP")}
           </div>
           <div className="text-green-100 text-xs mt-1">
             Across {rows.length} {rows.length === 1 ? "deal" : "deals"}
