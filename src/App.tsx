@@ -22,6 +22,7 @@ import Terms from './pages/Terms';
 import HNWISI from './pages/HNWISI';
 import ResetPassword from './pages/ResetPassword';
 import SetupAccount from './pages/SetupAccount';
+import AuthMagic from './pages/AuthMagic';
 import Propane from './pages/members/investments/Propane';
 import Loxa from './pages/members/investments/Loxa';
 import Pandektes from './pages/members/investments/Pandektes';
@@ -338,6 +339,7 @@ function App() {
             
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/setup-account" element={<SetupAccount />} />
+            <Route path="/auth/magic" element={<AuthMagic />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/hnwi-si" element={<HNWISI />} />
