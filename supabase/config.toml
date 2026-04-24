@@ -11,3 +11,6 @@ verify_jwt = false
 
 [functions.fetch-substack-feed]
 verify_jwt = false
+
+[functions.admin-get-magic-link]
+verify_jwt = false
