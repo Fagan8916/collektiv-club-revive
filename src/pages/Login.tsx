@@ -22,9 +22,24 @@ const Login = () => {
     }
   }, [isAuthenticated, authLoading, navigate]);
 
-  // Token/callback handling centralized in App.tsx to avoid duplication and loops
+  // Surface any auth_error= passed back from the OAuth/magic-link callback
+  // (set in src/main.tsx) so the user sees what went wrong instead of silently
+  // bouncing between Google and the login screen.
   useEffect(() => {
-    // no-op
+    const hash = window.location.hash || '';
+    const qIdx = hash.indexOf('?');
+    if (qIdx === -1) return;
+    const params = new URLSearchParams(hash.slice(qIdx + 1));
+    const err = params.get('auth_error');
+    if (err) {
+      toast({
+        title: 'Sign-in failed',
+        description: err,
+        variant: 'destructive',
+      });
+      // strip the param so we don't re-toast on re-renders
+      window.history.replaceState({}, document.title, `${window.location.origin}/#/login`);
+    }
   }, []);
 
   // Show loading while checking auth state
