@@ -13,5 +13,10 @@ export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABL
     storage: localStorage,
     persistSession: true,
     autoRefreshToken: true,
+    // We handle the OAuth/magic-link callback ourselves in src/main.tsx so
+    // multiple consumers don't race over the same URL fragment (which was
+    // leaving users without a session and looping them back to /login).
+    detectSessionInUrl: false,
+    flowType: 'implicit',
   }
 });
