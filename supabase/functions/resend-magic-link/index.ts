@@ -86,9 +86,25 @@ const handler = async (req: Request): Promise<Response> => {
 
     const emailRedirectTo = redirectTo || 'https://collektiv.club/#/setup-account';
 
-    const { error: magicLinkError } = await supabase.auth.signInWithOtp({
+    // Try to create the user (idempotent: if exists, we'll catch the error and continue)
+    const { error: createError } = await supabase.auth.admin.createUser({
       email: normalizedEmail,
-      options: { emailRedirectTo }
+      email_confirm: true,
+    });
+    if (createError && !/already been registered|already exists|duplicate/i.test(createError.message)) {
+      console.error('resend-magic-link: createUser error', createError);
+      // Non-fatal — proceed to generate link anyway
+    } else if (!createError) {
+      console.log('resend-magic-link: created auth user for', normalizedEmail);
+    } else {
+      console.log('resend-magic-link: user already exists', normalizedEmail);
+    }
+
+    // Generate & email a magic link via admin API (works even when signups are disabled)
+    const { error: magicLinkError } = await supabase.auth.admin.generateLink({
+      type: 'magiclink',
+      email: normalizedEmail,
+      options: { redirectTo: emailRedirectTo },
     });
 
     if (magicLinkError) {
