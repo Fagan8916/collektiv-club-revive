@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Plus, Trash2, Eye, EyeOff, Save, ExternalLink, Upload, FileText, X } from "lucide-react";
 import { toast } from "sonner";
+import AdminDealViewers from "@/components/AdminDealViewers";
 
 type Deal = {
   id: string;
@@ -784,6 +785,7 @@ const AdminDealsManager: React.FC = () => {
                           ({investedBySlug[d.slug]?.investorCount ?? 0} {(investedBySlug[d.slug]?.investorCount ?? 0) === 1 ? "investor" : "investors"})
                         </span>
                       </div>
+                      <AdminDealViewers dealSlug={d.slug} />
                     </div>
                     <div className="flex flex-col items-end gap-2 flex-shrink-0">
                       <div className="flex items-center gap-2">
