@@ -145,6 +145,33 @@ export type Database = {
         }
         Relationships: []
       }
+      deal_views: {
+        Row: {
+          deal_slug: string
+          id: string
+          page_type: string
+          user_id: string
+          viewed_at: string
+          viewer_email: string | null
+        }
+        Insert: {
+          deal_slug: string
+          id?: string
+          page_type?: string
+          user_id: string
+          viewed_at?: string
+          viewer_email?: string | null
+        }
+        Update: {
+          deal_slug?: string
+          id?: string
+          page_type?: string
+          user_id?: string
+          viewed_at?: string
+          viewer_email?: string | null
+        }
+        Relationships: []
+      }
       investment_deals: {
         Row: {
           close_date: string | null
