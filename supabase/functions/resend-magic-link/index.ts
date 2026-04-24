@@ -86,15 +86,6 @@ const handler = async (req: Request): Promise<Response> => {
 
     const emailRedirectTo = redirectTo || 'https://collektiv.club/#/setup-account';
 
-    // Check if user exists in auth; if not, create them (admin API bypasses "signups disabled")
-    const { data: existing } = await supabase.auth.admin.listUsers({ page: 1, perPage: 1 });
-    let userExists = false;
-    try {
-      // listUsers doesn't filter by email; do a targeted lookup via getUserByEmail-style query
-      const { data: lookup } = await supabase.rpc as any;
-      // Fallback: scan via admin listing with email filter is not supported, so attempt invite-style create
-    } catch (_) { /* ignore */ }
-
     // Try to create the user (idempotent: if exists, we'll catch the error and continue)
     const { error: createError } = await supabase.auth.admin.createUser({
       email: normalizedEmail,
