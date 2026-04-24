@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import DealCommitButton from "@/components/DealCommitButton";
+import { useDealViewTracker } from "@/hooks/useDealViewTracker";
 
 type Deal = {
   slug: string;
@@ -40,6 +41,8 @@ const DynamicDeal = () => {
   const [loading, setLoading] = useState(true);
   const [downloadingPdf, setDownloadingPdf] = useState(false);
   const [downloadingDeck, setDownloadingDeck] = useState(false);
+
+  useDealViewTracker(slug, "overview");
 
   useEffect(() => {
     const load = async () => {

@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import DealComments from "@/components/DealComments";
+import { useDealViewTracker } from "@/hooks/useDealViewTracker";
 
 type Deal = {
   slug: string;
@@ -18,6 +19,8 @@ const DynamicDealMemo = () => {
   const navigate = useNavigate();
   const [deal, setDeal] = useState<Deal | null>(null);
   const [loading, setLoading] = useState(true);
+
+  useDealViewTracker(slug, "memo");
 
   useEffect(() => {
     const load = async () => {
