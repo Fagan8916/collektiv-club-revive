@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Toaster } from '@/components/ui/sonner';
-import { isProfileComplete } from '@/utils/profileUtils';
+
 import { initOneSignal, tagOneSignalUser } from '@/lib/onesignal';
 import Index from './pages/Index';
 import About from './pages/About';
